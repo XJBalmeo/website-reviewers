@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Science Midterm Reviewer</title>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-icon">DS</div>
+                <h2>DataSci Reviewer</h2>
+            </div>
+            <ul id="nav-menu" class="nav-menu">
+                <!-- Dynamically populated via JS -->
+            </ul>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <header class="topbar">
+                <h1 id="lesson-title">Welcome to Data Science Review</h1>
+                <div class="topbar-actions">
+                    <button id="theme-toggle" class="btn-icon" aria-label="Toggle Theme">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                        </svg>
+                    </button>
+                </div>
+            </header>
+            
+            <div id="content-container" class="content-container">
+                <div class="welcome-screen">
+                    <h2>Midterm Examination Reviewer</h2>
+                    <p>Select a lesson from the sidebar to begin your review. This guide covers Introduction to Data Science, Big Data, and the Data Science Life Cycle.</p>
+                    <div class="hero-stats">
+                        <div class="stat-card">
+                            <h3>3</h3>
+                            <p>Core Lessons</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3>11</h3>
+                            <p>Key Topics</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3>100%</h3>
+                            <p>Exam Ready</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Data and Logic -->
+    <script src="lessons.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
