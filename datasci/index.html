@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -7,61 +7,3358 @@
     <!-- Google Fonts: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <!-- Main CSS -->
-    <link rel="stylesheet" href="styles.css">
+    <style>
+/* 
+ * Design System Variables
+ */
+:root {
+    --bg-primary: #0f172a;
+    --bg-secondary: #1e293b;
+    --bg-glass: rgba(30, 41, 59, 0.78);
+    --bg-glass-border: rgba(255, 255, 255, 0.1);
+    
+    --text-primary: #f8fafc;
+    --text-secondary: #cbd5e1;
+    --text-muted: #94a3b8;
+    
+    --accent-primary: #3b82f6;
+    --accent-secondary: #8b5cf6;
+    --accent-gradient: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+    
+    --success: #10b981;
+    --warning: #f59e0b;
+    --info: #0ea5e9;
+    
+    --font-main: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 20px;
+    --radius-full: 9999px;
+    
+    --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.12);
+    --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.22);
+    --shadow-glass: 0 8px 32px 0 rgba(0, 0, 0, 0.28);
+    
+    --transition-fast: 0.2s ease;
+    --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+[data-theme="light"] {
+    --bg-primary: #f1f5f9;
+    --bg-secondary: #ffffff;
+    --bg-glass: rgba(255, 255, 255, 0.9);
+    --bg-glass-border: rgba(15, 23, 42, 0.1);
+    
+    --text-primary: #0f172a;
+    --text-secondary: #334155;
+    --text-muted: #64748b;
+    
+    --shadow-sm: 0 4px 6px -1px rgba(15, 23, 42, 0.06);
+    --shadow-md: 0 10px 15px -3px rgba(15, 23, 42, 0.1);
+    --shadow-glass: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
+}
+
+/* Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-main);
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.65;
+    overflow-x: hidden;
+    transition: background-color var(--transition-normal), color var(--transition-normal);
+}
+
+body.drawer-open {
+    overflow: hidden;
+}
+
+code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    background: rgba(59, 130, 246, 0.14);
+    color: var(--accent-primary);
+    padding: 2px 6px;
+    border-radius: 6px;
+    font-size: 0.9em;
+}
+
+/* Layout */
+#app {
+    display: flex;
+    height: 100vh;
+    height: 100dvh;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Sidebar Overlay (Mobile) */
+.sidebar-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.65);
+    backdrop-filter: blur(4px);
+    z-index: 90;
+    opacity: 0;
+    transition: opacity var(--transition-normal);
+}
+
+.sidebar-overlay.active {
+    display: block;
+    opacity: 1;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 310px;
+    flex-shrink: 0;
+    background-color: var(--bg-glass);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-right: 1px solid var(--bg-glass-border);
+    display: flex;
+    flex-direction: column;
+    padding: 20px 0;
+    z-index: 100;
+    transition: transform var(--transition-normal);
+}
+
+.sidebar-header {
+    padding: 0 20px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    border-bottom: 1px solid var(--bg-glass-border);
+}
+
+.brand-btn {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: transparent;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    color: inherit;
+    font-family: inherit;
+}
+
+.logo-icon {
+    width: 42px;
+    height: 42px;
+    background: var(--accent-gradient);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 1.15rem;
+    color: white;
+    flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.brand-text h2 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    line-height: 1.2;
+}
+
+.brand-text span {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+.sidebar-search-wrapper {
+    padding: 14px 16px 8px;
+}
+
+.sidebar-search-input {
+    width: 100%;
+    padding: 10px 14px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--bg-glass-border);
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    font-family: inherit;
+    font-size: 0.88rem;
+    outline: none;
+    transition: border-color var(--transition-fast);
+}
+
+.sidebar-search-input:focus {
+    border-color: var(--accent-primary);
+}
+
+.nav-menu {
+    list-style: none;
+    padding: 8px 14px 24px;
+    flex: 1;
+    overflow-y: auto;
+}
+
+.nav-chapter {
+    margin-bottom: 20px;
+}
+
+.nav-chapter-title {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    margin: 8px 0 8px;
+    font-weight: 700;
+    padding: 0 12px;
+}
+
+.nav-chapter-list {
+    list-style: none;
+}
+
+.nav-item {
+    margin-bottom: 4px;
+}
+
+.nav-link {
+    display: block;
+    padding: 11px 14px;
+    border-radius: var(--radius-md);
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.94rem;
+    transition: all var(--transition-fast);
+    border: 1px solid transparent;
+}
+
+.nav-link:hover {
+    background-color: rgba(59, 130, 246, 0.1);
+    color: var(--accent-primary);
+    transform: translateX(3px);
+}
+
+.nav-link.active {
+    background: var(--accent-gradient);
+    color: white;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+    border-color: rgba(255, 255, 255, 0.15);
+}
+
+/* Main Content */
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    position: relative;
+    scroll-behavior: smooth;
+    min-width: 0;
+}
+
+.main-content::before, .main-content::after {
+    content: '';
+    position: fixed;
+    border-radius: 50%;
+    z-index: -1;
+    pointer-events: none;
+    filter: blur(100px);
+}
+
+.main-content::before {
+    top: -10%; right: -5%;
+    width: 40vw; height: 40vw;
+    background: rgba(139, 92, 246, 0.12);
+}
+
+.main-content::after {
+    bottom: -10%; left: 5%;
+    width: 35vw; height: 35vw;
+    background: rgba(59, 130, 246, 0.12);
+}
+
+/* Topbar */
+.topbar {
+    padding: 18px 36px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    position: sticky;
+    top: 0;
+    background-color: var(--bg-glass);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--bg-glass-border);
+    z-index: 30;
+}
+
+.topbar-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    min-width: 0;
+}
+
+.topbar-title-group {
+    min-width: 0;
+}
+
+.chapter-pill {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--accent-primary);
+    margin-bottom: 2px;
+}
+
+.topbar h1 {
+    font-size: clamp(1.15rem, 2.2vw, 1.65rem);
+    font-weight: 700;
+    color: var(--text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.topbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+.btn-pill {
+    background: rgba(59, 130, 246, 0.12);
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    color: var(--accent-primary);
+    padding: 8px 14px;
+    border-radius: var(--radius-full);
+    font-family: inherit;
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.btn-pill:hover {
+    background: var(--accent-gradient);
+    color: #ffffff;
+    border-color: transparent;
+}
+
+.btn-icon {
+    background: var(--bg-secondary);
+    border: 1px solid var(--bg-glass-border);
+    color: var(--text-primary);
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: all var(--transition-fast);
+    box-shadow: var(--shadow-sm);
+}
+
+.btn-icon:hover {
+    color: var(--accent-primary);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.btn-icon svg { width: 20px; height: 20px; }
+
+.mobile-only {
+    display: none;
+}
+
+/* Mobile Quick-Switch Horizontal Bar */
+.mobile-pill-bar {
+    padding: 10px 16px;
+    background: var(--bg-secondary);
+    border-bottom: 1px solid var(--bg-glass-border);
+    overflow-x: auto;
+    white-space: nowrap;
+    gap: 8px;
+    scrollbar-width: none;
+}
+
+.mobile-pill-bar::-webkit-scrollbar {
+    display: none;
+}
+
+.mobile-nav-pill {
+    display: inline-block;
+    padding: 7px 14px;
+    border-radius: var(--radius-full);
+    background: var(--bg-primary);
+    border: 1px solid var(--bg-glass-border);
+    color: var(--text-secondary);
+    font-family: inherit;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.mobile-nav-pill.active {
+    background: var(--accent-gradient);
+    color: #ffffff;
+    border-color: transparent;
+}
+
+/* Content Container */
+.content-container {
+    padding: 36px;
+    max-width: 1080px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+    animation: fadeInUp 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Section Cards */
+.section-card {
+    background: var(--bg-glass);
+    border: 1px solid var(--bg-glass-border);
+    border-radius: var(--radius-lg);
+    margin-bottom: 32px;
+    box-shadow: var(--shadow-glass);
+    opacity: 0;
+    overflow: hidden;
+}
+
+.section-card-header {
+    padding: 28px 32px 16px;
+    border-bottom: 1px solid var(--bg-glass-border);
+}
+
+.section-index-badge {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent-secondary);
+    margin-bottom: 4px;
+}
+
+.section-card-header h2 {
+    font-size: clamp(1.3rem, 2.2vw, 1.7rem);
+    color: var(--text-primary);
+    margin: 0;
+}
+
+/* Self-Contained Thematic Banners */
+.section-banner {
+    width: 100%;
+    min-height: 165px;
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    padding: 28px 32px;
+    overflow: hidden;
+}
+
+.banner-blue {
+    background: radial-gradient(circle at 85% 20%, rgba(14, 165, 233, 0.45), transparent 55%),
+                linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%);
+}
+
+.banner-purple {
+    background: radial-gradient(circle at 80% 25%, rgba(168, 85, 247, 0.45), transparent 55%),
+                linear-gradient(135deg, #3b0764 0%, #1e1b4b 100%);
+}
+
+.banner-teal {
+    background: radial-gradient(circle at 85% 20%, rgba(16, 185, 129, 0.42), transparent 55%),
+                linear-gradient(135deg, #064e3b 0%, #0f172a 100%);
+}
+
+.banner-indigo {
+    background: radial-gradient(circle at 80% 20%, rgba(99, 102, 241, 0.48), transparent 55%),
+                linear-gradient(135deg, #312e81 0%, #0f172a 100%);
+}
+
+.banner-violet {
+    background: radial-gradient(circle at 85% 25%, rgba(236, 72, 153, 0.38), transparent 55%),
+                linear-gradient(135deg, #4c1d95 0%, #0f172a 100%);
+}
+
+.banner-overlay {
+    position: relative;
+    z-index: 2;
+}
+
+.banner-kicker {
+    display: inline-block;
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: rgba(255, 255, 255, 0.85);
+    background: rgba(255, 255, 255, 0.14);
+    padding: 4px 12px;
+    border-radius: var(--radius-full);
+    margin-bottom: 10px;
+}
+
+.section-banner h2 {
+    font-size: clamp(1.45rem, 2.8vw, 2.05rem);
+    color: #ffffff;
+    margin: 0;
+    line-height: 1.25;
+}
+
+.section-body {
+    padding: 28px 32px 32px;
+}
+
+.lead-text {
+    font-size: clamp(1.05rem, 1.5vw, 1.2rem);
+    color: var(--text-primary);
+    font-weight: 400;
+    margin-bottom: 22px;
+    line-height: 1.7;
+}
+
+/* Flow Banner */
+.flow-banner {
+    background: var(--bg-secondary);
+    padding: 18px 20px;
+    border-radius: var(--radius-md);
+    text-align: center;
+    margin: 20px 0;
+    border: 1px solid var(--bg-glass-border);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+    color: var(--accent-secondary);
+    font-size: 1.05rem;
+}
+
+.flow-arrow {
+    color: var(--text-muted);
+}
+
+/* Feature Grid */
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
+    gap: 20px;
+    margin: 24px 0;
+}
+
+.feature-box {
+    background: var(--bg-secondary);
+    border: 1px solid var(--bg-glass-border);
+    border-radius: var(--radius-md);
+    padding: 22px;
+    transition: transform var(--transition-normal), border-color var(--transition-fast);
+    box-shadow: var(--shadow-sm);
+}
+
+.feature-box:hover {
+    transform: translateY(-3px);
+    border-color: var(--accent-primary);
+}
+
+.feature-icon {
+    font-size: 1.75rem;
+    margin-bottom: 14px;
+    display: inline-block;
+    padding: 10px 12px;
+    background: rgba(59, 130, 246, 0.1);
+    border-radius: var(--radius-md);
+    line-height: 1;
+}
+
+.feature-box h4 {
+    color: var(--text-primary);
+    font-size: 1.12rem;
+    margin-bottom: 8px;
+}
+
+.feature-box p {
+    color: var(--text-secondary);
+    font-size: 0.94rem;
+}
+
+/* Steps Layout */
+.step-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin: 24px 0;
+}
+
+.step-item {
+    display: flex;
+    background: var(--bg-secondary);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--bg-glass-border);
+    padding: 20px 22px;
+    align-items: flex-start;
+    gap: 18px;
+}
+
+.step-number {
+    background: var(--accent-gradient);
+    color: white;
+    min-width: 40px;
+    height: 40px;
+    padding: 0 8px;
+    border-radius: var(--radius-full);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.95rem;
+    flex-shrink: 0;
+    box-shadow: 0 4px 10px rgba(59,130,246,0.3);
+}
+
+.step-content {
+    min-width: 0;
+    flex: 1;
+}
+
+.step-content h4 {
+    font-size: 1.12rem;
+    margin-bottom: 6px;
+    color: var(--text-primary);
+}
+
+.step-content p {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+/* Tags & Badges */
+.tags-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 16px 0;
+}
+
+.tag {
+    background: rgba(139, 92, 246, 0.14);
+    color: var(--accent-secondary);
+    padding: 6px 13px;
+    border-radius: var(--radius-full);
+    font-size: 0.86rem;
+    font-weight: 600;
+    border: 1px solid rgba(139, 92, 246, 0.3);
+    display: inline-block;
+}
+
+.tag-ch1 {
+    background: rgba(59, 130, 246, 0.12);
+    color: var(--accent-primary);
+    border-color: rgba(59, 130, 246, 0.3);
+}
+
+.tag-ch2 {
+    background: rgba(16, 185, 129, 0.12);
+    color: var(--success);
+    border-color: rgba(16, 185, 129, 0.3);
+}
+
+.tag-ch3 {
+    background: rgba(139, 92, 246, 0.14);
+    color: var(--accent-secondary);
+    border-color: rgba(139, 92, 246, 0.3);
+}
+
+/* Alerts */
+.alert {
+    padding: 18px 22px;
+    border-radius: var(--radius-md);
+    margin: 22px 0;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+}
+
+.alert-icon {
+    font-size: 1.4rem;
+    line-height: 1.2;
+    flex-shrink: 0;
+}
+
+.alert-content {
+    min-width: 0;
+    flex: 1;
+}
+
+.alert-content strong {
+    display: block;
+    margin-bottom: 4px;
+    font-size: 1.05rem;
+}
+
+.alert-info {
+    background: rgba(14, 165, 233, 0.1);
+    border: 1px solid rgba(14, 165, 233, 0.3);
+    color: var(--info);
+}
+.alert-info p { color: var(--text-primary); }
+
+.alert-success {
+    background: rgba(16, 185, 129, 0.1);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    color: var(--success);
+}
+.alert-success p { color: var(--text-primary); }
+
+.alert-warning {
+    background: rgba(245, 158, 11, 0.1);
+    border: 1px solid rgba(245, 158, 11, 0.3);
+    color: var(--warning);
+}
+.alert-warning p { color: var(--text-primary); }
+
+/* Typography */
+h3 {
+    font-size: clamp(1.18rem, 1.8vw, 1.4rem);
+    margin: 28px 0 12px;
+    color: var(--text-primary);
+}
+
+h4 {
+    color: var(--text-primary);
+}
+
+ul.styled-list {
+    list-style: none;
+    margin: 12px 0;
+}
+
+ul.styled-list li {
+    position: relative;
+    padding-left: 24px;
+    margin-bottom: 10px;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+ul.styled-list li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--accent-primary);
+    font-weight: bold;
+}
+
+/* Welcome Screen */
+.welcome-screen {
+    text-align: center;
+    padding: 36px 12px 48px;
+}
+
+.welcome-badge {
+    display: inline-block;
+    background: rgba(59, 130, 246, 0.14);
+    color: var(--accent-primary);
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    padding: 6px 16px;
+    border-radius: var(--radius-full);
+    font-size: 0.82rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 16px;
+}
+
+.welcome-screen h2 {
+    font-size: clamp(2rem, 4.5vw, 3rem);
+    margin-bottom: 16px;
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    line-height: 1.2;
+}
+
+.welcome-screen > p {
+    font-size: clamp(1rem, 1.5vw, 1.18rem);
+    color: var(--text-secondary);
+    max-width: 680px;
+    margin: 0 auto 36px;
+}
+
+.hero-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 18px;
+    max-width: 780px;
+    margin: 0 auto 48px;
+}
+
+.stat-card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--bg-glass-border);
+    padding: 24px 16px;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    transition: transform var(--transition-fast);
+}
+
+.stat-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--accent-secondary);
+}
+
+.stat-card h3 {
+    font-size: 2.3rem;
+    margin: 0 0 4px;
+    color: var(--text-primary);
+}
+
+.stat-card p {
+    font-size: 0.92rem;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+.welcome-modules-section {
+    text-align: left;
+    margin-top: 24px;
+}
+
+.welcome-modules-section h3 {
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.module-launch-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+    gap: 18px;
+}
+
+.module-launch-card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--bg-glass-border);
+    border-radius: var(--radius-md);
+    padding: 22px;
+    text-align: left;
+    font-family: inherit;
+    color: inherit;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    transition: all var(--transition-fast);
+    box-shadow: var(--shadow-sm);
+}
+
+.module-launch-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--accent-primary);
+    box-shadow: var(--shadow-md);
+}
+
+.module-card-chapter {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--accent-primary);
+}
+
+.module-launch-card h4 {
+    font-size: 1.12rem;
+    color: var(--text-primary);
+}
+
+.module-launch-card p {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    flex: 1;
+}
+
+.module-card-cta {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--accent-secondary);
+    margin-top: 6px;
+}
+
+/* Lesson Footer Pager */
+.lesson-pager {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    margin-top: 12px;
+    padding-bottom: 24px;
+}
+
+.pager-btn {
+    background: var(--bg-secondary);
+    border: 1px solid var(--bg-glass-border);
+    border-radius: var(--radius-md);
+    padding: 18px 22px;
+    font-family: inherit;
+    color: var(--text-primary);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    transition: all var(--transition-fast);
+    box-shadow: var(--shadow-sm);
+}
+
+.pager-prev { text-align: left; }
+.pager-next { text-align: right; }
+
+.pager-btn:hover:not(:disabled) {
+    border-color: var(--accent-primary);
+    transform: translateY(-2px);
+}
+
+.pager-btn:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+.pager-label {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--accent-primary);
+    font-weight: 700;
+}
+
+.pager-btn strong {
+    font-size: 1rem;
+}
+
+/* Glossary Search & Filter Controls */
+.glossary-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-bottom: 20px;
+}
+
+.glossary-search-input {
+    width: 100%;
+    padding: 13px 16px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--bg-glass-border);
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    font-family: inherit;
+    font-size: 0.96rem;
+    outline: none;
+    transition: border-color var(--transition-fast);
+}
+
+.glossary-search-input:focus {
+    border-color: var(--accent-primary);
+}
+
+.glossary-filter-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.glossary-filter-btn {
+    padding: 8px 16px;
+    border-radius: var(--radius-full);
+    border: 1px solid var(--bg-glass-border);
+    background: var(--bg-secondary);
+    color: var(--text-secondary);
+    font-family: inherit;
+    font-size: 0.86rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.glossary-filter-btn.active,
+.glossary-filter-btn:hover {
+    background: var(--accent-gradient);
+    color: #ffffff;
+    border-color: transparent;
+}
+
+/* Table Styles */
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 8px 0 24px;
+    background: var(--bg-secondary);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    border: 1px solid var(--bg-glass-border);
+    box-shadow: var(--shadow-sm);
+}
+
+.data-table th, .data-table td {
+    padding: 15px 18px;
+    text-align: left;
+    border-bottom: 1px solid var(--bg-glass-border);
+}
+
+.data-table th {
+    background: rgba(59, 130, 246, 0.1);
+    color: var(--accent-primary);
+    font-weight: 700;
+    font-size: 0.95rem;
+}
+
+.data-table td {
+    color: var(--text-secondary);
+    vertical-align: top;
+    font-size: 0.94rem;
+}
+
+.data-table tr:last-child td {
+    border-bottom: none;
+}
+
+.data-table tr:hover td {
+    background: rgba(59, 130, 246, 0.04);
+}
+
+/* Tablet & Mobile Responsive Breakpoints */
+@media (max-width: 768px) {
+    .mobile-only {
+        display: flex;
+    }
+
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: min(84vw, 310px);
+        transform: translateX(-105%);
+        box-shadow: var(--shadow-glass);
+    }
+
+    .sidebar.open {
+        transform: translateX(0);
+    }
+
+    .topbar {
+        padding: 12px 16px;
+    }
+
+    .btn-pill span {
+        font-size: 0.8rem;
+    }
+
+    .content-container {
+        padding: 16px;
+    }
+
+    .section-card {
+        margin-bottom: 20px;
+        border-radius: var(--radius-md);
+    }
+
+    .section-card-header {
+        padding: 20px 18px 14px;
+    }
+
+    .section-banner {
+        min-height: 130px;
+        padding: 20px 18px;
+    }
+
+    .section-body {
+        padding: 20px 18px 22px;
+    }
+
+    .feature-box {
+        padding: 18px;
+    }
+
+    .step-item {
+        padding: 16px;
+        gap: 14px;
+    }
+
+    .alert {
+        padding: 16px;
+    }
+
+    .welcome-screen {
+        padding: 20px 4px 32px;
+    }
+}
+
+/* Mobile Stacked Table Cards on Small Phones */
+@media (max-width: 600px) {
+    .step-item {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .pager-next {
+        text-align: left;
+    }
+
+    .data-table thead {
+        display: none;
+    }
+
+    .data-table,
+    .data-table tbody,
+    .data-table tr,
+    .data-table td {
+        display: block;
+        width: 100%;
+    }
+
+    .data-table tr {
+        padding: 14px 16px;
+        border-bottom: 1px solid var(--bg-glass-border);
+    }
+
+    .data-table td {
+        padding: 4px 0;
+        border: none;
+    }
+
+    .data-table td:first-child {
+        font-size: 1.05rem;
+        color: var(--text-primary);
+    }
+}
+
+</style>
 </head>
 <body>
     <div id="app">
+        <!-- Mobile Sidebar Backdrop -->
+        <div id="sidebar-overlay" class="sidebar-overlay" aria-hidden="true"></div>
+
         <!-- Sidebar Navigation -->
-        <nav class="sidebar">
+        <nav id="sidebar" class="sidebar" aria-label="Course Navigation">
             <div class="sidebar-header">
-                <div class="logo-icon">DS</div>
-                <h2>DataSci Reviewer</h2>
+                <button id="home-btn" class="brand-btn" type="button" aria-label="Return to Welcome Screen">
+                    <div class="logo-icon">DS</div>
+                    <div class="brand-text">
+                        <h2>DataSci Reviewer</h2>
+                        <span>Midterm Study Guide</span>
+                    </div>
+                </button>
+                <button id="sidebar-close" class="btn-icon mobile-only" type="button" aria-label="Close Navigation Menu">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
             </div>
-            <ul id="nav-menu" class="nav-menu">
+            <div class="sidebar-search-wrapper">
+                <input type="search" id="nav-search" class="sidebar-search-input" placeholder="Filter lessons or topics..." aria-label="Filter lessons">
+            </div>
+            <div id="nav-menu" class="nav-menu">
                 <!-- Dynamically populated via JS -->
-            </ul>
+            </div>
         </nav>
 
         <!-- Main Content Area -->
-        <main class="main-content">
+        <main id="main-scroll" class="main-content">
             <header class="topbar">
-                <h1 id="lesson-title">Welcome to Data Science Review</h1>
+                <div class="topbar-left">
+                    <button id="menu-toggle" class="btn-icon mobile-only" type="button" aria-label="Open Navigation Menu">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="3" y1="12" x2="21" y2="12"></line>
+                            <line x1="3" y1="6" x2="21" y2="6"></line>
+                            <line x1="3" y1="18" x2="21" y2="18"></line>
+                        </svg>
+                    </button>
+                    <div class="topbar-title-group">
+                        <span id="lesson-chapter-badge" class="chapter-pill">Overview</span>
+                        <h1 id="lesson-title">Welcome to Data Science Review</h1>
+                    </div>
+                </div>
                 <div class="topbar-actions">
-                    <button id="theme-toggle" class="btn-icon" aria-label="Toggle Theme">
+                    <button id="quick-glossary-btn" class="btn-pill" type="button" title="Jump to Master Glossary">
+                        <span>📖 Glossary</span>
+                    </button>
+                    <button id="theme-toggle" class="btn-icon" type="button" aria-label="Toggle Light/Dark Theme">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
                         </svg>
                     </button>
                 </div>
             </header>
+
+            <!-- Mobile Horizontal Quick-Navigation Bar -->
+            <div id="mobile-pill-bar" class="mobile-pill-bar mobile-only" aria-label="Quick Lesson Switcher">
+                <!-- Dynamically populated via JS -->
+            </div>
             
             <div id="content-container" class="content-container">
-                <div class="welcome-screen">
-                    <h2>Midterm Examination Reviewer</h2>
-                    <p>Select a lesson from the sidebar to begin your review. This guide covers Introduction to Data Science, Big Data, and the Data Science Life Cycle.</p>
-                    <div class="hero-stats">
-                        <div class="stat-card">
-                            <h3>3</h3>
-                            <p>Core Lessons</p>
-                        </div>
-                        <div class="stat-card">
-                            <h3>11</h3>
-                            <p>Key Topics</p>
-                        </div>
-                        <div class="stat-card">
-                            <h3>100%</h3>
-                            <p>Exam Ready</p>
-                        </div>
-                    </div>
-                </div>
+                <!-- Dynamically populated via JS -->
             </div>
         </main>
     </div>
 
     <!-- Data and Logic -->
-    <script src="lessons.js"></script>
-    <script src="script.js"></script>
+    <script>
+const lessonsData = [
+  {
+    chapter: 'Chapter 1: Intro to Data Science',
+    id: 'chapter-1-big-data',
+    title: 'Big Data & Data Types',
+    sections: [
+      {
+        heading: 'What is Big Data?',
+        content: `
+          <div class="section-banner banner-blue">
+            <div class="banner-overlay">
+              <span class="banner-kicker">Lesson 1 • Big Data & Data Science</span>
+              <h2>The Data Explosion</h2>
+            </div>
+          </div>
+          <div class="section-body">
+            <p class="lead-text"><strong>Big Data</strong> refers to extremely large and complex amounts of data that are difficult to collect, store, manage, and analyze using traditional database systems such as <strong>RDBMS (Relational Database Management Systems)</strong> like MySQL, Oracle, or SQL Server.</p>
+            
+            <div class="alert alert-info">
+              <div class="alert-icon">💡</div>
+              <div class="alert-content">
+                <strong>In simple terms:</strong>
+                <p>Big Data = Data that is too large, too fast, or too complex for traditional database tools to handle efficiently.</p>
+              </div>
+            </div>
+
+            <div class="feature-grid">
+              <div class="feature-box">
+                <span class="feature-icon">📈</span>
+                <h4>Huge Volume</h4>
+                <p>Organizations collect millions or even billions of records daily. Platforms like Facebook or TikTok generate millions of user activities every single day.</p>
+              </div>
+              <div class="feature-box">
+                <span class="feature-icon">⚡</span>
+                <h4>High Velocity</h4>
+                <p>Data arrives extremely quickly in real-time, such as streaming video, real-time sensor data, or rapid social media posts.</p>
+              </div>
+            </div>
+
+            <h3>The Four (4) V's of Big Data</h3>
+            <p>Big Data is characterized by four foundational dimensions:</p>
+            <div class="step-list">
+              <div class="step-item">
+                <div class="step-number" style="background: var(--info);">1</div>
+                <div class="step-content">
+                  <h4>Volume</h4>
+                  <p><strong>Means how much data is there?</strong> Refers to the sheer size and scale of data generated.</p>
+                </div>
+              </div>
+              <div class="step-item">
+                <div class="step-number" style="background: var(--success);">2</div>
+                <div class="step-content">
+                  <h4>Velocity</h4>
+                  <p><strong>Means at what speed is new data generated?</strong> Refers to the rate at which new data flows into an organization.</p>
+                </div>
+              </div>
+              <div class="step-item">
+                <div class="step-number" style="background: var(--warning);">3</div>
+                <div class="step-content">
+                  <h4>Variety</h4>
+                  <p><strong>Means how diverse are different types of data?</strong> Data comes in all formats that may be structured, numeric in the traditional database, or unstructured text documents, video, audio, email, and stock ticker data.</p>
+                </div>
+              </div>
+              <div class="step-item">
+                <div class="step-number" style="background: var(--accent-primary);">4</div>
+                <div class="step-content">
+                  <h4>Veracity</h4>
+                  <p><strong>Means how accurate is the data?</strong> Refers to the trustworthiness, quality, and reliability of the data.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        `
+      },
+      {
+        heading: 'Forms of Big Data: Structured vs. Unstructured',
+        content: `
+          <div class="section-body">
+            <p class="lead-text">Big Data comes in two main <strong>forms</strong>: <strong>Structured Data</strong> and <strong>Unstructured Data</strong>.</p>
+            
+            <div class="feature-grid">
+              <div class="feature-box" style="border-top: 4px solid var(--success);">
+                <span class="feature-icon">📊</span>
+                <h4>Structured Data</h4>
+                <p>More easily analyzed and organized into the database. Typically, data that can be stored in a table, and every instance in the table has the same structure (i.e., set of attributes).</p>
+                <h4 style="margin-top: 16px; font-size: 0.95rem; color: var(--accent-primary);">Benefits of Structured Data:</h4>
+                <ul class="styled-list" style="margin-top: 10px;">
+                  <li><strong>Ease of Use:</strong> Easy to find, add, update, or delete. Highly organized and searchable.</li>
+                  <li><strong>Scalability:</strong> Systems can easily handle increasing amounts by adding storage.</li>
+                  <li><strong>Analytics:</strong> Easily queried with SQL and ready for statistical and machine learning models.</li>
+                </ul>
+              </div>
+              
+              <div class="feature-box" style="border-top: 4px solid var(--warning);">
+                <span class="feature-icon">📱</span>
+                <h4>Unstructured Data</h4>
+                <p>Data that does not follow a fixed or organized format, such as rows and columns in a traditional database. It makes up 80–90% of all data generated today.</p>
+                <ul class="styled-list" style="margin-top: 15px;">
+                  <li><strong>Examples:</strong> Text documents, video, audio, email, stock ticker data, social media posts, PDFs.</li>
+                  <li><strong>Challenges:</strong> Difficult for traditional relational databases to store and interpret directly.</li>
+                  <li><strong>Analysis:</strong> Requires specialized techniques like Natural Language Processing (NLP) or computer vision to extract meaning.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        `
+      }
+    ]
+  },
+  {
+    chapter: 'Chapter 1: Intro to Data Science',
+    id: 'chapter-1-data-science',
+    title: 'Data Mining vs Data Science',
+    sections: [
+      {
+        heading: 'Data Mining vs. Data Science',
+        content: `
+          <div class="section-banner banner-purple">
+            <div class="banner-overlay">
+              <span class="banner-kicker">Lesson 1 • Core Disciplines</span>
+              <h2>Finding the Gold in Data</h2>
+            </div>
+          </div>
+          <div class="section-body">
+            <p class="lead-text">Understanding how <strong>Big Data</strong>, <strong>Data Mining</strong>, and <strong>Data Science</strong> relate to one another is essential for any data practitioner.</p>
+
+            <div class="alert alert-warning">
+              <div class="alert-icon">⛏️</div>
+              <div class="alert-content">
+                <strong>Data Mining Definition</strong>
+                <p><strong>Data Mining</strong> is the process of examining large amounts of raw data to discover useful information, patterns, relationships, or trends. If Big Data is a mountain of information, Data Mining is the process of digging through it to find valuable insights.</p>
+              </div>
+            </div>
+
+            <h3>What is Data Science?</h3>
+            <p><strong>Data Science</strong> is the study of data to discover useful information, patterns, and insights that can help us understand a situation and make better decisions.</p>
+            
+            <h4>Fields Combined in Data Science:</h4>
+            <div class="feature-grid">
+              <div class="feature-box">
+                <span class="feature-icon">📊</span>
+                <h4>Statistics</h4>
+                <p>Helps us analyze numbers and determine patterns or trends.</p>
+              </div>
+              <div class="feature-box">
+                <span class="feature-icon">📐</span>
+                <h4>Mathematics</h4>
+                <p>Provides formulas and methods for analyzing data.</p>
+              </div>
+              <div class="feature-box">
+                <span class="feature-icon">🔍</span>
+                <h4>Data Analysis</h4>
+                <p>Involves examining data to find meaningful information.</p>
+              </div>
+              <div class="feature-box">
+                <span class="feature-icon">🤖</span>
+                <h4>Machine Learning</h4>
+                <p>Allows computers to learn patterns from data and make predictions.</p>
+              </div>
+              <div class="feature-box">
+                <span class="feature-icon">🏥</span>
+                <h4>Domain Knowledge</h4>
+                <p>Deep understanding of a specific industry or field—such as healthcare, finance, or retail—including its rules, processes, and unique language.</p>
+              </div>
+            </div>
+            
+            <div class="alert alert-success">
+              <div class="alert-icon">🎯</div>
+              <div class="alert-content">
+                <strong>Ultimate Goal of Data Science</strong>
+                <p>The ultimate goal of data science is <strong>improving decision making</strong>—using evidence from data to make informed choices across healthcare, finance, retail, and operations.</p>
+              </div>
+            </div>
+          </div>
+        `
+      },
+      {
+        heading: 'Extracting Actionable Insights & Patterns',
+        content: `
+          <div class="section-body">
+            <p class="lead-text">Discovering a pattern in data is only valuable when it leads to concrete decisions and actions.</p>
+            
+            <div class="flow-banner">
+              <span>DATA</span> <span class="flow-arrow">→</span>
+              <span>ANALYSIS</span> <span class="flow-arrow">→</span>
+              <span>INSIGHT</span> <span class="flow-arrow">→</span>
+              <span>DECISION</span>
+            </div>
+            
+            <div class="alert alert-info">
+              <div class="alert-icon">💡</div>
+              <div class="alert-content">
+                <strong>Actionable Insight</strong>
+                <p>A finding from data that gives us enough useful information to decide <em>what action should be taken</em>.</p>
+              </div>
+            </div>
+
+            <h3>Common Pattern & Grouping Techniques</h3>
+            <div class="step-list">
+              <div class="step-item">
+                <div class="step-number" style="background: var(--accent-primary);">1</div>
+                <div class="step-content">
+                  <h4>Customer Segmentation</h4>
+                  <p>Dividing customers into groups based on similar characteristics, behaviors, or preferences.</p>
+                </div>
+              </div>
+              <div class="step-item">
+                <div class="step-number" style="background: var(--success);">2</div>
+                <div class="step-content">
+                  <h4>Clustering</h4>
+                  <p>In Data Science and Machine Learning, this type of grouping (grouping entities with similar characteristics or behaviors) is commonly called <strong>clustering</strong>.</p>
+                </div>
+              </div>
+              <div class="step-item">
+                <div class="step-number" style="background: var(--accent-secondary);">3</div>
+                <div class="step-content">
+                  <h4>Association-Rule Mining</h4>
+                  <p>Data science technique used to discover relationships between items that frequently occur together (e.g., market basket analysis).</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        `
+      }
+    ]
+  },
+  {
+    chapter: 'Chapter 1: Intro to Data Science',
+    id: 'chapter-1-datasets',
+    title: 'Entities, Attributes & Architecture',
+    sections: [
+      {
+        heading: 'Core Data Elements',
+        content: `
+          <div class="section-body">
+            <p class="lead-text">To organize and analyze data systematically, we break datasets down into foundational building blocks.</p>
+            <div class="feature-grid">
+              <div class="feature-box">
+                <span class="feature-icon">📋</span>
+                <h4>Data</h4>
+                <p>A collection of facts, observations, or information about something in the real world.</p>
+              </div>
+              <div class="feature-box">
+                <span class="feature-icon">👤</span>
+                <h4>Entity</h4>
+                <p>The real-world person, object, or event that we are interested in studying.</p>
+                <p style="margin-top:10px; font-size: 0.85rem; color: var(--info);"><em>Who or what are we studying? (Rows)</em></p>
+              </div>
+              <div class="feature-box">
+                <span class="feature-icon">🏷️</span>
+                <h4>Attribute</h4>
+                <p>An attribute is a characteristic or property that describes an entity (also called a feature or variable).</p>
+                <p style="margin-top:10px; font-size: 0.85rem; color: var(--info);"><em>What do we know about it? (Columns)</em></p>
+              </div>
+              <div class="feature-box">
+                <span class="feature-icon">🗂️</span>
+                <h4>Data Set</h4>
+                <p>A collection of related data organized together (typically as an N × M table of entities and attributes).</p>
+              </div>
+            </div>
+          </div>
+        `
+      },
+      {
+        heading: 'Analytics Record & Data Architecture Main Areas',
+        content: `
+          <div class="section-body">
+            <div class="alert alert-warning" style="margin-top: 0;">
+              <div class="alert-icon">🗃️</div>
+              <div class="alert-content">
+                <strong>Analytics Record</strong>
+                <p><strong>A well-organized collection of data prepared for analysis.</strong> Preparing the analytics record requires resolving missing values, duplicates, and formatting inconsistencies across sources.</p>
+              </div>
+            </div>
+
+            <h3>Data Architecture Main Areas</h3>
+            <p>An organization's data architecture is divided into three main areas:</p>
+            <div class="step-list">
+              <div class="step-item">
+                <div class="step-number" style="background: var(--info);">1</div>
+                <div class="step-content">
+                  <h4>Data Sources</h4>
+                  <p><strong>Where all the data in an organization are generated.</strong> Includes transactional systems (CRM, ERP, POS), web logs, sensors, and external feeds.</p>
+                </div>
+              </div>
+              <div class="step-item">
+                <div class="step-number" style="background: var(--success);">2</div>
+                <div class="step-content">
+                  <h4>Data Storage</h4>
+                  <p><strong>Where the data are stored and processed.</strong> Includes relational databases (RDBMS), data warehouses, data lakes, and distributed systems like Hadoop.</p>
+                </div>
+              </div>
+              <div class="step-item">
+                <div class="step-number" style="background: var(--accent-secondary);">3</div>
+                <div class="step-content">
+                  <h4>Applications</h4>
+                  <p><strong>Where the data are shared with consumers of these data.</strong> Includes Business Intelligence (BI) dashboards, reporting tools, and analytical applications.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        `
+      }
+    ]
+  },
+  {
+    chapter: 'Chapter 2: Life Cycle',
+    id: 'chapter-2-lifecycle-p1-p2',
+    title: 'Phases 1 & 2: Business & Data',
+    sections: [
+      {
+        heading: 'Lesson 2: Life Cycle of Data Science',
+        content: `
+          <div class="section-banner banner-teal">
+            <div class="banner-overlay">
+              <span class="banner-kicker">Lesson 2 • Project Methodology</span>
+              <h2>The Data Science Life Cycle</h2>
+            </div>
+          </div>
+          <div class="section-body">
+            <p class="lead-text">The <strong>Data Science Life Cycle</strong> is defined by three core principles:</p>
+            <ul class="styled-list">
+              <li>A structured process that guides a data science project from start to finish.</li>
+              <li>A roadmap that helps data scientists organize, develop, and complete a data science project effectively.</li>
+              <li>An iterative process of research and discovery that guides data scientists in performing the tasks needed to develop and use predictive models.</li>
+            </ul>
+            
+            <h3>Goals (Data Science Project Life Cycle):</h3>
+            <div class="feature-grid">
+              <div class="feature-box">
+                <span class="feature-icon">🧭</span>
+                <h4>Clear Process</h4>
+                <p>Providing a clear and organized process for the project.</p>
+              </div>
+              <div class="feature-box">
+                <span class="feature-icon">💬</span>
+                <h4>Better Communication</h4>
+                <p>Improving communication between data science teams and customers.</p>
+              </div>
+              <div class="feature-box">
+                <span class="feature-icon">📄</span>
+                <h4>Standardized Artifacts</h4>
+                <p>Using standardized templates and project documents (artifacts).</p>
+              </div>
+              <div class="feature-box">
+                <span class="feature-icon">✅</span>
+                <h4>Consistency</h4>
+                <p>Making procedures consistent and reducing misunderstandings and confusion.</p>
+              </div>
+            </div>
+          </div>
+        `
+      },
+      {
+        heading: 'Phase 1: Business Requirements',
+        content: `
+          <div class="section-body">
+            <p class="lead-text"><strong>Business Requirements</strong> is the first and most important phase of a data science project. It focuses on clearly understanding the business problem before collecting or analyzing data.</p>
+            <div class="alert alert-info">
+              <div class="alert-icon">🔍</div>
+              <div class="alert-content">
+                <strong>Core Principle</strong>
+                <p>Understand the problem, define the goal, and ask the right questions before working with the data.</p>
+              </div>
+            </div>
+            
+            <div class="feature-grid">
+              <div class="feature-box">
+                <h4>Key Activities (Business Requirements)</h4>
+                <ul class="styled-list">
+                  <li>Understand the business problem</li>
+                  <li>Identify the central objectives of the project</li>
+                  <li>Identify the variables that need to be predicted</li>
+                  <li>Collaborate with stakeholders and ask "Why?"</li>
+                  <li>Formulate the questions that data science needs to answer</li>
+                </ul>
+              </div>
+              <div class="feature-box">
+                <h4>Important Activities (Business Requirements)</h4>
+                <ul class="styled-list">
+                  <li><strong>Identify key variables:</strong> Determine the target variables to be predicted and key inputs.</li>
+                  <li><strong>Identify data sources:</strong> Pinpoint where the required data originates.</li>
+                </ul>
+              </div>
+            </div>
+            
+            <h3>Deliverables (Business Requirements):</h3>
+            <div class="step-list">
+              <div class="step-item">
+                <div class="step-number" style="background: var(--info);">1</div>
+                <div class="step-content">
+                  <h4>Charter Document</h4>
+                  <p>Which is a living document that gets updated throughout the project, as new data or requirements arise.</p>
+                </div>
+              </div>
+              <div class="step-item">
+                <div class="step-number" style="background: var(--success);">2</div>
+                <div class="step-content">
+                  <h4>Data Sources</h4>
+                  <p>A document which specifies the original and destination locations of the raw data.</p>
+                </div>
+              </div>
+              <div class="step-item">
+                <div class="step-number" style="background: var(--warning);">3</div>
+                <div class="step-content">
+                  <h4>Data Dictionaries</h4>
+                  <p>Provide descriptions of the data supplied by the client including information about the schema and the entity-relation diagrams.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        `
+      },
+      {
+        heading: 'Phase 2: Data Acquisition and Understanding',
+        content: `
+          <div class="section-body">
+            <p class="lead-text">Once we have already defined the business and its objectives, we need to understand the data and all the different needs.</p>
+            
+            <h3>Data Ingestion & Key Concepts</h3>
+            <p><strong>Data Ingestion</strong> implies setting up the process of moving data from its source locations to the target locations where you run analytics operations.</p>
+            <div class="feature-grid">
+              <div class="feature-box">
+                <span class="feature-icon">📥</span>
+                <h4>Source Locations</h4>
+                <p>These are the origins of your data, such as databases, APIs, sensors, or files.</p>
+              </div>
+              <div class="feature-box">
+                <span class="feature-icon">📤</span>
+                <h4>Target Locations</h4>
+                <p>These are destinations like data warehouses, data lakes, or analytics platforms where you perform operations and reporting.</p>
+              </div>
+              <div class="feature-box">
+                <span class="feature-icon">⚙️</span>
+                <h4>Data Pipeline</h4>
+                <p>The automated system that extracts, transforms, and loads (ETL) data from source to target.</p>
+              </div>
+            </div>
+
+            <h3>ETL 3 Steps Process:</h3>
+            <div class="step-list">
+              <div class="step-item">
+                <div class="step-number">E</div>
+                <div class="step-content">
+                  <h4>Extracting</h4>
+                  <p>Extracting data from single or multiple data sources. Pulling raw data from multiple sources.</p>
+                </div>
+              </div>
+              <div class="step-item">
+                <div class="step-number">T</div>
+                <div class="step-content">
+                  <h4>Transforming</h4>
+                  <p>Transforming data as per business logic. Is in itself a two steps process—<strong>data cleansing</strong> and <strong>data manipulation</strong>. Cleaning, formatting, and structuring data to make it usable.</p>
+                </div>
+              </div>
+              <div class="step-item">
+                <div class="step-number">L</div>
+                <div class="step-content">
+                  <h4>Loading</h4>
+                  <p>Loading the previously transformed data into the target data source or data warehouse. Transferring the processed data into the target environment for analysis.</p>
+                </div>
+              </div>
+            </div>
+
+            <h3>Deliverables (Data Acquisition and Understanding):</h3>
+            <div class="step-list">
+              <div class="step-item">
+                <div class="step-number" style="background: var(--info);">1</div>
+                <div class="step-content">
+                  <h4>Data Quality Report</h4>
+                  <p>This includes data summaries, the relationship between attribute and target, variable ranking, etc.</p>
+                </div>
+              </div>
+              <div class="step-item">
+                <div class="step-number" style="background: var(--success);">2</div>
+                <div class="step-content">
+                  <h4>Solution Architecture</h4>
+                  <p>Can be in the form of a diagram/description of your data pipeline.</p>
+                </div>
+              </div>
+              <div class="step-item">
+                <div class="step-number" style="background: var(--warning);">3</div>
+                <div class="step-content">
+                  <h4>A Checkpoint Decision</h4>
+                  <p>This is used to determine if the value expected is sufficient to continue its pursuit.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        `
+      }
+    ]
+  },
+  {
+    chapter: 'Chapter 2: Life Cycle',
+    id: 'chapter-2-lifecycle-p3-p4',
+    title: 'Phases 3 & 4: Modeling & Deployment',
+    sections: [
+      {
+        heading: 'Phase 3: Data Modeling',
+        content: `
+          <div class="section-banner banner-indigo">
+            <div class="banner-overlay">
+              <span class="banner-kicker">Lesson 2 • Modeling, Features & Release</span>
+              <h2>Analytical Thinking Meets Mathematical Precision</h2>
+            </div>
+          </div>
+          <div class="section-body">
+            <p class="lead-text">In <strong>Data Modeling</strong>, you transform your understanding of the data into a structured design that defines how information will be organized, processed, and analyzed. This is where analytical thinking meets mathematical precision.</p>
+            
+            <h3>Key Focus Areas (Data Modeling):</h3>
+            <div class="feature-grid">
+              <div class="feature-box">
+                <span class="feature-icon">🎯</span>
+                <h4>Model Design</h4>
+                <p>You define the mathematical or statistical approach that best fits your goals (e.g., regression, classification, clustering).</p>
+              </div>
+              <div class="feature-box">
+                <span class="feature-icon">🔗</span>
+                <h4>Integration of Prior Knowledge</h4>
+                <p>Everything learned from earlier stages—data sources, dictionaries, and requirements—guides how you structure and relate data entities.</p>
+              </div>
+              <div class="feature-box">
+                <span class="feature-icon">🔄</span>
+                <h4>Iteration and Refinement</h4>
+                <p>As new insights emerge, you adjust the model to improve accuracy and relevance.</p>
+              </div>
+            </div>
+
+            <h3>Deliverables (Data Modeling):</h3>
+            <div class="step-list">
+              <div class="step-item">
+                <div class="step-number" style="background: var(--info);">1</div>
+                <div class="step-content">
+                  <h4>Data Model Diagram</h4>
+                  <p>Visual representation of entities, relationships, and data flow.</p>
+                </div>
+              </div>
+              <div class="step-item">
+                <div class="step-number" style="background: var(--success);">2</div>
+                <div class="step-content">
+                  <h4>Model Specification Document</h4>
+                  <p>Defines algorithms, parameters, and expected outputs.</p>
+                </div>
+              </div>
+              <div class="step-item">
+                <div class="step-number" style="background: var(--warning);">3</div>
+                <div class="step-content">
+                  <h4>Validation Report</h4>
+                  <p>Shows how the model performs against test data and metrics.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        `
+      },
+      {
+        heading: 'Feature Engineering & Outlier Handling',
+        content: `
+          <div class="section-body">
+            <p class="lead-text"><strong>Feature Engineering</strong> is one of the most critical tasks in the data preparation stage of a machine learning project. It's the art and science of transforming raw data into meaningful inputs called features that help models learn patterns effectively. It involves creating, modifying, and selecting variables (features) that best represent the underlying problem.</p>
+            
+            <h3>Key Activities (Feature Engineering):</h3>
+            <div class="feature-grid">
+              <div class="feature-box">
+                <span class="feature-icon">🔗</span>
+                <h4>Inclusion and Aggregation</h4>
+                <p>Combining raw variables or summarizing data to form new, informative features.</p>
+              </div>
+              <div class="feature-box">
+                <span class="feature-icon">🔄</span>
+                <h4>Transformation</h4>
+                <p>Applying mathematical or statistical operations (like normalization, scaling, or encoding) to make data suitable for algorithms.</p>
+              </div>
+              <div class="feature-box">
+                <span class="feature-icon">✂️</span>
+                <h4>Feature Selection</h4>
+                <p>Identifying which variables are most useful and discarding those that add noise or redundancy.</p>
+              </div>
+              <div class="feature-box">
+                <span class="feature-icon">🏥</span>
+                <h4>Domain Knowledge Application</h4>
+                <p>Leveraging expertise in the subject area to design features that capture real-world relationships.</p>
+              </div>
+            </div>
+
+            <h3>Data Transformation and Outlier Handling:</h3>
+            <div class="feature-grid">
+              <div class="feature-box">
+                <span class="feature-icon">📉</span>
+                <h4>Log Transform</h4>
+                <p>Reduces skewness and compresses large values. Useful for income or population data.</p>
+              </div>
+              <div class="feature-box">
+                <span class="feature-icon">√</span>
+                <h4>Square-root Transformation</h4>
+                <p>Stabilizes variance and reduces impact of outliers. Applied to count data (e.g., number of clicks).</p>
+              </div>
+              <div class="feature-box">
+                <span class="feature-icon">🏷️</span>
+                <h4>Categorical Encoding</h4>
+                <p>Converts non-numeric data into numeric form. One-hot or label encoding for categorical variables.</p>
+              </div>
+              <div class="feature-box">
+                <span class="feature-icon">⚡</span>
+                <h4>Power Functions</h4>
+                <p>Adjusts data distribution using exponents. Helps normalize data for linear models.</p>
+              </div>
+              <div class="feature-box">
+                <span class="feature-icon">📏</span>
+                <h4>Scaling</h4>
+                <p>Standardizes feature ranges for uniformity. Min-max scaling or standardization (z-score).</p>
+              </div>
+            </div>
+
+            <h3>Dealing With Data Issues:</h3>
+            <ul class="styled-list">
+              <li><strong>Skewed Data:</strong> Adjust distributions using log or power transforms to achieve symmetry.</li>
+              <li><strong>Bias Mitigation:</strong> Ensures data doesn't favor one group or outcome unfairly.</li>
+              <li><strong>Binning:</strong> Groups continuous values into discrete intervals for easier interpretation.</li>
+              <li><strong>Outlier Detection:</strong> Identifies data points that deviate from normal patterns.</li>
+            </ul>
+
+            <div class="alert alert-warning">
+              <div class="alert-icon">⚠️</div>
+              <div class="alert-content">
+                <strong>Outliers</strong>
+                <p>May signal technical glitches or critical incidents and must be treated carefully to avoid distorting model results.</p>
+              </div>
+            </div>
+
+            <h3>Common Outlier Treatment Methods:</h3>
+            <div class="step-list">
+              <div class="step-item">
+                <div class="step-number" style="background: var(--accent-primary);">1</div>
+                <div class="step-content">
+                  <h4>Trimming</h4>
+                  <p>Removes extreme values beyond a defined threshold (e.g., top and bottom 1%). Used when outliers are clearly errors or irrelevant to the analysis.</p>
+                </div>
+              </div>
+              <div class="step-item">
+                <div class="step-number" style="background: var(--success);">2</div>
+                <div class="step-content">
+                  <h4>Winsorizing</h4>
+                  <p>Replaces extreme values with the nearest acceptable boundary (e.g., cap at 95th percentile). Used when you want to keep all data points but reduce the influence of extremes.</p>
+                </div>
+              </div>
+              <div class="step-item">
+                <div class="step-number" style="background: var(--info);">3</div>
+                <div class="step-content">
+                  <h4>Imputation</h4>
+                  <p>Substitutes outlier values with estimated ones (mean, median, or model-based). Used when missing or extreme values need to be retained for continuity.</p>
+                </div>
+              </div>
+              <div class="step-item">
+                <div class="step-number" style="background: var(--warning);">4</div>
+                <div class="step-content">
+                  <h4>Transformation</h4>
+                  <p>Applies mathematical functions (log, square-root, etc.) to reduce the impact of outliers. Used when outliers are legitimate but need normalization.</p>
+                </div>
+              </div>
+              <div class="step-item">
+                <div class="step-number" style="background: var(--accent-secondary);">5</div>
+                <div class="step-content">
+                  <h4>Segmentation</h4>
+                  <p>Separates outliers into a different group for specialized analysis. Used when outliers represent meaningful anomalies (e.g., fraud detection).</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        `
+      },
+      {
+        heading: 'Feature Selection Methods',
+        content: `
+          <div class="section-body">
+            <p class="lead-text"><strong>Feature Selection</strong> identifies the most useful variables for a model using three primary methods:</p>
+            
+            <div class="feature-grid">
+              <div class="feature-box" style="border-top: 4px solid var(--info);">
+                <h4>1. Filter-Based Method</h4>
+                <p>Features are selected based on statistical metrics without involving a predictive model. Quick, simple, and works well for high-dimensional datasets.</p>
+                <h4 style="margin-top: 14px; font-size: 0.95rem; color: var(--info);">Filter-Based Method Examples:</h4>
+                <ul class="styled-list">
+                  <li><strong>Correlation:</strong> Removes features highly correlated with each other.</li>
+                  <li><strong>Chi-square Test:</strong> Measures dependence between categorical variables.</li>
+                  <li><strong>ANOVA (Analysis of Variance):</strong> Tests whether different groups have significantly different means.</li>
+                </ul>
+              </div>
+
+              <div class="feature-box" style="border-top: 4px solid var(--warning);">
+                <h4>2. Wrapper-Based Method</h4>
+                <p>More accurate but computationally expensive. Treats feature selection as a search problem, evaluating subsets of features by training models and checking performance.</p>
+                <h4 style="margin-top: 14px; font-size: 0.95rem; color: var(--warning);">Wrapper-Based Method Examples:</h4>
+                <ul class="styled-list">
+                  <li><strong>Recursive Feature Elimination (RFE):</strong> Iteratively removes the least important features.</li>
+                  <li><strong>Forward Selection:</strong> Starts with no features, adds them one by one based on performance.</li>
+                  <li><strong>Backward Selection:</strong> Starts with all features, removes them step by step.</li>
+                </ul>
+              </div>
+
+              <div class="feature-box" style="border-top: 4px solid var(--success);">
+                <h4>3. Embedded Method</h4>
+                <p>Efficient and integrated into model training. Uses algorithms that have built-in feature selection during training.</p>
+                <h4 style="margin-top: 14px; font-size: 0.95rem; color: var(--success);">Embedded Method Examples:</h4>
+                <ul class="styled-list">
+                  <li><strong>LASSO (L1 Regularization):</strong> Shrinks coefficients, eliminating less important features.</li>
+                  <li><strong>Ridge (L2 Regularization):</strong> Reduces coefficient size but keeps all features, controlling overfitting.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        `
+      },
+      {
+        heading: 'Phase 4: Deployment',
+        content: `
+          <div class="section-body">
+            <p class="lead-text"><strong>Deployment</strong> is the final step in the data science or machine learning project lifecycle. It's where your model moves from the development environment into a production or production-like environment so that real users can interact with it and validate its performance.</p>
+            
+            <h3>Key Activities (Deployment):</h3>
+            <div class="feature-grid">
+              <div class="feature-box">
+                <span class="feature-icon">⚙️</span>
+                <h4>Model Operationalization</h4>
+                <ul class="styled-list">
+                  <li>Convert the trained model into a deployable format (e.g., containerized service or API).</li>
+                  <li>Ensure scalability, security, and reliability.</li>
+                </ul>
+              </div>
+              <div class="feature-box">
+                <span class="feature-icon">🧪</span>
+                <h4>User Acceptance Testing (UAT)</h4>
+                <ul class="styled-list">
+                  <li>End-users validate the model's performance.</li>
+                  <li>Any issues or inaccuracies are fixed before full release.</li>
+                </ul>
+              </div>
+              <div class="feature-box">
+                <span class="feature-icon">🔌</span>
+                <h4>API Exposure</h4>
+                <p>The model is exposed through an open API interface, allowing integration with:</p>
+                <ul class="styled-list" style="margin-top: 8px;">
+                  <li>Websites</li>
+                  <li>Dashboards</li>
+                  <li>Spreadsheets</li>
+                  <li>Backend applications</li>
+                </ul>
+              </div>
+            </div>
+            
+            <h3>Deliverables (Deployment):</h3>
+            <div class="step-list">
+              <div class="step-item">
+                <div class="step-number" style="background: var(--info);">1</div>
+                <div class="step-content">
+                  <h4>Status Dashboard</h4>
+                  <p>Displays system health, uptime, and key performance metrics.</p>
+                </div>
+              </div>
+              <div class="step-item">
+                <div class="step-number" style="background: var(--success);">2</div>
+                <div class="step-content">
+                  <h4>Final Modeling Report</h4>
+                  <p>Summarizes model performance, deployment details, and validation results.</p>
+                </div>
+              </div>
+              <div class="step-item">
+                <div class="step-number" style="background: var(--accent-secondary);">3</div>
+                <div class="step-content">
+                  <h4>Solution Architecture Document</h4>
+                  <p>Describes the technical setup, data flow, and integration points.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        `
+      }
+    ]
+  },
+  {
+    chapter: 'Chapter 3: R Programming',
+    id: 'chapter-3-r-basics',
+    title: 'R Studio & Data Types',
+    sections: [
+      {
+        heading: 'Compiler vs. Interpreter & Intro to R and RStudio',
+        content: `
+          <div class="section-banner banner-violet">
+            <div class="banner-overlay">
+              <span class="banner-kicker">Lesson 3 • R Programming Fundamentals</span>
+              <h2>Programming & Statistical Computing in R</h2>
+            </div>
+          </div>
+          <div class="section-body">
+            <p class="lead-text">Before diving into R syntax, it helps to distinguish how programming languages translate code into machine execution, and how <strong>R</strong> and <strong>RStudio</strong> work together.</p>
+
+            <h3>Compiler vs. Interpreter</h3>
+            <div class="feature-grid">
+              <div class="feature-box" style="border-top: 4px solid var(--info);">
+                <span class="feature-icon">📘</span>
+                <h4>Compiler</h4>
+                <p><strong>Translate the whole book → then read it.</strong> Translates the entire program into machine code before execution.</p>
+              </div>
+              <div class="feature-box" style="border-top: 4px solid var(--accent-secondary);">
+                <span class="feature-icon">🗣️</span>
+                <h4>Interpreter</h4>
+                <p><strong>Translate one sentence → understand it → execute it → move to the next.</strong> R is an interpreted language that executes instructions line by line.</p>
+              </div>
+            </div>
+
+            <h3>R vs. RStudio</h3>
+            <div class="feature-grid">
+              <div class="feature-box">
+                <span class="feature-icon">📊</span>
+                <h4>R (The Language)</h4>
+                <ul class="styled-list">
+                  <li>A programming language used for statistical computing and graphics.</li>
+                  <li>It can be used independently without RStudio.</li>
+                </ul>
+              </div>
+              <div class="feature-box">
+                <span class="feature-icon">🖥️</span>
+                <h4>RStudio (The IDE)</h4>
+                <ul class="styled-list">
+                  <li>An integrated development environment (IDE) designed to enhance the R programming experience.</li>
+                  <li>It provides a user-friendly interface and tools for writing and executing R code.</li>
+                </ul>
+              </div>
+            </div>
+            
+            <h3>Interface Components of RStudio</h3>
+            <div class="feature-grid">
+              <div class="feature-box">
+                <span class="feature-icon">💻</span>
+                <h4>R Console</h4>
+                <p>This area shows the output of code you run. Also, you can directly write codes in console.</p>
+              </div>
+              <div class="feature-box">
+                <span class="feature-icon">📝</span>
+                <h4>R Script</h4>
+                <p>As the name suggests, here you get space to write codes (and save/edit them for reuse).</p>
+              </div>
+              <div class="feature-box">
+                <span class="feature-icon">🌍</span>
+                <h4>R Environment</h4>
+                <p>This space displays the set of external elements added. This includes data set, variables, vectors, functions, etc.</p>
+              </div>
+              <div class="feature-box">
+                <span class="feature-icon">📈</span>
+                <h4>Graphical Output</h4>
+                <p>This space displays the graphs created during exploratory data analysis.</p>
+              </div>
+            </div>
+          </div>
+        `
+      },
+      {
+        heading: 'Core Capabilities of R: Statistical, Computational & Visual',
+        content: `
+          <div class="section-body">
+            <p class="lead-text">R is widely used across data science for three major categories of tasks: <strong>Statistical Tasks</strong>, <strong>Computational Tasks</strong>, and <strong>Visual Information</strong>.</p>
+
+            <div class="feature-grid">
+              <div class="feature-box" style="border-top: 4px solid var(--accent-primary);">
+                <span class="feature-icon">📐</span>
+                <h4>Statistical Tasks</h4>
+                <ul class="styled-list">
+                  <li>Mean, median, and mode</li>
+                  <li>Standard deviation and variance</li>
+                  <li>Correlation</li>
+                  <li>Regression</li>
+                  <li>Hypothesis testing</li>
+                  <li>Probability distributions</li>
+                  <li>ANOVA</li>
+                  <li>Classification</li>
+                  <li>Clustering</li>
+                  <li>Data visualization</li>
+                </ul>
+              </div>
+
+              <div class="feature-box" style="border-top: 4px solid var(--success);">
+                <span class="feature-icon">⚙️</span>
+                <h4>Computational Tasks</h4>
+                <ul class="styled-list">
+                  <li>Data manipulation</li>
+                  <li>File processing</li>
+                  <li>Automation</li>
+                  <li>Programming</li>
+                  <li>Web-related tasks</li>
+                  <li>Machine learning</li>
+                  <li>Database connections</li>
+                  <li>Statistical modeling</li>
+                  <li>Data visualization</li>
+                </ul>
+              </div>
+
+              <div class="feature-box" style="border-top: 4px solid var(--warning);">
+                <span class="feature-icon">🎨</span>
+                <h4>Visual Information</h4>
+                <ul class="styled-list">
+                  <li>Bar charts</li>
+                  <li>Line graphs</li>
+                  <li>Pie charts</li>
+                  <li>Scatter plots</li>
+                  <li>Box plots</li>
+                  <li>Maps (Mapsa)</li>
+                  <li>Heatmaps</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        `
+      },
+      {
+        heading: 'Objects, Functions & Data Structures in R',
+        content: `
+          <div class="section-body">
+            <p class="lead-text">Everything in R is stored as an object with a specific class and structure.</p>
+            
+            <h3>5 Basic Classes of Objects</h3>
+            <div class="tags-container">
+              <span class="tag"><strong>Character</strong> (e.g., <code>"a"</code>, <code>"swc"</code>)</span>
+              <span class="tag"><strong>Numeric</strong> (e.g., <code>2</code>, <code>15.5</code>)</span>
+              <span class="tag"><strong>Integer</strong> (e.g., <code>2L</code>)</span>
+              <span class="tag"><strong>Complex</strong> (e.g., <code>1 + 4i</code>)</span>
+              <span class="tag"><strong>Logical</strong> (<code>TRUE</code> / <code>FALSE</code>)</span>
+            </div>
+
+            <h3>Object Inspection Functions</h3>
+            <div class="feature-grid">
+              <div class="feature-box">
+                <h4><code>class()</code></h4>
+                <p>What kind of object is it (high-level)?</p>
+              </div>
+              <div class="feature-box">
+                <h4><code>typeof()</code></h4>
+                <p>What is the object's data type (low-level)?</p>
+              </div>
+              <div class="feature-box">
+                <h4><code>length()</code></h4>
+                <p>How long is it? What about two-dimensional objects?</p>
+              </div>
+              <div class="feature-box">
+                <h4><code>attributes()</code></h4>
+                <p>Does it have any metadata?</p>
+              </div>
+            </div>
+
+            <h3>Core Data Types & Structures in R</h3>
+            <p>The four main data structures in R are <strong>Vector</strong>, <strong>Matrices</strong>, <strong>Data Frames</strong>, and <strong>List</strong>:</p>
+            <div class="step-list">
+              <div class="step-item">
+                <div class="step-number" style="background: var(--info);">V</div>
+                <div class="step-content">
+                  <h4>Vector & Atomic Vector</h4>
+                  <p><strong>Vector:</strong> A vector is simply a collection of values stored together (created with <code>c()</code>).<br>
+                  <strong>Atomic Vector:</strong> We mean that the vector only holds data of a <em>single data type</em>.<br>
+                  <strong>Coercion:</strong> This effect causes the objects of different types to 'convert' into one class when mixed inside a single atomic vector.</p>
+                </div>
+              </div>
+              <div class="step-item">
+                <div class="step-number" style="background: var(--warning);">M</div>
+                <div class="step-content">
+                  <h4>Matrix (Matrices)</h4>
+                  <p>Represented by a set of rows and columns. It is a <strong>2-dimensional data structure</strong>. It consists of elements of the <strong>same class</strong>.</p>
+                </div>
+              </div>
+              <div class="step-item">
+                <div class="step-number" style="background: var(--accent-primary);">DF</div>
+                <div class="step-content">
+                  <h4>Data Frames</h4>
+                  <p>A 2-dimensional tabular data structure (rows and columns) where different columns can hold different data types (e.g., numeric, character, logical)—ideal for real-world datasets.</p>
+                </div>
+              </div>
+              <div class="step-item">
+                <div class="step-number" style="background: var(--success);">L</div>
+                <div class="step-content">
+                  <h4>List</h4>
+                  <p>A special type of vector which contains elements of <strong>different data types</strong>.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        `
+      }
+    ]
+  },
+  {
+    chapter: 'Chapter 3: R Programming',
+    id: 'chapter-3-dplyr',
+    title: 'Data Manipulation & dplyr',
+    sections: [
+      {
+        heading: 'Ways to Change Data & The dplyr Package',
+        content: `
+          <div class="section-banner banner-blue">
+            <div class="banner-overlay">
+              <span class="banner-kicker">Lesson 3 • Data Wrangling in R</span>
+              <h2>Split-Apply-Combine & dplyr</h2>
+            </div>
+          </div>
+          <div class="section-body">
+            <p class="lead-text">In R, transforming and preparing datasets follows three foundational operations—<strong>Split, Apply, and Combine</strong>—and is streamlined by the <strong><code>dplyr</code></strong> package.</p>
+
+            <h3>Ways to Change Data</h3>
+            <div class="feature-grid">
+              <div class="feature-box" style="border-top: 4px solid var(--info);">
+                <span class="feature-icon">✂️</span>
+                <h4>Split</h4>
+                <p><strong>Splitting and selecting.</strong> Breaking data into subsets or choosing specific parts.</p>
+              </div>
+              <div class="feature-box" style="border-top: 4px solid var(--warning);">
+                <span class="feature-icon">🔄</span>
+                <h4>Apply</h4>
+                <p><strong>Transforming and re-calculating.</strong> Computing new values or summary metrics on subsets.</p>
+              </div>
+              <div class="feature-box" style="border-top: 4px solid var(--success);">
+                <span class="feature-icon">🔗</span>
+                <h4>Combine</h4>
+                <p><strong>Aggregating and merging.</strong> Bringing processed results back together into a unified table.</p>
+              </div>
+            </div>
+
+            <div class="alert alert-info">
+              <div class="alert-icon">📦</div>
+              <div class="alert-content">
+                <strong>What is <code>dplyr</code>?</strong>
+                <p><strong><code>dplyr</code></strong> is an R package designed mainly for <strong>data manipulation</strong>. It provides intuitive verb functions for filtering, selecting, mutating, grouping, and summarizing tabular data.</p>
+              </div>
+            </div>
+
+            <h3>Core <code>dplyr</code> Verbs & The Pipe Operator</h3>
+            <div class="step-list">
+              <div class="step-item">
+                <div class="step-number" style="background: var(--info);">1</div>
+                <div class="step-content">
+                  <h4><code>select()</code></h4>
+                  <p><strong>Which columns do I want?</strong> Chooses specific variables/columns by name or condition.</p>
+                </div>
+              </div>
+              <div class="step-item">
+                <div class="step-number" style="background: var(--success);">2</div>
+                <div class="step-content">
+                  <h4><code>filter()</code></h4>
+                  <p><strong>Which rows/records do I want?</strong> Subsets rows that satisfy logical conditions.</p>
+                </div>
+              </div>
+              <div class="step-item">
+                <div class="step-number" style="background: var(--warning);">3</div>
+                <div class="step-content">
+                  <h4><code>mutate()</code></h4>
+                  <p><strong>Create or modify a variable/column.</strong> Adds new calculated columns or updates existing ones.</p>
+                </div>
+              </div>
+              <div class="step-item">
+                <div class="step-number" style="background: var(--accent-primary);">4</div>
+                <div class="step-content">
+                  <h4><code>summarise()</code></h4>
+                  <p><strong>Produce a summary of the data.</strong> Collapses rows into summary statistics (such as mean, count, or min/max).</p>
+                </div>
+              </div>
+              <div class="step-item">
+                <div class="step-number" style="background: var(--accent-secondary);">5</div>
+                <div class="step-content">
+                  <h4><code>group_by()</code></h4>
+                  <p><strong>Divide the data into groups based on a variable.</strong> Pairs with <code>summarise()</code> or <code>mutate()</code> to perform operations per group.</p>
+                </div>
+              </div>
+              <div class="step-item">
+                <div class="step-number" style="background: var(--info);">%>%</div>
+                <div class="step-content">
+                  <h4>Pipe Operator (<code>%>%</code>)</h4>
+                  <p><strong>Take this result and pass it to the next operation.</strong> Chains multiple <code>dplyr</code> steps together into a readable left-to-right pipeline.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        `
+      }
+    ]
+  },
+  {
+    chapter: 'Chapter 3: R Programming',
+    id: 'chapter-3-r-regression',
+    title: 'Descriptive Stats, Regression & ANOVA',
+    sections: [
+      {
+        heading: 'Descriptive Statistics Tools',
+        content: `
+          <div class="section-banner banner-teal">
+            <div class="banner-overlay">
+              <span class="banner-kicker">Lesson 3 • Statistical Analysis in R</span>
+              <h2>Descriptive Statistics, Linear Regression & ANOVA</h2>
+            </div>
+          </div>
+          <div class="section-body">
+            <p class="lead-text"><strong>Descriptive Statistics Tools</strong> summarize and describe the main features of a dataset through two primary approaches: <strong>Graphical</strong> and <strong>Analytical</strong>.</p>
+
+            <div class="feature-grid">
+              <div class="feature-box" style="border-top: 4px solid var(--info);">
+                <span class="feature-icon">📊</span>
+                <h4>1. Graphical Tools</h4>
+                <p>Visual representations used to inspect distributions and relationships:</p>
+                <ul class="styled-list" style="margin-top: 10px;">
+                  <li><strong>Graphics</strong></li>
+                  <li><strong>Bar Diagram</strong></li>
+                  <li><strong>Histogram</strong></li>
+                  <li><strong>Scattered Diagrams</strong> (Scatter Diagrams)</li>
+                </ul>
+              </div>
+
+              <div class="feature-box" style="border-top: 4px solid var(--accent-secondary);">
+                <span class="feature-icon">🧮</span>
+                <h4>2. Analytical Tools</h4>
+                <p>Mathematical measures divided into two sub-categories:</p>
+                <h4 style="margin-top: 12px; font-size: 0.95rem; color: var(--accent-primary);">Measures of Central Tendency:</h4>
+                <ul class="styled-list" style="margin-top: 6px;">
+                  <li><strong>Mean</strong> (Average)</li>
+                  <li><strong>Median</strong> (Middle value)</li>
+                  <li><strong>Mode</strong> (Most frequent value)</li>
+                </ul>
+                <h4 style="margin-top: 12px; font-size: 0.95rem; color: var(--warning);">Measures of Variations:</h4>
+                <ul class="styled-list" style="margin-top: 6px;">
+                  <li><strong>Variants (Variance)</strong></li>
+                  <li><strong>Standard Deviation</strong></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        `
+      },
+      {
+        heading: 'Simple Linear Regression & Equation Variables',
+        content: `
+          <div class="section-body">
+            <p class="lead-text"><strong>Simple Linear Regression</strong> is a statistical method used to examine the relationship between one <strong>dependent (response) variable</strong> and one <strong>explanatory (predictor) variable</strong>.</p>
+            
+            <div class="alert alert-info">
+              <div class="alert-icon">📐</div>
+              <div class="alert-content">
+                <strong>The Tilde Operator (<code>~</code>) & <code>lm()</code> Command</strong>
+                <p>In R, the tilde symbol <strong><code>~</code></strong> means <strong>"is explained by"</strong> or <strong>"as a function of"</strong>.</p>
+                <p style="margin-top: 8px;"><code>model &lt;- lm(Y ~ X, data = dataset)</code></p>
+              </div>
+            </div>
+
+            <h3>Basic Regression Equation Variables</h3>
+            <p>In the simple linear regression equation <strong><code>Y = b₀ + b₁X</code></strong>, each symbol has a specific role:</p>
+            <div class="step-list">
+              <div class="step-item">
+                <div class="step-number" style="background: var(--accent-primary);">Y</div>
+                <div class="step-content">
+                  <h4><code>Y</code> — Dependent / Response Variable</h4>
+                  <p>The outcome variable we are trying to predict or explain.</p>
+                </div>
+              </div>
+              <div class="step-item">
+                <div class="step-number" style="background: var(--info);">X</div>
+                <div class="step-content">
+                  <h4><code>X</code> — Explanatory / Predictor Variable</h4>
+                  <p>The input feature used to predict or explain changes in <code>Y</code>.</p>
+                </div>
+              </div>
+              <div class="step-item">
+                <div class="step-number" style="background: var(--success);">b₀</div>
+                <div class="step-content">
+                  <h4><code>b₀</code> — Intercept</h4>
+                  <p>The predicted value of <code>Y</code> when the predictor <code>X</code> is equal to zero.</p>
+                </div>
+              </div>
+              <div class="step-item">
+                <div class="step-number" style="background: var(--warning);">b₁</div>
+                <div class="step-content">
+                  <h4><code>b₁</code> — Slope / Coefficient</h4>
+                  <p>How much the response variable <code>Y</code> changes for a one-unit increase in <code>X</code>.</p>
+                </div>
+              </div>
+            </div>
+
+            <h3>Numeric vs. Categorical Predictors</h3>
+            <ul class="styled-list">
+              <li><strong>Numeric Predictor (e.g., Age):</strong> Produces an estimated intercept (<code>b₀</code>) and slope (<code>b₁</code>).</li>
+              <li><strong>Categorical Predictor (e.g., Smoker Yes/No):</strong> R uses <em>factor/dummy coding</em> to compare categories against a reference category.</li>
+            </ul>
+          </div>
+        `
+      },
+      {
+        heading: 'ANOVA Table & Model Summaries',
+        content: `
+          <div class="section-body">
+            <p class="lead-text">Once a regression model is fitted, we evaluate statistical significance using <code>summary(model)</code> and <code>anova(model)</code>.</p>
+            
+            <div class="alert alert-warning">
+              <div class="alert-icon">📈</div>
+              <div class="alert-content">
+                <strong>ANOVA Table Definition</strong>
+                <p>An <strong>ANOVA Table</strong> (Analysis of Variance) is a table used in statistics to determine whether there is a <strong>statistically significant difference among group means</strong>.</p>
+                <p style="margin-top: 8px;">It partitions total variation into variation <em>between groups</em> and variation <em>within groups</em> using the F-test and p-value (Command: <code>anova(model)</code>).</p>
+              </div>
+            </div>
+
+            <h3>Key Outputs of <code>summary(model)</code></h3>
+            <div class="feature-grid">
+              <div class="feature-box">
+                <h4>Coefficients & p-values</h4>
+                <p>Displays estimates for the intercept (<code>b₀</code>) and slope (<code>b₁</code>), standard errors, t-statistics, and p-values. Asterisks (<code>*</code>) mark statistically significant predictors.</p>
+              </div>
+              <div class="feature-box">
+                <h4>Residual Standard Error</h4>
+                <p>Measures the variation of observations around the regression line (Root-MSE). Lower values indicate a tighter fit.</p>
+              </div>
+              <div class="feature-box">
+                <h4>Extracting Model Elements</h4>
+                <p>Inspect stored model metadata with <code>attributes(model)</code> and extract components using <code>model$coef</code> or <code>coef(model)</code>.</p>
+              </div>
+            </div>
+
+            <h3>Standard R Modeling Workflow</h3>
+            <div class="tags-container" style="background: var(--bg-secondary); padding: 16px; border-radius: var(--radius-md);">
+              <span class="tag">1. <code>read_excel()</code> (Import)</span>
+              <span class="tag">2. <code>View()</code> (Explore)</span>
+              <span class="tag">3. <code>lm(Y ~ X)</code> (Model)</span>
+              <span class="tag">4. <code>summary()</code> (Interpret)</span>
+              <span class="tag">5. <code>anova()</code> (Test Group Means)</span>
+            </div>
+          </div>
+        `
+      }
+    ]
+  },
+  {
+    chapter: 'Reference',
+    id: 'cheat-sheet',
+    title: 'Cheat Sheet / Glossary',
+    sections: [
+      {
+        heading: 'Master Glossary of All Exam Terms',
+        content: `
+          <div class="section-body">
+            <p class="lead-text">Complete reference table of all definitions, deliverables, R functions, and statistical concepts across Lessons 1, 2, and 3. Use the search box or chapter pills below to filter instantaneously.</p>
+            
+            <div class="glossary-controls">
+              <input type="search" id="glossary-search" class="glossary-search-input" placeholder="Search any term, function, or definition (e.g., Winsorizing, dplyr, b1, Charter)..." aria-label="Search glossary terms">
+              <div class="glossary-filter-pills" role="group" aria-label="Filter glossary by chapter">
+                <button type="button" class="glossary-filter-btn active" data-chapter="all">All Chapters</button>
+                <button type="button" class="glossary-filter-btn" data-chapter="Chapter 1">Chapter 1</button>
+                <button type="button" class="glossary-filter-btn" data-chapter="Chapter 2">Chapter 2</button>
+                <button type="button" class="glossary-filter-btn" data-chapter="Chapter 3">Chapter 3</button>
+              </div>
+            </div>
+
+            <div class="table-responsive">
+              <table id="glossary-table" class="data-table">
+                <thead>
+                  <tr>
+                    <th style="width: 24%;">Term</th>
+                    <th style="width: 16%;">Chapter</th>
+                    <th style="width: 60%;">Definition & Exam Context</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Chapter 1 Terms -->
+                  <tr data-chapter="Chapter 1">
+                    <td data-label="Term"><strong>Big Data</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch1">Chapter 1</span></td>
+                    <td data-label="Definition">Refers to extremely large and complex amounts of data that are difficult to collect, store, manage, and analyze using traditional database systems such as RDBMS (Relational Database Management Systems).</td>
+                  </tr>
+                  <tr data-chapter="Chapter 1">
+                    <td data-label="Term"><strong>Forms of Big Data</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch1">Chapter 1</span></td>
+                    <td data-label="Definition">Structured Data and Unstructured Data.</td>
+                  </tr>
+                  <tr data-chapter="Chapter 1">
+                    <td data-label="Term"><strong>Structured Data</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch1">Chapter 1</span></td>
+                    <td data-label="Definition">More easily analyzed and organized into the database. Typically, data that can be stored in a table, and every instance in the table has the same structure (i.e., set of attributes).</td>
+                  </tr>
+                  <tr data-chapter="Chapter 1">
+                    <td data-label="Term"><strong>Benefits of Structured Data</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch1">Chapter 1</span></td>
+                    <td data-label="Definition">Ease of Use, Scalability, and Analytics.</td>
+                  </tr>
+                  <tr data-chapter="Chapter 1">
+                    <td data-label="Term"><strong>Unstructured Data</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch1">Chapter 1</span></td>
+                    <td data-label="Definition">Data that does not follow a fixed or organized format, such as rows and columns in a traditional database (e.g., text documents, video, audio, email, stock ticker data).</td>
+                  </tr>
+                  <tr data-chapter="Chapter 1">
+                    <td data-label="Term"><strong>Four V's of Big Data</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch1">Chapter 1</span></td>
+                    <td data-label="Definition"><strong>Volume</strong> (how much data is there?), <strong>Velocity</strong> (at what speed is new data generated?), <strong>Variety</strong> (how diverse are different types of data?), and <strong>Veracity</strong> (how accurate is the data?).</td>
+                  </tr>
+                  <tr data-chapter="Chapter 1">
+                    <td data-label="Term"><strong>Data Mining</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch1">Chapter 1</span></td>
+                    <td data-label="Definition">The process of examining large amounts of raw data to discover useful information, patterns, relationships, or trends.</td>
+                  </tr>
+                  <tr data-chapter="Chapter 1">
+                    <td data-label="Term"><strong>Data Science</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch1">Chapter 1</span></td>
+                    <td data-label="Definition">The study of data to discover useful information, patterns, and insights that can help us understand a situation and make better decisions.</td>
+                  </tr>
+                  <tr data-chapter="Chapter 1">
+                    <td data-label="Term"><strong>Statistics</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch1">Chapter 1</span></td>
+                    <td data-label="Definition">Helps us analyze numbers and determine patterns or trends.</td>
+                  </tr>
+                  <tr data-chapter="Chapter 1">
+                    <td data-label="Term"><strong>Mathematics</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch1">Chapter 1</span></td>
+                    <td data-label="Definition">Provides formulas and methods for analyzing data.</td>
+                  </tr>
+                  <tr data-chapter="Chapter 1">
+                    <td data-label="Term"><strong>Data Analysis</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch1">Chapter 1</span></td>
+                    <td data-label="Definition">Involves examining data to find meaningful information.</td>
+                  </tr>
+                  <tr data-chapter="Chapter 1">
+                    <td data-label="Term"><strong>Machine Learning</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch1">Chapter 1</span></td>
+                    <td data-label="Definition">Allows computers to learn patterns from data and make predictions.</td>
+                  </tr>
+                  <tr data-chapter="Chapter 1">
+                    <td data-label="Term"><strong>Domain Knowledge</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch1">Chapter 1</span></td>
+                    <td data-label="Definition">Deep understanding of a specific industry or field—such as healthcare, finance, or retail—including its rules, processes, and unique language.</td>
+                  </tr>
+                  <tr data-chapter="Chapter 1">
+                    <td data-label="Term"><strong>Customer Segmentation</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch1">Chapter 1</span></td>
+                    <td data-label="Definition">Dividing customers into groups based on similar characteristics, behaviors, or preferences.</td>
+                  </tr>
+                  <tr data-chapter="Chapter 1">
+                    <td data-label="Term"><strong>Clustering</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch1">Chapter 1</span></td>
+                    <td data-label="Definition">In Data Science and Machine Learning, grouping entities based on similar characteristics or behaviors is commonly called clustering.</td>
+                  </tr>
+                  <tr data-chapter="Chapter 1">
+                    <td data-label="Term"><strong>Association-Rule Mining</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch1">Chapter 1</span></td>
+                    <td data-label="Definition">Data science technique used to discover relationships between items that frequently occur together.</td>
+                  </tr>
+                  <tr data-chapter="Chapter 1">
+                    <td data-label="Term"><strong>Actionable Insight</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch1">Chapter 1</span></td>
+                    <td data-label="Definition">A finding from data that gives us enough useful information to decide what action should be taken.</td>
+                  </tr>
+                  <tr data-chapter="Chapter 1">
+                    <td data-label="Term"><strong>Data</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch1">Chapter 1</span></td>
+                    <td data-label="Definition">A collection of facts, observations, or information about something in the real world.</td>
+                  </tr>
+                  <tr data-chapter="Chapter 1">
+                    <td data-label="Term"><strong>Entity</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch1">Chapter 1</span></td>
+                    <td data-label="Definition">The real-world person, object, or event that we are interested in studying.</td>
+                  </tr>
+                  <tr data-chapter="Chapter 1">
+                    <td data-label="Term"><strong>Attribute</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch1">Chapter 1</span></td>
+                    <td data-label="Definition">A characteristic or property that describes an entity.</td>
+                  </tr>
+                  <tr data-chapter="Chapter 1">
+                    <td data-label="Term"><strong>Data Set</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch1">Chapter 1</span></td>
+                    <td data-label="Definition">A collection of related data organized together.</td>
+                  </tr>
+                  <tr data-chapter="Chapter 1">
+                    <td data-label="Term"><strong>Analytics Record</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch1">Chapter 1</span></td>
+                    <td data-label="Definition">A well-organized collection of data prepared for analysis.</td>
+                  </tr>
+                  <tr data-chapter="Chapter 1">
+                    <td data-label="Term"><strong>Data Sources (Architecture)</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch1">Chapter 1</span></td>
+                    <td data-label="Definition">Where all the data in an organization are generated.</td>
+                  </tr>
+                  <tr data-chapter="Chapter 1">
+                    <td data-label="Term"><strong>Data Storage (Architecture)</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch1">Chapter 1</span></td>
+                    <td data-label="Definition">Where the data are stored and processed.</td>
+                  </tr>
+                  <tr data-chapter="Chapter 1">
+                    <td data-label="Term"><strong>Applications (Architecture)</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch1">Chapter 1</span></td>
+                    <td data-label="Definition">Where the data are shared with consumers of these data.</td>
+                  </tr>
+
+                  <!-- Chapter 2 Terms -->
+                  <tr data-chapter="Chapter 2">
+                    <td data-label="Term"><strong>Data Science Life Cycle</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch2">Chapter 2</span></td>
+                    <td data-label="Definition">A structured process and roadmap that guides a data science project from start to finish; an iterative process of research and discovery for developing predictive models.</td>
+                  </tr>
+                  <tr data-chapter="Chapter 2">
+                    <td data-label="Term"><strong>Business Requirements</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch2">Chapter 2</span></td>
+                    <td data-label="Definition">The first and most important phase of a data science project. Focuses on clearly understanding the business problem, defining the goal, and asking the right questions before working with data.</td>
+                  </tr>
+                  <tr data-chapter="Chapter 2">
+                    <td data-label="Term"><strong>Charter Document</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch2">Chapter 2</span></td>
+                    <td data-label="Definition">Phase 1 Deliverable: A living document that gets updated throughout the project, as new data or requirements arise.</td>
+                  </tr>
+                  <tr data-chapter="Chapter 2">
+                    <td data-label="Term"><strong>Data Sources (Deliverable)</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch2">Chapter 2</span></td>
+                    <td data-label="Definition">Phase 1 Deliverable: A document which specifies the original and destination locations of the raw data.</td>
+                  </tr>
+                  <tr data-chapter="Chapter 2">
+                    <td data-label="Term"><strong>Data Dictionaries</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch2">Chapter 2</span></td>
+                    <td data-label="Definition">Phase 1 Deliverable: Provide descriptions of the data supplied by the client including information about the schema and the entity-relation diagrams.</td>
+                  </tr>
+                  <tr data-chapter="Chapter 2">
+                    <td data-label="Term"><strong>Data Acquisition & Understanding</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch2">Chapter 2</span></td>
+                    <td data-label="Definition">Phase 2: Once business objectives are defined, understanding the data and all its different needs via ETL and Data Ingestion.</td>
+                  </tr>
+                  <tr data-chapter="Chapter 2">
+                    <td data-label="Term"><strong>ETL 3 Steps Process</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch2">Chapter 2</span></td>
+                    <td data-label="Definition"><strong>Extracting</strong> (pulling raw data from single/multiple sources), <strong>Transforming</strong> (two-step process of data cleansing and data manipulation per business logic), and <strong>Loading</strong> (loading transformed data into the target data source/warehouse).</td>
+                  </tr>
+                  <tr data-chapter="Chapter 2">
+                    <td data-label="Term"><strong>Data Ingestion</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch2">Chapter 2</span></td>
+                    <td data-label="Definition">Setting up the process of moving data from its source locations to the target locations where you run analytics operations.</td>
+                  </tr>
+                  <tr data-chapter="Chapter 2">
+                    <td data-label="Term"><strong>Source Locations</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch2">Chapter 2</span></td>
+                    <td data-label="Definition">The origins of your data, such as databases, APIs, sensors, or files.</td>
+                  </tr>
+                  <tr data-chapter="Chapter 2">
+                    <td data-label="Term"><strong>Target Locations</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch2">Chapter 2</span></td>
+                    <td data-label="Definition">Destinations like data warehouses, data lakes, or analytics platforms where you perform operations and reporting.</td>
+                  </tr>
+                  <tr data-chapter="Chapter 2">
+                    <td data-label="Term"><strong>Data Pipeline</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch2">Chapter 2</span></td>
+                    <td data-label="Definition">The automated system that extracts, transforms, and loads (ETL) data from source to target.</td>
+                  </tr>
+                  <tr data-chapter="Chapter 2">
+                    <td data-label="Term"><strong>Data Quality Report</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch2">Chapter 2</span></td>
+                    <td data-label="Definition">Phase 2 Deliverable: Includes data summaries, the relationship between attribute and target, variable ranking, etc.</td>
+                  </tr>
+                  <tr data-chapter="Chapter 2">
+                    <td data-label="Term"><strong>Solution Architecture (Phase 2)</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch2">Chapter 2</span></td>
+                    <td data-label="Definition">Phase 2 Deliverable: Can be in the form of a diagram/description of your data pipeline.</td>
+                  </tr>
+                  <tr data-chapter="Chapter 2">
+                    <td data-label="Term"><strong>A Checkpoint Decision</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch2">Chapter 2</span></td>
+                    <td data-label="Definition">Phase 2 Deliverable: Used to determine if the value expected is sufficient to continue its pursuit.</td>
+                  </tr>
+                  <tr data-chapter="Chapter 2">
+                    <td data-label="Term"><strong>Data Modeling</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch2">Chapter 2</span></td>
+                    <td data-label="Definition">Phase 3: Transforming your understanding of the data into a structured design that defines how information will be organized, processed, and analyzed.</td>
+                  </tr>
+                  <tr data-chapter="Chapter 2">
+                    <td data-label="Term"><strong>Model Design</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch2">Chapter 2</span></td>
+                    <td data-label="Definition">Defining the mathematical or statistical approach that best fits your goals (e.g., regression, classification, clustering).</td>
+                  </tr>
+                  <tr data-chapter="Chapter 2">
+                    <td data-label="Term"><strong>Integration of Prior Knowledge</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch2">Chapter 2</span></td>
+                    <td data-label="Definition">Using everything learned from earlier stages (data sources, dictionaries, requirements) to guide how you structure and relate data entities.</td>
+                  </tr>
+                  <tr data-chapter="Chapter 2">
+                    <td data-label="Term"><strong>Iteration and Refinement</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch2">Chapter 2</span></td>
+                    <td data-label="Definition">Adjusting the model as new insights emerge to improve accuracy and relevance.</td>
+                  </tr>
+                  <tr data-chapter="Chapter 2">
+                    <td data-label="Term"><strong>Data Model Diagram</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch2">Chapter 2</span></td>
+                    <td data-label="Definition">Phase 3 Deliverable: Visual representation of entities, relationships, and data flow.</td>
+                  </tr>
+                  <tr data-chapter="Chapter 2">
+                    <td data-label="Term"><strong>Model Specification Document</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch2">Chapter 2</span></td>
+                    <td data-label="Definition">Phase 3 Deliverable: Defines algorithms, parameters, and expected outputs.</td>
+                  </tr>
+                  <tr data-chapter="Chapter 2">
+                    <td data-label="Term"><strong>Validation Report</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch2">Chapter 2</span></td>
+                    <td data-label="Definition">Phase 3 Deliverable: Shows how the model performs against test data and metrics.</td>
+                  </tr>
+                  <tr data-chapter="Chapter 2">
+                    <td data-label="Term"><strong>Feature Engineering</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch2">Chapter 2</span></td>
+                    <td data-label="Definition">The art and science of transforming raw data into meaningful inputs called features that help models learn patterns effectively (creating, modifying, and selecting variables).</td>
+                  </tr>
+                  <tr data-chapter="Chapter 2">
+                    <td data-label="Term"><strong>Inclusion and Aggregation</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch2">Chapter 2</span></td>
+                    <td data-label="Definition">Combining raw variables or summarizing data to form new, informative features.</td>
+                  </tr>
+                  <tr data-chapter="Chapter 2">
+                    <td data-label="Term"><strong>Feature Selection</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch2">Chapter 2</span></td>
+                    <td data-label="Definition">Identifying which variables are most useful and discarding those that add noise or redundancy.</td>
+                  </tr>
+                  <tr data-chapter="Chapter 2">
+                    <td data-label="Term"><strong>Log Transform</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch2">Chapter 2</span></td>
+                    <td data-label="Definition">Reduces skewness and compresses large values. Useful for income or population data.</td>
+                  </tr>
+                  <tr data-chapter="Chapter 2">
+                    <td data-label="Term"><strong>Square-root Transformation</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch2">Chapter 2</span></td>
+                    <td data-label="Definition">Stabilizes variance and reduces impact of outliers. Applied to count data (e.g., number of clicks).</td>
+                  </tr>
+                  <tr data-chapter="Chapter 2">
+                    <td data-label="Term"><strong>Categorical Encoding</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch2">Chapter 2</span></td>
+                    <td data-label="Definition">Converts non-numeric data into numeric form. One-hot or label encoding for categorical variables.</td>
+                  </tr>
+                  <tr data-chapter="Chapter 2">
+                    <td data-label="Term"><strong>Power Functions</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch2">Chapter 2</span></td>
+                    <td data-label="Definition">Adjusts data distribution using exponents. Helps normalize data for linear models.</td>
+                  </tr>
+                  <tr data-chapter="Chapter 2">
+                    <td data-label="Term"><strong>Scaling</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch2">Chapter 2</span></td>
+                    <td data-label="Definition">Standardizes feature ranges for uniformity. Min-max scaling or standardization (z-score).</td>
+                  </tr>
+                  <tr data-chapter="Chapter 2">
+                    <td data-label="Term"><strong>Skewed Data</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch2">Chapter 2</span></td>
+                    <td data-label="Definition">Adjust distributions using log or power transforms to achieve symmetry.</td>
+                  </tr>
+                  <tr data-chapter="Chapter 2">
+                    <td data-label="Term"><strong>Bias Mitigation</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch2">Chapter 2</span></td>
+                    <td data-label="Definition">Ensures data doesn't favor one group or outcome unfairly.</td>
+                  </tr>
+                  <tr data-chapter="Chapter 2">
+                    <td data-label="Term"><strong>Binning</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch2">Chapter 2</span></td>
+                    <td data-label="Definition">Groups continuous values into discrete intervals for easier interpretation.</td>
+                  </tr>
+                  <tr data-chapter="Chapter 2">
+                    <td data-label="Term"><strong>Outlier Detection & Outliers</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch2">Chapter 2</span></td>
+                    <td data-label="Definition">Identifies data points that deviate from normal patterns. Outliers may signal technical glitches or critical incidents and must be treated carefully.</td>
+                  </tr>
+                  <tr data-chapter="Chapter 2">
+                    <td data-label="Term"><strong>Trimming</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch2">Chapter 2</span></td>
+                    <td data-label="Definition">Removes extreme values beyond a defined threshold (e.g., top and bottom 1%) when outliers are clearly errors or irrelevant.</td>
+                  </tr>
+                  <tr data-chapter="Chapter 2">
+                    <td data-label="Term"><strong>Winsorizing</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch2">Chapter 2</span></td>
+                    <td data-label="Definition">Replaces extreme values with the nearest acceptable boundary (e.g., cap at 95th percentile) when you want to keep all data points but reduce the influence of extremes.</td>
+                  </tr>
+                  <tr data-chapter="Chapter 2">
+                    <td data-label="Term"><strong>Imputation</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch2">Chapter 2</span></td>
+                    <td data-label="Definition">Substitutes outlier values with estimated ones (mean, median, or model-based) when missing or extreme values need to be retained for continuity.</td>
+                  </tr>
+                  <tr data-chapter="Chapter 2">
+                    <td data-label="Term"><strong>Transformation (Outlier)</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch2">Chapter 2</span></td>
+                    <td data-label="Definition">Applies mathematical functions (log, square-root, etc.) to reduce the impact of outliers when they are legitimate but need normalization.</td>
+                  </tr>
+                  <tr data-chapter="Chapter 2">
+                    <td data-label="Term"><strong>Segmentation (Outlier)</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch2">Chapter 2</span></td>
+                    <td data-label="Definition">Separates outliers into a different group for specialized analysis when outliers represent meaningful anomalies (e.g., fraud detection).</td>
+                  </tr>
+                  <tr data-chapter="Chapter 2">
+                    <td data-label="Term"><strong>Filter-Based Method</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch2">Chapter 2</span></td>
+                    <td data-label="Definition">Features selected based on statistical metrics without a predictive model. Examples: <strong>Correlation</strong> (removes highly correlated features), <strong>Chi-square Test</strong> (dependence between categorical variables), <strong>ANOVA</strong> (tests if groups have significantly different means).</td>
+                  </tr>
+                  <tr data-chapter="Chapter 2">
+                    <td data-label="Term"><strong>Wrapper-Based Method</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch2">Chapter 2</span></td>
+                    <td data-label="Definition">More accurate but computationally expensive; evaluates feature subsets by training models. Examples: <strong>RFE</strong> (iteratively removes least important features), <strong>Forward Selection</strong> (starts with none, adds one by one), <strong>Backward Selection</strong> (starts with all, removes step by step).</td>
+                  </tr>
+                  <tr data-chapter="Chapter 2">
+                    <td data-label="Term"><strong>Embedded Method</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch2">Chapter 2</span></td>
+                    <td data-label="Definition">Efficient and integrated into model training. Examples: <strong>LASSO (L1 Regularization)</strong> (shrinks coefficients, eliminating less important features) and <strong>Ridge (L2 Regularization)</strong> (reduces coefficient size but keeps all features, controlling overfitting).</td>
+                  </tr>
+                  <tr data-chapter="Chapter 2">
+                    <td data-label="Term"><strong>Deployment</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch2">Chapter 2</span></td>
+                    <td data-label="Definition">Phase 4: The final step in the data science project lifecycle where the model moves from development into production so real users can interact with it and validate performance.</td>
+                  </tr>
+                  <tr data-chapter="Chapter 2">
+                    <td data-label="Term"><strong>Model Operationalization</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch2">Chapter 2</span></td>
+                    <td data-label="Definition">Converting the trained model into a deployable format (e.g., containerized service or API) and ensuring scalability, security, and reliability.</td>
+                  </tr>
+                  <tr data-chapter="Chapter 2">
+                    <td data-label="Term"><strong>User Acceptance Testing (UAT)</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch2">Chapter 2</span></td>
+                    <td data-label="Definition">End-users validate the model's performance; any issues or inaccuracies are fixed before full release.</td>
+                  </tr>
+                  <tr data-chapter="Chapter 2">
+                    <td data-label="Term"><strong>API Exposure</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch2">Chapter 2</span></td>
+                    <td data-label="Definition">Exposing the model through an open API interface for integration with websites, dashboards, spreadsheets, and backend applications.</td>
+                  </tr>
+                  <tr data-chapter="Chapter 2">
+                    <td data-label="Term"><strong>Status Dashboard</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch2">Chapter 2</span></td>
+                    <td data-label="Definition">Phase 4 Deliverable: Displays system health, uptime, and key performance metrics.</td>
+                  </tr>
+                  <tr data-chapter="Chapter 2">
+                    <td data-label="Term"><strong>Final Modeling Report</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch2">Chapter 2</span></td>
+                    <td data-label="Definition">Phase 4 Deliverable: Summarizes model performance, deployment details, and validation results.</td>
+                  </tr>
+                  <tr data-chapter="Chapter 2">
+                    <td data-label="Term"><strong>Solution Architecture Document</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch2">Chapter 2</span></td>
+                    <td data-label="Definition">Phase 4 Deliverable: Describes the technical setup, data flow, and integration points.</td>
+                  </tr>
+
+                  <!-- Chapter 3 Terms -->
+                  <tr data-chapter="Chapter 3">
+                    <td data-label="Term"><strong>Compiler</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch3">Chapter 3</span></td>
+                    <td data-label="Definition">Translate the whole book → then read it.</td>
+                  </tr>
+                  <tr data-chapter="Chapter 3">
+                    <td data-label="Term"><strong>Interpreter</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch3">Chapter 3</span></td>
+                    <td data-label="Definition">Translate one sentence → understand it → execute it → move to the next.</td>
+                  </tr>
+                  <tr data-chapter="Chapter 3">
+                    <td data-label="Term"><strong>R</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch3">Chapter 3</span></td>
+                    <td data-label="Definition">A programming language used for statistical computing and graphics. It can be used independently without RStudio.</td>
+                  </tr>
+                  <tr data-chapter="Chapter 3">
+                    <td data-label="Term"><strong>RStudio</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch3">Chapter 3</span></td>
+                    <td data-label="Definition">An integrated development environment (IDE) designed to enhance the R programming experience. Provides a user-friendly interface and tools for writing and executing R code.</td>
+                  </tr>
+                  <tr data-chapter="Chapter 3">
+                    <td data-label="Term"><strong>R Console</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch3">Chapter 3</span></td>
+                    <td data-label="Definition">Shows the output of code you run. Also, you can directly write codes in console.</td>
+                  </tr>
+                  <tr data-chapter="Chapter 3">
+                    <td data-label="Term"><strong>R Script</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch3">Chapter 3</span></td>
+                    <td data-label="Definition">Space where you write, edit, and save R codes.</td>
+                  </tr>
+                  <tr data-chapter="Chapter 3">
+                    <td data-label="Term"><strong>R Environment</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch3">Chapter 3</span></td>
+                    <td data-label="Definition">Displays the set of external elements added, including data sets, variables, vectors, functions, etc.</td>
+                  </tr>
+                  <tr data-chapter="Chapter 3">
+                    <td data-label="Term"><strong>Graphical Output</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch3">Chapter 3</span></td>
+                    <td data-label="Definition">Displays the graphs created during exploratory data analysis.</td>
+                  </tr>
+                  <tr data-chapter="Chapter 3">
+                    <td data-label="Term"><strong>Statistical Tasks in R</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch3">Chapter 3</span></td>
+                    <td data-label="Definition">Mean, median, and mode; Standard deviation and variance; Correlation; Regression; Hypothesis testing; Probability distributions; ANOVA; Classification; Clustering; Data visualization.</td>
+                  </tr>
+                  <tr data-chapter="Chapter 3">
+                    <td data-label="Term"><strong>Computational Tasks in R</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch3">Chapter 3</span></td>
+                    <td data-label="Definition">Data manipulation, File processing, Automation, Programming, Web-related tasks, Machine learning, Database connections, Statistical modeling, Data visualization.</td>
+                  </tr>
+                  <tr data-chapter="Chapter 3">
+                    <td data-label="Term"><strong>Visual Information in R</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch3">Chapter 3</span></td>
+                    <td data-label="Definition">Bar charts, Line graphs, Pie charts, Scatter plots, Box plots, Maps (Mapsa), Heatmaps.</td>
+                  </tr>
+                  <tr data-chapter="Chapter 3">
+                    <td data-label="Term"><strong>Basic Classes of Objects</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch3">Chapter 3</span></td>
+                    <td data-label="Definition">Character, Numeric, Integer, Complex, Logical.</td>
+                  </tr>
+                  <tr data-chapter="Chapter 3">
+                    <td data-label="Term"><strong>Vector & Atomic Vector</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch3">Chapter 3</span></td>
+                    <td data-label="Definition"><strong>Vector:</strong> Simply a collection of values stored together. <strong>Atomic Vector:</strong> A vector that only holds data of a single data type.</td>
+                  </tr>
+                  <tr data-chapter="Chapter 3">
+                    <td data-label="Term"><strong>Object Inspection Functions</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch3">Chapter 3</span></td>
+                    <td data-label="Definition"><code>class()</code> (what kind of object is it, high-level?), <code>typeof()</code> (what is the object's data type, low-level?), <code>length()</code> (how long is it?), <code>attributes()</code> (does it have any metadata?).</td>
+                  </tr>
+                  <tr data-chapter="Chapter 3">
+                    <td data-label="Term"><strong>Data Types (Structures)</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch3">Chapter 3</span></td>
+                    <td data-label="Definition">Vector, Matrices, Data Frames, and List.</td>
+                  </tr>
+                  <tr data-chapter="Chapter 3">
+                    <td data-label="Term"><strong>Coercion</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch3">Chapter 3</span></td>
+                    <td data-label="Definition">This effect causes the objects of different types to 'convert' into one class.</td>
+                  </tr>
+                  <tr data-chapter="Chapter 3">
+                    <td data-label="Term"><strong>List</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch3">Chapter 3</span></td>
+                    <td data-label="Definition">A special type of vector which contains elements of different data types.</td>
+                  </tr>
+                  <tr data-chapter="Chapter 3">
+                    <td data-label="Term"><strong>Matrix</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch3">Chapter 3</span></td>
+                    <td data-label="Definition">Represented by a set of rows and columns. It is a 2-dimensional data structure consisting of elements of the same class.</td>
+                  </tr>
+                  <tr data-chapter="Chapter 3">
+                    <td data-label="Term"><strong>Ways to Change Data</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch3">Chapter 3</span></td>
+                    <td data-label="Definition"><strong>Split</strong> (splitting and selecting), <strong>Apply</strong> (transforming and re-calculating), <strong>Combine</strong> (aggregating and merging).</td>
+                  </tr>
+                  <tr data-chapter="Chapter 3">
+                    <td data-label="Term"><strong><code>dplyr</code></strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch3">Chapter 3</span></td>
+                    <td data-label="Definition">An R package designed mainly for data manipulation.</td>
+                  </tr>
+                  <tr data-chapter="Chapter 3">
+                    <td data-label="Term"><strong><code>select()</code></strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch3">Chapter 3</span></td>
+                    <td data-label="Definition"><code>dplyr</code> verb: Which columns do I want?</td>
+                  </tr>
+                  <tr data-chapter="Chapter 3">
+                    <td data-label="Term"><strong><code>filter()</code></strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch3">Chapter 3</span></td>
+                    <td data-label="Definition"><code>dplyr</code> verb: Which rows/records do I want?</td>
+                  </tr>
+                  <tr data-chapter="Chapter 3">
+                    <td data-label="Term"><strong><code>mutate()</code></strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch3">Chapter 3</span></td>
+                    <td data-label="Definition"><code>dplyr</code> verb: Create or modify a variable/column.</td>
+                  </tr>
+                  <tr data-chapter="Chapter 3">
+                    <td data-label="Term"><strong><code>summarise()</code></strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch3">Chapter 3</span></td>
+                    <td data-label="Definition"><code>dplyr</code> verb: Produce a summary of the data.</td>
+                  </tr>
+                  <tr data-chapter="Chapter 3">
+                    <td data-label="Term"><strong><code>group_by()</code></strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch3">Chapter 3</span></td>
+                    <td data-label="Definition"><code>dplyr</code> verb: Divide the data into groups based on a variable.</td>
+                  </tr>
+                  <tr data-chapter="Chapter 3">
+                    <td data-label="Term"><strong>Pipe Operator (<code>%>%</code>)</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch3">Chapter 3</span></td>
+                    <td data-label="Definition">Take this result and pass it to the next operation.</td>
+                  </tr>
+                  <tr data-chapter="Chapter 3">
+                    <td data-label="Term"><strong>Descriptive Statistics Tools</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch3">Chapter 3</span></td>
+                    <td data-label="Definition"><strong>Graphical</strong> (Graphics, Bar Diagram, Histogram, Scattered Diagrams) and <strong>Analytical</strong> (Measures of Central Tendency: Mean, Median, Mode; Measures of Variations: Variants/Variance, Standard Deviation).</td>
+                  </tr>
+                  <tr data-chapter="Chapter 3">
+                    <td data-label="Term"><strong>Simple Linear Regression</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch3">Chapter 3</span></td>
+                    <td data-label="Definition">A statistical method used to examine the relationship between one dependent (response) variable and one explanatory (predictor) variable.</td>
+                  </tr>
+                  <tr data-chapter="Chapter 3">
+                    <td data-label="Term"><strong>Tilde (<code>~</code>)</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch3">Chapter 3</span></td>
+                    <td data-label="Definition">Means "is explained by" or "as a function of" in R formulas (e.g., <code>lm(Y ~ X)</code>).</td>
+                  </tr>
+                  <tr data-chapter="Chapter 3">
+                    <td data-label="Term"><strong>Regression Variables (<code>Y, X, b₀, b₁</code>)</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch3">Chapter 3</span></td>
+                    <td data-label="Definition"><strong><code>Y</code></strong> = Dependent/Response Variable; <strong><code>X</code></strong> = Explanatory/Predictor Variable; <strong><code>b₀</code></strong> = Intercept; <strong><code>b₁</code></strong> = Slope/Coefficient.</td>
+                  </tr>
+                  <tr data-chapter="Chapter 3">
+                    <td data-label="Term"><strong>ANOVA Table</strong></td>
+                    <td data-label="Chapter"><span class="tag tag-ch3">Chapter 3</span></td>
+                    <td data-label="Definition">A table used in statistics to determine whether there is a statistically significant difference among group means.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        `
+      }
+    ]
+  }
+];
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    const navMenu = document.getElementById('nav-menu');
+    const mobilePillBar = document.getElementById('mobile-pill-bar');
+    const contentContainer = document.getElementById('content-container');
+    const lessonTitle = document.getElementById('lesson-title');
+    const lessonChapterBadge = document.getElementById('lesson-chapter-badge');
+    const themeToggle = document.getElementById('theme-toggle');
+    const menuToggle = document.getElementById('menu-toggle');
+    const sidebarClose = document.getElementById('sidebar-close');
+    const sidebar = document.getElementById('sidebar');
+    const sidebarOverlay = document.getElementById('sidebar-overlay');
+    const homeBtn = document.getElementById('home-btn');
+    const quickGlossaryBtn = document.getElementById('quick-glossary-btn');
+    const navSearch = document.getElementById('nav-search');
+    const mainScroll = document.getElementById('main-scroll');
+
+    let activeLessonId = null;
+
+    // Safe localStorage wrapper
+    function getStoredTheme() {
+        try {
+            return localStorage.getItem('theme') || 'dark';
+        } catch (e) {
+            return 'dark';
+        }
+    }
+
+    function setStoredTheme(theme) {
+        try {
+            localStorage.setItem('theme', theme);
+        } catch (e) {
+            // Ignore storage errors in sandboxed iframes
+        }
+    }
+
+    // Initialize Theme
+    const currentTheme = getStoredTheme();
+    document.documentElement.setAttribute('data-theme', currentTheme);
+
+    themeToggle.addEventListener('click', () => {
+        const theme = document.documentElement.getAttribute('data-theme');
+        const newTheme = theme === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', newTheme);
+        setStoredTheme(newTheme);
+    });
+
+    // Mobile Sidebar Drawer Controls
+    function openSidebar() {
+        sidebar.classList.add('open');
+        sidebarOverlay.classList.add('active');
+        document.body.classList.add('drawer-open');
+    }
+
+    function closeSidebar() {
+        sidebar.classList.remove('open');
+        sidebarOverlay.classList.remove('active');
+        document.body.classList.remove('drawer-open');
+    }
+
+    menuToggle.addEventListener('click', openSidebar);
+    sidebarClose.addEventListener('click', closeSidebar);
+    sidebarOverlay.addEventListener('click', closeSidebar);
+
+    homeBtn.addEventListener('click', () => {
+        closeSidebar();
+        renderWelcomeScreen();
+    });
+
+    quickGlossaryBtn.addEventListener('click', () => {
+        closeSidebar();
+        loadLesson('cheat-sheet');
+    });
+
+    // Render Sidebar & Mobile Pill Navigation
+    function renderNavigation(filterText = '') {
+        navMenu.innerHTML = '';
+        mobilePillBar.innerHTML = '';
+
+        const query = filterText.trim().toLowerCase();
+        const grouped = {};
+
+        lessonsData.forEach(lesson => {
+            const matchesTitle = lesson.title.toLowerCase().includes(query) || lesson.chapter.toLowerCase().includes(query);
+            const matchesSection = lesson.sections.some(s =>
+                s.heading.toLowerCase().includes(query) || s.content.toLowerCase().includes(query)
+            );
+            if (!query || matchesTitle || matchesSection) {
+                if (!grouped[lesson.chapter]) {
+                    grouped[lesson.chapter] = [];
+                }
+                grouped[lesson.chapter].push(lesson);
+            }
+        });
+
+        Object.keys(grouped).forEach(chapterName => {
+            const chapterDiv = document.createElement('div');
+            chapterDiv.className = 'nav-chapter';
+
+            const chapterTitle = document.createElement('h3');
+            chapterTitle.className = 'nav-chapter-title';
+            chapterTitle.textContent = chapterName;
+            chapterDiv.appendChild(chapterTitle);
+
+            const ul = document.createElement('ul');
+            ul.className = 'nav-chapter-list';
+
+            grouped[chapterName].forEach(lesson => {
+                const li = document.createElement('li');
+                li.className = 'nav-item';
+
+                const a = document.createElement('a');
+                a.href = `#${lesson.id}`;
+                a.className = 'nav-link' + (lesson.id === activeLessonId ? ' active' : '');
+                a.textContent = lesson.title;
+                a.dataset.id = lesson.id;
+
+                a.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    closeSidebar();
+                    loadLesson(lesson.id);
+                });
+
+                li.appendChild(a);
+                ul.appendChild(li);
+            });
+
+            chapterDiv.appendChild(ul);
+            navMenu.appendChild(chapterDiv);
+        });
+
+        // Populate Mobile Horizontal Quick-Switch Pills
+        lessonsData.forEach(lesson => {
+            const pill = document.createElement('button');
+            pill.type = 'button';
+            pill.className = 'mobile-nav-pill' + (lesson.id === activeLessonId ? ' active' : '');
+            pill.textContent = lesson.title;
+            pill.dataset.id = lesson.id;
+            pill.addEventListener('click', () => {
+                loadLesson(lesson.id);
+            });
+            mobilePillBar.appendChild(pill);
+        });
+    }
+
+    navSearch.addEventListener('input', (e) => {
+        renderNavigation(e.target.value);
+    });
+
+    // Update Active Link Styling
+    function syncActiveNavigation(lessonId) {
+        activeLessonId = lessonId;
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.classList.toggle('active', link.dataset.id === lessonId);
+        });
+        document.querySelectorAll('.mobile-nav-pill').forEach(pill => {
+            const isActive = pill.dataset.id === lessonId;
+            pill.classList.toggle('active', isActive);
+            if (isActive) {
+                pill.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+            }
+        });
+    }
+
+    // Render Welcome Screen with Interactive Module Cards
+    function renderWelcomeScreen() {
+        syncActiveNavigation(null);
+        lessonChapterBadge.textContent = 'Course Overview';
+        lessonTitle.textContent = 'Welcome to Data Science Review';
+
+        const totalLessons = lessonsData.length;
+        const totalSections = lessonsData.reduce((acc, item) => acc + item.sections.length, 0);
+
+        let cardsHtml = '';
+        lessonsData.forEach((lesson, idx) => {
+            cardsHtml += `
+                <button type="button" class="module-launch-card" data-lesson-id="${lesson.id}">
+                    <span class="module-card-chapter">${lesson.chapter}</span>
+                    <h4>${ idx + 1 }. ${lesson.title}</h4>
+                    <p>${lesson.sections.map(s => s.heading).join(' • ')}</p>
+                    <span class="module-card-cta">Open Module →</span>
+                </button>
+            `;
+        });
+
+        contentContainer.innerHTML = `
+            <div class="welcome-screen animate-fade-in">
+                <span class="welcome-badge">100% Exam-Aligned Study Guide</span>
+                <h2>Midterm Examination Reviewer</h2>
+                <p>Complete interactive guide covering <strong>Lesson 1: Big Data &amp; Data Science</strong>, <strong>Lesson 2: The Data Science Life Cycle</strong>, and <strong>Lesson 3: R Programming, dplyr, Descriptive Stats &amp; Regression</strong>.</p>
+                <div class="hero-stats">
+                    <div class="stat-card">
+                        <h3>3</h3>
+                        <p>Core Chapters</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>${totalLessons}</h3>
+                        <p>Study Modules</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>${totalSections}</h3>
+                        <p>Topic Sections</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>78</h3>
+                        <p>Glossary Terms</p>
+                    </div>
+                </div>
+
+                <div class="welcome-modules-section">
+                    <h3>Jump Straight to a Study Module</h3>
+                    <div class="module-launch-grid">
+                        ${cardsHtml}
+                    </div>
+                </div>
+            </div>
+        `;
+
+        contentContainer.querySelectorAll('.module-launch-card').forEach(btn => {
+            btn.addEventListener('click', () => {
+                loadLesson(btn.dataset.lessonId);
+            });
+        });
+
+        mainScroll.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Wire Glossary Search and Filter Pills
+    function initGlossaryControls() {
+        const searchInput = document.getElementById('glossary-search');
+        const filterBtns = document.querySelectorAll('.glossary-filter-btn');
+        const rows = document.querySelectorAll('#glossary-table tbody tr');
+        if (!searchInput || !rows.length) return;
+
+        let selectedChapter = 'all';
+
+        function filterTable() {
+            const query = searchInput.value.trim().toLowerCase();
+            rows.forEach(row => {
+                const rowChapter = row.getAttribute('data-chapter') || '';
+                const text = row.textContent.toLowerCase();
+                const matchesChapter = selectedChapter === 'all' || rowChapter === selectedChapter;
+                const matchesQuery = !query || text.includes(query);
+                row.style.display = (matchesChapter && matchesQuery) ? '' : 'none';
+            });
+        }
+
+        searchInput.addEventListener('input', filterTable);
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                selectedChapter = btn.getAttribute('data-chapter') || 'all';
+                filterTable();
+            });
+        });
+    }
+
+    // Load Lesson Content
+    function loadLesson(lessonId) {
+        const lessonIndex = lessonsData.findIndex(l => l.id === lessonId);
+        if (lessonIndex === -1) return;
+        const lesson = lessonsData[lessonIndex];
+
+        syncActiveNavigation(lessonId);
+        lessonChapterBadge.textContent = lesson.chapter;
+        lessonTitle.textContent = lesson.title;
+        contentContainer.innerHTML = '';
+
+        lesson.sections.forEach((section, index) => {
+            const sectionEl = document.createElement('section');
+            sectionEl.className = 'section-card animate-fade-in';
+            sectionEl.style.animationDelay = `${index * 0.08}s`;
+
+            sectionEl.innerHTML = `
+                <div class="section-card-header">
+                    <span class="section-index-badge">Section ${index + 1} of ${lesson.sections.length}</span>
+                    <h2>${section.heading}</h2>
+                </div>
+                ${section.content}
+            `;
+
+            contentContainer.appendChild(sectionEl);
+        });
+
+        // Add Previous / Next Lesson Navigation Footer
+        const prevLesson = lessonIndex > 0 ? lessonsData[lessonIndex - 1] : null;
+        const nextLesson = lessonIndex < lessonsData.length - 1 ? lessonsData[lessonIndex + 1] : null;
+
+        const pagerEl = document.createElement('div');
+        pagerEl.className = 'lesson-pager animate-fade-in';
+        pagerEl.innerHTML = `
+            <button type="button" class="pager-btn pager-prev" ${!prevLesson ? 'disabled' : ''} data-target="${prevLesson ? prevLesson.id : ''}">
+                <span class="pager-label">← Previous Module</span>
+                <strong>${prevLesson ? prevLesson.title : 'Start of Course'}</strong>
+            </button>
+            <button type="button" class="pager-btn pager-next" ${!nextLesson ? 'disabled' : ''} data-target="${nextLesson ? nextLesson.id : ''}">
+                <span class="pager-label">Next Module →</span>
+                <strong>${nextLesson ? nextLesson.title : 'End of Course'}</strong>
+            </button>
+        `;
+
+        pagerEl.querySelectorAll('.pager-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const targetId = btn.getAttribute('data-target');
+                if (targetId) loadLesson(targetId);
+            });
+        });
+
+        contentContainer.appendChild(pagerEl);
+
+        if (lessonId === 'cheat-sheet') {
+            initGlossaryControls();
+        }
+
+        mainScroll.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Initialize App
+    renderNavigation();
+    renderWelcomeScreen();
+});
+
+</script>
 </body>
 </html>
