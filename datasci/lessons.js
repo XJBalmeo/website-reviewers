@@ -70,18 +70,18 @@ const lessonsData = [
         `
       },
       {
-        heading: 'Structured vs. Unstructured Data',
+        heading: 'Forms of Big Data: Structured vs. Unstructured',
         content: `
           <div class="section-body">
-            <p class="lead-text">All data can generally be classified into two major categories based on its formatting and organization.</p>
+            <p class="lead-text">Big Data comes in two main <strong>forms</strong>: <strong>Structured Data</strong> and <strong>Unstructured Data</strong>. All data can generally be classified into these two major categories based on its formatting and organization.</p>
             
             <div class="feature-grid">
               <div class="feature-box" style="border-top: 4px solid var(--success);">
                 <span class="feature-icon">📊</span>
                 <h4>Structured Data</h4>
-                <p>Data that is easily analyzed and organized. It typically fits neatly into a predefined model with rows and columns (tables).</p>
-                <ul class="styled-list" style="margin-top: 15px;">
-                  <li><strong>Examples:</strong> SQL databases, Excel spreadsheets, CSV files, system logs, CRM/ERP records, POS transactions.</li>
+                <p>More easily analyzed and organized into the database. Typically, data that can be stored in a table, and every instance in the table has the same structure (i.e., set of attributes).</p>
+                <h4 style="margin-top: 15px; font-size: 0.95rem; color: var(--accent-primary);">Benefits of Structured Data:</h4>
+                <ul class="styled-list" style="margin-top: 10px;">
                   <li><strong>Ease of Use:</strong> Easy to find, add, update, or delete. Highly organized and searchable.</li>
                   <li><strong>Scalability:</strong> Systems can easily handle increasing amounts by adding storage.</li>
                   <li><strong>Analytics:</strong> Perfect for SQL filtering and running basic machine learning algorithms.</li>
@@ -91,9 +91,9 @@ const lessonsData = [
               <div class="feature-box" style="border-top: 4px solid var(--warning);">
                 <span class="feature-icon">📱</span>
                 <h4>Unstructured Data</h4>
-                <p>Information that does not follow a fixed or organized format. It makes up 80-90% of all data generated today.</p>
+                <p>Data that does not follow a fixed or organized format, such as rows and columns in a traditional database. It makes up 80-90% of all data generated today.</p>
                 <ul class="styled-list" style="margin-top: 15px;">
-                  <li><strong>Examples:</strong> Word documents, Emails, Images, Video files, Audio recordings, Social Media posts, PDFs.</li>
+                  <li><strong>Examples:</strong> Text documents, video, audio, email, stock ticker data, social media posts, PDFs.</li>
                   <li><strong>Challenges:</strong> Extremely difficult for traditional relational databases to interpret. Requires complex storage.</li>
                   <li><strong>Analysis:</strong> Needs advanced specialized technologies like Natural Language Processing (NLP) or advanced Machine Learning to extract meaning (e.g., Sentiment analysis on a complaint email).</li>
                 </ul>
@@ -126,26 +126,37 @@ const lessonsData = [
               </div>
             </div>
 
-            <p><strong>Data Mining</strong> examines large amounts of raw data to discover useful relationships. For example, a supermarket using software to discover that "Customers who buy coffee often also buy biscuits", which helps them place products together to increase sales.</p>
+            <p><strong>Data Mining</strong> is the process of examining large amounts of raw data to discover useful information, patterns, relationships, or trends. For example, a supermarket using software to discover that "Customers who buy coffee often also buy biscuits", which helps them place products together to increase sales.</p>
 
             <h3 style="margin-top: 30px;">What is Data Science?</h3>
-            <p><strong>Data Science</strong> is the overarching, broader study of data. It acts as a large umbrella that combines multiple disciplines to turn raw data into useful insights that help organizations understand situations and make better decisions.</p>
+            <p><strong>Data Science</strong> is the study of data to discover useful information, patterns, and insights that can help us understand a situation and make better decisions. It acts as a large umbrella that combines multiple disciplines.</p>
             
+            <h4 style="margin-top: 20px;">Fields Combined in Data Science:</h4>
             <div class="feature-grid">
               <div class="feature-box">
+                <span class="feature-icon">📊</span>
+                <h4>Statistics</h4>
+                <p>Helps us analyze numbers and determine patterns or trends in data.</p>
+              </div>
+              <div class="feature-box">
                 <span class="feature-icon">📐</span>
-                <h4>Statistics & Math</h4>
-                <p>Provides the formulas and statistical methods to analyze numbers, verify reliability, and determine trends.</p>
+                <h4>Mathematics</h4>
+                <p>Provides formulas and methods for analyzing data.</p>
+              </div>
+              <div class="feature-box">
+                <span class="feature-icon">🔍</span>
+                <h4>Data Analysis</h4>
+                <p>Involves examining data to find meaningful information.</p>
               </div>
               <div class="feature-box">
                 <span class="feature-icon">🤖</span>
                 <h4>Machine Learning</h4>
-                <p>Allows computers to learn patterns from historical data and make future predictions.</p>
+                <p>Allows computers to learn patterns from data and make predictions.</p>
               </div>
               <div class="feature-box">
                 <span class="feature-icon">🏥</span>
                 <h4>Domain Knowledge</h4>
-                <p>Deep understanding of the specific industry (e.g., healthcare, finance, retail) to properly interpret the results.</p>
+                <p>Deep understanding of a specific industry or field—such as healthcare, finance, or retail—including its rules, processes, and unique language.</p>
               </div>
             </div>
             
@@ -169,7 +180,7 @@ const lessonsData = [
               <h3 style="margin: 0; color: var(--accent-secondary);">DATA → ANALYSIS → INSIGHT → DECISION</h3>
             </div>
             
-            <p>An <strong>insight</strong> is a useful understanding from data (e.g., "Students with low attendance tend to have lower grades"). However, an <strong>actionable insight</strong> is a finding that gives us enough useful information to actually decide <em>what action should be taken</em>.</p>
+            <p>An <strong>insight</strong> is a useful understanding from data (e.g., "Students with low attendance tend to have lower grades"). However, an <strong>actionable insight</strong> is a finding from data that gives us enough useful information to decide <em>what action should be taken</em>.</p>
             
             <div class="alert alert-info">
               <div class="alert-icon">💡</div>
@@ -183,15 +194,22 @@ const lessonsData = [
               <div class="step-item">
                 <div class="step-number" style="background: var(--accent-primary);">1</div>
                 <div class="step-content">
-                  <h4>Clustering / Customer Segmentation</h4>
-                  <p>Grouping entities that behave similarly without a predefined label. E.g., dividing 10,000 customers into "Budget Shoppers", "Premium Shoppers", and "Occasional Shoppers" based on their spending and frequency.</p>
+                  <h4>Customer Segmentation</h4>
+                  <p>Dividing customers into groups based on similar characteristics, behaviors, or preferences. E.g., dividing 10,000 customers into "Budget Shoppers", "Premium Shoppers", and "Occasional Shoppers" based on their spending and frequency.</p>
                 </div>
               </div>
               <div class="step-item">
-                <div class="step-number" style="background: var(--accent-secondary);">2</div>
+                <div class="step-number" style="background: var(--success);">2</div>
+                <div class="step-content">
+                  <h4>Clustering</h4>
+                  <p>In Data Science and Machine Learning, grouping entities that behave similarly is commonly called <strong>clustering</strong>. It groups data without predefined labels, discovering natural groupings in the data.</p>
+                </div>
+              </div>
+              <div class="step-item">
+                <div class="step-number" style="background: var(--accent-secondary);">3</div>
                 <div class="step-content">
                   <h4>Association-Rule Mining</h4>
-                  <p>Discovering relationships between items that frequently occur together. Also known as Market Basket Analysis. E.g., discovering that Diapers and Baby Wipes are frequently bought in the same transaction.</p>
+                  <p>A data science technique used to discover relationships between items that frequently occur together. Also known as Market Basket Analysis. E.g., discovering that Diapers and Baby Wipes are frequently bought in the same transaction.</p>
                 </div>
               </div>
             </div>
@@ -209,18 +227,23 @@ const lessonsData = [
         heading: 'Data Elements',
         content: `
           <div class="section-body">
-            <p class="lead-text">To work with data, we must first understand its foundational components: Entities and Attributes.</p>
+            <p class="lead-text">To work with data, we must first understand its foundational components.</p>
             <div class="feature-grid">
+              <div class="feature-box">
+                <span class="feature-icon">📋</span>
+                <h4>Data</h4>
+                <p>A collection of facts, observations, or information about something in the real world.</p>
+              </div>
               <div class="feature-box">
                 <span class="feature-icon">👤</span>
                 <h4>Entity</h4>
-                <p>The real-world person, object, or event we are interested in studying (e.g., a specific Student like Maria, a specific Product, or a specific Transaction).</p>
+                <p>The real-world person, object, or event that we are interested in studying (e.g., a specific Student like Maria, a specific Product, or a specific Transaction).</p>
                 <p style="margin-top:10px; font-size: 0.85rem; color: var(--info);"><em>Who or what are we studying?</em></p>
               </div>
               <div class="feature-box">
                 <span class="feature-icon">🏷️</span>
                 <h4>Attribute (Feature / Variable)</h4>
-                <p>A characteristic or property that describes an entity (e.g., Age, Location, Course, Total Spent). The terms attribute, feature, and variable are used interchangeably.</p>
+                <p>An attribute is a characteristic or property that describes an entity (e.g., Age, Location, Course, Total Spent). The terms attribute, feature, and variable are used interchangeably.</p>
                 <p style="margin-top:10px; font-size: 0.85rem; color: var(--info);"><em>What do we know about it?</em></p>
               </div>
               <div class="feature-box">
@@ -315,8 +338,15 @@ const lessonsData = [
             <h2>Iterative Discovery</h2>
           </div>
           <div class="section-body">
-            <p class="lead-text">The Data Science Project Life Cycle is an iterative process of research and discovery that guides a project from start to finish. It is not always a straight line; scientists often move back and forth between tasks.</p>
-            <p><strong>Benefits:</strong> It provides a clear framework, improves communication between teams and customers, uses standardized templates (artifacts), and reduces misunderstandings.</p>
+            <p class="lead-text">The <strong>Data Science Life Cycle</strong> is a structured process that guides a data science project from start to finish. It is a roadmap that helps data scientists organize, develop, and complete a data science project effectively. It is an iterative process of research and discovery that guides data scientists in performing the tasks needed to develop and use predictive models.</p>
+            
+            <h3 style="margin-top: 30px;">Goals of the Data Science Project Life Cycle:</h3>
+            <ul class="styled-list">
+              <li>Providing a clear and organized process for the project.</li>
+              <li>Improving communication between data science teams and customers.</li>
+              <li>Using standardized templates and project documents (artifacts).</li>
+              <li>Making procedures consistent and reducing misunderstandings and confusion.</li>
+            </ul>
           </div>
         `
       },
@@ -324,7 +354,7 @@ const lessonsData = [
         heading: 'Phase 1: Business Requirements',
         content: `
           <div class="section-body">
-            <p class="lead-text">The first and most important phase. The data scientist works closely with customers and stakeholders to clearly understand the business problem.</p>
+            <p class="lead-text">The first and most important phase of a data science project. It focuses on clearly understanding the business problem before collecting or analyzing data. Understand the problem, define the goal, and ask the right questions before working with the data.</p>
             <div class="alert alert-info">
               <div class="alert-icon">🔍</div>
               <div class="alert-content">
@@ -333,19 +363,44 @@ const lessonsData = [
               </div>
             </div>
             
-            <h3 style="margin-top: 30px;">Key Goals:</h3>
+            <h3 style="margin-top: 30px;">Key Activities:</h3>
             <ul class="styled-list">
-              <li>Identify the main problem and root cause.</li>
-              <li><strong>Identify Key Variables:</strong> Determine which specific variables will be the targets of the predictive model. These measure project success.</li>
-              <li><strong>Identify Data Sources:</strong> Determine where the necessary data will come from (what the business has access to vs what needs to be obtained).</li>
-              <li><strong>Ask the right questions:</strong> Determine if you are answering "How much?" (Regression), "Which category?" (Classification), or "Which group?" (Clustering).</li>
+              <li>Understand the business problem</li>
+              <li>Identify the central objectives of the project</li>
+              <li>Identify the variables that need to be predicted</li>
+              <li>Collaborate with stakeholders and ask "Why?"</li>
+              <li>Formulate the questions that data science needs to answer</li>
+            </ul>
+
+            <h3 style="margin-top: 30px;">Important Activities:</h3>
+            <ul class="styled-list">
+              <li><strong>Identify Key Variables:</strong> Determine which specific variables will be the targets of the predictive model.</li>
+              <li><strong>Identify Data Sources:</strong> Determine where the necessary data will come from.</li>
             </ul>
             
             <h3 style="margin-top: 30px;">Phase 1 Deliverables:</h3>
-            <div class="tags-container">
-              <span class="tag">Charter Document (living document)</span>
-              <span class="tag">Data Sources Specification</span>
-              <span class="tag">Data Dictionaries (schemas & diagrams)</span>
+            <div class="step-list">
+              <div class="step-item">
+                <div class="step-number" style="background: var(--info);">1</div>
+                <div class="step-content">
+                  <h4>Charter Document</h4>
+                  <p>A living document that gets updated throughout the project, as new data or requirements arise.</p>
+                </div>
+              </div>
+              <div class="step-item">
+                <div class="step-number" style="background: var(--success);">2</div>
+                <div class="step-content">
+                  <h4>Data Sources</h4>
+                  <p>A document which specifies the original and destination locations of the raw data.</p>
+                </div>
+              </div>
+              <div class="step-item">
+                <div class="step-number" style="background: var(--warning);">3</div>
+                <div class="step-content">
+                  <h4>Data Dictionaries</h4>
+                  <p>Provide descriptions of the data supplied by the client including information about the schema and the entity-relation diagrams.</p>
+                </div>
+              </div>
             </div>
           </div>
         `
@@ -354,28 +409,48 @@ const lessonsData = [
         heading: 'Phase 2: Data Acquisition & Understanding',
         content: `
           <div class="section-body">
-            <p class="lead-text">This phase involves ingesting data from source locations into target locations (like a data warehouse). This is generally done through an automated <strong>ETL pipeline</strong>.</p>
+            <p class="lead-text">Once we have defined the business and its objectives, we need to understand the data and all the different needs. This phase involves <strong>Data Ingestion</strong>—setting up the process of moving data from its source locations to the target locations where you run analytics operations.</p>
             
+            <h3>Key Concepts of Data Ingestion:</h3>
+            <div class="feature-grid">
+              <div class="feature-box">
+                <span class="feature-icon">📥</span>
+                <h4>Source Locations</h4>
+                <p>These are the origins of your data, such as databases, APIs, sensors, or files.</p>
+              </div>
+              <div class="feature-box">
+                <span class="feature-icon">📤</span>
+                <h4>Target Locations</h4>
+                <p>These are destinations like data warehouses, data lakes, or analytics platforms where you perform operations and reporting.</p>
+              </div>
+              <div class="feature-box">
+                <span class="feature-icon">⚙️</span>
+                <h4>Data Pipeline</h4>
+                <p>The automated system that extracts, transforms, and loads (ETL) data from source to target.</p>
+              </div>
+            </div>
+
+            <h3 style="margin-top: 30px;">The ETL 3-Step Process:</h3>
             <div class="step-list">
               <div class="step-item">
                 <div class="step-number">E</div>
                 <div class="step-content">
-                  <h4>Extract</h4>
-                  <p>Pull raw data from multiple sources (MySQL, PostgreSQL, web APIs, Excel, CSVs via Parsers, Web Scraping).</p>
+                  <h4>Extracting</h4>
+                  <p>Extracting data from single or multiple data sources. Pulling raw data from multiple sources (databases, APIs, Excel, CSVs, Web Scraping).</p>
                 </div>
               </div>
               <div class="step-item">
                 <div class="step-number">T</div>
                 <div class="step-content">
-                  <h4>Transform</h4>
-                  <p>Cleanse, format, and structure data as per business logic to make it usable.</p>
+                  <h4>Transforming</h4>
+                  <p>Transforming data as per business logic. It is in itself a two-step process—data cleansing and data manipulation. Cleaning, formatting, and structuring data to make it usable.</p>
                 </div>
               </div>
               <div class="step-item">
                 <div class="step-number">L</div>
                 <div class="step-content">
-                  <h4>Load</h4>
-                  <p>Transfer the processed data into the target environment/repository for analysis.</p>
+                  <h4>Loading</h4>
+                  <p>Loading the previously transformed data into the target data source or data warehouse. Transferring the processed data into the target environment for analysis.</p>
                 </div>
               </div>
             </div>
@@ -383,10 +458,28 @@ const lessonsData = [
             <p style="margin-top:20px;">After ingestion, data scientists <strong>explore and audit the data</strong> to verify its quality using summarization and visualization utilities.</p>
 
             <h3 style="margin-top: 30px;">Phase 2 Deliverables:</h3>
-            <div class="tags-container" style="margin-top: 10px;">
-              <span class="tag">Data Quality Report (data summaries, variable ranking)</span>
-              <span class="tag">Solution Architecture (diagram of data pipeline)</span>
-              <span class="tag">Checkpoint Decision (is value sufficient to continue?)</span>
+            <div class="step-list">
+              <div class="step-item">
+                <div class="step-number" style="background: var(--info);">1</div>
+                <div class="step-content">
+                  <h4>Data Quality Report</h4>
+                  <p>This includes data summaries, the relationship between attribute and target, variable ranking, etc.</p>
+                </div>
+              </div>
+              <div class="step-item">
+                <div class="step-number" style="background: var(--success);">2</div>
+                <div class="step-content">
+                  <h4>Solution Architecture</h4>
+                  <p>Can be in the form of a diagram/description of your data pipeline.</p>
+                </div>
+              </div>
+              <div class="step-item">
+                <div class="step-number" style="background: var(--warning);">3</div>
+                <div class="step-content">
+                  <h4>Checkpoint Decision</h4>
+                  <p>This is used to determine if the value expected is sufficient to continue its pursuit.</p>
+                </div>
+              </div>
             </div>
           </div>
         `
@@ -405,48 +498,201 @@ const lessonsData = [
             <h2>Analytical Precision</h2>
           </div>
           <div class="section-body">
-            <p class="lead-text">Transforming your understanding of the data into a structured mathematical/statistical design. This is where analytical thinking meets precision to choose the optimal features and create an accurate machine learning model.</p>
+            <p class="lead-text"><strong>Data Modeling</strong> is where you transform your understanding of the data into a structured design that defines how information will be organized, processed, and analyzed. This is where analytical thinking meets mathematical precision.</p>
             
-            <h3>Feature Engineering</h3>
-            <p>The art of transforming raw data into meaningful inputs. <em>"Better data beats better algorithms."</em> It includes Inclusion, Aggregation, and Feature Selection.</p>
-            
-            <h4>Feature Selection Methods:</h4>
+            <h3>Key Focus Areas of Data Modeling:</h3>
             <div class="feature-grid">
               <div class="feature-box">
-                <h4>Filter-Based</h4>
-                <p>Selects features using statistical metrics without a predictive model. (e.g., Correlation, Chi-Square, ANOVA). Use case: Quick, simple, high-dimensional data.</p>
+                <span class="feature-icon">🎯</span>
+                <h4>Model Design</h4>
+                <p>You define the mathematical or statistical approach that best fits your goals (e.g., regression, classification, clustering).</p>
               </div>
               <div class="feature-box">
-                <h4>Wrapper-Based</h4>
-                <p>Treats selection as a search problem by training models to evaluate subsets (Recursive Elimination, Forward/Backward Selection). Use case: More accurate but computationally expensive.</p>
+                <span class="feature-icon">🔗</span>
+                <h4>Integration of Prior Knowledge</h4>
+                <p>Everything learned from earlier stages—data sources, dictionaries, and requirements—guides how you structure and relate data entities.</p>
               </div>
               <div class="feature-box">
-                <h4>Embedded</h4>
-                <p>Uses algorithms with built-in feature selection during the training process itself (LASSO/L1, Ridge/L2).</p>
+                <span class="feature-icon">🔄</span>
+                <h4>Iteration and Refinement</h4>
+                <p>As new insights emerge, you adjust the model to improve accuracy and relevance.</p>
               </div>
             </div>
 
-            <h4 style="margin-top: 30px;">Dealing with Data Issues (Transformations):</h4>
+            <h3 style="margin-top: 30px;">Phase 3 Deliverables:</h3>
+            <div class="step-list">
+              <div class="step-item">
+                <div class="step-number" style="background: var(--info);">1</div>
+                <div class="step-content">
+                  <h4>Data Model Diagram</h4>
+                  <p>Visual representation of entities, relationships, and data flow.</p>
+                </div>
+              </div>
+              <div class="step-item">
+                <div class="step-number" style="background: var(--success);">2</div>
+                <div class="step-content">
+                  <h4>Model Specification Document</h4>
+                  <p>Defines algorithms, parameters, and expected outputs.</p>
+                </div>
+              </div>
+              <div class="step-item">
+                <div class="step-number" style="background: var(--warning);">3</div>
+                <div class="step-content">
+                  <h4>Validation Report</h4>
+                  <p>Shows how the model performs against test data and metrics.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        `
+      },
+      {
+        heading: 'Feature Engineering',
+        content: `
+          <div class="section-body">
+            <p class="lead-text"><strong>Feature Engineering</strong> is one of the most critical tasks in the data preparation stage of a machine learning project. It's the art and science of transforming raw data into meaningful inputs called features that help models learn patterns effectively. It involves creating, modifying, and selecting variables (features) that best represent the underlying problem.</p>
+            
+            <h3>Key Activities of Feature Engineering:</h3>
+            <div class="feature-grid">
+              <div class="feature-box">
+                <span class="feature-icon">🔗</span>
+                <h4>Inclusion and Aggregation</h4>
+                <p>Combining raw variables or summarizing data to form new, informative features.</p>
+              </div>
+              <div class="feature-box">
+                <span class="feature-icon">🔄</span>
+                <h4>Transformation</h4>
+                <p>Applying mathematical or statistical operations (like normalization, scaling, or encoding) to make data suitable for algorithms.</p>
+              </div>
+              <div class="feature-box">
+                <span class="feature-icon">✂️</span>
+                <h4>Feature Selection</h4>
+                <p>Identifying which variables are most useful and discarding those that add noise or redundancy.</p>
+              </div>
+              <div class="feature-box">
+                <span class="feature-icon">🏥</span>
+                <h4>Domain Knowledge Application</h4>
+                <p>Leveraging expertise in the subject area to design features that capture real-world relationships.</p>
+              </div>
+            </div>
+
+            <h3 style="margin-top: 30px;">Data Transformation and Outlier Handling:</h3>
+            <div class="feature-grid">
+              <div class="feature-box">
+                <span class="feature-icon">📉</span>
+                <h4>Log Transform</h4>
+                <p>Reduces skewness and compresses large values. Useful for income or population data.</p>
+              </div>
+              <div class="feature-box">
+                <span class="feature-icon">√</span>
+                <h4>Square-root Transformation</h4>
+                <p>Stabilizes variance and reduces impact of outliers. Applied to count data (e.g., number of clicks).</p>
+              </div>
+              <div class="feature-box">
+                <span class="feature-icon">🏷️</span>
+                <h4>Categorical Encoding</h4>
+                <p>Converts non-numeric data into numeric form. One-hot or label encoding for categorical variables.</p>
+              </div>
+              <div class="feature-box">
+                <span class="feature-icon">⚡</span>
+                <h4>Power Functions</h4>
+                <p>Adjusts data distribution using exponents. Helps normalize data for linear models.</p>
+              </div>
+              <div class="feature-box">
+                <span class="feature-icon">📏</span>
+                <h4>Scaling</h4>
+                <p>Standardizes feature ranges for uniformity. Includes Min-max scaling or standardization (z-score).</p>
+              </div>
+            </div>
+
+            <h3 style="margin-top: 30px;">Dealing With Data Issues:</h3>
             <ul class="styled-list">
               <li><strong>Skewed Data:</strong> Adjust distributions using log or power transforms to achieve symmetry.</li>
-              <li><strong>Bias Mitigation:</strong> Ensure data doesn't favor one group unfairly.</li>
-              <li><strong>Binning:</strong> Group continuous values into discrete intervals for easier interpretation.</li>
-              <li><strong>Outlier Detection:</strong> Prevent model bias. Methods include <strong>Trimming</strong> (removing extreme values), <strong>Winsorizing</strong> (capping values at a boundary), and <strong>Imputation</strong> (substituting outliers with median/mean).</li>
+              <li><strong>Bias Mitigation:</strong> Ensures data doesn't favor one group or outcome unfairly.</li>
+              <li><strong>Binning:</strong> Groups continuous values into discrete intervals for easier interpretation.</li>
+              <li><strong>Outlier Detection:</strong> Identifies data points that deviate from normal patterns.</li>
             </ul>
 
-            <h3 style="margin-top: 40px;">Model Training Process</h3>
-            <ul class="styled-list">
-              <li><strong>Split Data:</strong> Randomly divide data into a training set and a test set.</li>
-              <li><strong>Build Models:</strong> Create a baseline model, then increase complexity.</li>
-              <li><strong>Evaluate:</strong> Test algorithms on the test set. Use <strong>Hyperparameter Tuning</strong> to optimize.</li>
-              <li><strong>Prevent Overfitting:</strong> Use techniques like <strong>Cross-Validation</strong> to ensure the model generalizes well.</li>
-            </ul>
-
-            <div class="tags-container" style="margin-top: 20px;">
-              <span class="tag">Deliverable: Data Model Diagram</span>
-              <span class="tag">Deliverable: Model Specification Document</span>
-              <span class="tag">Deliverable: Validation Report</span>
+            <div class="alert alert-warning" style="margin-top: 20px;">
+              <div class="alert-icon">⚠️</div>
+              <div class="alert-content">
+                <strong>About Outliers</strong>
+                <p>Outliers may signal technical glitches or critical incidents and must be treated carefully to avoid distorting model results.</p>
+              </div>
             </div>
+
+            <h3 style="margin-top: 30px;">Common Outlier Treatment Methods:</h3>
+            <div class="step-list">
+              <div class="step-item">
+                <div class="step-number" style="background: var(--accent-primary);">1</div>
+                <div class="step-content">
+                  <h4>Trimming</h4>
+                  <p>Removes extreme values beyond a defined threshold (e.g., top and bottom 1%). Used when outliers are clearly errors or irrelevant to the analysis.</p>
+                </div>
+              </div>
+              <div class="step-item">
+                <div class="step-number" style="background: var(--success);">2</div>
+                <div class="step-content">
+                  <h4>Winsorizing</h4>
+                  <p>Replaces extreme values with the nearest acceptable boundary (e.g., cap at 95th percentile). Used when you want to keep all data points but reduce the influence of extremes.</p>
+                </div>
+              </div>
+              <div class="step-item">
+                <div class="step-number" style="background: var(--info);">3</div>
+                <div class="step-content">
+                  <h4>Imputation</h4>
+                  <p>Substitutes outlier values with estimated ones (mean, median, or model-based). Used when missing or extreme values need to be retained for continuity.</p>
+                </div>
+              </div>
+              <div class="step-item">
+                <div class="step-number" style="background: var(--warning);">4</div>
+                <div class="step-content">
+                  <h4>Transformation</h4>
+                  <p>Applies mathematical functions (log, square-root, etc.) to reduce the impact of outliers. Used when outliers are legitimate but need normalization.</p>
+                </div>
+              </div>
+              <div class="step-item">
+                <div class="step-number" style="background: var(--accent-secondary);">5</div>
+                <div class="step-content">
+                  <h4>Segmentation</h4>
+                  <p>Separates outliers into a different group for specialized analysis. Used when outliers represent meaningful anomalies (e.g., fraud detection).</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        `
+      },
+      {
+        heading: 'Feature Selection Methods',
+        content: `
+          <div class="section-body">
+            <p class="lead-text">Feature Selection is the process of identifying which variables are most useful for your model. There are three main approaches.</p>
+            
+            <h3>1. Filter-Based Method</h3>
+            <p>Features are selected based on statistical metrics without involving a predictive model. Quick, simple, and works well for high-dimensional datasets.</p>
+            <h4 style="margin-top: 15px;">Filter-Based Method Examples:</h4>
+            <ul class="styled-list">
+              <li><strong>Correlation:</strong> Removes features highly correlated with each other.</li>
+              <li><strong>Chi-square Test:</strong> Measures dependence between categorical variables.</li>
+              <li><strong>ANOVA (Analysis of Variance):</strong> Tests whether different groups have significantly different means.</li>
+            </ul>
+
+            <h3 style="margin-top: 30px;">2. Wrapper-Based Method</h3>
+            <p>More accurate but computationally expensive. Treats feature selection as a search problem, evaluating subsets of features by training models and checking performance.</p>
+            <h4 style="margin-top: 15px;">Wrapper-Based Method Examples:</h4>
+            <ul class="styled-list">
+              <li><strong>Recursive Feature Elimination (RFE):</strong> Iteratively removes the least important features.</li>
+              <li><strong>Forward Selection:</strong> Starts with no features, adds them one by one based on performance.</li>
+              <li><strong>Backward Selection:</strong> Starts with all features, removes them step by step.</li>
+            </ul>
+
+            <h3 style="margin-top: 30px;">3. Embedded Method</h3>
+            <p>Efficient and integrated into model training. Uses algorithms that have built-in feature selection during training.</p>
+            <h4 style="margin-top: 15px;">Embedded Method Examples:</h4>
+            <ul class="styled-list">
+              <li><strong>LASSO (L1 Regularization):</strong> Shrinks coefficients, eliminating less important features.</li>
+              <li><strong>Ridge (L2 Regularization):</strong> Reduces coefficient size but keeps all features, controlling overfitting.</li>
+            </ul>
           </div>
         `
       },
@@ -454,7 +700,7 @@ const lessonsData = [
         heading: 'Phase 4: Deployment',
         content: `
           <div class="section-body">
-            <p class="lead-text">The final step where the model moves from development into a production or production-like environment.</p>
+            <p class="lead-text"><strong>Deployment</strong> is the final step in the data science or machine learning project lifecycle. It's where your model moves from the development environment into a production or production-like environment so that real users can interact with it and validate its performance.</p>
             
             <div class="alert alert-success">
               <div class="alert-icon">🚀</div>
@@ -467,8 +713,8 @@ const lessonsData = [
             <h3 style="margin-top: 30px;">Key Activities:</h3>
             <ul class="styled-list">
               <li><strong>Model Operationalization:</strong> Convert the trained model into a deployable format (container or API) ensuring scalability and security.</li>
-              <li><strong>API Exposure:</strong> The model is exposed through an open API interface, allowing integration with Websites, Dashboards, Spreadsheets, and Backend applications.</li>
               <li><strong>User Acceptance Testing (UAT):</strong> End-users validate the model's performance. Inaccuracies are fixed before full release.</li>
+              <li><strong>API Exposure:</strong> The model is exposed through an open API interface, allowing integration with Websites, Dashboards, Spreadsheets, and Backend applications.</li>
             </ul>
             
             <div class="tags-container" style="margin-top: 20px;">
@@ -693,9 +939,14 @@ const lessonsData = [
                 <tbody>
                   <!-- Chapter 1 Terms -->
                   <tr>
+                    <td><strong>Data</strong></td>
+                    <td><span class="tag" style="background: rgba(59,130,246,0.1); color: var(--accent-primary);">Chapter 1</span></td>
+                    <td>A collection of facts, observations, or information about something in the real world.</td>
+                  </tr>
+                  <tr>
                     <td><strong>Big Data</strong></td>
                     <td><span class="tag" style="background: rgba(59,130,246,0.1); color: var(--accent-primary);">Chapter 1</span></td>
-                    <td>Data that is too large, fast, or complex for traditional Relational Databases (RDBMS) to handle efficiently.</td>
+                    <td>Extremely large and complex amounts of data that are difficult to collect, store, manage, and analyze using traditional RDBMS.</td>
                   </tr>
                   <tr>
                     <td><strong>The 4 V's</strong></td>
@@ -705,79 +956,299 @@ const lessonsData = [
                   <tr>
                     <td><strong>Structured Data</strong></td>
                     <td><span class="tag" style="background: rgba(59,130,246,0.1); color: var(--accent-primary);">Chapter 1</span></td>
-                    <td>Information formatted into tables with rows and columns. Easily searchable. (e.g., CSV, SQL).</td>
+                    <td>Data easily analyzed and organized into the database; stored in tables with the same structure (i.e., set of attributes). Benefits: Ease of Use, Scalability, Analytics.</td>
                   </tr>
                   <tr>
                     <td><strong>Unstructured Data</strong></td>
                     <td><span class="tag" style="background: rgba(59,130,246,0.1); color: var(--accent-primary);">Chapter 1</span></td>
-                    <td>Data with no fixed format. Makes up 80-90% of data today. Harder to analyze. (e.g., Emails, Images, Video).</td>
+                    <td>Data that does not follow a fixed or organized format, such as rows and columns in a traditional database. (e.g., text documents, video, audio, email).</td>
                   </tr>
                   <tr>
                     <td><strong>Data Mining</strong></td>
                     <td><span class="tag" style="background: rgba(59,130,246,0.1); color: var(--accent-primary);">Chapter 1</span></td>
-                    <td>The specific process of digging through raw datasets to discover hidden patterns and relationships.</td>
+                    <td>The process of examining large amounts of raw data to discover useful information, patterns, relationships, or trends.</td>
                   </tr>
                   <tr>
                     <td><strong>Data Science</strong></td>
                     <td><span class="tag" style="background: rgba(59,130,246,0.1); color: var(--accent-primary);">Chapter 1</span></td>
-                    <td>The broader study combining Stats, Math, Machine Learning, and Domain Knowledge. <em>Goal: Improving decision making.</em></td>
+                    <td>The study of data to discover useful information, patterns, and insights that can help us understand a situation and make better decisions.</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Statistics</strong></td>
+                    <td><span class="tag" style="background: rgba(59,130,246,0.1); color: var(--accent-primary);">Chapter 1</span></td>
+                    <td>Helps us analyze numbers and determine patterns or trends.</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Mathematics</strong></td>
+                    <td><span class="tag" style="background: rgba(59,130,246,0.1); color: var(--accent-primary);">Chapter 1</span></td>
+                    <td>Provides formulas and methods for analyzing data.</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Data Analysis</strong></td>
+                    <td><span class="tag" style="background: rgba(59,130,246,0.1); color: var(--accent-primary);">Chapter 1</span></td>
+                    <td>Involves examining data to find meaningful information.</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Machine Learning</strong></td>
+                    <td><span class="tag" style="background: rgba(59,130,246,0.1); color: var(--accent-primary);">Chapter 1</span></td>
+                    <td>Allows computers to learn patterns from data and make predictions.</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Domain Knowledge</strong></td>
+                    <td><span class="tag" style="background: rgba(59,130,246,0.1); color: var(--accent-primary);">Chapter 1</span></td>
+                    <td>Deep understanding of a specific industry or field—such as healthcare, finance, or retail—including its rules, processes, and unique language.</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Customer Segmentation</strong></td>
+                    <td><span class="tag" style="background: rgba(59,130,246,0.1); color: var(--accent-primary);">Chapter 1</span></td>
+                    <td>Dividing customers into groups based on similar characteristics, behaviors, or preferences.</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Clustering</strong></td>
+                    <td><span class="tag" style="background: rgba(59,130,246,0.1); color: var(--accent-primary);">Chapter 1</span></td>
+                    <td>In Data Science and Machine Learning, this type of grouping is commonly called clustering.</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Association-Rule Mining</strong></td>
+                    <td><span class="tag" style="background: rgba(59,130,246,0.1); color: var(--accent-primary);">Chapter 1</span></td>
+                    <td>Data science technique used to discover relationships between items that frequently occur together.</td>
                   </tr>
                   <tr>
                     <td><strong>Actionable Insight</strong></td>
                     <td><span class="tag" style="background: rgba(59,130,246,0.1); color: var(--accent-primary);">Chapter 1</span></td>
-                    <td>A finding from data analysis that provides enough information to actually decide what action should be taken.</td>
+                    <td>A finding from data that gives us enough useful information to decide what action should be taken.</td>
                   </tr>
                   <tr>
                     <td><strong>Entity</strong></td>
                     <td><span class="tag" style="background: rgba(59,130,246,0.1); color: var(--accent-primary);">Chapter 1</span></td>
-                    <td>The real-world person, object, or event being studied (The "Who/What").</td>
+                    <td>The real-world person, object, or event that we are interested in studying.</td>
                   </tr>
                   <tr>
                     <td><strong>Attribute / Feature</strong></td>
                     <td><span class="tag" style="background: rgba(59,130,246,0.1); color: var(--accent-primary);">Chapter 1</span></td>
-                    <td>A characteristic describing an entity. Synonymous with "Variable".</td>
+                    <td>An attribute is a characteristic or property that describes an entity.</td>
                   </tr>
                   <tr>
-                    <td><strong>Data Set / Matrix</strong></td>
+                    <td><strong>Data Set</strong></td>
                     <td><span class="tag" style="background: rgba(59,130,246,0.1); color: var(--accent-primary);">Chapter 1</span></td>
-                    <td>An organized collection of data, modeled as an N × M matrix (N = rows/entities, M = columns/attributes).</td>
+                    <td>A collection of related data organized together.</td>
                   </tr>
                   <tr>
                     <td><strong>Analytics Record</strong></td>
                     <td><span class="tag" style="background: rgba(59,130,246,0.1); color: var(--accent-primary);">Chapter 1</span></td>
-                    <td>The consolidated, cleaned master table prepared for analysis. Gathering this takes the most effort.</td>
+                    <td>A well-organized collection of data prepared for analysis. The consolidated, cleaned master table.</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Data Sources</strong></td>
+                    <td><span class="tag" style="background: rgba(59,130,246,0.1); color: var(--accent-primary);">Chapter 1</span></td>
+                    <td>Where all the data in an organization are generated.</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Data Storage</strong></td>
+                    <td><span class="tag" style="background: rgba(59,130,246,0.1); color: var(--accent-primary);">Chapter 1</span></td>
+                    <td>Where the data are stored and processed.</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Applications</strong></td>
+                    <td><span class="tag" style="background: rgba(59,130,246,0.1); color: var(--accent-primary);">Chapter 1</span></td>
+                    <td>Where the data are shared with consumers of these data.</td>
                   </tr>
 
                   <!-- Chapter 2 Terms -->
                   <tr>
+                    <td><strong>Data Science Life Cycle</strong></td>
+                    <td><span class="tag" style="background: rgba(16,185,129,0.1); color: var(--success);">Chapter 2</span></td>
+                    <td>A structured process that guides a data science project from start to finish. An iterative process of research and discovery.</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Business Requirements</strong></td>
+                    <td><span class="tag" style="background: rgba(16,185,129,0.1); color: var(--success);">Chapter 2</span></td>
+                    <td>The first and most important phase. Focuses on clearly understanding the business problem before collecting or analyzing data.</td>
+                  </tr>
+                  <tr>
                     <td><strong>Charter Document</strong></td>
                     <td><span class="tag" style="background: rgba(16,185,129,0.1); color: var(--success);">Chapter 2</span></td>
-                    <td>A living document from the Business Requirements phase that gets updated as new data/requirements arise.</td>
+                    <td>A living document that gets updated throughout the project, as new data or requirements arise.</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Data Sources (Deliverable)</strong></td>
+                    <td><span class="tag" style="background: rgba(16,185,129,0.1); color: var(--success);">Chapter 2</span></td>
+                    <td>A document which specifies the original and destination locations of the raw data.</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Data Dictionaries</strong></td>
+                    <td><span class="tag" style="background: rgba(16,185,129,0.1); color: var(--success);">Chapter 2</span></td>
+                    <td>Provide descriptions of the data supplied by the client including information about the schema and entity-relation diagrams.</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Data Ingestion</strong></td>
+                    <td><span class="tag" style="background: rgba(16,185,129,0.1); color: var(--success);">Chapter 2</span></td>
+                    <td>Setting up the process of moving data from its source locations to the target locations where you run analytics operations.</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Source Locations</strong></td>
+                    <td><span class="tag" style="background: rgba(16,185,129,0.1); color: var(--success);">Chapter 2</span></td>
+                    <td>The origins of your data, such as databases, APIs, sensors, or files.</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Target Locations</strong></td>
+                    <td><span class="tag" style="background: rgba(16,185,129,0.1); color: var(--success);">Chapter 2</span></td>
+                    <td>Destinations like data warehouses, data lakes, or analytics platforms where you perform operations and reporting.</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Data Pipeline</strong></td>
+                    <td><span class="tag" style="background: rgba(16,185,129,0.1); color: var(--success);">Chapter 2</span></td>
+                    <td>The automated system that extracts, transforms, and loads (ETL) data from source to target.</td>
                   </tr>
                   <tr>
                     <td><strong>ETL Pipeline</strong></td>
                     <td><span class="tag" style="background: rgba(16,185,129,0.1); color: var(--success);">Chapter 2</span></td>
-                    <td>Stands for Extract (pull), Transform (clean/format), Load (transfer). The core of Data Acquisition.</td>
+                    <td>Extract (pull from single or multiple sources), Transform (cleanse and manipulate data), Load (transfer to target environment).</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Data Quality Report</strong></td>
+                    <td><span class="tag" style="background: rgba(16,185,129,0.1); color: var(--success);">Chapter 2</span></td>
+                    <td>Includes data summaries, the relationship between attribute and target, variable ranking, etc.</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Solution Architecture</strong></td>
+                    <td><span class="tag" style="background: rgba(16,185,129,0.1); color: var(--success);">Chapter 2</span></td>
+                    <td>Can be in the form of a diagram/description of your data pipeline.</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Checkpoint Decision</strong></td>
+                    <td><span class="tag" style="background: rgba(16,185,129,0.1); color: var(--success);">Chapter 2</span></td>
+                    <td>Used to determine if the value expected is sufficient to continue its pursuit.</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Data Modeling</strong></td>
+                    <td><span class="tag" style="background: rgba(16,185,129,0.1); color: var(--success);">Chapter 2</span></td>
+                    <td>Transforming your understanding of the data into a structured design that defines how information will be organized, processed, and analyzed.</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Model Design</strong></td>
+                    <td><span class="tag" style="background: rgba(16,185,129,0.1); color: var(--success);">Chapter 2</span></td>
+                    <td>Defining the mathematical or statistical approach that best fits your goals (e.g., regression, classification, clustering).</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Data Model Diagram</strong></td>
+                    <td><span class="tag" style="background: rgba(16,185,129,0.1); color: var(--success);">Chapter 2</span></td>
+                    <td>Visual representation of entities, relationships, and data flow.</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Model Specification Document</strong></td>
+                    <td><span class="tag" style="background: rgba(16,185,129,0.1); color: var(--success);">Chapter 2</span></td>
+                    <td>Defines algorithms, parameters, and expected outputs.</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Validation Report</strong></td>
+                    <td><span class="tag" style="background: rgba(16,185,129,0.1); color: var(--success);">Chapter 2</span></td>
+                    <td>Shows how the model performs against test data and metrics.</td>
                   </tr>
                   <tr>
                     <td><strong>Feature Engineering</strong></td>
                     <td><span class="tag" style="background: rgba(16,185,129,0.1); color: var(--success);">Chapter 2</span></td>
-                    <td>The art of transforming raw data into meaningful inputs. Includes feature selection (Filter, Wrapper, Embedded).</td>
+                    <td>The art and science of transforming raw data into meaningful inputs (features) that help models learn patterns effectively.</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Inclusion & Aggregation</strong></td>
+                    <td><span class="tag" style="background: rgba(16,185,129,0.1); color: var(--success);">Chapter 2</span></td>
+                    <td>Combining raw variables or summarizing data to form new, informative features.</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Feature Selection</strong></td>
+                    <td><span class="tag" style="background: rgba(16,185,129,0.1); color: var(--success);">Chapter 2</span></td>
+                    <td>Identifying which variables are most useful and discarding those that add noise or redundancy.</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Log Transform</strong></td>
+                    <td><span class="tag" style="background: rgba(16,185,129,0.1); color: var(--success);">Chapter 2</span></td>
+                    <td>Reduces skewness and compresses large values. Useful for income or population data.</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Square-root Transformation</strong></td>
+                    <td><span class="tag" style="background: rgba(16,185,129,0.1); color: var(--success);">Chapter 2</span></td>
+                    <td>Stabilizes variance and reduces impact of outliers. Applied to count data (e.g., number of clicks).</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Categorical Encoding</strong></td>
+                    <td><span class="tag" style="background: rgba(16,185,129,0.1); color: var(--success);">Chapter 2</span></td>
+                    <td>Converts non-numeric data into numeric form. One-hot or label encoding for categorical variables.</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Power Functions</strong></td>
+                    <td><span class="tag" style="background: rgba(16,185,129,0.1); color: var(--success);">Chapter 2</span></td>
+                    <td>Adjusts data distribution using exponents. Helps normalize data for linear models.</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Scaling</strong></td>
+                    <td><span class="tag" style="background: rgba(16,185,129,0.1); color: var(--success);">Chapter 2</span></td>
+                    <td>Standardizes feature ranges for uniformity. Min-max scaling or standardization (z-score).</td>
                   </tr>
                   <tr>
                     <td><strong>Binning</strong></td>
                     <td><span class="tag" style="background: rgba(16,185,129,0.1); color: var(--success);">Chapter 2</span></td>
-                    <td>A transformation technique that groups continuous values into discrete intervals.</td>
+                    <td>Groups continuous values into discrete intervals for easier interpretation.</td>
                   </tr>
                   <tr>
-                    <td><strong>Outlier Mitigation</strong></td>
+                    <td><strong>Outlier Detection</strong></td>
                     <td><span class="tag" style="background: rgba(16,185,129,0.1); color: var(--success);">Chapter 2</span></td>
-                    <td>Handling extreme values via Trimming (removing), Winsorizing (capping), or Imputation (substituting).</td>
+                    <td>Identifies data points that deviate from normal patterns. May signal technical glitches or critical incidents.</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Trimming</strong></td>
+                    <td><span class="tag" style="background: rgba(16,185,129,0.1); color: var(--success);">Chapter 2</span></td>
+                    <td>Removes extreme values beyond a defined threshold (e.g., top and bottom 1%).</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Winsorizing</strong></td>
+                    <td><span class="tag" style="background: rgba(16,185,129,0.1); color: var(--success);">Chapter 2</span></td>
+                    <td>Replaces extreme values with the nearest acceptable boundary (e.g., cap at 95th percentile).</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Imputation</strong></td>
+                    <td><span class="tag" style="background: rgba(16,185,129,0.1); color: var(--success);">Chapter 2</span></td>
+                    <td>Substitutes outlier values with estimated ones (mean, median, or model-based).</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Segmentation (Outlier)</strong></td>
+                    <td><span class="tag" style="background: rgba(16,185,129,0.1); color: var(--success);">Chapter 2</span></td>
+                    <td>Separates outliers into a different group for specialized analysis (e.g., fraud detection).</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Filter-Based Method</strong></td>
+                    <td><span class="tag" style="background: rgba(16,185,129,0.1); color: var(--success);">Chapter 2</span></td>
+                    <td>Features selected based on statistical metrics without a predictive model. Examples: Correlation, Chi-square Test, ANOVA.</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Wrapper-Based Method</strong></td>
+                    <td><span class="tag" style="background: rgba(16,185,129,0.1); color: var(--success);">Chapter 2</span></td>
+                    <td>More accurate but computationally expensive. Examples: RFE, Forward Selection, Backward Selection.</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Embedded Method</strong></td>
+                    <td><span class="tag" style="background: rgba(16,185,129,0.1); color: var(--success);">Chapter 2</span></td>
+                    <td>Efficient, integrated into model training. Examples: LASSO (L1 Regularization), Ridge (L2 Regularization).</td>
+                  </tr>
+                  <tr>
+                    <td><strong>LASSO (L1)</strong></td>
+                    <td><span class="tag" style="background: rgba(16,185,129,0.1); color: var(--success);">Chapter 2</span></td>
+                    <td>Shrinks coefficients, eliminating less important features.</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Ridge (L2)</strong></td>
+                    <td><span class="tag" style="background: rgba(16,185,129,0.1); color: var(--success);">Chapter 2</span></td>
+                    <td>Reduces coefficient size but keeps all features, controlling overfitting.</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Deployment</strong></td>
+                    <td><span class="tag" style="background: rgba(16,185,129,0.1); color: var(--success);">Chapter 2</span></td>
+                    <td>The final step where your model moves from development into production so real users can interact with it.</td>
                   </tr>
                   <tr>
                     <td><strong>Operationalization</strong></td>
                     <td><span class="tag" style="background: rgba(16,185,129,0.1); color: var(--success);">Chapter 2</span></td>
-                    <td>The final deployment goal: Making the model usable/accessible for end-users via APIs or dashboards.</td>
+                    <td>Making the model usable/accessible for end-users via APIs or dashboards.</td>
                   </tr>
 
                   <!-- Chapter 3 Terms -->
