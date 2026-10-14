@@ -1,1242 +1,3 @@
-  <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Data Science Midterm Reviewer</title>
-    <!-- Google Fonts: Inter -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- Main CSS -->
-    <style>
-/* 
- * Design System Variables
- */
-:root {
-    --bg-primary: #0f172a;
-    --bg-secondary: #1e293b;
-    --bg-glass: rgba(30, 41, 59, 0.78);
-    --bg-glass-border: rgba(255, 255, 255, 0.1);
-    
-    --text-primary: #f8fafc;
-    --text-secondary: #cbd5e1;
-    --text-muted: #94a3b8;
-    
-    --accent-primary: #3b82f6;
-    --accent-secondary: #8b5cf6;
-    --accent-gradient: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-    
-    --success: #10b981;
-    --warning: #f59e0b;
-    --info: #0ea5e9;
-    
-    --font-main: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    
-    --radius-sm: 8px;
-    --radius-md: 12px;
-    --radius-lg: 20px;
-    --radius-full: 9999px;
-    
-    --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.12);
-    --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.22);
-    --shadow-glass: 0 8px 32px 0 rgba(0, 0, 0, 0.28);
-    
-    --transition-fast: 0.2s ease;
-    --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-[data-theme="light"] {
-    --bg-primary: #f1f5f9;
-    --bg-secondary: #ffffff;
-    --bg-glass: rgba(255, 255, 255, 0.9);
-    --bg-glass-border: rgba(15, 23, 42, 0.1);
-    
-    --text-primary: #0f172a;
-    --text-secondary: #334155;
-    --text-muted: #64748b;
-    
-    --shadow-sm: 0 4px 6px -1px rgba(15, 23, 42, 0.06);
-    --shadow-md: 0 10px 15px -3px rgba(15, 23, 42, 0.1);
-    --shadow-glass: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
-}
-
-/* Base Styles */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: var(--font-main);
-    background-color: var(--bg-primary);
-    color: var(--text-primary);
-    line-height: 1.65;
-    overflow-x: hidden;
-    transition: background-color var(--transition-normal), color var(--transition-normal);
-}
-
-body.drawer-open {
-    overflow: hidden;
-}
-
-code {
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-    background: rgba(59, 130, 246, 0.14);
-    color: var(--accent-primary);
-    padding: 2px 6px;
-    border-radius: 6px;
-    font-size: 0.9em;
-}
-
-/* Layout */
-#app {
-    display: flex;
-    height: 100vh;
-    height: 100dvh;
-    overflow: hidden;
-    position: relative;
-}
-
-/* Sidebar Overlay (Mobile) */
-.sidebar-overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(15, 23, 42, 0.65);
-    backdrop-filter: blur(4px);
-    z-index: 90;
-    opacity: 0;
-    transition: opacity var(--transition-normal);
-}
-
-.sidebar-overlay.active {
-    display: block;
-    opacity: 1;
-}
-
-/* Sidebar */
-.sidebar {
-    width: 310px;
-    flex-shrink: 0;
-    background-color: var(--bg-glass);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-right: 1px solid var(--bg-glass-border);
-    display: flex;
-    flex-direction: column;
-    padding: 20px 0;
-    z-index: 100;
-    transition: transform var(--transition-normal);
-}
-
-.sidebar-header {
-    padding: 0 20px 18px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    border-bottom: 1px solid var(--bg-glass-border);
-}
-
-.brand-btn {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    background: transparent;
-    border: none;
-    text-align: left;
-    cursor: pointer;
-    color: inherit;
-    font-family: inherit;
-}
-
-.logo-icon {
-    width: 42px;
-    height: 42px;
-    background: var(--accent-gradient);
-    border-radius: var(--radius-md);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 800;
-    font-size: 1.15rem;
-    color: white;
-    flex-shrink: 0;
-    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
-}
-
-.brand-text h2 {
-    font-size: 1.2rem;
-    font-weight: 700;
-    background: var(--accent-gradient);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    line-height: 1.2;
-}
-
-.brand-text span {
-    font-size: 0.78rem;
-    color: var(--text-muted);
-    font-weight: 500;
-}
-
-.sidebar-search-wrapper {
-    padding: 14px 16px 8px;
-}
-
-.sidebar-search-input {
-    width: 100%;
-    padding: 10px 14px;
-    border-radius: var(--radius-md);
-    border: 1px solid var(--bg-glass-border);
-    background: var(--bg-secondary);
-    color: var(--text-primary);
-    font-family: inherit;
-    font-size: 0.88rem;
-    outline: none;
-    transition: border-color var(--transition-fast);
-}
-
-.sidebar-search-input:focus {
-    border-color: var(--accent-primary);
-}
-
-.nav-menu {
-    list-style: none;
-    padding: 8px 14px 24px;
-    flex: 1;
-    overflow-y: auto;
-}
-
-.nav-chapter {
-    margin-bottom: 20px;
-}
-
-.nav-chapter-title {
-    font-size: 0.78rem;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--text-muted);
-    margin: 8px 0 8px;
-    font-weight: 700;
-    padding: 0 12px;
-}
-
-.nav-chapter-list {
-    list-style: none;
-}
-
-.nav-item {
-    margin-bottom: 4px;
-}
-
-.nav-link {
-    display: block;
-    padding: 11px 14px;
-    border-radius: var(--radius-md);
-    color: var(--text-secondary);
-    text-decoration: none;
-    font-weight: 500;
-    font-size: 0.94rem;
-    transition: all var(--transition-fast);
-    border: 1px solid transparent;
-}
-
-.nav-link:hover {
-    background-color: rgba(59, 130, 246, 0.1);
-    color: var(--accent-primary);
-    transform: translateX(3px);
-}
-
-.nav-link.active {
-    background: var(--accent-gradient);
-    color: white;
-    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
-    border-color: rgba(255, 255, 255, 0.15);
-}
-
-/* Main Content */
-.main-content {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    overflow-y: auto;
-    position: relative;
-    scroll-behavior: smooth;
-    min-width: 0;
-}
-
-.main-content::before, .main-content::after {
-    content: '';
-    position: fixed;
-    border-radius: 50%;
-    z-index: -1;
-    pointer-events: none;
-    filter: blur(100px);
-}
-
-.main-content::before {
-    top: -10%; right: -5%;
-    width: 40vw; height: 40vw;
-    background: rgba(139, 92, 246, 0.12);
-}
-
-.main-content::after {
-    bottom: -10%; left: 5%;
-    width: 35vw; height: 35vw;
-    background: rgba(59, 130, 246, 0.12);
-}
-
-/* Topbar */
-.topbar {
-    padding: 18px 36px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 16px;
-    position: sticky;
-    top: 0;
-    background-color: var(--bg-glass);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-bottom: 1px solid var(--bg-glass-border);
-    z-index: 30;
-}
-
-.topbar-left {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    min-width: 0;
-}
-
-.topbar-title-group {
-    min-width: 0;
-}
-
-.chapter-pill {
-    display: inline-block;
-    font-size: 0.75rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: var(--accent-primary);
-    margin-bottom: 2px;
-}
-
-.topbar h1 {
-    font-size: clamp(1.15rem, 2.2vw, 1.65rem);
-    font-weight: 700;
-    color: var(--text-primary);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.topbar-actions {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    flex-shrink: 0;
-}
-
-.btn-pill {
-    background: rgba(59, 130, 246, 0.12);
-    border: 1px solid rgba(59, 130, 246, 0.3);
-    color: var(--accent-primary);
-    padding: 8px 14px;
-    border-radius: var(--radius-full);
-    font-family: inherit;
-    font-size: 0.88rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all var(--transition-fast);
-}
-
-.btn-pill:hover {
-    background: var(--accent-gradient);
-    color: #ffffff;
-    border-color: transparent;
-}
-
-.btn-icon {
-    background: var(--bg-secondary);
-    border: 1px solid var(--bg-glass-border);
-    color: var(--text-primary);
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    flex-shrink: 0;
-    transition: all var(--transition-fast);
-    box-shadow: var(--shadow-sm);
-}
-
-.btn-icon:hover {
-    color: var(--accent-primary);
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-md);
-}
-
-.btn-icon svg { width: 20px; height: 20px; }
-
-.mobile-only {
-    display: none;
-}
-
-/* Mobile Quick-Switch Horizontal Bar */
-.mobile-pill-bar {
-    padding: 10px 16px;
-    background: var(--bg-secondary);
-    border-bottom: 1px solid var(--bg-glass-border);
-    overflow-x: auto;
-    white-space: nowrap;
-    gap: 8px;
-    scrollbar-width: none;
-}
-
-.mobile-pill-bar::-webkit-scrollbar {
-    display: none;
-}
-
-.mobile-nav-pill {
-    display: inline-block;
-    padding: 7px 14px;
-    border-radius: var(--radius-full);
-    background: var(--bg-primary);
-    border: 1px solid var(--bg-glass-border);
-    color: var(--text-secondary);
-    font-family: inherit;
-    font-size: 0.82rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all var(--transition-fast);
-}
-
-.mobile-nav-pill.active {
-    background: var(--accent-gradient);
-    color: #ffffff;
-    border-color: transparent;
-}
-
-/* Content Container */
-.content-container {
-    padding: 36px;
-    max-width: 1080px;
-    margin: 0 auto;
-    width: 100%;
-}
-
-/* Animations */
-@keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-.animate-fade-in {
-    animation: fadeInUp 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-/* Section Cards */
-.section-card {
-    background: var(--bg-glass);
-    border: 1px solid var(--bg-glass-border);
-    border-radius: var(--radius-lg);
-    margin-bottom: 32px;
-    box-shadow: var(--shadow-glass);
-    opacity: 0;
-    overflow: hidden;
-}
-
-.section-card-header {
-    padding: 28px 32px 16px;
-    border-bottom: 1px solid var(--bg-glass-border);
-}
-
-.section-index-badge {
-    display: inline-block;
-    font-size: 0.75rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--accent-secondary);
-    margin-bottom: 4px;
-}
-
-.section-card-header h2 {
-    font-size: clamp(1.3rem, 2.2vw, 1.7rem);
-    color: var(--text-primary);
-    margin: 0;
-}
-
-/* Self-Contained Thematic Banners */
-.section-banner {
-    width: 100%;
-    min-height: 165px;
-    position: relative;
-    display: flex;
-    align-items: flex-end;
-    padding: 28px 32px;
-    overflow: hidden;
-}
-
-.banner-blue {
-    background: radial-gradient(circle at 85% 20%, rgba(14, 165, 233, 0.45), transparent 55%),
-                linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%);
-}
-
-.banner-purple {
-    background: radial-gradient(circle at 80% 25%, rgba(168, 85, 247, 0.45), transparent 55%),
-                linear-gradient(135deg, #3b0764 0%, #1e1b4b 100%);
-}
-
-.banner-teal {
-    background: radial-gradient(circle at 85% 20%, rgba(16, 185, 129, 0.42), transparent 55%),
-                linear-gradient(135deg, #064e3b 0%, #0f172a 100%);
-}
-
-.banner-indigo {
-    background: radial-gradient(circle at 80% 20%, rgba(99, 102, 241, 0.48), transparent 55%),
-                linear-gradient(135deg, #312e81 0%, #0f172a 100%);
-}
-
-.banner-violet {
-    background: radial-gradient(circle at 85% 25%, rgba(236, 72, 153, 0.38), transparent 55%),
-                linear-gradient(135deg, #4c1d95 0%, #0f172a 100%);
-}
-
-.banner-overlay {
-    position: relative;
-    z-index: 2;
-}
-
-.banner-kicker {
-    display: inline-block;
-    font-size: 0.78rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: rgba(255, 255, 255, 0.85);
-    background: rgba(255, 255, 255, 0.14);
-    padding: 4px 12px;
-    border-radius: var(--radius-full);
-    margin-bottom: 10px;
-}
-
-.section-banner h2 {
-    font-size: clamp(1.45rem, 2.8vw, 2.05rem);
-    color: #ffffff;
-    margin: 0;
-    line-height: 1.25;
-}
-
-.section-body {
-    padding: 28px 32px 32px;
-}
-
-.lead-text {
-    font-size: clamp(1.05rem, 1.5vw, 1.2rem);
-    color: var(--text-primary);
-    font-weight: 400;
-    margin-bottom: 22px;
-    line-height: 1.7;
-}
-
-/* Flow Banner */
-.flow-banner {
-    background: var(--bg-secondary);
-    padding: 18px 20px;
-    border-radius: var(--radius-md);
-    text-align: center;
-    margin: 20px 0;
-    border: 1px solid var(--bg-glass-border);
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    font-weight: 700;
-    color: var(--accent-secondary);
-    font-size: 1.05rem;
-}
-
-.flow-arrow {
-    color: var(--text-muted);
-}
-
-/* Feature Grid */
-.feature-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
-    gap: 20px;
-    margin: 24px 0;
-}
-
-.feature-box {
-    background: var(--bg-secondary);
-    border: 1px solid var(--bg-glass-border);
-    border-radius: var(--radius-md);
-    padding: 22px;
-    transition: transform var(--transition-normal), border-color var(--transition-fast);
-    box-shadow: var(--shadow-sm);
-}
-
-.feature-box:hover {
-    transform: translateY(-3px);
-    border-color: var(--accent-primary);
-}
-
-.feature-icon {
-    font-size: 1.75rem;
-    margin-bottom: 14px;
-    display: inline-block;
-    padding: 10px 12px;
-    background: rgba(59, 130, 246, 0.1);
-    border-radius: var(--radius-md);
-    line-height: 1;
-}
-
-.feature-box h4 {
-    color: var(--text-primary);
-    font-size: 1.12rem;
-    margin-bottom: 8px;
-}
-
-.feature-box p {
-    color: var(--text-secondary);
-    font-size: 0.94rem;
-}
-
-/* Steps Layout */
-.step-list {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    margin: 24px 0;
-}
-
-.step-item {
-    display: flex;
-    background: var(--bg-secondary);
-    border-radius: var(--radius-md);
-    border: 1px solid var(--bg-glass-border);
-    padding: 20px 22px;
-    align-items: flex-start;
-    gap: 18px;
-}
-
-.step-number {
-    background: var(--accent-gradient);
-    color: white;
-    min-width: 40px;
-    height: 40px;
-    padding: 0 8px;
-    border-radius: var(--radius-full);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 700;
-    font-size: 0.95rem;
-    flex-shrink: 0;
-    box-shadow: 0 4px 10px rgba(59,130,246,0.3);
-}
-
-.step-content {
-    min-width: 0;
-    flex: 1;
-}
-
-.step-content h4 {
-    font-size: 1.12rem;
-    margin-bottom: 6px;
-    color: var(--text-primary);
-}
-
-.step-content p {
-    color: var(--text-secondary);
-    font-size: 0.95rem;
-}
-
-/* Tags & Badges */
-.tags-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin: 16px 0;
-}
-
-.tag {
-    background: rgba(139, 92, 246, 0.14);
-    color: var(--accent-secondary);
-    padding: 6px 13px;
-    border-radius: var(--radius-full);
-    font-size: 0.86rem;
-    font-weight: 600;
-    border: 1px solid rgba(139, 92, 246, 0.3);
-    display: inline-block;
-}
-
-.tag-ch1 {
-    background: rgba(59, 130, 246, 0.12);
-    color: var(--accent-primary);
-    border-color: rgba(59, 130, 246, 0.3);
-}
-
-.tag-ch2 {
-    background: rgba(16, 185, 129, 0.12);
-    color: var(--success);
-    border-color: rgba(16, 185, 129, 0.3);
-}
-
-.tag-ch3 {
-    background: rgba(139, 92, 246, 0.14);
-    color: var(--accent-secondary);
-    border-color: rgba(139, 92, 246, 0.3);
-}
-
-/* Alerts */
-.alert {
-    padding: 18px 22px;
-    border-radius: var(--radius-md);
-    margin: 22px 0;
-    display: flex;
-    gap: 14px;
-    align-items: flex-start;
-}
-
-.alert-icon {
-    font-size: 1.4rem;
-    line-height: 1.2;
-    flex-shrink: 0;
-}
-
-.alert-content {
-    min-width: 0;
-    flex: 1;
-}
-
-.alert-content strong {
-    display: block;
-    margin-bottom: 4px;
-    font-size: 1.05rem;
-}
-
-.alert-info {
-    background: rgba(14, 165, 233, 0.1);
-    border: 1px solid rgba(14, 165, 233, 0.3);
-    color: var(--info);
-}
-.alert-info p { color: var(--text-primary); }
-
-.alert-success {
-    background: rgba(16, 185, 129, 0.1);
-    border: 1px solid rgba(16, 185, 129, 0.3);
-    color: var(--success);
-}
-.alert-success p { color: var(--text-primary); }
-
-.alert-warning {
-    background: rgba(245, 158, 11, 0.1);
-    border: 1px solid rgba(245, 158, 11, 0.3);
-    color: var(--warning);
-}
-.alert-warning p { color: var(--text-primary); }
-
-/* Typography */
-h3 {
-    font-size: clamp(1.18rem, 1.8vw, 1.4rem);
-    margin: 28px 0 12px;
-    color: var(--text-primary);
-}
-
-h4 {
-    color: var(--text-primary);
-}
-
-ul.styled-list {
-    list-style: none;
-    margin: 12px 0;
-}
-
-ul.styled-list li {
-    position: relative;
-    padding-left: 24px;
-    margin-bottom: 10px;
-    color: var(--text-secondary);
-    font-size: 0.95rem;
-}
-
-ul.styled-list li::before {
-    content: '→';
-    position: absolute;
-    left: 0;
-    color: var(--accent-primary);
-    font-weight: bold;
-}
-
-/* Welcome Screen */
-.welcome-screen {
-    text-align: center;
-    padding: 36px 12px 48px;
-}
-
-.welcome-badge {
-    display: inline-block;
-    background: rgba(59, 130, 246, 0.14);
-    color: var(--accent-primary);
-    border: 1px solid rgba(59, 130, 246, 0.3);
-    padding: 6px 16px;
-    border-radius: var(--radius-full);
-    font-size: 0.82rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    margin-bottom: 16px;
-}
-
-.welcome-screen h2 {
-    font-size: clamp(2rem, 4.5vw, 3rem);
-    margin-bottom: 16px;
-    background: var(--accent-gradient);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    line-height: 1.2;
-}
-
-.welcome-screen > p {
-    font-size: clamp(1rem, 1.5vw, 1.18rem);
-    color: var(--text-secondary);
-    max-width: 680px;
-    margin: 0 auto 36px;
-}
-
-.hero-stats {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-    gap: 18px;
-    max-width: 780px;
-    margin: 0 auto 48px;
-}
-
-.stat-card {
-    background: var(--bg-secondary);
-    border: 1px solid var(--bg-glass-border);
-    padding: 24px 16px;
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-sm);
-    transition: transform var(--transition-fast);
-}
-
-.stat-card:hover {
-    transform: translateY(-4px);
-    border-color: var(--accent-secondary);
-}
-
-.stat-card h3 {
-    font-size: 2.3rem;
-    margin: 0 0 4px;
-    color: var(--text-primary);
-}
-
-.stat-card p {
-    font-size: 0.92rem;
-    color: var(--text-muted);
-    font-weight: 600;
-}
-
-.welcome-modules-section {
-    text-align: left;
-    margin-top: 24px;
-}
-
-.welcome-modules-section h3 {
-    text-align: center;
-    margin-bottom: 24px;
-}
-
-.module-launch-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
-    gap: 18px;
-}
-
-.module-launch-card {
-    background: var(--bg-secondary);
-    border: 1px solid var(--bg-glass-border);
-    border-radius: var(--radius-md);
-    padding: 22px;
-    text-align: left;
-    font-family: inherit;
-    color: inherit;
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    transition: all var(--transition-fast);
-    box-shadow: var(--shadow-sm);
-}
-
-.module-launch-card:hover {
-    transform: translateY(-4px);
-    border-color: var(--accent-primary);
-    box-shadow: var(--shadow-md);
-}
-
-.module-card-chapter {
-    font-size: 0.75rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: var(--accent-primary);
-}
-
-.module-launch-card h4 {
-    font-size: 1.12rem;
-    color: var(--text-primary);
-}
-
-.module-launch-card p {
-    font-size: 0.88rem;
-    color: var(--text-muted);
-    flex: 1;
-}
-
-.module-card-cta {
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: var(--accent-secondary);
-    margin-top: 6px;
-}
-
-/* Lesson Footer Pager */
-.lesson-pager {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 16px;
-    margin-top: 12px;
-    padding-bottom: 24px;
-}
-
-.pager-btn {
-    background: var(--bg-secondary);
-    border: 1px solid var(--bg-glass-border);
-    border-radius: var(--radius-md);
-    padding: 18px 22px;
-    font-family: inherit;
-    color: var(--text-primary);
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    transition: all var(--transition-fast);
-    box-shadow: var(--shadow-sm);
-}
-
-.pager-prev { text-align: left; }
-.pager-next { text-align: right; }
-
-.pager-btn:hover:not(:disabled) {
-    border-color: var(--accent-primary);
-    transform: translateY(-2px);
-}
-
-.pager-btn:disabled {
-    opacity: 0.45;
-    cursor: not-allowed;
-}
-
-.pager-label {
-    font-size: 0.78rem;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: var(--accent-primary);
-    font-weight: 700;
-}
-
-.pager-btn strong {
-    font-size: 1rem;
-}
-
-/* Glossary Search & Filter Controls */
-.glossary-controls {
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-    margin-bottom: 20px;
-}
-
-.glossary-search-input {
-    width: 100%;
-    padding: 13px 16px;
-    border-radius: var(--radius-md);
-    border: 1px solid var(--bg-glass-border);
-    background: var(--bg-secondary);
-    color: var(--text-primary);
-    font-family: inherit;
-    font-size: 0.96rem;
-    outline: none;
-    transition: border-color var(--transition-fast);
-}
-
-.glossary-search-input:focus {
-    border-color: var(--accent-primary);
-}
-
-.glossary-filter-pills {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-}
-
-.glossary-filter-btn {
-    padding: 8px 16px;
-    border-radius: var(--radius-full);
-    border: 1px solid var(--bg-glass-border);
-    background: var(--bg-secondary);
-    color: var(--text-secondary);
-    font-family: inherit;
-    font-size: 0.86rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all var(--transition-fast);
-}
-
-.glossary-filter-btn.active,
-.glossary-filter-btn:hover {
-    background: var(--accent-gradient);
-    color: #ffffff;
-    border-color: transparent;
-}
-
-/* Table Styles */
-.table-responsive {
-    width: 100%;
-    overflow-x: auto;
-}
-
-.data-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 8px 0 24px;
-    background: var(--bg-secondary);
-    border-radius: var(--radius-md);
-    overflow: hidden;
-    border: 1px solid var(--bg-glass-border);
-    box-shadow: var(--shadow-sm);
-}
-
-.data-table th, .data-table td {
-    padding: 15px 18px;
-    text-align: left;
-    border-bottom: 1px solid var(--bg-glass-border);
-}
-
-.data-table th {
-    background: rgba(59, 130, 246, 0.1);
-    color: var(--accent-primary);
-    font-weight: 700;
-    font-size: 0.95rem;
-}
-
-.data-table td {
-    color: var(--text-secondary);
-    vertical-align: top;
-    font-size: 0.94rem;
-}
-
-.data-table tr:last-child td {
-    border-bottom: none;
-}
-
-.data-table tr:hover td {
-    background: rgba(59, 130, 246, 0.04);
-}
-
-/* Tablet & Mobile Responsive Breakpoints */
-@media (max-width: 768px) {
-    .mobile-only {
-        display: flex;
-    }
-
-    .sidebar {
-        position: fixed;
-        top: 0;
-        left: 0;
-        bottom: 0;
-        width: min(84vw, 310px);
-        transform: translateX(-105%);
-        box-shadow: var(--shadow-glass);
-    }
-
-    .sidebar.open {
-        transform: translateX(0);
-    }
-
-    .topbar {
-        padding: 12px 16px;
-    }
-
-    .btn-pill span {
-        font-size: 0.8rem;
-    }
-
-    .content-container {
-        padding: 16px;
-    }
-
-    .section-card {
-        margin-bottom: 20px;
-        border-radius: var(--radius-md);
-    }
-
-    .section-card-header {
-        padding: 20px 18px 14px;
-    }
-
-    .section-banner {
-        min-height: 130px;
-        padding: 20px 18px;
-    }
-
-    .section-body {
-        padding: 20px 18px 22px;
-    }
-
-    .feature-box {
-        padding: 18px;
-    }
-
-    .step-item {
-        padding: 16px;
-        gap: 14px;
-    }
-
-    .alert {
-        padding: 16px;
-    }
-
-    .welcome-screen {
-        padding: 20px 4px 32px;
-    }
-}
-
-/* Mobile Stacked Table Cards on Small Phones */
-@media (max-width: 600px) {
-    .step-item {
-        flex-direction: column;
-        gap: 10px;
-    }
-
-    .pager-next {
-        text-align: left;
-    }
-
-    .data-table thead {
-        display: none;
-    }
-
-    .data-table,
-    .data-table tbody,
-    .data-table tr,
-    .data-table td {
-        display: block;
-        width: 100%;
-    }
-
-    .data-table tr {
-        padding: 14px 16px;
-        border-bottom: 1px solid var(--bg-glass-border);
-    }
-
-    .data-table td {
-        padding: 4px 0;
-        border: none;
-    }
-
-    .data-table td:first-child {
-        font-size: 1.05rem;
-        color: var(--text-primary);
-    }
-}
-
-</style>
-</head>
-<body>
-    <div id="app">
-        <!-- Mobile Sidebar Backdrop -->
-        <div id="sidebar-overlay" class="sidebar-overlay" aria-hidden="true"></div>
-
-        <!-- Sidebar Navigation -->
-        <nav id="sidebar" class="sidebar" aria-label="Course Navigation">
-            <div class="sidebar-header">
-                <button id="home-btn" class="brand-btn" type="button" aria-label="Return to Welcome Screen">
-                    <div class="logo-icon">DS</div>
-                    <div class="brand-text">
-                        <h2>DataSci Reviewer</h2>
-                        <span>Midterm Study Guide</span>
-                    </div>
-                </button>
-                <button id="sidebar-close" class="btn-icon mobile-only" type="button" aria-label="Close Navigation Menu">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <line x1="18" y1="6" x2="6" y2="18"></line>
-                        <line x1="6" y1="6" x2="18" y2="18"></line>
-                    </svg>
-                </button>
-            </div>
-            <div class="sidebar-search-wrapper">
-                <input type="search" id="nav-search" class="sidebar-search-input" placeholder="Filter lessons or topics..." aria-label="Filter lessons">
-            </div>
-            <div id="nav-menu" class="nav-menu">
-                <!-- Dynamically populated via JS -->
-            </div>
-        </nav>
-
-        <!-- Main Content Area -->
-        <main id="main-scroll" class="main-content">
-            <header class="topbar">
-                <div class="topbar-left">
-                    <button id="menu-toggle" class="btn-icon mobile-only" type="button" aria-label="Open Navigation Menu">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <line x1="3" y1="12" x2="21" y2="12"></line>
-                            <line x1="3" y1="6" x2="21" y2="6"></line>
-                            <line x1="3" y1="18" x2="21" y2="18"></line>
-                        </svg>
-                    </button>
-                    <div class="topbar-title-group">
-                        <span id="lesson-chapter-badge" class="chapter-pill">Overview</span>
-                        <h1 id="lesson-title">Welcome to Data Science Review</h1>
-                    </div>
-                </div>
-                <div class="topbar-actions">
-                    <button id="quick-glossary-btn" class="btn-pill" type="button" title="Jump to Master Glossary">
-                        <span>📖 Glossary</span>
-                    </button>
-                    <button id="theme-toggle" class="btn-icon" type="button" aria-label="Toggle Light/Dark Theme">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-                        </svg>
-                    </button>
-                </div>
-            </header>
-
-            <!-- Mobile Horizontal Quick-Navigation Bar -->
-            <div id="mobile-pill-bar" class="mobile-pill-bar mobile-only" aria-label="Quick Lesson Switcher">
-                <!-- Dynamically populated via JS -->
-            </div>
-            
-            <div id="content-container" class="content-container">
-                <!-- Dynamically populated via JS -->
-            </div>
-        </main>
-    </div>
-
-    <!-- Data and Logic -->
-    <script>
 const lessonsData = [
   {
     chapter: 'Chapter 1: Intro to Data Science',
@@ -2481,9 +1242,9 @@ const lessonsData = [
             <p class="lead-text">Complete reference table of all definitions, deliverables, R functions, and statistical concepts across Lessons 1, 2, and 3. Use the search box or chapter pills below to filter instantaneously.</p>
             
             <div class="glossary-controls">
-              <input type="search" id="glossary-search" class="glossary-search-input" placeholder="Search any term, function, or definition (e.g., Winsorizing, dplyr, b1, Charter)..." aria-label="Search glossary terms">
+              <input type="search" id="glossary-search" class="glossary-search-input" placeholder="Search terms, R functions, or definitions..." aria-label="Search glossary terms">
               <div class="glossary-filter-pills" role="group" aria-label="Filter glossary by chapter">
-                <button type="button" class="glossary-filter-btn active" data-chapter="all">All Chapters</button>
+                <button type="button" class="glossary-filter-btn active" data-chapter="all">All</button>
                 <button type="button" class="glossary-filter-btn" data-chapter="Chapter 1">Chapter 1</button>
                 <button type="button" class="glossary-filter-btn" data-chapter="Chapter 2">Chapter 2</button>
                 <button type="button" class="glossary-filter-btn" data-chapter="Chapter 3">Chapter 3</button>
@@ -3035,330 +1796,660 @@ const lessonsData = [
   }
 ];
 
+const quizData = [
+  // CHAPTER 1: INTRO TO DATA SCIENCE (Questions 1 - 16)
+  {
+    id: 1,
+    chapter: 'Chapter 1',
+    question: 'What does Big Data refer to in Data Science?',
+    options: [
+      'Any dataset stored inside a standard Microsoft Excel worksheet',
+      'Extremely large and complex amounts of data that are difficult to collect, store, manage, and analyze using traditional RDBMS',
+      'A small relational table where every row has fewer than ten attributes',
+      'Data that can only be processed manually without computers'
+    ],
+    correct: 1,
+    explanation: 'Big Data refers to extremely large and complex amounts of data that traditional Relational Database Management Systems (RDBMS) like MySQL or Oracle struggle to collect, store, manage, and analyze efficiently.'
+  },
+  {
+    id: 2,
+    chapter: 'Chapter 1',
+    question: 'Which of the Four V\'s of Big Data answers the question: "How much data is there?"',
+    options: [
+      'Velocity',
+      'Variety',
+      'Volume',
+      'Veracity'
+    ],
+    correct: 2,
+    explanation: 'Volume refers to the sheer amount or size of data generated and collected by an organization ("How much data is there?").'
+  },
+  {
+    id: 3,
+    chapter: 'Chapter 1',
+    question: 'Which of the Four V\'s of Big Data refers to the speed at which new data is generated and flows into an organization?',
+    options: [
+      'Velocity',
+      'Veracity',
+      'Volume',
+      'Variety'
+    ],
+    correct: 0,
+    explanation: 'Velocity means "at what speed is new data generated?"—such as real-time sensor streams, live video, or rapid social media activity.'
+  },
+  {
+    id: 4,
+    chapter: 'Chapter 1',
+    question: 'Text documents, video, audio, email, and stock ticker data existing alongside numeric database tables illustrate which V of Big Data?',
+    options: [
+      'Veracity',
+      'Volume',
+      'Velocity',
+      'Variety'
+    ],
+    correct: 3,
+    explanation: 'Variety means "how diverse are different types of data?" It encompasses both structured numeric tables and unstructured formats like text, video, audio, email, and stock ticker data.'
+  },
+  {
+    id: 5,
+    chapter: 'Chapter 1',
+    question: 'In the Four V\'s of Big Data, what does Veracity measure?',
+    options: [
+      'How fast data packets travel across a network',
+      'How accurate, trustworthy, and reliable the data is',
+      'How many terabytes of storage are required',
+      'How many columns exist in a relational table'
+    ],
+    correct: 1,
+    explanation: 'Veracity answers "how accurate is the data?" It focuses on the quality, trustworthiness, and reliability of the data source.'
+  },
+  {
+    id: 6,
+    chapter: 'Chapter 1',
+    question: 'Which statement best defines Structured Data?',
+    options: [
+      'Data that does not follow any fixed format, such as raw audio recordings',
+      'Data that can be stored in a table where every instance has the same structure (set of attributes)',
+      'Data that cannot be searched or filtered using SQL',
+      'Multimedia files that make up 80–90% of all organizational data'
+    ],
+    correct: 1,
+    explanation: 'Structured Data is easily analyzed and organized in a database—typically stored in a table where every instance (row) shares the exact same structure (set of attributes).'
+  },
+  {
+    id: 7,
+    chapter: 'Chapter 1',
+    question: 'What are the three main benefits of Structured Data highlighted in your lecture notes?',
+    options: [
+      'Volume, Velocity, and Variety',
+      'Extracting, Transforming, and Loading',
+      'Ease of Use, Scalability, and Analytics',
+      'Trimming, Winsorizing, and Imputation'
+    ],
+    correct: 2,
+    explanation: 'The three core benefits of Structured Data are Ease of Use (easy to find, add, update, or delete), Scalability (easily expanded by adding storage), and Analytics (ready for SQL querying and ML models).'
+  },
+  {
+    id: 8,
+    chapter: 'Chapter 1',
+    question: 'Which of the following is an example of Unstructured Data?',
+    options: [
+      'A relational SQL table of student IDs and numerical GPAs',
+      'Video recordings, audio files, emails, and text documents that do not follow a fixed row-and-column format',
+      'An N × M data matrix with uniform numeric attributes',
+      'A standardized database schema with primary keys'
+    ],
+    correct: 1,
+    explanation: 'Unstructured Data does not follow a fixed row-and-column format in a traditional database. Examples include text documents, video, audio, email, and social media posts.'
+  },
+  {
+    id: 9,
+    chapter: 'Chapter 1',
+    question: 'What is the process of examining large amounts of raw data ("digging through the mountain") to discover useful information, patterns, relationships, or trends?',
+    options: [
+      'Data Ingestion',
+      'Data Mining',
+      'Categorical Encoding',
+      'Model Operationalization'
+    ],
+    correct: 1,
+    explanation: 'Data Mining is the specific process of examining large amounts of raw data to uncover useful patterns, relationships, or trends.'
+  },
+  {
+    id: 10,
+    chapter: 'Chapter 1',
+    question: 'What is the ultimate goal of Data Science across business functions?',
+    options: [
+      'Collecting as many terabytes of raw uncleaned data as possible',
+      'Replacing all domain experts with automated scripts',
+      'Improving decision making through useful information, patterns, and insights from data',
+      'Writing code exclusively in compiled languages'
+    ],
+    correct: 2,
+    explanation: 'Data Science is the study of data to discover useful information, patterns, and insights that help us understand a situation and make better decisions.'
+  },
+  {
+    id: 11,
+    chapter: 'Chapter 1',
+    question: 'Among the fields combined in Data Science, which one provides a deep understanding of a specific industry (such as healthcare, finance, or retail), including its rules, processes, and unique language?',
+    options: [
+      'Mathematics',
+      'Domain Knowledge',
+      'Machine Learning',
+      'Statistics'
+    ],
+    correct: 1,
+    explanation: 'Domain Knowledge is the deep understanding of a specific industry or field—such as healthcare, finance, or retail—including its rules, workflows, and terminology.'
+  },
+  {
+    id: 12,
+    chapter: 'Chapter 1',
+    question: 'Dividing customers into groups such as "Budget Shoppers", "Premium Shoppers", and "Occasional Shoppers" based on similar characteristics, behaviors, or preferences is called:',
+    options: [
+      'Association-Rule Mining',
+      'Customer Segmentation',
+      'Winsorizing',
+      'Forward Selection'
+    ],
+    correct: 1,
+    explanation: 'Customer Segmentation is the practice of dividing customers into groups based on shared characteristics, behaviors, or preferences.'
+  },
+  {
+    id: 13,
+    chapter: 'Chapter 1',
+    question: 'In Data Science and Machine Learning, what is the common term for grouping entities that behave similarly without predefined labels?',
+    options: [
+      'Clustering',
+      'Simple Linear Regression',
+      'Trimming',
+      'Dummy Coding'
+    ],
+    correct: 0,
+    explanation: 'In Data Science and Machine Learning, grouping entities based on similar characteristics or behaviors is commonly called clustering.'
+  },
+  {
+    id: 14,
+    chapter: 'Chapter 1',
+    question: 'A supermarket discovers that customers who buy coffee frequently also buy biscuits in the same transaction. Which data science technique discovers such item relationships?',
+    options: [
+      'Recursive Feature Elimination (RFE)',
+      'Association-Rule Mining',
+      'LASSO Regularization',
+      'Log Transformation'
+    ],
+    correct: 1,
+    explanation: 'Association-Rule Mining (often used in market basket analysis) discovers relationships between items that frequently occur together.'
+  },
+  {
+    id: 15,
+    chapter: 'Chapter 1',
+    question: 'What makes a finding from data an "Actionable Insight"?',
+    options: [
+      'It is stored in an unstructured format',
+      'It gives us enough useful information to decide what specific action should be taken',
+      'It contains at least one million rows of raw observations',
+      'It was generated without any statistical analysis'
+    ],
+    correct: 1,
+    explanation: 'An Actionable Insight is a finding from data that provides enough useful information to decide what concrete action should be taken (DATA → ANALYSIS → INSIGHT → DECISION).'
+  },
+  {
+    id: 16,
+    chapter: 'Chapter 1',
+    question: 'What do we call the well-organized, cleaned master collection of data prepared specifically for analysis (where rows are Entities and columns are Attributes)?',
+    options: [
+      'Charter Document',
+      'Analytics Record',
+      'Status Dashboard',
+      'Source Location'
+    ],
+    correct: 1,
+    explanation: 'An Analytics Record is a well-organized collection of data prepared for analysis after resolving missing values, duplicates, and formatting issues.'
+  },
 
-document.addEventListener('DOMContentLoaded', () => {
-    const navMenu = document.getElementById('nav-menu');
-    const mobilePillBar = document.getElementById('mobile-pill-bar');
-    const contentContainer = document.getElementById('content-container');
-    const lessonTitle = document.getElementById('lesson-title');
-    const lessonChapterBadge = document.getElementById('lesson-chapter-badge');
-    const themeToggle = document.getElementById('theme-toggle');
-    const menuToggle = document.getElementById('menu-toggle');
-    const sidebarClose = document.getElementById('sidebar-close');
-    const sidebar = document.getElementById('sidebar');
-    const sidebarOverlay = document.getElementById('sidebar-overlay');
-    const homeBtn = document.getElementById('home-btn');
-    const quickGlossaryBtn = document.getElementById('quick-glossary-btn');
-    const navSearch = document.getElementById('nav-search');
-    const mainScroll = document.getElementById('main-scroll');
+  // CHAPTER 2: DATA SCIENCE LIFE CYCLE (Questions 17 - 34)
+  {
+    id: 17,
+    chapter: 'Chapter 2',
+    question: 'Which of the following is NOT one of the stated goals of the Data Science Project Life Cycle?',
+    options: [
+      'Providing a clear and organized process for the project',
+      'Improving communication between data science teams and customers',
+      'Using standardized templates and project documents (artifacts)',
+      'Skipping business understanding to start coding models immediately'
+    ],
+    correct: 3,
+    explanation: 'The Data Science Life Cycle aims to provide a clear process, improve team-customer communication, use standardized artifacts, and make procedures consistent to reduce confusion—never to skip business understanding.'
+  },
+  {
+    id: 18,
+    chapter: 'Chapter 2',
+    question: 'What is the first and most important phase of a data science project?',
+    options: [
+      'Data Modeling',
+      'Business Requirements',
+      'Deployment',
+      'Feature Engineering'
+    ],
+    correct: 1,
+    explanation: 'Phase 1: Business Requirements is the first and most important phase. It focuses on clearly understanding the business problem, defining the goal, and asking the right questions before working with data.'
+  },
+  {
+    id: 19,
+    chapter: 'Chapter 2',
+    question: 'Which two tasks are highlighted as the "Important Activities" during the Business Requirements phase?',
+    options: [
+      'Identify key variables and Identify data sources',
+      'Winsorizing outliers and Scaling features',
+      'Containerizing APIs and Running User Acceptance Testing',
+      'Writing R scripts and Running ANOVA tables'
+    ],
+    correct: 0,
+    explanation: 'The two Important Activities in Phase 1 (Business Requirements) are identifying key variables (targets to predict) and identifying data sources.'
+  },
+  {
+    id: 20,
+    chapter: 'Chapter 2',
+    question: 'Which Phase 1 (Business Requirements) deliverable is described as "a living document that gets updated throughout the project, as new data or requirements arise"?',
+    options: [
+      'Validation Report',
+      'Charter Document',
+      'Data Quality Report',
+      'Data Dictionary'
+    ],
+    correct: 1,
+    explanation: 'The Charter Document is a living document created in Phase 1 that gets updated throughout the lifecycle as new data or requirements emerge.'
+  },
+  {
+    id: 21,
+    chapter: 'Chapter 2',
+    question: 'Which Phase 1 deliverable provides descriptions of the data supplied by the client, including information about the schema and entity-relation diagrams?',
+    options: [
+      'Data Dictionaries',
+      'Checkpoint Decision',
+      'Status Dashboard',
+      'Model Specification Document'
+    ],
+    correct: 0,
+    explanation: 'Data Dictionaries provide descriptions of client-supplied data, including schema details and entity-relation diagrams.'
+  },
+  {
+    id: 22,
+    chapter: 'Chapter 2',
+    question: 'In Phase 2 (Data Acquisition & Understanding), what term refers to setting up the process of moving data from its source locations to target locations for analytics?',
+    options: [
+      'Data Ingestion',
+      'Feature Selection',
+      'Dummy Coding',
+      'Bias Mitigation'
+    ],
+    correct: 0,
+    explanation: 'Data Ingestion is the process of moving data from its Source Locations (databases, APIs, sensors, files) to Target Locations (data warehouses, data lakes, analytics platforms) via a Data Pipeline.'
+  },
+  {
+    id: 23,
+    chapter: 'Chapter 2',
+    question: 'In the ETL 3-Step Process, which step is itself a two-step process consisting of data cleansing and data manipulation as per business logic?',
+    options: [
+      'Extracting',
+      'Transforming',
+      'Loading',
+      'Operationalizing'
+    ],
+    correct: 1,
+    explanation: 'Transforming transforms data according to business logic and is a two-step process: data cleansing and data manipulation (cleaning, formatting, and structuring data to make it usable).'
+  },
+  {
+    id: 24,
+    chapter: 'Chapter 2',
+    question: 'Which Phase 2 deliverable is used to determine whether the expected value of the project is sufficient to continue pursuing it?',
+    options: [
+      'Data Quality Report',
+      'Solution Architecture',
+      'A Checkpoint Decision',
+      'Data Model Diagram'
+    ],
+    correct: 2,
+    explanation: 'A Checkpoint Decision is a Phase 2 deliverable used to evaluate whether the expected business value justifies continuing the project.'
+  },
+  {
+    id: 25,
+    chapter: 'Chapter 2',
+    question: 'What are the three Key Focus Areas of Phase 3 (Data Modeling)?',
+    options: [
+      'Extracting, Transforming, and Loading',
+      'Model Design, Integration of Prior Knowledge, and Iteration and Refinement',
+      'Filter-Based, Wrapper-Based, and Embedded Methods',
+      'Split, Apply, and Combine'
+    ],
+    correct: 1,
+    explanation: 'The three Key Focus Areas of Data Modeling are Model Design, Integration of Prior Knowledge, and Iteration and Refinement.'
+  },
+  {
+    id: 26,
+    chapter: 'Chapter 2',
+    question: 'Which Phase 3 (Data Modeling) deliverable defines the algorithms, parameters, and expected outputs, while another shows how the model performs against test data and metrics?',
+    options: [
+      'Charter Document and Data Dictionary',
+      'Model Specification Document and Validation Report',
+      'Data Quality Report and Checkpoint Decision',
+      'Status Dashboard and API Exposure'
+    ],
+    correct: 1,
+    explanation: 'In Phase 3, the Model Specification Document defines algorithms, parameters, and expected outputs, while the Validation Report shows how the model performs against test data and metrics.'
+  },
+  {
+    id: 27,
+    chapter: 'Chapter 2',
+    question: 'In Feature Engineering, what is the activity of combining raw variables or summarizing data to form new, informative features?',
+    options: [
+      'Inclusion and Aggregation',
+      'Trimming',
+      'Backward Selection',
+      'API Exposure'
+    ],
+    correct: 0,
+    explanation: 'Inclusion and Aggregation is the Feature Engineering activity of combining raw variables or summarizing data to create new, informative features.'
+  },
+  {
+    id: 28,
+    chapter: 'Chapter 2',
+    question: 'Which data transformation is specifically recommended for reducing skewness and compressing large values in income or population data?',
+    options: [
+      'Categorical Encoding',
+      'Log Transform',
+      'One-Hot Encoding',
+      'Chi-square Test'
+    ],
+    correct: 1,
+    explanation: 'Log Transform reduces skewness and compresses large values, making it especially useful for right-skewed income or population datasets.'
+  },
+  {
+    id: 29,
+    chapter: 'Chapter 2',
+    question: 'Grouping continuous values into discrete intervals for easier interpretation is known as:',
+    options: [
+      'Binning',
+      'Scaling',
+      'Winsorizing',
+      'Coercion'
+    ],
+    correct: 0,
+    explanation: 'Binning groups continuous numeric values into discrete intervals (bins/buckets) for easier interpretation.'
+  },
+  {
+    id: 30,
+    chapter: 'Chapter 2',
+    question: 'How does Winsorizing differ from Trimming when treating outliers?',
+    options: [
+      'Winsorizing deletes the entire column, whereas Trimming imputes the mean',
+      'Winsorizing replaces extreme values with the nearest acceptable boundary (e.g., capping at the 95th percentile), whereas Trimming removes extreme values beyond a threshold',
+      'Winsorizing is only used for text data, whereas Trimming is used for audio data',
+      'There is no difference; both delete the top and bottom 1% of records'
+    ],
+    correct: 1,
+    explanation: 'Trimming removes extreme values beyond a threshold (e.g., top/bottom 1%), whereas Winsorizing keeps all data points by replacing extreme values with the nearest acceptable boundary (e.g., capping at the 95th percentile).'
+  },
+  {
+    id: 31,
+    chapter: 'Chapter 2',
+    question: 'When outliers represent meaningful anomalies—such as in fraud detection—which outlier treatment method separates them into a different group for specialized analysis?',
+    options: [
+      'Imputation',
+      'Segmentation',
+      'Square-root Transformation',
+      'Min-max Scaling'
+    ],
+    correct: 1,
+    explanation: 'Segmentation separates outliers into a distinct group for specialized analysis when those outliers represent meaningful real-world anomalies such as fraud.'
+  },
+  {
+    id: 32,
+    chapter: 'Chapter 2',
+    question: 'Correlation, Chi-square Test, and ANOVA are examples of which Feature Selection approach?',
+    options: [
+      'Filter-Based Method',
+      'Wrapper-Based Method',
+      'Embedded Method',
+      'Regularization Method'
+    ],
+    correct: 0,
+    explanation: 'Filter-Based Methods select features using statistical metrics (Correlation, Chi-square Test, ANOVA) without involving a predictive model during selection.'
+  },
+  {
+    id: 33,
+    chapter: 'Chapter 2',
+    question: 'Compare LASSO (L1 Regularization) and Ridge (L2 Regularization) under the Embedded Feature Selection method:',
+    options: [
+      'LASSO shrinks coefficients and eliminates less important features, whereas Ridge reduces coefficient size but keeps all features to control overfitting',
+      'Ridge eliminates all features, whereas LASSO keeps all features',
+      'Both are Filter-Based methods that do not train a model',
+      'LASSO is Forward Selection, whereas Ridge is Backward Selection'
+    ],
+    correct: 0,
+    explanation: 'LASSO (L1 Regularization) shrinks coefficients and can eliminate less important features entirely, whereas Ridge (L2 Regularization) reduces coefficient magnitudes to control overfitting while keeping all features.'
+  },
+  {
+    id: 34,
+    chapter: 'Chapter 2',
+    question: 'In Phase 4 (Deployment), which deliverable displays system health, uptime, and key performance metrics?',
+    options: [
+      'Final Modeling Report',
+      'Status Dashboard',
+      'Solution Architecture Document',
+      'Charter Document'
+    ],
+    correct: 1,
+    explanation: 'The Status Dashboard displays live system health, uptime, and key performance metrics, while the Final Modeling Report summarizes model performance/validation and the Solution Architecture Document describes technical setup and data flow.'
+  },
 
-    let activeLessonId = null;
-
-    // Safe localStorage wrapper
-    function getStoredTheme() {
-        try {
-            return localStorage.getItem('theme') || 'dark';
-        } catch (e) {
-            return 'dark';
-        }
-    }
-
-    function setStoredTheme(theme) {
-        try {
-            localStorage.setItem('theme', theme);
-        } catch (e) {
-            // Ignore storage errors in sandboxed iframes
-        }
-    }
-
-    // Initialize Theme
-    const currentTheme = getStoredTheme();
-    document.documentElement.setAttribute('data-theme', currentTheme);
-
-    themeToggle.addEventListener('click', () => {
-        const theme = document.documentElement.getAttribute('data-theme');
-        const newTheme = theme === 'dark' ? 'light' : 'dark';
-        document.documentElement.setAttribute('data-theme', newTheme);
-        setStoredTheme(newTheme);
-    });
-
-    // Mobile Sidebar Drawer Controls
-    function openSidebar() {
-        sidebar.classList.add('open');
-        sidebarOverlay.classList.add('active');
-        document.body.classList.add('drawer-open');
-    }
-
-    function closeSidebar() {
-        sidebar.classList.remove('open');
-        sidebarOverlay.classList.remove('active');
-        document.body.classList.remove('drawer-open');
-    }
-
-    menuToggle.addEventListener('click', openSidebar);
-    sidebarClose.addEventListener('click', closeSidebar);
-    sidebarOverlay.addEventListener('click', closeSidebar);
-
-    homeBtn.addEventListener('click', () => {
-        closeSidebar();
-        renderWelcomeScreen();
-    });
-
-    quickGlossaryBtn.addEventListener('click', () => {
-        closeSidebar();
-        loadLesson('cheat-sheet');
-    });
-
-    // Render Sidebar & Mobile Pill Navigation
-    function renderNavigation(filterText = '') {
-        navMenu.innerHTML = '';
-        mobilePillBar.innerHTML = '';
-
-        const query = filterText.trim().toLowerCase();
-        const grouped = {};
-
-        lessonsData.forEach(lesson => {
-            const matchesTitle = lesson.title.toLowerCase().includes(query) || lesson.chapter.toLowerCase().includes(query);
-            const matchesSection = lesson.sections.some(s =>
-                s.heading.toLowerCase().includes(query) || s.content.toLowerCase().includes(query)
-            );
-            if (!query || matchesTitle || matchesSection) {
-                if (!grouped[lesson.chapter]) {
-                    grouped[lesson.chapter] = [];
-                }
-                grouped[lesson.chapter].push(lesson);
-            }
-        });
-
-        Object.keys(grouped).forEach(chapterName => {
-            const chapterDiv = document.createElement('div');
-            chapterDiv.className = 'nav-chapter';
-
-            const chapterTitle = document.createElement('h3');
-            chapterTitle.className = 'nav-chapter-title';
-            chapterTitle.textContent = chapterName;
-            chapterDiv.appendChild(chapterTitle);
-
-            const ul = document.createElement('ul');
-            ul.className = 'nav-chapter-list';
-
-            grouped[chapterName].forEach(lesson => {
-                const li = document.createElement('li');
-                li.className = 'nav-item';
-
-                const a = document.createElement('a');
-                a.href = `#${lesson.id}`;
-                a.className = 'nav-link' + (lesson.id === activeLessonId ? ' active' : '');
-                a.textContent = lesson.title;
-                a.dataset.id = lesson.id;
-
-                a.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    closeSidebar();
-                    loadLesson(lesson.id);
-                });
-
-                li.appendChild(a);
-                ul.appendChild(li);
-            });
-
-            chapterDiv.appendChild(ul);
-            navMenu.appendChild(chapterDiv);
-        });
-
-        // Populate Mobile Horizontal Quick-Switch Pills
-        lessonsData.forEach(lesson => {
-            const pill = document.createElement('button');
-            pill.type = 'button';
-            pill.className = 'mobile-nav-pill' + (lesson.id === activeLessonId ? ' active' : '');
-            pill.textContent = lesson.title;
-            pill.dataset.id = lesson.id;
-            pill.addEventListener('click', () => {
-                loadLesson(lesson.id);
-            });
-            mobilePillBar.appendChild(pill);
-        });
-    }
-
-    navSearch.addEventListener('input', (e) => {
-        renderNavigation(e.target.value);
-    });
-
-    // Update Active Link Styling
-    function syncActiveNavigation(lessonId) {
-        activeLessonId = lessonId;
-        document.querySelectorAll('.nav-link').forEach(link => {
-            link.classList.toggle('active', link.dataset.id === lessonId);
-        });
-        document.querySelectorAll('.mobile-nav-pill').forEach(pill => {
-            const isActive = pill.dataset.id === lessonId;
-            pill.classList.toggle('active', isActive);
-            if (isActive) {
-                pill.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
-            }
-        });
-    }
-
-    // Render Welcome Screen with Interactive Module Cards
-    function renderWelcomeScreen() {
-        syncActiveNavigation(null);
-        lessonChapterBadge.textContent = 'Course Overview';
-        lessonTitle.textContent = 'Welcome to Data Science Review';
-
-        const totalLessons = lessonsData.length;
-        const totalSections = lessonsData.reduce((acc, item) => acc + item.sections.length, 0);
-
-        let cardsHtml = '';
-        lessonsData.forEach((lesson, idx) => {
-            cardsHtml += `
-                <button type="button" class="module-launch-card" data-lesson-id="${lesson.id}">
-                    <span class="module-card-chapter">${lesson.chapter}</span>
-                    <h4>${ idx + 1 }. ${lesson.title}</h4>
-                    <p>${lesson.sections.map(s => s.heading).join(' • ')}</p>
-                    <span class="module-card-cta">Open Module →</span>
-                </button>
-            `;
-        });
-
-        contentContainer.innerHTML = `
-            <div class="welcome-screen animate-fade-in">
-                <span class="welcome-badge">100% Exam-Aligned Study Guide</span>
-                <h2>Midterm Examination Reviewer</h2>
-                <p>Complete interactive guide covering <strong>Lesson 1: Big Data &amp; Data Science</strong>, <strong>Lesson 2: The Data Science Life Cycle</strong>, and <strong>Lesson 3: R Programming, dplyr, Descriptive Stats &amp; Regression</strong>.</p>
-                <div class="hero-stats">
-                    <div class="stat-card">
-                        <h3>3</h3>
-                        <p>Core Chapters</p>
-                    </div>
-                    <div class="stat-card">
-                        <h3>${totalLessons}</h3>
-                        <p>Study Modules</p>
-                    </div>
-                    <div class="stat-card">
-                        <h3>${totalSections}</h3>
-                        <p>Topic Sections</p>
-                    </div>
-                    <div class="stat-card">
-                        <h3>78</h3>
-                        <p>Glossary Terms</p>
-                    </div>
-                </div>
-
-                <div class="welcome-modules-section">
-                    <h3>Jump Straight to a Study Module</h3>
-                    <div class="module-launch-grid">
-                        ${cardsHtml}
-                    </div>
-                </div>
-            </div>
-        `;
-
-        contentContainer.querySelectorAll('.module-launch-card').forEach(btn => {
-            btn.addEventListener('click', () => {
-                loadLesson(btn.dataset.lessonId);
-            });
-        });
-
-        mainScroll.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    // Wire Glossary Search and Filter Pills
-    function initGlossaryControls() {
-        const searchInput = document.getElementById('glossary-search');
-        const filterBtns = document.querySelectorAll('.glossary-filter-btn');
-        const rows = document.querySelectorAll('#glossary-table tbody tr');
-        if (!searchInput || !rows.length) return;
-
-        let selectedChapter = 'all';
-
-        function filterTable() {
-            const query = searchInput.value.trim().toLowerCase();
-            rows.forEach(row => {
-                const rowChapter = row.getAttribute('data-chapter') || '';
-                const text = row.textContent.toLowerCase();
-                const matchesChapter = selectedChapter === 'all' || rowChapter === selectedChapter;
-                const matchesQuery = !query || text.includes(query);
-                row.style.display = (matchesChapter && matchesQuery) ? '' : 'none';
-            });
-        }
-
-        searchInput.addEventListener('input', filterTable);
-
-        filterBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                filterBtns.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                selectedChapter = btn.getAttribute('data-chapter') || 'all';
-                filterTable();
-            });
-        });
-    }
-
-    // Load Lesson Content
-    function loadLesson(lessonId) {
-        const lessonIndex = lessonsData.findIndex(l => l.id === lessonId);
-        if (lessonIndex === -1) return;
-        const lesson = lessonsData[lessonIndex];
-
-        syncActiveNavigation(lessonId);
-        lessonChapterBadge.textContent = lesson.chapter;
-        lessonTitle.textContent = lesson.title;
-        contentContainer.innerHTML = '';
-
-        lesson.sections.forEach((section, index) => {
-            const sectionEl = document.createElement('section');
-            sectionEl.className = 'section-card animate-fade-in';
-            sectionEl.style.animationDelay = `${index * 0.08}s`;
-
-            sectionEl.innerHTML = `
-                <div class="section-card-header">
-                    <span class="section-index-badge">Section ${index + 1} of ${lesson.sections.length}</span>
-                    <h2>${section.heading}</h2>
-                </div>
-                ${section.content}
-            `;
-
-            contentContainer.appendChild(sectionEl);
-        });
-
-        // Add Previous / Next Lesson Navigation Footer
-        const prevLesson = lessonIndex > 0 ? lessonsData[lessonIndex - 1] : null;
-        const nextLesson = lessonIndex < lessonsData.length - 1 ? lessonsData[lessonIndex + 1] : null;
-
-        const pagerEl = document.createElement('div');
-        pagerEl.className = 'lesson-pager animate-fade-in';
-        pagerEl.innerHTML = `
-            <button type="button" class="pager-btn pager-prev" ${!prevLesson ? 'disabled' : ''} data-target="${prevLesson ? prevLesson.id : ''}">
-                <span class="pager-label">← Previous Module</span>
-                <strong>${prevLesson ? prevLesson.title : 'Start of Course'}</strong>
-            </button>
-            <button type="button" class="pager-btn pager-next" ${!nextLesson ? 'disabled' : ''} data-target="${nextLesson ? nextLesson.id : ''}">
-                <span class="pager-label">Next Module →</span>
-                <strong>${nextLesson ? nextLesson.title : 'End of Course'}</strong>
-            </button>
-        `;
-
-        pagerEl.querySelectorAll('.pager-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const targetId = btn.getAttribute('data-target');
-                if (targetId) loadLesson(targetId);
-            });
-        });
-
-        contentContainer.appendChild(pagerEl);
-
-        if (lessonId === 'cheat-sheet') {
-            initGlossaryControls();
-        }
-
-        mainScroll.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    // Initialize App
-    renderNavigation();
-    renderWelcomeScreen();
-});
-
-</script>
-</body>
-</html>
+  // CHAPTER 3: R PROGRAMMING, DPLYR, DESCRIPTIVE STATS & REGRESSION (Questions 35 - 50)
+  {
+    id: 35,
+    chapter: 'Chapter 3',
+    question: 'In your lecture notes\' book analogy, which tool translates "one sentence → understand it → execute it → move to the next"?',
+    options: [
+      'Compiler',
+      'Interpreter',
+      'Data Pipeline',
+      'Relational Database'
+    ],
+    correct: 1,
+    explanation: 'A Compiler translates the whole book first and then reads it, whereas an Interpreter translates one sentence, understands it, executes it, and moves to the next.'
+  },
+  {
+    id: 36,
+    chapter: 'Chapter 3',
+    question: 'Which statement accurately describes the relationship between R and RStudio?',
+    options: [
+      'R cannot run unless RStudio is installed first',
+      'R is a programming language for statistical computing and graphics that can be used independently, while RStudio is an IDE designed to enhance the R experience',
+      'RStudio is a database engine and R is a spreadsheet app',
+      'R and RStudio are two different names for the exact same compiler'
+    ],
+    correct: 1,
+    explanation: 'R is the programming language used for statistical computing and graphics (and can be used independently without RStudio), while RStudio is an Integrated Development Environment (IDE) providing a user-friendly interface.'
+  },
+  {
+    id: 37,
+    chapter: 'Chapter 3',
+    question: 'Which RStudio pane displays the set of external elements added—such as datasets, variables, vectors, and functions?',
+    options: [
+      'R Console',
+      'R Script',
+      'R Environment',
+      'Graphical Output'
+    ],
+    correct: 2,
+    explanation: 'The R Environment pane displays loaded external elements including datasets, variables, vectors, and functions.'
+  },
+  {
+    id: 38,
+    chapter: 'Chapter 3',
+    question: 'In Lesson 3, Bar charts, Line graphs, Pie charts, Scatter plots, Box plots, Maps (Mapsa), and Heatmaps fall under which category of R capabilities?',
+    options: [
+      'Statistical Tasks',
+      'Computational Tasks',
+      'Visual Information',
+      'Object Coercion'
+    ],
+    correct: 2,
+    explanation: 'Bar charts, Line graphs, Pie charts, Scatter plots, Box plots, Maps (Mapsa), and Heatmaps are the seven items listed under Visual Information in R.'
+  },
+  {
+    id: 39,
+    chapter: 'Chapter 3',
+    question: 'What are the 5 Basic Classes of Objects (data types) in R?',
+    options: [
+      'Character, Numeric, Integer, Complex, and Logical',
+      'Vector, Matrix, Data Frame, List, and Table',
+      'Select, Filter, Mutate, Summarise, and Group_by',
+      'Mean, Median, Mode, Variance, and Standard Deviation'
+    ],
+    correct: 0,
+    explanation: 'The 5 Basic Classes of Objects in R are Character ("a"), Numeric (15.5), Integer (2L), Complex (1+4i), and Logical (TRUE/FALSE).'
+  },
+  {
+    id: 40,
+    chapter: 'Chapter 3',
+    question: 'In R, which function answers "What kind of object is it (high-level)?" versus "What is the object\'s data type (low-level)?"',
+    options: [
+      'length() for high-level; attributes() for low-level',
+      'class() for high-level; typeof() for low-level',
+      'typeof() for high-level; class() for low-level',
+      'summary() for high-level; anova() for low-level'
+    ],
+    correct: 1,
+    explanation: 'class() tells you what kind of object it is at a high level, while typeof() tells you the object\'s low-level internal data type.'
+  },
+  {
+    id: 41,
+    chapter: 'Chapter 3',
+    question: 'What happens when you mix elements of different data types inside an Atomic Vector in R?',
+    options: [
+      'R throws a fatal compiler crash and deletes the vector',
+      'Coercion occurs, causing objects of different types to convert into a single common class',
+      'The atomic vector automatically turns into a 2-dimensional Matrix',
+      'R ignores all non-numeric values'
+    ],
+    correct: 1,
+    explanation: 'An Atomic Vector can only hold data of a single data type. When different types are mixed, Coercion converts them into one unified class.'
+  },
+  {
+    id: 42,
+    chapter: 'Chapter 3',
+    question: 'Which R data structure is a special type of vector that CAN contain elements of different data types, versus a 2-dimensional structure of rows and columns where all elements must be of the SAME class?',
+    options: [
+      'List (different data types) vs. Matrix (2D of same class)',
+      'Matrix (different data types) vs. Atomic Vector (2D of same class)',
+      'Character (different data types) vs. Logical (2D of same class)',
+      'Console (different data types) vs. Environment (2D of same class)'
+    ],
+    correct: 0,
+    explanation: 'A List is a special vector that can hold elements of different data types, whereas a Matrix is a 2-dimensional structure (rows and columns) consisting of elements of the same class.'
+  },
+  {
+    id: 43,
+    chapter: 'Chapter 3',
+    question: 'Under "Ways to Change Data" in R, what do Split, Apply, and Combine each mean?',
+    options: [
+      'Split = splitting and selecting; Apply = transforming and re-calculating; Combine = aggregating and merging',
+      'Split = deleting outliers; Apply = deploying APIs; Combine = writing documentation',
+      'Split = extracting; Apply = loading; Combine = archiving',
+      'Split = plotting; Apply = compiling; Combine = interpreting'
+    ],
+    correct: 0,
+    explanation: 'In R data handling: Split means splitting and selecting, Apply means transforming and re-calculating, and Combine means aggregating and merging.'
+  },
+  {
+    id: 44,
+    chapter: 'Chapter 3',
+    question: 'In the dplyr package, what is the exact difference between select() and filter()?',
+    options: [
+      'select() chooses which rows/records you want; filter() chooses which columns you want',
+      'select() answers "Which columns do I want?"; filter() answers "Which rows/records do I want?"',
+      'select() creates new variables; filter() groups data by category',
+      'Both functions only work on unstructured audio files'
+    ],
+    correct: 1,
+    explanation: 'In dplyr, select() chooses columns ("Which columns do I want?"), while filter() subsets rows/records ("Which rows/records do I want?").'
+  },
+  {
+    id: 45,
+    chapter: 'Chapter 3',
+    question: 'Which dplyr function is used to "Create or modify a variable/column", and which one is used to "Divide the data into groups based on a variable"?',
+    options: [
+      'summarise() and select()',
+      'mutate() and group_by()',
+      'filter() and mutate()',
+      'class() and typeof()'
+    ],
+    correct: 1,
+    explanation: 'mutate() creates or modifies a variable/column, while group_by() divides the data into groups based on a variable (often paired with summarise()).'
+  },
+  {
+    id: 46,
+    chapter: 'Chapter 3',
+    question: 'What does the Pipe Operator (%>%) do in R?',
+    options: [
+      'Checks whether two categorical variables are independent',
+      'Takes the result of one operation and passes it directly into the next operation',
+      'Computes the residual standard error of a linear model',
+      'Converts an R script into a binary executable'
+    ],
+    correct: 1,
+    explanation: 'The Pipe Operator (%>%) means: "Take this result and pass it to the next operation," allowing clean left-to-right data manipulation pipelines.'
+  },
+  {
+    id: 47,
+    chapter: 'Chapter 3',
+    question: 'Under Descriptive Statistics Tools, how are Graphical and Analytical tools categorized in your notes?',
+    options: [
+      'Graphical includes Graphics, Bar Diagram, Histogram, and Scattered Diagrams; Analytical includes Measures of Central Tendency (Mean, Median, Mode) and Measures of Variations (Variants/Variance, Standard Deviation)',
+      'Graphical includes Mean and Median; Analytical includes Bar Diagram and Histogram',
+      'Graphical includes LASSO and Ridge; Analytical includes RFE and Forward Selection',
+      'Graphical includes ETL; Analytical includes API Exposure'
+    ],
+    correct: 0,
+    explanation: 'Descriptive Statistics Tools are divided into Graphical (Graphics, Bar Diagram, Histogram, Scattered Diagrams) and Analytical (Measures of Central Tendency: Mean, Median, Mode; Measures of Variations: Variants/Variance, Standard Deviation).'
+  },
+  {
+    id: 48,
+    chapter: 'Chapter 3',
+    question: 'In the R linear regression command lm(LungCap ~ Age, data = LungCapData), what does the tilde symbol (~) mean?',
+    options: [
+      '"is multiplied by"',
+      '"is explained by" or "as a function of"',
+      '"is coerced into"',
+      '"is piped to"'
+    ],
+    correct: 1,
+    explanation: 'In R formula syntax, the tilde (~) reads as "is explained by" or "as a function of" (i.e., LungCap is explained by Age).'
+  },
+  {
+    id: 49,
+    chapter: 'Chapter 3',
+    question: 'In the Basic Regression Equation (Y = b₀ + b₁X), what do Y, X, b₀, and b₁ represent?',
+    options: [
+      'Y = Dependent/Response Variable, X = Explanatory/Predictor Variable, b₀ = Intercept, b₁ = Slope/Coefficient',
+      'Y = Explanatory Variable, X = Response Variable, b₀ = Slope, b₁ = Intercept',
+      'Y = Variance, X = Standard Deviation, b₀ = Mean, b₁ = Median',
+      'Y = Residual, X = F-statistic, b₀ = p-value, b₁ = R-squared'
+    ],
+    correct: 0,
+    explanation: 'In the regression equation: Y is the Dependent/Response Variable, X is the Explanatory/Predictor Variable, b₀ is the Intercept, and b₁ is the Slope/Coefficient.'
+  },
+  {
+    id: 50,
+    chapter: 'Chapter 3',
+    question: 'What is an ANOVA Table used for in statistics and R?',
+    options: [
+      'To convert unstructured video into relational tables',
+      'To determine whether there is a statistically significant difference among group means',
+      'To remove the top and bottom 1% of extreme values',
+      'To write and save R scripts in the RStudio editor'
+    ],
+    correct: 1,
+    explanation: 'An ANOVA (Analysis of Variance) Table is used in statistics to determine whether there is a statistically significant difference among group means using the F-test and p-value.'
+  }
+];
