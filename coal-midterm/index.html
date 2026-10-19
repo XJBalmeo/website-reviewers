@@ -159,6 +159,7 @@
             <a href="#m1-von-neumann" class="px-3 py-1 rounded-lg bg-white/10 hover:bg-white/20 text-xs font-medium transition">Von Neumann &amp; Execution Cycle</a>
             <a href="#m1-subsystems" class="px-3 py-1 rounded-lg bg-white/10 hover:bg-white/20 text-xs font-medium transition">Core Hardware Subsystems</a>
             <a href="#m1-history" class="px-3 py-1 rounded-lg bg-white/10 hover:bg-white/20 text-xs font-medium transition">Generations &amp; Chip Integration</a>
+            <a href="#m1-performance" class="px-3 py-1 rounded-lg bg-teal-500/30 hover:bg-teal-500/40 border border-teal-400/40 text-xs font-semibold transition">Performance Metrics &amp; Amdahl's Law</a>
           </div>
         </div>
       </div>
@@ -677,6 +678,215 @@
             </div>
             <div class="relative h-64 w-full mt-3">
               <canvas id="integrationChart"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- Additional Architectural Details: Program Counter, Bus Protocols, System vs Application Programmers, Historical Milestones -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5 pt-2">
+          <div class="bg-white dark:bg-slate-900 rounded-xl p-4 border border-slate-200 dark:border-slate-800 shadow-sm space-y-2 text-xs">
+            <span class="px-2 py-0.5 rounded bg-teal-100 dark:bg-teal-950 text-teal-800 dark:text-teal-300 font-mono font-bold">Von Neumann &amp; Bus Details</span>
+            <h5 class="font-bold text-sm text-slate-900 dark:text-white">Program Counter (PC) &amp; Multipoint Buses</h5>
+            <ul class="space-y-1.5 text-slate-600 dark:text-slate-300">
+              <li>• <strong>Program Counter (PC):</strong> Special CPU register that holds the address of the <strong>next instruction to be executed</strong> and automatically increments on each fetch, saving instruction memory space.</li>
+              <li>• <strong>System Bus Model Refinement:</strong> Includes a <strong>Power Bus</strong> and optional separate <strong>I/O Bus</strong>. Because a <strong>multipoint bus</strong> is a shared resource, access is governed by hardware <strong>protocols</strong>.</li>
+              <li>• <strong>Alan Turing's Contribution:</strong> First to envisage and prove the possibility of universal machines capable of reading and executing programmed instructions for any conceivable task.</li>
+            </ul>
+          </div>
+
+          <div class="bg-white dark:bg-slate-900 rounded-xl p-4 border border-slate-200 dark:border-slate-800 shadow-sm space-y-2 text-xs">
+            <span class="px-2 py-0.5 rounded bg-indigo-100 dark:bg-indigo-950 text-indigo-800 dark:text-indigo-300 font-mono font-bold">Abstraction Boundary</span>
+            <h5 class="font-bold text-sm text-slate-900 dark:text-white">System vs. Applications Programmers</h5>
+            <ul class="space-y-1.5 text-slate-600 dark:text-slate-300">
+              <li>• <strong>Levels 1–3 (System Programmers):</strong> Numeric languages (long series of numbers). Levels 2 and 3 are always <strong>interpreted</strong> (by microprogram/hardwired control or OS). Built by system programmers who develop virtual machines and interpreters.</li>
+              <li>• <strong>Levels 4–5 (Applications Programmers):</strong> Contain human-meaningful words and abbreviations (e.g., C, Java, BASIC, LISP, Prolog) usually supported by <strong>translation</strong> (assembler/compiler).</li>
+              <li>• <strong>Below Level 0 (Device Level):</strong> Individual transistors and wires in the domain of electrical engineering; 1-bit transistor memories group into 16-, 32-, or 64-bit registers.</li>
+            </ul>
+          </div>
+
+          <div class="bg-white dark:bg-slate-900 rounded-xl p-4 border border-slate-200 dark:border-slate-800 shadow-sm space-y-2 text-xs">
+            <span class="px-2 py-0.5 rounded bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300 font-mono font-bold">Landmark Machines</span>
+            <h5 class="font-bold text-sm text-slate-900 dark:text-white">Key Historical Computing Milestones</h5>
+            <ul class="space-y-1 text-slate-600 dark:text-slate-300">
+              <li>• <strong>1834 Analytical Engine (Babbage):</strong> First attempt to build a digital computer.</li>
+              <li>• <strong>1936 Z1 (Zuse) &amp; 1943 COLOSSUS:</strong> First working relay calculating machine &amp; first electronic computer.</li>
+              <li>• <strong>1946 ENIAC &amp; 1949 EDSAC (Wilkes):</strong> Modern electronic history starts (ENIAC); first stored-program computer (EDSAC).</li>
+              <li>• <strong>1951 UNIVAC &amp; 1952 IAS (Von Neumann):</strong> First commercial computer sold to US Census Bureau (UNIVAC); foundational stored-program design (IAS).</li>
+              <li>• <strong>1971 Intel 4004, 1981 IBM PC, 1984 Macintosh:</strong> First single-chip microprocessor (Intel 4004) leading to personal computers, GUIs, and networking.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Flow Part 6: Measuring Computer Performance (MIPS, CPI/IPC, Benchmarks, Means, Speedup & Amdahl's Law) -->
+      <div id="m1-performance" class="searchable-card space-y-5">
+        <div class="border-l-4 border-indigo-500 pl-3">
+          <span class="text-xs font-mono uppercase tracking-wider text-indigo-600 dark:text-indigo-400 font-bold">Part 6 • Quantitative Performance Evaluation</span>
+          <h3 class="text-xl font-bold text-slate-900 dark:text-white">Measuring Performance: Execution Time, MIPS, CPI/IPC, Benchmarks, Speedup &amp; Amdahl's Law</h3>
+          <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400">
+            <strong>Execution time</strong> is the most direct indicator of how long a user waits for a program to complete—systems that execute programs in less time have higher performance. Alongside speed, <strong>ease of programming</strong> and <strong>binary compatibility</strong> across processor families also govern architectural choices.
+          </p>
+        </div>
+
+        <!-- Row 1: MIPS, CPI/IPC, and Benchmark Suites + Means -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
+          <!-- MIPS & CPI/IPC -->
+          <div class="bg-white dark:bg-slate-900 rounded-xl p-5 border border-slate-200 dark:border-slate-800 shadow-sm space-y-3 text-xs">
+            <div class="flex items-center justify-between">
+              <span class="font-mono font-bold px-2 py-0.5 rounded bg-indigo-100 dark:bg-indigo-950 text-indigo-800 dark:text-indigo-300">Rate &amp; Cycle Metrics</span>
+              <span class="text-slate-400 font-mono">MIPS • CPI • IPC</span>
+            </div>
+            <h4 class="text-base font-bold text-slate-900 dark:text-white">MIPS, CPI &amp; IPC</h4>
+            <div class="space-y-2 text-slate-600 dark:text-slate-300">
+              <p>
+                • <strong>MIPS (Millions of Instructions Per Second):</strong> Execution rate calculated by dividing instruction count by execution time:
+                $$\text{MIPS} = \frac{\text{Instructions Executed}}{\text{Execution Time} \times 10^6}$$
+                <em>Limitation:</em> MIPS does not account for the fact that different ISAs require different instruction counts to perform the same task—so a computer with a <strong>higher MIPS rating can still take longer</strong> to finish a program if it executes many more instructions.
+              </p>
+              <p>
+                • <strong>CPI (Cycles Per Instruction) &amp; IPC (Instructions Per Cycle):</strong> Reciprocal metrics ($\text{IPC} = 1 / \text{CPI}$):
+                $$\text{CPI} = \frac{\text{Total Clock Cycles}}{\text{Instructions Executed}}, \quad \text{IPC} = \frac{\text{Instructions Executed}}{\text{Total Clock Cycles}}$$
+                <strong>Low CPI</strong> (or <strong>High IPC</strong>) indicates better performance. Rearranging gives $\text{Instructions} = \frac{\text{Cycles}}{\text{CPI}}$ and $\text{Cycles} = \text{CPI} \times \text{Instructions}$.
+              </p>
+            </div>
+          </div>
+
+          <!-- CPI/IPC Worked Examples Card -->
+          <div class="bg-white dark:bg-slate-900 rounded-xl p-5 border border-slate-200 dark:border-slate-800 shadow-sm space-y-3 text-xs">
+            <div class="flex items-center justify-between">
+              <span class="font-mono font-bold px-2 py-0.5 rounded bg-teal-100 dark:bg-teal-950 text-teal-800 dark:text-teal-300">LaTeX Walkthroughs</span>
+              <span class="text-slate-400 font-mono">Cycle Math</span>
+            </div>
+            <h4 class="text-base font-bold text-slate-900 dark:text-white">CPI &amp; IPC Solved Computations</h4>
+            <div class="p-3 rounded-lg bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 space-y-1.5">
+              <p class="font-bold text-teal-700 dark:text-teal-300">Example 1: Loop CPI &amp; IPC</p>
+              <p class="text-slate-600 dark:text-slate-300">A $100$-instruction loop runs $42$ times taking $16{,}000$ cycles:</p>
+              $$\begin{aligned}
+              \text{Instructions} &= 100 \times 42 = 4{,}200 \\
+              \text{CPI} &= \frac{16{,}000}{4{,}200} = \mathbf{3.81}, \quad \text{IPC} = \frac{4{,}200}{16{,}000} = \mathbf{0.26}
+              \end{aligned}$$
+            </div>
+            <div class="p-3 rounded-lg bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 space-y-1.5">
+              <p class="font-bold text-indigo-700 dark:text-indigo-300">Example 2: Finding Instruction Count &amp; IPC</p>
+              <p class="text-slate-600 dark:text-slate-300">• Given $1{,}000{,}000$ cycles and $\text{CPI} = 40$:</p>
+              $$\text{Instructions} = \frac{1{,}000{,}000}{40} = \mathbf{25{,}000\text{ instructions}}$$
+              <p class="text-slate-600 dark:text-slate-300">• Given $35{,}000$ instructions in $17{,}000$ cycles:</p>
+              $$\text{IPC} = \frac{35{,}000}{17{,}000} \approx \mathbf{2.06}$$
+            </div>
+          </div>
+
+          <!-- Benchmark Suites & Arithmetic vs Geometric Mean -->
+          <div class="bg-white dark:bg-slate-900 rounded-xl p-5 border border-slate-200 dark:border-slate-800 shadow-sm space-y-3 text-xs">
+            <div class="flex items-center justify-between">
+              <span class="font-mono font-bold px-2 py-0.5 rounded bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300">Standardized Workloads</span>
+              <span class="text-slate-400 font-mono">Benchmarks &amp; Means</span>
+            </div>
+            <h4 class="text-base font-bold text-slate-900 dark:text-white">Benchmark Suites &amp; Averaging Means</h4>
+            <p class="text-slate-600 dark:text-slate-300">
+              • <strong>Benchmark Suites:</strong> Standardized collections of typical programs used to compare computer performance fairly. Architects use <strong>multiple benchmarks</strong> because different programs stress different aspects of a system, and scores are based on <strong>total execution time</strong> rather than instruction rate.
+            </p>
+            <div class="p-3 rounded-lg bg-amber-50/60 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 space-y-1">
+              <p class="font-bold text-amber-900 dark:text-amber-300">Geometric vs. Arithmetic Mean (Values: $4, 2, 4, 82$)</p>
+              <p class="text-slate-600 dark:text-slate-300">Benchmark suites prefer the <strong>geometric mean</strong> because a single extreme outlier skews the arithmetic mean heavily:</p>
+              $$\text{Arithmetic Mean} = \frac{4 + 2 + 4 + 82}{4} = \mathbf{23}$$
+              $$\text{Geometric Mean} = \sqrt[4]{4 \times 2 \times 4 \times 82} = \mathbf{7.16}$$
+            </div>
+          </div>
+        </div>
+
+        <!-- Row 2: Speedup & Amdahl's Law + Interactive Performance Calculator -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          <div class="lg:col-span-7 bg-white dark:bg-slate-900 rounded-xl p-5 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4 text-xs">
+            <h4 class="text-base font-bold text-slate-900 dark:text-white">Speedup &amp; Amdahl's Law ("Make the Common Case Fast")</h4>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div class="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 space-y-1.5">
+                <p class="font-bold text-teal-700 dark:text-teal-300">Speedup Ratio Formula</p>
+                <p class="text-slate-600 dark:text-slate-300">Ratio of execution time <strong>before (Old Time)</strong> to execution time <strong>after (New Time)</strong> an improvement:</p>
+                $$\text{Speedup} = \frac{\text{Execution Time}_{\text{old}}}{\text{Execution Time}_{\text{new}}}$$
+                $$\text{New Time} = \frac{\text{Old Time}}{\text{Speedup}}$$
+                <ul class="text-slate-600 dark:text-slate-300 space-y-0.5 pt-1 font-mono text-[11px]">
+                  <li>• $25\text{ s} \to 15\text{ s}: \; 25 / 15 = \mathbf{1.67\times}$</li>
+                  <li>• $200\text{ s} \to 150\text{ s}: \; 200 / 150 = \mathbf{1.33\times}$</li>
+                  <li>• $120\text{ s} \to 80\text{ s}: \; 120 / 80 = \mathbf{1.50\times}$</li>
+                  <li>• $78\text{ s}$ with $3\times$ speedup: $78 / 3 = \mathbf{26\text{ s}}$</li>
+                </ul>
+              </div>
+
+              <div class="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 space-y-1.5">
+                <p class="font-bold text-indigo-700 dark:text-indigo-300">Amdahl's Law Equations</p>
+                <p class="text-slate-600 dark:text-slate-300">The performance gain from optimizing a single component is limited by the fraction of time ($\text{Frac}_{\text{used}}$) that component is actually used:</p>
+                $$T_{\text{new}} = T_{\text{old}} \times \left( \text{Frac}_{\text{unused}} + \frac{\text{Frac}_{\text{used}}}{\text{Speedup}_{\text{used}}} \right)$$
+                $$\text{Speedup}_{\text{overall}} = \frac{1}{\text{Frac}_{\text{unused}} + \dfrac{\text{Frac}_{\text{used}}}{\text{Speedup}_{\text{used}}}}$$
+                <p class="text-slate-500">As $\text{Speedup}_{\text{used}} \to \infty$, maximum possible speedup converges to $\dfrac{1}{\text{Frac}_{\text{unused}}}$.</p>
+              </div>
+            </div>
+
+            <div class="p-3 rounded-lg bg-indigo-50/60 dark:bg-indigo-950/30 border border-indigo-200 dark:border-indigo-800">
+              <p class="font-bold text-indigo-900 dark:text-indigo-300">Hardware Multiplier Walkthrough ($200\text{ cycles software} \to 4\text{ cycles hardware} \implies \text{Speedup}_{\text{used}} = 200/4 = 50$):</p>
+              <p class="text-slate-700 dark:text-slate-300 mt-1">
+                • If multiplication is used <strong>$10\%$ of time</strong> ($\text{Frac}_{\text{used}}=0.1, \text{Frac}_{\text{unused}}=0.9$): $\quad \text{Speedup} = \dfrac{1}{0.9 + 0.1/50} = \mathbf{1.11\times}$<br>
+                • If multiplication is used <strong>$40\%$ of time</strong> ($\text{Frac}_{\text{used}}=0.4, \text{Frac}_{\text{unused}}=0.6$): $\quad \text{Speedup} = \dfrac{1}{0.6 + 0.4/50} = \mathbf{1.64\times}$
+              </p>
+            </div>
+          </div>
+
+          <!-- Interactive Performance & Speedup Calculator -->
+          <div class="lg:col-span-5 bg-gradient-to-br from-slate-900 to-indigo-950 text-white rounded-xl p-5 border border-indigo-700/60 shadow-md flex flex-col justify-between space-y-4 text-xs">
+            <div>
+              <span class="font-mono uppercase tracking-wider text-teal-300 font-bold text-[11px]">Interactive Performance Lab</span>
+              <h4 class="text-base font-bold mt-0.5">Live Speedup, CPI/IPC &amp; Amdahl's Law Calculator</h4>
+            </div>
+
+            <div class="space-y-3">
+              <div class="p-3 rounded-lg bg-white/10 border border-white/10 space-y-2">
+                <div class="flex items-center justify-between">
+                  <span class="font-bold text-teal-300">1. Execution Time Speedup</span>
+                  <div class="flex gap-1">
+                    <button type="button" data-old="200" data-new="150" class="perf-preset-btn px-2 py-0.5 rounded bg-white/10 hover:bg-white/20 font-mono text-[10px]">200s→150s</button>
+                    <button type="button" data-old="120" data-new="80" class="perf-preset-btn px-2 py-0.5 rounded bg-white/10 hover:bg-white/20 font-mono text-[10px]">120s→80s</button>
+                    <button type="button" data-old="78" data-new="26" class="perf-preset-btn px-2 py-0.5 rounded bg-white/10 hover:bg-white/20 font-mono text-[10px]">78s→26s</button>
+                  </div>
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                  <div>
+                    <label for="perfOldTime" class="block text-[10px] text-slate-300">Old Time (sec)</label>
+                    <input id="perfOldTime" type="number" step="any" min="0.1" value="200" class="w-full mt-0.5 px-2.5 py-1 rounded bg-slate-800 border border-slate-600 text-white font-mono" />
+                  </div>
+                  <div>
+                    <label for="perfNewTime" class="block text-[10px] text-slate-300">New Time (sec)</label>
+                    <input id="perfNewTime" type="number" step="any" min="0.1" value="150" class="w-full mt-0.5 px-2.5 py-1 rounded bg-slate-800 border border-slate-600 text-white font-mono" />
+                  </div>
+                </div>
+                <div class="flex items-center justify-between pt-1 border-t border-white/10">
+                  <span class="text-slate-300">Computed Speedup ($T_{\text{old}} \div T_{\text{new}}$):</span>
+                  <span id="perfSpeedupOut" class="font-mono font-bold text-sm text-emerald-400">1.33×</span>
+                </div>
+              </div>
+
+              <div class="p-3 rounded-lg bg-white/10 border border-white/10 space-y-2">
+                <div class="flex items-center justify-between">
+                  <span class="font-bold text-indigo-300">2. Cycles, Instructions, CPI &amp; IPC</span>
+                  <div class="flex gap-1">
+                    <button type="button" data-cyc="1000000" data-inst="25000" class="cpi-preset-btn px-2 py-0.5 rounded bg-white/10 hover:bg-white/20 font-mono text-[10px]">1M cyc / 25k inst</button>
+                    <button type="button" data-cyc="17000" data-inst="35000" class="cpi-preset-btn px-2 py-0.5 rounded bg-white/10 hover:bg-white/20 font-mono text-[10px]">35k inst / 17k cyc</button>
+                  </div>
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                  <div>
+                    <label for="perfCycles" class="block text-[10px] text-slate-300">Total Clock Cycles</label>
+                    <input id="perfCycles" type="number" step="any" min="1" value="1000000" class="w-full mt-0.5 px-2.5 py-1 rounded bg-slate-800 border border-slate-600 text-white font-mono" />
+                  </div>
+                  <div>
+                    <label for="perfInstr" class="block text-[10px] text-slate-300">Instructions Executed</label>
+                    <input id="perfInstr" type="number" step="any" min="1" value="25000" class="w-full mt-0.5 px-2.5 py-1 rounded bg-slate-800 border border-slate-600 text-white font-mono" />
+                  </div>
+                </div>
+                <div class="flex items-center justify-between pt-1 border-t border-white/10 font-mono">
+                  <span>CPI: <strong id="perfCpiOut" class="text-amber-300">40.00</strong></span>
+                  <span>IPC: <strong id="perfIpcOut" class="text-emerald-300">0.025</strong></span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -1210,12 +1420,338 @@
                 </tr>
                 <tr>
                   <td class="py-2.5 px-3 font-bold text-amber-600 dark:text-amber-400">EBCDIC<br><span class="text-[11px] font-normal text-slate-500">Extended Binary Coded Decimal Interchange Code</span></td>
-                  <td class="py-2.5 px-3 font-mono">IBM Proprietary Encoding</td>
-                  <td class="py-2.5 px-3">Alphanumeric and control characters developed by IBM.</td>
+                  <td class="py-2.5 px-3 font-mono">$8\text{ bits}$ ($2^8 = 256$ chars)<br>Ex: <code>'A'</code> = $11000001_2$</td>
+                  <td class="py-2.5 px-3">Alphanumeric and control characters developed by IBM (uses zone bits + 4 numeric bits).</td>
                   <td class="py-2.5 px-3">IBM mainframe computer systems</td>
+                </tr>
+                <tr>
+                  <td class="py-2.5 px-3 font-bold text-purple-600 dark:text-purple-400">6-Bit Standard BCD</td>
+                  <td class="py-2.5 px-3 font-mono">$6\text{ bits}$ ($2^6 = 64$ chars)<br>Ex: <code>'A'</code> = $110001_2$</td>
+                  <td class="py-2.5 px-3">Uses <strong>2 left zone bits</strong> + <strong>4 right numeric bits</strong> (zone <code>00</code> = digits $0\text{–}9$; zones <code>01, 10, 11</code> = letters/symbols).</td>
+                  <td class="py-2.5 px-3">Early 2nd-generation alphanumeric systems</td>
+                </tr>
+                <tr>
+                  <td class="py-2.5 px-3 font-bold text-rose-600 dark:text-rose-400">Huffman Coding<br><span class="text-[11px] font-normal text-slate-500">Variable-Length Code</span></td>
+                  <td class="py-2.5 px-3 font-mono">Variable bit length</td>
+                  <td class="py-2.5 px-3">Assigns the <strong>shortest binary codes to the most frequently occurring characters</strong>.</td>
+                  <td class="py-2.5 px-3">Significant space savings (trades off extra CPU decoding time)</td>
                 </tr>
               </tbody>
             </table>
+          </div>
+        </div>
+
+        <!-- Deep-Dive Cards: 1) Complete 0-9 Code Table (8421, 2421, 5211, Excess-3, Gray) & XOR Gray Conversion -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          <div class="lg:col-span-6 bg-white dark:bg-slate-900 rounded-xl p-5 border border-slate-200 dark:border-slate-800 shadow-sm space-y-3 text-xs">
+            <h4 class="text-base font-bold text-slate-900 dark:text-white">Complete 4-Bit Binary Code Reference Table ($0\text{–}9$)</h4>
+            <p class="text-slate-600 dark:text-slate-300">Note how $2421$, $5211$, and $\text{Excess-3}$ are <strong>self-complementing</strong> (the $9$'s complement of any decimal digit is obtained by inverting all $4$ bits):</p>
+            <div class="overflow-x-auto">
+              <table class="w-full text-center font-mono border-collapse text-xs">
+                <thead>
+                  <tr class="border-b border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/70">
+                    <th class="py-1.5 px-2">Dec</th>
+                    <th class="py-1.5 px-2 text-sky-600 dark:text-sky-400">8421 BCD</th>
+                    <th class="py-1.5 px-2 text-indigo-600 dark:text-indigo-400">2421 Code</th>
+                    <th class="py-1.5 px-2 text-teal-600 dark:text-teal-400">5211 Code</th>
+                    <th class="py-1.5 px-2 text-purple-600 dark:text-purple-400">Excess-3</th>
+                    <th class="py-1.5 px-2 text-amber-600 dark:text-amber-400">4-Bit Gray</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-200 dark:divide-slate-800">
+                  <tr><td class="py-1 font-bold">0</td><td>0000</td><td>0000</td><td>0000</td><td>0011</td><td>0000</td></tr>
+                  <tr><td class="py-1 font-bold">1</td><td>0001</td><td>0001</td><td>0001</td><td>0100</td><td>0001</td></tr>
+                  <tr><td class="py-1 font-bold">2</td><td>0010</td><td>0010</td><td>0011</td><td>0101</td><td>0011</td></tr>
+                  <tr><td class="py-1 font-bold">3</td><td>0011</td><td>0011</td><td>0101</td><td>0110</td><td>0010</td></tr>
+                  <tr><td class="py-1 font-bold">4</td><td>0100</td><td>0100</td><td>0111</td><td>0111</td><td>0110</td></tr>
+                  <tr><td class="py-1 font-bold">5</td><td>0101</td><td>1011</td><td>1000</td><td>1000</td><td>0111</td></tr>
+                  <tr><td class="py-1 font-bold">6</td><td>0110</td><td>1100</td><td>1010</td><td>1001</td><td>0101</td></tr>
+                  <tr><td class="py-1 font-bold">7</td><td>0111</td><td>1101</td><td>1100</td><td>1010</td><td>0100</td></tr>
+                  <tr><td class="py-1 font-bold">8</td><td>1000</td><td>1110</td><td>1110</td><td>1011</td><td>1100</td></tr>
+                  <tr><td class="py-1 font-bold">9</td><td>1001</td><td>1111</td><td>1111</td><td>1100</td><td>1101</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Binary <-> Gray Code XOR Algorithms & Unpacked vs Packed Decimal Formats -->
+          <div class="lg:col-span-6 space-y-4">
+            <div class="bg-white dark:bg-slate-900 rounded-xl p-5 border border-slate-200 dark:border-slate-800 shadow-sm space-y-2.5 text-xs">
+              <div class="flex items-center justify-between">
+                <h4 class="text-base font-bold text-slate-900 dark:text-white">Binary $\leftrightarrow$ Gray Code XOR Conversion Rules</h4>
+                <span class="px-2 py-0.5 rounded bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300 font-mono font-bold">Shaft Encoders &amp; ADCs</span>
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div class="p-3 rounded-lg bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700">
+                  <p class="font-bold text-indigo-600 dark:text-indigo-400">Binary $\rightarrow$ Gray ($10110_2 \to 11101_{\text{Gray}}$)</p>
+                  <p class="text-slate-600 dark:text-slate-300 mt-0.5">1. Keep MSB identical ($G_{\text{MSB}} = B_{\text{MSB}}$).<br>2. XOR each adjacent pair of binary bits ($G_i = B_{i+1} \oplus B_i$):</p>
+                  $$1 \;\; (1\oplus 0=1) \;\; (0\oplus 1=1) \;\; (1\oplus 1=0) \;\; (1\oplus 0=1) \implies \mathbf{11101_{\text{Gray}}}$$
+                </div>
+                <div class="p-3 rounded-lg bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700">
+                  <p class="font-bold text-teal-600 dark:text-teal-400">Gray $\rightarrow$ Binary ($11011_{\text{Gray}} \to 10010_2$)</p>
+                  <p class="text-slate-600 dark:text-slate-300 mt-0.5">1. Keep MSB identical ($B_{\text{MSB}} = G_{\text{MSB}}$).<br>2. XOR each newly found binary bit with the next Gray bit ($B_i = B_{i+1} \oplus G_i$):</p>
+                  $$1 \;\; (1\oplus 1=0) \;\; (0\oplus 0=0) \;\; (0\oplus 1=1) \;\; (1\oplus 1=0) \implies \mathbf{10010_2}$$
+                </div>
+              </div>
+            </div>
+
+            <!-- Unpacked (Zoned) vs Packed Decimal Format -->
+            <div class="bg-white dark:bg-slate-900 rounded-xl p-5 border border-slate-200 dark:border-slate-800 shadow-sm space-y-2.5 text-xs">
+              <div class="flex items-center justify-between">
+                <h4 class="text-base font-bold text-slate-900 dark:text-white">Unpacked (Zoned) vs. Packed Decimal Formats ($\pm 789$)</h4>
+                <span class="px-2 py-0.5 rounded bg-sky-100 dark:bg-sky-950 text-sky-800 dark:text-sky-300 font-mono font-bold">Sign: + is 1100 (C), − is 1101 (D)</span>
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div class="p-3 rounded-lg bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700">
+                  <p class="font-bold text-sky-700 dark:text-sky-300">Unpacked (Zoned) Decimal (1 Byte/Digit)</p>
+                  <p class="text-slate-600 dark:text-slate-300 mt-0.5">Upper 4 bits = zone <code>1111</code> (<code>F</code>), except the least-significant byte whose upper 4 bits store the sign (<code>1100</code> for $+$, <code>1101</code> for $-$):</p>
+                  <p class="font-mono mt-1 text-[11px]">$+789 = \mathbf{\text{F7 F8 C9}_{16}}$ &nbsp;|&nbsp; $-789 = \mathbf{\text{F7 F8 D9}_{16}}$</p>
+                </div>
+                <div class="p-3 rounded-lg bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700">
+                  <p class="font-bold text-emerald-700 dark:text-emerald-300">Packed Decimal (2 Digits/Byte)</p>
+                  <p class="text-slate-600 dark:text-slate-300 mt-0.5">Eliminates wasted zone bits by packing 2 decimal digits per byte, placing the 4-bit sign in the rightmost nibble:</p>
+                  <p class="font-mono mt-1 text-[11px]">$+789 = \mathbf{78\;9\text{C}_{16}}$ &nbsp;|&nbsp; $-789 = \mathbf{78\;9\text{D}_{16}}$</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Comprehensive Worked Radix & Activity 2 Conversions Matrix -->
+        <div class="bg-white dark:bg-slate-900 rounded-2xl p-4 sm:p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-6">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-slate-200 dark:border-slate-800">
+            <div>
+              <span class="text-[11px] font-mono uppercase tracking-wider text-teal-600 dark:text-teal-400 font-bold">Worked Reference Solutions</span>
+              <h4 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white">Multi-Base Conversion Master Walkthroughs (Integer, Fractional &amp; Repeating Cases)</h4>
+              <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Formatted step-by-step equations, bit-grouping badges, and conversion tables optimized for mobile and desktop screens.</p>
+            </div>
+            <span class="self-start sm:self-center shrink-0 px-3 py-1 rounded-full bg-teal-100 dark:bg-teal-950 text-teal-800 dark:text-teal-300 font-mono text-xs font-bold">Complete Solved Reference</span>
+          </div>
+
+          <!-- Section 1: Decimal -> Binary, Octal & Hexadecimal -->
+          <div class="space-y-3">
+            <div class="flex items-center gap-2">
+              <span class="w-6 h-6 rounded-full bg-teal-600 text-white font-mono text-xs font-bold flex items-center justify-center shrink-0">1</span>
+              <h5 class="text-sm font-bold text-slate-900 dark:text-white">Decimal $\rightarrow$ Binary, Octal &amp; Hexadecimal</h5>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+              <!-- Card 1A: 27_10 -->
+              <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700 flex flex-col justify-between space-y-3">
+                <div>
+                  <div class="flex items-center justify-between">
+                    <span class="font-mono font-bold text-sm text-teal-700 dark:text-teal-300">Convert $27_{10}$</span>
+                    <span class="px-2 py-0.5 rounded bg-teal-100 dark:bg-teal-950 text-teal-800 dark:text-teal-300 font-mono text-[10px] font-semibold">Integer Case</span>
+                  </div>
+                  <p class="text-slate-600 dark:text-slate-300 mt-2">Decompose into powers of $2$ ($16 + 8 + 2 + 1$):</p>
+                  <div class="my-2 p-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-center overflow-x-auto">
+                    $$27_{10} = 16 + 8 + 0 + 2 + 1 = \mathbf{11011_2}$$
+                  </div>
+                </div>
+                <div class="grid grid-cols-3 gap-1.5 text-center font-mono">
+                  <div class="p-2 rounded-lg bg-sky-50 dark:bg-sky-950/50 border border-sky-200 dark:border-sky-800">
+                    <span class="block text-[10px] text-slate-500 dark:text-slate-400">Binary</span>
+                    <strong class="text-sky-700 dark:text-sky-300 text-xs">11011₂</strong>
+                  </div>
+                  <div class="p-2 rounded-lg bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-200 dark:border-emerald-800">
+                    <span class="block text-[10px] text-slate-500 dark:text-slate-400">Oct (011 011)</span>
+                    <strong class="text-emerald-700 dark:text-emerald-300 text-xs">33₈</strong>
+                  </div>
+                  <div class="p-2 rounded-lg bg-indigo-50 dark:bg-indigo-950/50 border border-indigo-200 dark:border-indigo-800">
+                    <span class="block text-[10px] text-slate-500 dark:text-slate-400">Hex (0001 1011)</span>
+                    <strong class="text-indigo-700 dark:text-indigo-300 text-xs">1B₁₆</strong>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Card 1B: 15_10 -->
+              <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700 flex flex-col justify-between space-y-3">
+                <div>
+                  <div class="flex items-center justify-between">
+                    <span class="font-mono font-bold text-sm text-teal-700 dark:text-teal-300">Convert $15_{10}$</span>
+                    <span class="px-2 py-0.5 rounded bg-teal-100 dark:bg-teal-950 text-teal-800 dark:text-teal-300 font-mono text-[10px] font-semibold">4-Bit All 1s</span>
+                  </div>
+                  <p class="text-slate-600 dark:text-slate-300 mt-2">Sum of first four binary weights ($8 + 4 + 2 + 1$):</p>
+                  <div class="my-2 p-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-center overflow-x-auto">
+                    $$15_{10} = 8 + 4 + 2 + 1 = \mathbf{1111_2}$$
+                  </div>
+                </div>
+                <div class="grid grid-cols-3 gap-1.5 text-center font-mono">
+                  <div class="p-2 rounded-lg bg-sky-50 dark:bg-sky-950/50 border border-sky-200 dark:border-sky-800">
+                    <span class="block text-[10px] text-slate-500 dark:text-slate-400">Binary</span>
+                    <strong class="text-sky-700 dark:text-sky-300 text-xs">1111₂</strong>
+                  </div>
+                  <div class="p-2 rounded-lg bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-200 dark:border-emerald-800">
+                    <span class="block text-[10px] text-slate-500 dark:text-slate-400">Oct (001 111)</span>
+                    <strong class="text-emerald-700 dark:text-emerald-300 text-xs">17₈</strong>
+                  </div>
+                  <div class="p-2 rounded-lg bg-indigo-50 dark:bg-indigo-950/50 border border-indigo-200 dark:border-indigo-800">
+                    <span class="block text-[10px] text-slate-500 dark:text-slate-400">Hex (1111)</span>
+                    <strong class="text-indigo-700 dark:text-indigo-300 text-xs">F₁₆</strong>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Card 1C: 50.22_10 -->
+              <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700 flex flex-col justify-between space-y-3">
+                <div>
+                  <div class="flex items-center justify-between">
+                    <span class="font-mono font-bold text-sm text-teal-700 dark:text-teal-300">Convert $50.22_{10}$</span>
+                    <span class="px-2 py-0.5 rounded bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300 font-mono text-[10px] font-semibold">Mixed Fraction</span>
+                  </div>
+                  <p class="text-slate-600 dark:text-slate-300 mt-1.5">
+                    • <strong>Integer $50_{10}$:</strong> $32 + 16 + 2 = \mathbf{110010_2} = \mathbf{62_8} = \mathbf{32_{16}}$<br>
+                    • <strong>Fraction $0.22_{10}$ ($\times 2$):</strong> $0.44(\mathbf{0}) \to 0.88(\mathbf{0}) \to 1.76(\mathbf{1}) \to 1.52(\mathbf{1}) \to 1.04(\mathbf{1})\dots$
+                  </p>
+                </div>
+                <div class="space-y-1 font-mono text-[11px]">
+                  <div class="flex items-center justify-between px-2.5 py-1 rounded bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700">
+                    <span class="text-slate-500">Binary:</span>
+                    <strong class="text-sky-600 dark:text-sky-400">110010.00111₂…</strong>
+                  </div>
+                  <div class="flex items-center justify-between px-2.5 py-1 rounded bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700">
+                    <span class="text-slate-500">Octal:</span>
+                    <strong class="text-emerald-600 dark:text-emerald-400">62.1605₈…</strong>
+                  </div>
+                  <div class="flex items-center justify-between px-2.5 py-1 rounded bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700">
+                    <span class="text-slate-500">Hex:</span>
+                    <strong class="text-indigo-600 dark:text-indigo-400">32.3851EB₁₆…</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 2: Base-N -> Decimal Weight Summations (Clean Responsive Table) -->
+          <div class="space-y-3">
+            <div class="flex items-center gap-2">
+              <span class="w-6 h-6 rounded-full bg-indigo-600 text-white font-mono text-xs font-bold flex items-center justify-center shrink-0">2</span>
+              <h5 class="text-sm font-bold text-slate-900 dark:text-white">Base-$N$ $\rightarrow$ Decimal Positional Weight Summations</h5>
+            </div>
+
+            <div class="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-700">
+              <table class="w-full text-left border-collapse text-xs">
+                <thead>
+                  <tr class="bg-slate-100 dark:bg-slate-800/90 border-b border-slate-200 dark:border-slate-700">
+                    <th class="py-2.5 px-3 font-bold">Source Value</th>
+                    <th class="py-2.5 px-3 font-bold">Positional Weight Expansion ($\sum \text{digit} \times \text{base}^k$)</th>
+                    <th class="py-2.5 px-3 font-bold">Component Sum</th>
+                    <th class="py-2.5 px-3 font-bold text-indigo-600 dark:text-indigo-400">Decimal Result</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-200 dark:divide-slate-800 bg-white dark:bg-slate-900">
+                  <tr>
+                    <td class="py-2.5 px-3 font-mono font-bold text-sky-600 dark:text-sky-400">$11011_2$</td>
+                    <td class="py-2.5 px-3">$(1\times 2^4) + (1\times 2^3) + (0\times 2^2) + (1\times 2^1) + (1\times 2^0)$</td>
+                    <td class="py-2.5 px-3 font-mono">$16 + 8 + 0 + 2 + 1$</td>
+                    <td class="py-2.5 px-3 font-mono font-bold text-sm text-indigo-600 dark:text-indigo-400">$27_{10}$</td>
+                  </tr>
+                  <tr>
+                    <td class="py-2.5 px-3 font-mono font-bold text-emerald-600 dark:text-emerald-400">$33_8$</td>
+                    <td class="py-2.5 px-3">$(3 \times 8^1) + (3 \times 8^0)$</td>
+                    <td class="py-2.5 px-3 font-mono">$24 + 3$</td>
+                    <td class="py-2.5 px-3 font-mono font-bold text-sm text-indigo-600 dark:text-indigo-400">$27_{10}$</td>
+                  </tr>
+                  <tr>
+                    <td class="py-2.5 px-3 font-mono font-bold text-purple-600 dark:text-purple-400">$1\text{BF}_{16}$<br><span class="text-[10px] font-normal text-slate-500">($\text{B}=11, \text{F}=15$)</span></td>
+                    <td class="py-2.5 px-3">$(1 \times 16^2) + (11 \times 16^1) + (15 \times 16^0)$</td>
+                    <td class="py-2.5 px-3 font-mono">$256 + 176 + 15$</td>
+                    <td class="py-2.5 px-3 font-mono font-bold text-sm text-indigo-600 dark:text-indigo-400">$447_{10}$</td>
+                  </tr>
+                  <tr>
+                    <td class="py-2.5 px-3 font-mono font-bold text-emerald-600 dark:text-emerald-400">$21772_8$</td>
+                    <td class="py-2.5 px-3">$(2\times 8^4) + (1\times 8^3) + (7\times 8^2) + (7\times 8^1) + (2\times 8^0)$</td>
+                    <td class="py-2.5 px-3 font-mono">$8192 + 512 + 448 + 56 + 2$</td>
+                    <td class="py-2.5 px-3 font-mono font-bold text-sm text-indigo-600 dark:text-indigo-400">$9{,}210_{10}$</td>
+                  </tr>
+                  <tr>
+                    <td class="py-2.5 px-3 font-mono font-bold text-purple-600 dark:text-purple-400">$\text{A}257\text{C}_{16}$<br><span class="text-[10px] font-normal text-slate-500">($\text{A}=10, \text{C}=12$)</span></td>
+                    <td class="py-2.5 px-3">$(10\times 16^4) + (2\times 16^3) + (5\times 16^2) + (7\times 16^1) + (12\times 16^0)$</td>
+                    <td class="py-2.5 px-3 font-mono">$655{,}360 + 8{,}192 + 1{,}280 + 112 + 12$</td>
+                    <td class="py-2.5 px-3 font-mono font-bold text-sm text-indigo-600 dark:text-indigo-400">$664{,}956_{10}$</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Section 3: Fractional & Bidirectional Groupings (4 Structured Cards) -->
+          <div class="space-y-3">
+            <div class="flex items-center gap-2">
+              <span class="w-6 h-6 rounded-full bg-amber-500 text-slate-950 font-mono text-xs font-bold flex items-center justify-center shrink-0">3</span>
+              <h5 class="text-sm font-bold text-slate-900 dark:text-white">Fractional, Repeating &amp; Bidirectional Groupings</h5>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+              <!-- Card 3A: Terminating Decimal Fraction 0.4375_10 -->
+              <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700 space-y-2">
+                <div class="flex items-center justify-between">
+                  <span class="font-bold text-amber-700 dark:text-amber-400">Terminating Fraction: $0.4375_{10}$</span>
+                  <span class="font-mono px-2 py-0.5 rounded bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300 font-bold">$0.0111_2 = 0.7_{16}$</span>
+                </div>
+                <div class="p-2.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 font-mono text-[11px] space-y-1">
+                  <p><span class="text-slate-500">To Binary ($\times 2$):</span> $0.875(\mathbf{0}) \to 1.75(\mathbf{1}) \to 1.50(\mathbf{1}) \to 1.00(\mathbf{1}) \implies \mathbf{0.0111_2}$</p>
+                  <p><span class="text-slate-500">To Hex ($\times 16$):</span> $0.4375 \times 16 = \mathbf{7}.0 \implies \mathbf{0.7_{16}}$</p>
+                </div>
+              </div>
+
+              <!-- Card 3B: Repeating Decimal Fraction 0.36_10 -> Hex -->
+              <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700 space-y-2">
+                <div class="flex items-center justify-between">
+                  <span class="font-bold text-rose-700 dark:text-rose-400">Repeating Fraction: $0.36_{10} \rightarrow \text{Hex}$</span>
+                  <span class="font-mono px-2 py-0.5 rounded bg-rose-100 dark:bg-rose-950 text-rose-800 dark:text-rose-300 font-bold">$0.\overline{5\text{C}28\text{F}}_{16}$</span>
+                </div>
+                <div class="p-2.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 font-mono text-[11px] space-y-0.5">
+                  <p>$0.36 \times 16 = \mathbf{5}.76 \;\to\; 0.76 \times 16 = \mathbf{12}(\text{C}).16 \;\to\; 0.16 \times 16 = \mathbf{2}.56$</p>
+                  <p>$0.56 \times 16 = \mathbf{8}.96 \;\to\; 0.96 \times 16 = \mathbf{15}(\text{F}).36$ <span class="text-rose-500 font-sans">(repeats $.36$)</span></p>
+                </div>
+              </div>
+
+              <!-- Card 3C: Binary Fraction 0.1011110001_2 -> Hex (Visual Pill Boxes instead of cramped underbrace) -->
+              <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700 space-y-2">
+                <div class="flex items-center justify-between">
+                  <span class="font-bold text-indigo-700 dark:text-indigo-300">Binary Fraction $\rightarrow$ Hex: $0.1011110001_2$</span>
+                  <span class="font-mono px-2 py-0.5 rounded bg-indigo-100 dark:bg-indigo-950 text-indigo-800 dark:text-indigo-300 font-bold">$0.\text{BC}4_{16}$</span>
+                </div>
+                <p class="text-slate-600 dark:text-slate-300">Group into 4-bit nibbles from the radix point rightward (pad trailing zeros):</p>
+                <div class="grid grid-cols-3 gap-2 text-center font-mono text-[11px]">
+                  <div class="p-1.5 rounded bg-white dark:bg-slate-900 border border-indigo-200 dark:border-indigo-800">
+                    <span class="block text-slate-400 text-[10px]">Bits 1–4</span>
+                    <strong>1011₂ = B₁₆</strong>
+                  </div>
+                  <div class="p-1.5 rounded bg-white dark:bg-slate-900 border border-indigo-200 dark:border-indigo-800">
+                    <span class="block text-slate-400 text-[10px]">Bits 5–8</span>
+                    <strong>1100₂ = C₁₆</strong>
+                  </div>
+                  <div class="p-1.5 rounded bg-white dark:bg-slate-900 border border-indigo-200 dark:border-indigo-800">
+                    <span class="block text-slate-400 text-[10px]">Bits 9–12 (padded)</span>
+                    <strong>0100₂ = 4₁₆</strong>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Card 3D: Quick Hex & Octal Bit Groupings -->
+              <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700 space-y-2">
+                <div class="flex items-center justify-between">
+                  <span class="font-bold text-teal-700 dark:text-teal-300">Direct Hex &amp; Octal Bit Groupings</span>
+                  <span class="font-mono px-2 py-0.5 rounded bg-teal-100 dark:bg-teal-950 text-teal-800 dark:text-teal-300 font-bold">Fast Lookup</span>
+                </div>
+                <div class="space-y-1.5 font-mono text-[11px]">
+                  <div class="flex items-center justify-between px-2.5 py-1 rounded bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700">
+                    <span>$38\text{C}_{16} \to \text{Binary}$:</span>
+                    <strong class="text-sky-600 dark:text-sky-400">0011 1000 1100₂ = 1110001100₂</strong>
+                  </div>
+                  <div class="flex items-center justify-between px-2.5 py-1 rounded bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700">
+                    <span>$0.8\text{E}_{16} \to \text{Binary}$:</span>
+                    <strong class="text-sky-600 dark:text-sky-400">0.1000 1110₂ = 0.1000111₂</strong>
+                  </div>
+                  <div class="flex items-center justify-between px-2.5 py-1 rounded bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700">
+                    <span>$1000011_2 \to \text{Octal}$:</span>
+                    <strong class="text-emerald-600 dark:text-emerald-400">001 000 011₂ = 103₈</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -1637,6 +2173,10 @@
           <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
             The <strong class="text-white">Instruction Set Architecture (ISA)</strong> acts as the contract between software and hardware—specifying the machine instructions a processor understands, how binary instructions are structured, where operands reside, and how the CPU executes programs step by step.
           </p>
+          <div class="pt-2 flex flex-wrap gap-2">
+            <a href="#m4-addressing" class="px-3 py-1 rounded-lg bg-purple-500/30 hover:bg-purple-500/40 border border-purple-400/40 text-xs font-semibold transition">7 Addressing Modes</a>
+            <a href="#m4-stack-trace" class="px-3 py-1 rounded-lg bg-purple-500/30 hover:bg-purple-500/40 border border-purple-400/40 text-xs font-semibold transition">Stack (PUSH/POP) &amp; Postfix Traces</a>
+          </div>
         </div>
       </div>
 
@@ -1891,8 +2431,365 @@
           <div class="bg-white dark:bg-slate-900 rounded-xl p-4 border-t-4 border-rose-500 border-x border-b border-slate-200 dark:border-slate-800 shadow-sm space-y-2 text-xs">
             <h4 class="font-bold text-sm text-slate-900 dark:text-white">5. Input/Output</h4>
             <p class="text-slate-600 dark:text-slate-300">Manages data exchange between CPU and external devices.</p>
-            <p class="text-slate-500"><strong>Operations:</strong> Reading input &amp; sending output.</p>
-            <p class="text-slate-500"><strong>Hardware:</strong> Keyboard, Monitor, External peripherals.</p>
+            <div class="flex flex-wrap gap-1 font-mono font-bold">
+              <span class="px-2 py-0.5 rounded bg-rose-100 dark:bg-rose-950 text-rose-700 dark:text-rose-300">INPUT</span>
+              <span class="px-2 py-0.5 rounded bg-rose-100 dark:bg-rose-950 text-rose-700 dark:text-rose-300">OUTPUT</span>
+              <span class="px-2 py-0.5 rounded bg-rose-100 dark:bg-rose-950 text-rose-700 dark:text-rose-300">MOVE Rin, R0</span>
+            </div>
+            <p class="text-slate-500">Supports dedicated I/O ports and <strong>Memory-Mapped I/O</strong>.</p>
+          </div>
+        </div>
+
+        <!-- Detailed Tables of Operations & Condition Code Flags (N, Z, V, C) -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 pt-2">
+          <!-- Condition Code Flags & Subroutine CALL/RETURN Mechanics -->
+          <div class="lg:col-span-6 bg-white dark:bg-slate-900 rounded-xl p-5 border border-slate-200 dark:border-slate-800 shadow-sm space-y-3 text-xs">
+            <div class="flex items-center justify-between">
+              <h4 class="text-base font-bold text-slate-900 dark:text-white">Condition Code (CC) Register Flags &amp; Subroutines</h4>
+              <span class="px-2 py-0.5 rounded bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300 font-mono font-bold">N • Z • V • C</span>
+            </div>
+            <p class="text-slate-600 dark:text-slate-300">
+              Conditional branch instructions (such as <code>BRANCH-IF-GREATER-THAN Loop</code>) inspect individual status bits inside the <strong>Condition Code (CC) Register</strong> set by recent arithmetic or comparison operations:
+            </p>
+            <div class="overflow-x-auto">
+              <table class="w-full text-left border-collapse text-xs">
+                <thead>
+                  <tr class="border-b border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/60">
+                    <th class="py-2 px-3 font-bold">Flag Name</th>
+                    <th class="py-2 px-3 font-bold">Condition to Set Flag = 1 (0 Otherwise)</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-200 dark:divide-slate-800">
+                  <tr>
+                    <td class="py-1.5 px-3 font-mono font-bold text-rose-600 dark:text-rose-400">Negative (N)</td>
+                    <td class="py-1.5 px-3">Set to $1$ if the result of the most recent operation is <strong>negative</strong>.</td>
+                  </tr>
+                  <tr>
+                    <td class="py-1.5 px-3 font-mono font-bold text-indigo-600 dark:text-indigo-400">Zero (Z)</td>
+                    <td class="py-1.5 px-3">Set to $1$ if the result of the most recent operation is <strong>$0$</strong>.</td>
+                  </tr>
+                  <tr>
+                    <td class="py-1.5 px-3 font-mono font-bold text-amber-600 dark:text-amber-400">Overflow (V)</td>
+                    <td class="py-1.5 px-3">Set to $1$ if the most recent operation causes an <strong>arithmetic overflow</strong>.</td>
+                  </tr>
+                  <tr>
+                    <td class="py-1.5 px-3 font-mono font-bold text-emerald-600 dark:text-emerald-400">Carry (C)</td>
+                    <td class="py-1.5 px-3">Set to $1$ if the most recent operation results in a <strong>carry out</strong>.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="p-3 rounded-lg bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 space-y-1">
+              <p class="font-bold text-slate-900 dark:text-white">How <code>CALL</code> &amp; <code>RETURN</code> Use the Stack &amp; Program Counter (PC):</p>
+              <p class="text-slate-600 dark:text-slate-300">
+                • <strong><code>JUMP NEW-ADDRESS</code>:</strong> Unconditionally overwrites the PC with <code>NEW-ADDRESS</code> (previous PC is lost).<br>
+                • <strong><code>CALL SUBROUTINE</code>:</strong> Pushes the <strong>incremented PC</strong> (address of the next sequential instruction) onto the <strong>stack</strong>, then loads the PC with the subroutine's starting address.<br>
+                • <strong><code>RETURN</code>:</strong> Pops the saved return address from the stack back into the PC, resuming execution right where the program branched.
+              </p>
+            </div>
+          </div>
+
+          <!-- Expanded Operations Reference + Dedicated vs Memory-Mapped I/O + ISA Design Pressures -->
+          <div class="lg:col-span-6 space-y-4 text-xs">
+            <!-- Card A: Extended Instruction Operations & Memory-Mapped I/O -->
+            <div class="bg-white dark:bg-slate-900 rounded-xl p-4 sm:p-5 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+              <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 dark:border-slate-800 pb-2.5">
+                <h4 class="text-base font-bold text-slate-900 dark:text-white">Extended Instruction Operations &amp; Memory-Mapped I/O</h4>
+                <span class="px-2 py-0.5 rounded bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 font-mono text-[11px] font-bold">ISA Instruction Set</span>
+              </div>
+
+              <!-- Structured Table for Data Movement, Arithmetic & Logical Ops -->
+              <div class="space-y-2">
+                <p class="font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-wider text-[11px]">1. Core Data, Arithmetic &amp; Logical Instruction Set</p>
+                <div class="overflow-x-auto rounded-lg border border-slate-200 dark:border-slate-700">
+                  <table class="w-full text-left border-collapse text-xs">
+                    <tbody class="divide-y divide-slate-200 dark:divide-slate-700 bg-slate-50/70 dark:bg-slate-800/50">
+                      <tr>
+                        <td class="py-2 px-3 font-bold text-indigo-700 dark:text-indigo-300 w-28 align-top">Data Movement</td>
+                        <td class="py-2 px-3 space-y-1">
+                          <div class="flex flex-wrap gap-1 font-mono text-[11px] font-bold">
+                            <span class="px-1.5 py-0.5 rounded bg-indigo-100 dark:bg-indigo-950 text-indigo-800 dark:text-indigo-300">MOVE</span>
+                            <span class="px-1.5 py-0.5 rounded bg-indigo-100 dark:bg-indigo-950 text-indigo-800 dark:text-indigo-300">LOAD</span>
+                            <span class="px-1.5 py-0.5 rounded bg-indigo-100 dark:bg-indigo-950 text-indigo-800 dark:text-indigo-300">STORE</span>
+                            <span class="px-1.5 py-0.5 rounded bg-indigo-100 dark:bg-indigo-950 text-indigo-800 dark:text-indigo-300">PUSH</span>
+                            <span class="px-1.5 py-0.5 rounded bg-indigo-100 dark:bg-indigo-950 text-indigo-800 dark:text-indigo-300">POP</span>
+                          </div>
+                          <p class="text-slate-600 dark:text-slate-300 text-[11px]"><code>PUSH</code>: register $\to$ stack top &nbsp;|&nbsp; <code>POP</code>: stack top $\to$ register. Source contents remain unchanged after <code>MOVE</code>/<code>LOAD</code>/<code>STORE</code>.</p>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="py-2 px-3 font-bold text-emerald-700 dark:text-emerald-300 align-top">Arithmetic</td>
+                        <td class="py-2 px-3 space-y-1">
+                          <div class="flex flex-wrap gap-1 font-mono text-[11px] font-bold">
+                            <span class="px-1.5 py-0.5 rounded bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300">ADD</span>
+                            <span class="px-1.5 py-0.5 rounded bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300">SUBTRACT</span>
+                            <span class="px-1.5 py-0.5 rounded bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300">MULTIPLY</span>
+                            <span class="px-1.5 py-0.5 rounded bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300">DIVIDE</span>
+                            <span class="px-1.5 py-0.5 rounded bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300">INCREMENT (+1)</span>
+                            <span class="px-1.5 py-0.5 rounded bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300">DECREMENT (-1)</span>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="py-2 px-3 font-bold text-sky-700 dark:text-sky-300 align-top">Logical &amp; Shift</td>
+                        <td class="py-2 px-3 space-y-1">
+                          <div class="flex flex-wrap gap-1 font-mono text-[11px] font-bold">
+                            <span class="px-1.5 py-0.5 rounded bg-sky-100 dark:bg-sky-950 text-sky-800 dark:text-sky-300">AND</span>
+                            <span class="px-1.5 py-0.5 rounded bg-sky-100 dark:bg-sky-950 text-sky-800 dark:text-sky-300">OR</span>
+                            <span class="px-1.5 py-0.5 rounded bg-sky-100 dark:bg-sky-950 text-sky-800 dark:text-sky-300">EXOR</span>
+                            <span class="px-1.5 py-0.5 rounded bg-sky-100 dark:bg-sky-950 text-sky-800 dark:text-sky-300">NOT</span>
+                            <span class="px-1.5 py-0.5 rounded bg-sky-100 dark:bg-sky-950 text-sky-800 dark:text-sky-300">COMPARE</span>
+                            <span class="px-1.5 py-0.5 rounded bg-sky-100 dark:bg-sky-950 text-sky-800 dark:text-sky-300">SHIFT</span>
+                            <span class="px-1.5 py-0.5 rounded bg-sky-100 dark:bg-sky-950 text-sky-800 dark:text-sky-300">ROTATE</span>
+                          </div>
+                          <p class="text-slate-600 dark:text-slate-300 text-[11px]"><code>COMPARE</code> sets CC flags &nbsp;|&nbsp; <code>SHIFT</code> moves bits left/right &nbsp;|&nbsp; <code>ROTATE</code> shifts bits with wraparound.</p>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <!-- Side-by-Side Comparison: Dedicated I/O vs Memory-Mapped I/O -->
+              <div class="space-y-2">
+                <p class="font-bold text-rose-600 dark:text-rose-400 uppercase tracking-wider text-[11px]">2. Dedicated I/O Ports vs. Memory-Mapped I/O</p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                  <div class="p-3 rounded-xl bg-rose-50/60 dark:bg-rose-950/30 border border-rose-200 dark:border-rose-800 space-y-1.5">
+                    <span class="font-bold text-rose-800 dark:text-rose-300 block">Dedicated I/O Ports</span>
+                    <p class="text-slate-600 dark:text-slate-300 text-[11px]">Uses special I/O instructions and isolated port numbers:</p>
+                    <div class="space-y-1 font-mono text-[11px]">
+                      <div class="px-2 py-1 rounded bg-white dark:bg-slate-900 border border-rose-200 dark:border-rose-800"><code>INPUT 1000</code> <span class="text-slate-400">(port $1000 \to \text{ACC}$)</span></div>
+                      <div class="px-2 py-1 rounded bg-white dark:bg-slate-900 border border-rose-200 dark:border-rose-800"><code>OUTPUT 2000</code> <span class="text-slate-400">($\text{ACC} \to$ port $2000$)</span></div>
+                    </div>
+                  </div>
+                  <div class="p-3 rounded-xl bg-teal-50/60 dark:bg-teal-950/30 border border-teal-200 dark:border-teal-800 space-y-1.5">
+                    <span class="font-bold text-teal-800 dark:text-teal-300 block">Memory-Mapped I/O</span>
+                    <p class="text-slate-600 dark:text-slate-300 text-[11px]">Maps device registers to standard memory addresses:</p>
+                    <div class="px-2 py-1 rounded bg-white dark:bg-slate-900 border border-teal-200 dark:border-teal-800 font-mono text-[11px]">
+                      <code>MOVE Rin, R0</code> &nbsp;/&nbsp; <code>MOVE R0, Rin</code>
+                    </div>
+                    <p class="text-[11px] text-emerald-700 dark:text-emerald-400"><strong>+ Pro:</strong> Uses standard memory instructions.</p>
+                    <p class="text-[11px] text-rose-600 dark:text-rose-400"><strong>− Con:</strong> Consumes memory address space.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card B: Five ISA Design Pressures, RISC Movement & Extended Data Types -->
+            <div class="bg-white dark:bg-slate-900 rounded-xl p-4 sm:p-5 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+              <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 dark:border-slate-800 pb-2.5">
+                <h4 class="text-base font-bold text-slate-900 dark:text-white">Five ISA Design Pressures, RISC &amp; Data Widths</h4>
+                <span class="px-2 py-0.5 rounded bg-purple-100 dark:bg-purple-950 text-purple-700 dark:text-purple-300 font-mono text-[11px] font-bold">Architecture Evolution</span>
+              </div>
+
+              <!-- 5 Numbered Pills for ISA Design Pressures -->
+              <div class="space-y-2">
+                <p class="font-bold text-purple-600 dark:text-purple-400 uppercase tracking-wider text-[11px]">5 Engineering Pressures on ISA Design</p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  <div class="p-2.5 rounded-lg bg-slate-50 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700 flex items-center gap-2">
+                    <span class="w-5 h-5 rounded-full bg-purple-600 text-white font-mono text-[10px] font-bold flex items-center justify-center shrink-0">1</span>
+                    <span class="font-semibold text-slate-800 dark:text-slate-200">Cost / Performance ratio</span>
+                  </div>
+                  <div class="p-2.5 rounded-lg bg-slate-50 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700 flex items-center gap-2">
+                    <span class="w-5 h-5 rounded-full bg-purple-600 text-white font-mono text-[10px] font-bold flex items-center justify-center shrink-0">2</span>
+                    <span class="font-semibold text-slate-800 dark:text-slate-200">Cost/performance scaling</span>
+                  </div>
+                  <div class="p-2.5 rounded-lg bg-slate-50 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700 flex items-center gap-2">
+                    <span class="w-5 h-5 rounded-full bg-purple-600 text-white font-mono text-[10px] font-bold flex items-center justify-center shrink-0">3</span>
+                    <span class="font-semibold text-slate-800 dark:text-slate-200">Model of computation</span>
+                  </div>
+                  <div class="p-2.5 rounded-lg bg-slate-50 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700 flex items-center gap-2">
+                    <span class="w-5 h-5 rounded-full bg-purple-600 text-white font-mono text-[10px] font-bold flex items-center justify-center shrink-0">4</span>
+                    <span class="font-semibold text-slate-800 dark:text-slate-200">Backward compatibility <span class="font-normal text-slate-500">(IBM 360)</span></span>
+                  </div>
+                  <div class="p-2.5 rounded-lg bg-slate-50 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700 flex items-center gap-2 sm:col-span-2">
+                    <span class="w-5 h-5 rounded-full bg-purple-600 text-white font-mono text-[10px] font-bold flex items-center justify-center shrink-0">5</span>
+                    <span class="font-semibold text-slate-800 dark:text-slate-200">Future compatibility <span class="font-normal text-slate-500">(forward-looking extensibility for next-gen systems)</span></span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- RISC Callout Box -->
+              <div class="p-3 rounded-xl bg-amber-50/70 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800">
+                <p class="font-bold text-amber-900 dark:text-amber-300">RISC (Reduced Instruction Set Computer) Movement</p>
+                <p class="text-slate-600 dark:text-slate-300 mt-0.5">Popularized by <strong>Patterson and Hennessy</strong>—streamlines instruction sets by removing complex ISA "baggage" and optimizing designs using real-world software benchmarks.</p>
+              </div>
+
+              <!-- ISA Data Width Terminology Grid -->
+              <div class="space-y-2">
+                <p class="font-bold text-teal-600 dark:text-teal-400 uppercase tracking-wider text-[11px]">ISA Data Width Terminology</p>
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center font-mono text-[11px]">
+                  <div class="p-2 rounded-lg bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700">
+                    <span class="block text-indigo-600 dark:text-indigo-400 font-bold">8-bit</span>
+                    <span class="font-sans text-[10px] text-slate-500">Byte / Char</span>
+                  </div>
+                  <div class="p-2 rounded-lg bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700">
+                    <span class="block text-indigo-600 dark:text-indigo-400 font-bold">16-bit</span>
+                    <span class="font-sans text-[10px] text-slate-500">Word</span>
+                  </div>
+                  <div class="p-2 rounded-lg bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700">
+                    <span class="block text-teal-600 dark:text-teal-400 font-bold">32-bit</span>
+                    <span class="font-sans text-[10px] text-slate-500">Doubleword / Single Float</span>
+                  </div>
+                  <div class="p-2 rounded-lg bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700">
+                    <span class="block text-teal-600 dark:text-teal-400 font-bold">64-bit</span>
+                    <span class="font-sans text-[10px] text-slate-500">Quadword / Double Float</span>
+                  </div>
+                </div>
+                <p class="text-[11px] text-slate-500 dark:text-slate-400">Also supports <strong>Packed BCD</strong>, <strong>variable-length byte strings</strong>, and <strong>SIMD vectors</strong> (CRAY vector processors, x86 MMX).</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Flow Part 5: Complete 7 Addressing Modes Reference (Direct Answer to Activity 3) -->
+      <div id="m4-addressing" class="searchable-card space-y-4">
+        <div class="border-l-4 border-teal-500 pl-3">
+          <span class="text-xs font-mono uppercase tracking-wider text-teal-600 dark:text-teal-400 font-bold">Part 5 • Effective Address Calculation</span>
+          <h3 class="text-xl font-bold text-slate-900 dark:text-white">Complete Processor Addressing Modes Reference (7 Modes)</h3>
+          <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400">
+            An <strong>addressing mode</strong> is the method used by a machine instruction (via its <strong>mode field</strong> and <strong>address field</strong>) to specify where its operand or data can be found and how to compute the operand's <strong>effective memory address (EA)</strong>.
+          </p>
+        </div>
+
+        <div class="bg-white dark:bg-slate-900 rounded-xl p-5 border border-slate-200 dark:border-slate-800 shadow-sm">
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse text-xs sm:text-sm">
+              <thead>
+                <tr class="border-b border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/60">
+                  <th class="py-2.5 px-3 font-bold">Addressing Mode</th>
+                  <th class="py-2.5 px-3 font-bold">Where Operand / Address Field Points</th>
+                  <th class="py-2.5 px-3 font-bold">Memory Refs</th>
+                  <th class="py-2.5 px-3 font-bold">Advantages &amp; Limitations</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-200 dark:divide-slate-800">
+                <tr>
+                  <td class="py-2.5 px-3 font-bold text-purple-600 dark:text-purple-400">1. Immediate Addressing</td>
+                  <td class="py-2.5 px-3">Operand value is <strong>included directly inside the instruction</strong> itself (defines constants or initial values).</td>
+                  <td class="py-2.5 px-3 font-mono font-bold text-emerald-600 dark:text-emerald-400">0 refs<br><span class="text-[10px] font-normal">(beyond fetch)</span></td>
+                  <td class="py-2.5 px-3"><strong>+ Advantage:</strong> Fastest—no extra memory reference required.<br><strong>− Limitation:</strong> Operand magnitude is restricted by the small bit width of the address field.</td>
+                </tr>
+                <tr>
+                  <td class="py-2.5 px-3 font-bold text-indigo-600 dark:text-indigo-400">2. Direct Addressing</td>
+                  <td class="py-2.5 px-3">Address field contains the <strong>actual effective memory address</strong> where the operand is stored in memory (e.g., <code>Move P, R0</code>).</td>
+                  <td class="py-2.5 px-3 font-mono font-bold text-sky-600 dark:text-sky-400">1 memory ref</td>
+                  <td class="py-2.5 px-3"><strong>+ Advantage:</strong> Simple single memory read.<br><strong>− Limitation:</strong> Provides a limited address space because the address field is shorter than a full word.</td>
+                </tr>
+                <tr>
+                  <td class="py-2.5 px-3 font-bold text-sky-600 dark:text-sky-400">3. Indirect Addressing</td>
+                  <td class="py-2.5 px-3">Address field specifies the <strong>address of a memory location that contains the full-length address of the operand</strong> ($\text{EA} = M[\text{Address}]$).</td>
+                  <td class="py-2.5 px-3 font-mono font-bold text-rose-600 dark:text-rose-400">2 memory refs<br><span class="text-[10px] font-normal">(or more if cascaded)</span></td>
+                  <td class="py-2.5 px-3"><strong>+ Advantage:</strong> For word length $N$, expands addressable space to $2^N$.<br><strong>− Limitation:</strong> Slower execution because fetching the operand requires two memory accesses.</td>
+                </tr>
+                <tr>
+                  <td class="py-2.5 px-3 font-bold text-teal-600 dark:text-teal-400">4. Register Addressing</td>
+                  <td class="py-2.5 px-3">Address field references a <strong>CPU register</strong> ($3\text{–}4\text{ bits}$ select among $8\text{–}16$ general-purpose registers) that holds the operand.</td>
+                  <td class="py-2.5 px-3 font-mono font-bold text-emerald-600 dark:text-emerald-400">0 memory refs</td>
+                  <td class="py-2.5 px-3"><strong>+ Advantage:</strong> Very small address field needed in the instruction and rapid internal register access.</td>
+                </tr>
+                <tr>
+                  <td class="py-2.5 px-3 font-bold text-emerald-600 dark:text-emerald-400">5. Register Indirect Addressing</td>
+                  <td class="py-2.5 px-3">Address field refers to a <strong>CPU register that contains the effective memory address</strong> of the operand in main memory ($\text{EA} = [R_i]$).</td>
+                  <td class="py-2.5 px-3 font-mono font-bold text-sky-600 dark:text-sky-400">1 memory ref</td>
+                  <td class="py-2.5 px-3"><strong>+ Advantage:</strong> Uses a compact register field while addressing memory using full register width (1 fewer memory access than memory-indirect).</td>
+                </tr>
+                <tr>
+                  <td class="py-2.5 px-3 font-bold text-amber-600 dark:text-amber-400">6. Displacement Addressing</td>
+                  <td class="py-2.5 px-3">Combines direct and register-indirect addressing: adds a direct address field $A$ to the contents of a register $R$ ($\text{EA} = A + [R]$).</td>
+                  <td class="py-2.5 px-3 font-mono font-bold text-sky-600 dark:text-sky-400">1 memory ref</td>
+                  <td class="py-2.5 px-3">Includes three sub-types: <strong>(1) Relative addressing</strong>, <strong>(2) Base register addressing</strong>, and <strong>(3) Indexing addressing</strong>.</td>
+                </tr>
+                <tr>
+                  <td class="py-2.5 px-3 font-bold text-rose-600 dark:text-rose-400">7. Stack (Implicit) Addressing</td>
+                  <td class="py-2.5 px-3">Implied addressing where operations automatically act on the <strong>top one or two elements of the LIFO stack</strong> pointed to by the <strong>Stack Pointer (SP)</strong>.</td>
+                  <td class="py-2.5 px-3 font-mono">Stack Top (SP)</td>
+                  <td class="py-2.5 px-3">Also called <strong>implicit addressing</strong>; <code>PUSH</code> places a value onto the top of the stack and <code>POP</code> retrieves the top element.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Flow Part 6: CPU Organizations, Stack (LIFO) Mechanics & Evaluating X = (A+B)*(C+D) -->
+      <div id="m4-stack-trace" class="searchable-card space-y-4">
+        <div class="border-l-4 border-purple-500 pl-3">
+          <span class="text-xs font-mono uppercase tracking-wider text-purple-600 dark:text-purple-400 font-bold">Part 6 • Program Traces &amp; Stack Architecture</span>
+          <h3 class="text-xl font-bold text-slate-900 dark:text-white">CPU Organizations, Stack (PUSH/POP) Mechanics &amp; Evaluating $X = (A+B) \times (C+D)$</h3>
+          <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400">
+            Based on the number of address fields, CPU organization is classified into <strong>(1) Single Accumulator organization</strong>, <strong>(2) General Register organization</strong>, and <strong>(3) Stack organization</strong>. Below is the complete trace of $X = (A+B) \times (C+D)$ across all instruction classes.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          <!-- Left: 3-Address, 2-Address, 1.5-Address, and 1-Address Traces -->
+          <div class="lg:col-span-6 bg-white dark:bg-slate-900 rounded-xl p-5 border border-slate-200 dark:border-slate-800 shadow-sm space-y-3 text-xs">
+            <h4 class="text-base font-bold text-slate-900 dark:text-white">Register &amp; Accumulator Traces for $X = (A+B) \times (C+D)$</h4>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div class="p-3 rounded-lg bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700">
+                <p class="font-bold text-purple-600 dark:text-purple-400 mb-1">1. Three-Address Program (3 steps)</p>
+                <pre class="font-mono text-[11px] leading-relaxed text-slate-700 dark:text-slate-200">ADD R1, A, B   ; R1 = M[A] + M[B]
+ADD R2, C, D   ; R2 = M[C] + M[D]
+MUL X, R1, R2  ; M[X] = R1 * R2</pre>
+                <p class="text-[11px] text-slate-500 mt-1.5"><strong>1.5-Address Variant:</strong> <code>ADD B, R1</code> (one memory operand + one register operand).</p>
+              </div>
+
+              <div class="p-3 rounded-lg bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700">
+                <p class="font-bold text-indigo-600 dark:text-indigo-400 mb-1">2. Two-Address Program (6 steps)</p>
+                <pre class="font-mono text-[11px] leading-relaxed text-slate-700 dark:text-slate-200">MOV R1, A      ; R1 = M[A]
+ADD R1, B      ; R1 = R1 + M[B]
+MOV R2, C      ; R2 = M[C]
+ADD R2, D      ; R2 = R2 + M[D]
+MUL R1, R2     ; R1 = R1 * R2
+MOV X, R1      ; M[X] = R1</pre>
+              </div>
+            </div>
+
+            <div class="p-3 rounded-lg bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700">
+              <p class="font-bold text-teal-600 dark:text-teal-400 mb-1">3. One-Address (Single Accumulator $R_{\text{acc}}$) Program (7 steps)</p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 font-mono text-[11px] text-slate-700 dark:text-slate-200">
+                <div>
+                  LOAD A &nbsp;&nbsp;; Racc = M[A]<br>
+                  ADD B &nbsp;&nbsp;&nbsp;; Racc = Racc + M[B]<br>
+                  STORE T &nbsp;; M[T] = Racc<br>
+                  LOAD C &nbsp;&nbsp;; Racc = M[C]
+                </div>
+                <div>
+                  ADD D &nbsp;&nbsp;&nbsp;; Racc = Racc + M[D]<br>
+                  MUL T &nbsp;&nbsp;&nbsp;; Racc = Racc * M[T]<br>
+                  STORE X &nbsp;; M[X] = Racc
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Stack Architecture, SP Push/Pop & Zero-Address Postfix Trace -->
+          <div class="lg:col-span-6 bg-white dark:bg-slate-900 rounded-xl p-5 border border-slate-200 dark:border-slate-800 shadow-sm space-y-3 text-xs">
+            <div class="flex items-center justify-between">
+              <h4 class="text-base font-bold text-slate-900 dark:text-white">Zero-Address Stack Architecture &amp; Postfix (RPN) Trace</h4>
+              <span class="px-2 py-0.5 rounded bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300 font-mono font-bold">LIFO Stack &amp; SP</span>
+            </div>
+            <p class="text-slate-600 dark:text-slate-300">
+              A <strong>stack</strong> is a <strong>Last-In, First-Out (LIFO)</strong> structure managed by the <strong>Stack Pointer (SP)</strong> register. In a stack-oriented processor:
+              <br>• <strong><code>PUSH</code></strong> places a new data item onto the <strong>top of the stack</strong> (stores value at SP and increments SP, e.g., $1023 \to 1024$).
+              <br>• <strong><code>POP</code></strong> retrieves the top item from the stack into a register (decrements SP first, e.g., $1022 \to 1021$, and reads value).
+              <br>• <strong>Arithmetic operations</strong> (like <code>ADD</code> or <code>MUL</code>) implicitly operate on the <strong>top two elements of the stack</strong> after converting infix expressions to <strong>Reverse Polish Notation (Postfix)</strong>:
+            </p>
+            <div class="p-3 rounded-lg bg-amber-50/60 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800">
+              <p class="font-bold text-amber-900 dark:text-amber-300 mb-1">Infix: $X = (A+B) \times (C+D)$ &nbsp;$\longrightarrow$&nbsp; Postfix (RPN): $X = AB+CD+\times$</p>
+              <div class="grid grid-cols-2 sm:grid-cols-4 gap-1.5 font-mono text-[11px] pt-1">
+                <div class="p-1.5 rounded bg-white dark:bg-slate-900 border border-amber-200 dark:border-amber-800">1. <strong>PUSH A</strong><br><span class="text-slate-500">TOP = A</span></div>
+                <div class="p-1.5 rounded bg-white dark:bg-slate-900 border border-amber-200 dark:border-amber-800">2. <strong>PUSH B</strong><br><span class="text-slate-500">TOP = B</span></div>
+                <div class="p-1.5 rounded bg-white dark:bg-slate-900 border border-amber-200 dark:border-amber-800">3. <strong>ADD</strong><br><span class="text-teal-600 dark:text-teal-400">TOP = A+B</span></div>
+                <div class="p-1.5 rounded bg-white dark:bg-slate-900 border border-amber-200 dark:border-amber-800">4. <strong>PUSH C</strong><br><span class="text-slate-500">TOP = C</span></div>
+                <div class="p-1.5 rounded bg-white dark:bg-slate-900 border border-amber-200 dark:border-amber-800">5. <strong>PUSH D</strong><br><span class="text-slate-500">TOP = D</span></div>
+                <div class="p-1.5 rounded bg-white dark:bg-slate-900 border border-amber-200 dark:border-amber-800">6. <strong>ADD</strong><br><span class="text-teal-600 dark:text-teal-400">TOP = C+D</span></div>
+                <div class="p-1.5 rounded bg-white dark:bg-slate-900 border border-amber-200 dark:border-amber-800">7. <strong>MUL</strong><br><span class="text-indigo-600 dark:text-indigo-400">(C+D)*(A+B)</span></div>
+                <div class="p-1.5 rounded bg-white dark:bg-slate-900 border border-amber-200 dark:border-amber-800">8. <strong>POP X</strong><br><span class="text-emerald-600 dark:text-emerald-400">M[X] = TOP</span></div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -2253,6 +3150,69 @@
         btnB.addEventListener('click', function () { stateB = stateB ? 0 : 1; updateLogicSimulator(); });
         btnC.addEventListener('click', function () { stateC = stateC ? 0 : 1; updateLogicSimulator(); });
       }
+
+      // 9. Interactive Performance Speedup & CPI/IPC Calculators (Module 1)
+      var perfOldTime = document.getElementById('perfOldTime');
+      var perfNewTime = document.getElementById('perfNewTime');
+      var perfSpeedupOut = document.getElementById('perfSpeedupOut');
+      var perfPresetBtns = document.querySelectorAll('.perf-preset-btn');
+
+      function updateSpeedupCalc() {
+        if (!perfOldTime || !perfNewTime || !perfSpeedupOut) return;
+        var oldT = parseFloat(perfOldTime.value);
+        var newT = parseFloat(perfNewTime.value);
+        if (isNaN(oldT) || isNaN(newT) || newT <= 0) {
+          perfSpeedupOut.textContent = '—';
+          return;
+        }
+        var sp = oldT / newT;
+        perfSpeedupOut.textContent = sp.toFixed(2) + '×';
+      }
+
+      if (perfOldTime && perfNewTime) {
+        perfOldTime.addEventListener('input', updateSpeedupCalc);
+        perfNewTime.addEventListener('input', updateSpeedupCalc);
+      }
+
+      perfPresetBtns.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          perfOldTime.value = btn.getAttribute('data-old');
+          perfNewTime.value = btn.getAttribute('data-new');
+          updateSpeedupCalc();
+        });
+      });
+
+      var perfCycles = document.getElementById('perfCycles');
+      var perfInstr = document.getElementById('perfInstr');
+      var perfCpiOut = document.getElementById('perfCpiOut');
+      var perfIpcOut = document.getElementById('perfIpcOut');
+      var cpiPresetBtns = document.querySelectorAll('.cpi-preset-btn');
+
+      function updateCpiCalc() {
+        if (!perfCycles || !perfInstr || !perfCpiOut || !perfIpcOut) return;
+        var cyc = parseFloat(perfCycles.value);
+        var ins = parseFloat(perfInstr.value);
+        if (isNaN(cyc) || isNaN(ins) || cyc <= 0 || ins <= 0) {
+          perfCpiOut.textContent = '—';
+          perfIpcOut.textContent = '—';
+          return;
+        }
+        perfCpiOut.textContent = (cyc / ins).toFixed(2);
+        perfIpcOut.textContent = (ins / cyc).toFixed(3);
+      }
+
+      if (perfCycles && perfInstr) {
+        perfCycles.addEventListener('input', updateCpiCalc);
+        perfInstr.addEventListener('input', updateCpiCalc);
+      }
+
+      cpiPresetBtns.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          perfCycles.value = btn.getAttribute('data-cyc');
+          perfInstr.value = btn.getAttribute('data-inst');
+          updateCpiCalc();
+        });
+      });
     });
   </script>
 </body>
