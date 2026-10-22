@@ -1,0 +1,2563 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Principles of Programming Languages — Visual Study Guide</title>
+    <style>
+        :root {
+            --bg-page: #f4f7f9;
+            --bg-surface: #ffffff;
+            --bg-subtle: #eef2f6;
+            --bg-code: #0b1120;
+            --text-primary: #0f172a;
+            --text-secondary: #334155;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --border-strong: #cbd5e1;
+
+            --primary: #0d9488;
+            --primary-soft: #f0fdfa;
+            --primary-border: #99f6e4;
+            --indigo: #4f46e5;
+            --indigo-soft: #eef2ff;
+            --indigo-border: #c7d2fe;
+            --emerald: #16a34a;
+            --emerald-soft: #f0fdf4;
+            --emerald-border: #bbf7d0;
+            --amber: #d97706;
+            --amber-soft: #fffbeb;
+            --amber-border: #fde68a;
+            --rose: #e11d48;
+            --rose-soft: #fff1f2;
+            --rose-border: #fecdd3;
+            --cyan: #0284c7;
+            --cyan-soft: #f0f9ff;
+            --cyan-border: #bae6fd;
+
+            --hl-bg: #fef08a;
+            --hl-text: #713f12;
+
+            --shadow-sm: 0 1px 4px rgba(15, 23, 42, 0.05);
+            --shadow-md: 0 8px 24px -4px rgba(15, 23, 42, 0.07);
+            --radius-sm: 10px;
+            --radius-md: 14px;
+            --radius-lg: 20px;
+        }
+
+        [data-theme="dark"] {
+            --bg-page: #070b14;
+            --bg-surface: #0f172a;
+            --bg-subtle: #1e293b;
+            --bg-code: #020617;
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --text-muted: #94a3b8;
+            --border: #1e293b;
+            --border-strong: #334155;
+
+            --primary: #2dd4bf;
+            --primary-soft: rgba(45, 212, 191, 0.13);
+            --primary-border: rgba(45, 212, 191, 0.32);
+            --indigo: #818cf8;
+            --indigo-soft: rgba(129, 140, 248, 0.14);
+            --indigo-border: rgba(129, 140, 248, 0.32);
+            --emerald: #4ade80;
+            --emerald-soft: rgba(74, 222, 128, 0.13);
+            --emerald-border: rgba(74, 222, 128, 0.32);
+            --amber: #fbbf24;
+            --amber-soft: rgba(251, 191, 36, 0.13);
+            --amber-border: rgba(251, 191, 36, 0.32);
+            --rose: #fb7185;
+            --rose-soft: rgba(251, 113, 133, 0.13);
+            --rose-border: rgba(251, 113, 133, 0.32);
+            --cyan: #38bdf8;
+            --cyan-soft: rgba(56, 189, 248, 0.13);
+            --cyan-border: rgba(56, 189, 248, 0.32);
+
+            --hl-bg: rgba(250, 204, 21, 0.22);
+            --hl-text: #fde047;
+
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.45);
+            --shadow-md: 0 10px 28px -4px rgba(0, 0, 0, 0.65);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            max-width: 100vw;
+            overflow-x: hidden;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-page);
+            color: var(--text-secondary);
+            line-height: 1.6;
+            font-size: 15px;
+            transition: background-color 0.25s ease, color 0.25s ease;
+        }
+
+        h1, h2, h3, h4 {
+            color: var(--text-primary);
+            line-height: 1.3;
+            font-weight: 700;
+        }
+
+        strong, b {
+            color: var(--text-primary);
+            font-weight: 700;
+        }
+
+        code {
+            font-family: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
+            font-size: 0.86em;
+            background: var(--bg-subtle);
+            border: 1px solid var(--border-strong);
+            padding: 0.08rem 0.38rem;
+            border-radius: 5px;
+            color: var(--text-primary);
+        }
+
+        /* INLINE SVG ICON SYSTEM */
+        svg.ico {
+            width: 18px;
+            height: 18px;
+            stroke: currentColor;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            fill: none;
+            flex-shrink: 0;
+            vertical-align: middle;
+        }
+
+        svg.ico-lg {
+            width: 22px;
+            height: 22px;
+        }
+
+        .hl {
+            background: var(--hl-bg);
+            color: var(--hl-text);
+            padding: 0.08rem 0.42rem;
+            border-radius: 5px;
+            font-weight: 700;
+            font-size: 0.92em;
+        }
+
+        /* TOP READING PROGRESS BAR */
+        .progress-track {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: rgba(148, 163, 184, 0.2);
+            z-index: 200;
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #10b981, #06b6d4, #6366f1);
+            transition: width 0.1s ease-out;
+        }
+
+        /* HEADER */
+        .app-header {
+            background: linear-gradient(135deg, #090d16 0%, #0f172a 55%, #115e59 100%);
+            color: #ffffff;
+            padding: 1.5rem 4%;
+            border-bottom: 3px solid #14b8a6;
+        }
+
+        .header-inner {
+            max-width: 940px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .header-title-wrap {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .brand-mark {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            background: rgba(20, 184, 166, 0.2);
+            border: 1px solid rgba(45, 212, 191, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #2dd4bf;
+            flex-shrink: 0;
+        }
+
+        .header-title h1 {
+            color: #ffffff;
+            font-size: clamp(1.3rem, 2.6vw, 1.85rem);
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+
+        .header-title p {
+            color: #94a3b8;
+            font-size: 0.85rem;
+            margin-top: 0.15rem;
+        }
+
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 0.55rem;
+            flex-wrap: wrap;
+        }
+
+        .search-box {
+            position: relative;
+            min-width: 210px;
+            flex: 1;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 0.52rem 0.85rem 0.52rem 2.2rem;
+            border-radius: var(--radius-sm);
+            border: 1px solid rgba(255, 255, 255, 0.22);
+            background: rgba(15, 23, 42, 0.7);
+            color: #ffffff;
+            font-size: 0.85rem;
+            outline: none;
+        }
+
+        .search-box input::placeholder { color: #94a3b8; }
+        .search-box input:focus { border-color: #2dd4bf; background: rgba(15, 23, 42, 0.95); }
+
+        .search-icon {
+            position: absolute;
+            left: 0.68rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94a3b8;
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .ctrl-btn {
+            background: rgba(255, 255, 255, 0.12);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.22);
+            padding: 0.52rem 0.85rem;
+            border-radius: var(--radius-sm);
+            font-size: 0.82rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            white-space: nowrap;
+            transition: background 0.2s;
+        }
+
+        .ctrl-btn:hover { background: rgba(255, 255, 255, 0.22); }
+        .ctrl-btn.active-mode { background: #2dd4bf; color: #0f172a; border-color: #2dd4bf; font-weight: 700; }
+
+        /* 4-TAB STICKY NAVIGATION */
+        .nav-bar {
+            position: sticky;
+            top: 0;
+            z-index: 150;
+            background: var(--bg-surface);
+            border-bottom: 1px solid var(--border-strong);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .nav-inner {
+            max-width: 940px;
+            margin: 0 auto;
+            padding: 0 2%;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.25rem;
+        }
+
+        .nav-tab {
+            background: transparent;
+            color: var(--text-muted);
+            border: none;
+            border-bottom: 3px solid transparent;
+            padding: 0.82rem 0.5rem;
+            font-size: 0.84rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+            transition: all 0.2s ease;
+            text-align: center;
+        }
+
+        .nav-tab:hover { color: var(--text-primary); background: var(--bg-subtle); }
+        .nav-tab.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+            background: var(--primary-soft);
+        }
+
+        .tab-num {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 22px;
+            height: 22px;
+            border-radius: 6px;
+            font-size: 0.74rem;
+            background: var(--bg-subtle);
+            color: var(--text-secondary);
+            flex-shrink: 0;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .nav-tab.active .tab-num { background: var(--primary); color: #ffffff; }
+
+        /* SINGLE-COLUMN LINEAR CONTAINER */
+        main {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 1.85rem 4% 4.5rem;
+        }
+
+        .module-pane { display: none; }
+        .module-pane.active { display: block; }
+
+        /* VERTICAL CIRCUIT TIMELINE SPINE */
+        .linear-feed {
+            position: relative;
+            padding-left: 2.5rem;
+        }
+
+        .linear-feed::before {
+            content: "";
+            position: absolute;
+            left: 14px;
+            top: 24px;
+            bottom: 40px;
+            width: 3px;
+            background: linear-gradient(180deg, var(--primary) 0%, var(--cyan) 50%, var(--indigo) 100%);
+            border-radius: 99px;
+            opacity: 0.35;
+        }
+
+        .lesson-stop {
+            position: relative;
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 1.65rem 1.75rem;
+            margin-bottom: 2.25rem;
+            box-shadow: var(--shadow-md);
+            scroll-margin-top: 76px;
+        }
+
+        .stop-node {
+            position: absolute;
+            left: -2.5rem;
+            top: 1.6rem;
+            width: 32px;
+            height: 32px;
+            border-radius: 9px;
+            background: var(--primary);
+            color: #ffffff;
+            font-size: 0.75rem;
+            font-weight: 800;
+            font-family: 'JetBrains Mono', monospace;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 0 5px var(--bg-page);
+            z-index: 2;
+        }
+
+        .stop-kicker {
+            font-size: 0.72rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.07em;
+            color: var(--primary);
+            margin-bottom: 0.2rem;
+            display: block;
+        }
+
+        .stop-header {
+            margin-bottom: 1rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .stop-header h2 {
+            font-size: clamp(1.1rem, 2.2vw, 1.28rem);
+        }
+
+        .takeaway-banner {
+            background: var(--primary-soft);
+            border-left: 4px solid var(--primary);
+            padding: 0.8rem 1rem;
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+            font-size: 0.9rem;
+            color: var(--text-primary);
+            margin-bottom: 1.15rem;
+        }
+
+        /* ONE-POINT-PER-LINE STACKED LISTS */
+        .point-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .point-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.7rem;
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 0.65rem 0.85rem;
+            font-size: 0.87rem;
+            line-height: 1.48;
+        }
+
+        .point-num {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 26px;
+            height: 24px;
+            padding: 0 0.4rem;
+            border-radius: 6px;
+            background: var(--primary-soft);
+            color: var(--primary);
+            font-weight: 800;
+            font-size: 0.74rem;
+            font-family: 'JetBrains Mono', monospace;
+            flex-shrink: 0;
+            margin-top: 0.08rem;
+        }
+
+        .point-num.indigo { background: var(--indigo-soft); color: var(--indigo); }
+        .point-num.emerald { background: var(--emerald-soft); color: var(--emerald); }
+        .point-num.amber { background: var(--amber-soft); color: var(--amber); }
+        .point-num.rose { background: var(--rose-soft); color: var(--rose); }
+        .point-num.cyan { background: var(--cyan-soft); color: var(--cyan); }
+
+        /* NEXT STEP BAR */
+        .next-step-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            margin-top: 1.35rem;
+            padding-top: 0.9rem;
+            border-top: 1px dashed var(--border-strong);
+            font-size: 0.82rem;
+            color: var(--text-muted);
+        }
+
+        .next-btn {
+            background: var(--bg-subtle);
+            color: var(--primary);
+            border: 1px solid var(--primary-border);
+            padding: 0.48rem 0.95rem;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.15s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .next-btn:hover {
+            background: var(--primary);
+            color: #ffffff;
+        }
+
+        /* =========================================================================
+           VISUAL & INTERACTIVE COMPONENTS
+           ========================================================================= */
+
+        /* 1. HUB & ORBIT */
+        .hub-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.85rem;
+            margin: 0.75rem 0;
+        }
+
+        .hub-core {
+            background: linear-gradient(135deg, #0d9488, #4f46e5);
+            color: #ffffff;
+            padding: 0.78rem 1.4rem;
+            border-radius: 999px;
+            font-weight: 800;
+            font-size: 0.92rem;
+            text-align: center;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 6px 18px rgba(13, 148, 136, 0.25);
+        }
+
+        .orbit-ring {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.48rem;
+        }
+
+        .orbit-pill {
+            background: var(--bg-subtle);
+            border: 1.5px solid var(--border-strong);
+            color: var(--text-primary);
+            padding: 0.48rem 0.85rem;
+            border-radius: 999px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.18s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .orbit-pill:hover, .orbit-pill.active {
+            background: var(--primary);
+            color: #ffffff;
+            border-color: var(--primary);
+        }
+
+        .spotlight-box {
+            width: 100%;
+            background: var(--bg-subtle);
+            border: 1px solid var(--border-strong);
+            border-radius: var(--radius-md);
+            padding: 1rem 1.15rem;
+            font-size: 0.9rem;
+        }
+
+        /* 2. PILLARS & PIPELINES */
+        .pillars-visual {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 0.8rem;
+            margin-top: 0.75rem;
+        }
+
+        .pillar-col {
+            background: var(--bg-subtle);
+            border-top: 4px solid var(--primary);
+            border-bottom: 4px solid var(--border-strong);
+            border-radius: var(--radius-sm);
+            padding: 0.95rem;
+        }
+
+        .pillar-head {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.55rem;
+            color: var(--text-primary);
+            font-weight: 700;
+            font-size: 0.92rem;
+        }
+
+        .pipeline-flow {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+            gap: 0.55rem;
+            margin: 0.85rem 0 1.1rem;
+        }
+
+        .pipe-node {
+            background: var(--bg-subtle);
+            border: 1px solid var(--border-strong);
+            border-top: 3.5px solid var(--primary);
+            border-radius: var(--radius-sm);
+            padding: 0.72rem 0.78rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.22rem;
+        }
+
+        .pipe-step {
+            font-size: 0.68rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--primary);
+        }
+
+        .pipe-node h4 { font-size: 0.88rem; }
+        .pipe-node p { font-size: 0.79rem; color: var(--text-muted); line-height: 1.38; }
+
+        /* 3. SPLIT LENS & VERSUS PANES */
+        .lens-switch {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.45rem;
+            background: var(--bg-subtle);
+            padding: 0.38rem;
+            border-radius: var(--radius-md);
+            margin-bottom: 0.95rem;
+        }
+
+        .lens-btn {
+            background: transparent;
+            border: none;
+            padding: 0.6rem 0.75rem;
+            border-radius: var(--radius-sm);
+            font-weight: 700;
+            font-size: 0.84rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.45rem;
+        }
+
+        .lens-btn.active {
+            background: var(--bg-surface);
+            color: var(--primary);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .visual-versus {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 0.9rem;
+        }
+
+        .vs-pane {
+            border: 1px solid var(--border-strong);
+            border-radius: var(--radius-md);
+            padding: 1.05rem;
+            background: var(--bg-subtle);
+        }
+
+        /* 4. STEPPER PLAYER */
+        .stepper-player {
+            background: var(--bg-subtle);
+            border: 1px solid var(--border-strong);
+            border-radius: var(--radius-md);
+            padding: 1.05rem;
+            margin-top: 0.75rem;
+        }
+
+        .stepper-dots {
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+            margin-bottom: 0.95rem;
+            overflow-x: auto;
+            padding-bottom: 0.25rem;
+        }
+
+        .step-dot {
+            flex: 1;
+            min-width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            border: 1.5px solid var(--border-strong);
+            background: var(--bg-surface);
+            color: var(--text-muted);
+            font-weight: 800;
+            font-size: 0.81rem;
+            font-family: 'JetBrains Mono', monospace;
+            cursor: pointer;
+            transition: all 0.18s;
+        }
+
+        .step-dot.active {
+            background: var(--primary);
+            color: #ffffff;
+            border-color: var(--primary);
+        }
+
+        .stepper-stage {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 1rem 1.1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.85rem;
+            flex-wrap: wrap;
+        }
+
+        /* 5. ICON TILE GRID */
+        .tile-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(135px, 1fr));
+            gap: 0.55rem;
+            margin-bottom: 0.85rem;
+        }
+
+        .icon-tile {
+            background: var(--bg-subtle);
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 0.75rem 0.6rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.18s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
+        .icon-tile:hover, .icon-tile.active {
+            border-color: var(--primary);
+            background: var(--primary-soft);
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .icon-tile .t-lbl {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        /* 6. ACCORDION STACK */
+        .accordion-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 0.55rem;
+        }
+
+        details.acc-item {
+            background: var(--bg-subtle);
+            border: 1px solid var(--border-strong);
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+        }
+
+        details.acc-item[open] {
+            background: var(--bg-surface);
+            border-color: var(--primary);
+            box-shadow: var(--shadow-sm);
+        }
+
+        details.acc-item summary {
+            padding: 0.85rem 1.05rem;
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: var(--text-primary);
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        details.acc-item summary::-webkit-details-marker { display: none; }
+
+        .sum-left {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.55rem;
+        }
+
+        details.acc-item summary::after {
+            content: "+";
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: var(--primary);
+            flex-shrink: 0;
+        }
+
+        details.acc-item[open] summary::after { content: "−"; }
+
+        .acc-body {
+            padding: 0.85rem 1.05rem 1rem;
+            font-size: 0.87rem;
+            color: var(--text-secondary);
+            border-top: 1px solid var(--border);
+        }
+
+        /* 7. FUNNEL & STAIRCASE */
+        .funnel-wrap {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.45rem;
+            margin: 0.85rem 0;
+        }
+
+        .funnel-layer {
+            text-align: center;
+            padding: 0.7rem 1rem;
+            border-radius: var(--radius-sm);
+            color: #ffffff;
+            font-size: 0.85rem;
+        }
+
+        /* 8. PILLS & CODE BLOCKS */
+        .pill-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .pill-btn {
+            background: var(--bg-subtle);
+            color: var(--text-secondary);
+            border: 1px solid var(--border-strong);
+            padding: 0.45rem 0.85rem;
+            border-radius: var(--radius-sm);
+            font-size: 0.81rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.15s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
+        .pill-btn:hover { border-color: var(--primary); }
+        .pill-btn.active {
+            background: var(--primary);
+            color: #ffffff;
+            border-color: var(--primary);
+        }
+
+        .code-block {
+            background: var(--bg-code);
+            color: #e2e8f0;
+            font-family: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
+            font-size: 0.82rem;
+            padding: 0.9rem 1.05rem;
+            border-radius: var(--radius-sm);
+            overflow-x: auto;
+            line-height: 1.58;
+            border: 1px solid #334155;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        .code-block .hl-kw { color: #2dd4bf; font-weight: 700; }
+        .code-block .hl-nt { color: #38bdf8; font-weight: 700; }
+        .code-block .hl-cm { color: #fde047; }
+
+        /* 9. MATRIX CELLS FOR ROW-MAJOR VS COLUMN-MAJOR */
+        .matrix-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 56px);
+            gap: 0.4rem;
+            justify-content: center;
+            margin: 0.65rem 0;
+        }
+
+        .matrix-cell {
+            height: 44px;
+            border-radius: 8px;
+            background: var(--bg-surface);
+            border: 2px solid var(--primary);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.76rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        /* TABLES */
+        .table-wrap {
+            width: 100%;
+            overflow-x: auto;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-strong);
+            border-radius: var(--radius-sm);
+            margin-top: 0.75rem;
+        }
+
+        table.data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.84rem;
+        }
+
+        table.data-table th {
+            background: var(--bg-subtle);
+            color: var(--text-primary);
+            font-weight: 700;
+            text-align: left;
+            padding: 0.65rem 0.85rem;
+            border-bottom: 2px solid var(--border-strong);
+        }
+
+        table.data-table td {
+            padding: 0.6rem 0.85rem;
+            border-bottom: 1px solid var(--border);
+            vertical-align: top;
+        }
+
+        /* FOCUS MODE */
+        body.step-focus-mode .lesson-stop { display: none; }
+        body.step-focus-mode .lesson-stop.focused-stop {
+            display: block;
+            animation: fadeIn 0.25s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        #searchStatus {
+            display: none;
+            background: var(--primary-soft);
+            border: 1px solid var(--primary-border);
+            color: var(--primary);
+            padding: 0.65rem 1rem;
+            border-radius: var(--radius-sm);
+            margin-bottom: 1.25rem;
+            font-weight: 600;
+            font-size: 0.85rem;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        /* MOBILE RESPONSIVENESS */
+        @media screen and (max-width: 720px) {
+            .app-header { padding: 1.15rem 4%; }
+            .header-controls { width: 100%; }
+            .search-box { min-width: 100%; order: 3; }
+            .nav-inner { grid-template-columns: repeat(2, 1fr); gap: 0.15rem; }
+            .nav-tab { justify-content: flex-start; padding: 0.65rem 0.7rem; font-size: 0.8rem; }
+            main { padding: 1.25rem 3.5% 3.5rem; }
+            .linear-feed { padding-left: 1.55rem; }
+            .linear-feed::before { left: 9px; }
+            .stop-node { left: -1.55rem; width: 24px; height: 24px; font-size: 0.68rem; top: 1.25rem; }
+            .lesson-stop { padding: 1.15rem 1rem; margin-bottom: 1.6rem; }
+            .lens-switch { grid-template-columns: 1fr; }
+            .funnel-layer { width: 100% !important; }
+            .tile-grid { grid-template-columns: repeat(2, 1fr); }
+            .next-step-bar { flex-direction: column; align-items: stretch; text-align: center; }
+            .next-btn { justify-content: center; width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- TOP READING PROGRESS BAR -->
+    <div class="progress-track" aria-hidden="true">
+        <div class="progress-fill" id="scrollProgress"></div>
+    </div>
+
+    <!-- HEADER -->
+    <header class="app-header">
+        <div class="header-inner">
+            <div class="header-title-wrap">
+                <div class="brand-mark">
+                    <svg class="ico ico-lg" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                </div>
+                <div class="header-title">
+                    <h1>Principles of Programming Languages</h1>
+                    <p>Interactive Linear Reviewer &bull; Overview, Syntax &amp; Semantics, Names/Scopes &amp; Data Types</p>
+                </div>
+            </div>
+            <div class="header-controls">
+                <button class="ctrl-btn" id="focusModeBtn" onclick="toggleFocusMode()" type="button" title="Show only one lesson block at a time">
+                    <svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+                    <span id="focusModeText">One-Step Mode: Off</span>
+                </button>
+                <button class="ctrl-btn" id="themeToggle" type="button">
+                    <span id="themeIcon" style="display:inline-flex;align-items:center;"></span>
+                    <span id="themeText">Dark</span>
+                </button>
+                <div class="search-box">
+                    <span class="search-icon">
+                        <svg class="ico" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    </span>
+                    <input type="text" id="globalSearch" placeholder="Filter any PPL concept..." aria-label="Filter concepts">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 4-TAB NAVIGATION (ONE TAB PER REFERENCE MODULE) -->
+    <nav class="nav-bar" aria-label="Course Lessons">
+        <div class="nav-inner">
+            <button class="nav-tab active" onclick="switchTab('tab1', this)" type="button">
+                <span class="tab-num">L1</span> Overview of PLs
+            </button>
+            <button class="nav-tab" onclick="switchTab('tab2', this)" type="button">
+                <span class="tab-num">L2</span> Syntax &amp; Semantics
+            </button>
+            <button class="nav-tab" onclick="switchTab('tab3', this)" type="button">
+                <span class="tab-num">L3</span> Names, Bindings &amp; Scopes
+            </button>
+            <button class="nav-tab" onclick="switchTab('tab4', this)" type="button">
+                <span class="tab-num">L4</span> Data Types
+            </button>
+        </div>
+    </nav>
+
+    <main>
+        <div id="searchStatus">
+            <span id="searchStatusText">Showing filtered matches</span>
+            <button class="pill-btn" onclick="clearSearch()" type="button">Clear Filter</button>
+        </div>
+
+        <!-- =========================================================================
+             TAB 1: OVERVIEW OF PROGRAMMING LANGUAGES (LESSON 1)
+             ========================================================================= -->
+        <section id="tab1" class="module-pane active">
+            <div class="linear-feed">
+
+                <!-- STOP 1.1: DEFINITIONS OF A PROGRAMMING LANGUAGE -->
+                <article class="lesson-stop focused-stop" id="t1-s1">
+                    <div class="stop-node">01</div>
+                    <div class="stop-header">
+                        <span class="stop-kicker">Lesson 1 &bull; Step 1 of 7 &bull; Core Definitions</span>
+                        <h2>What is a Programming Language?</h2>
+                    </div>
+
+                    <div class="takeaway-banner">
+                        <strong>Beyond a Mere User:</strong> Studying the principles, design concepts, and implementation effects of programming languages transforms you from a <span class="hl">mere user of a compiler</span> into an engineer who understands how languages work and how to design new ones.
+                    </div>
+
+                    <div class="point-stack">
+                        <div class="point-row"><span class="point-num">1</span><div><strong>Ghezzi Definition:</strong> A <span class="hl">formal notation</span> for describing algorithms for execution by a computer.</div></div>
+                        <div class="point-row"><span class="point-num">2</span><div><strong>Marcotty Definition:</strong> A <span class="hl">convention for communicating</span> algorithms.</div></div>
+                        <div class="point-row"><span class="point-num">3</span><div><strong>Pratt Definition:</strong> <span class="hl">Any notation</span> for the description of algorithms.</div></div>
+                        <div class="point-row"><span class="point-num">4</span><div><strong>Sethi Definition:</strong> Notation used for <span class="hl">specifying, organizing, and reasoning</span> about computation.</div></div>
+                    </div>
+
+                    <div class="next-step-bar">
+                        <span>Understand the 4 foundational definitions?</span>
+                        <button class="next-btn" onclick="goNextStop('t1-s1', 't1-s2')" type="button">Next: 6 Reasons to Study PLs &darr;</button>
+                    </div>
+                </article>
+
+                <!-- STOP 1.2: 6 PRIMARY REASONS FOR STUDYING PROGRAMMING LANGUAGES -->
+                <article class="lesson-stop" id="t1-s2">
+                    <div class="stop-node">02</div>
+                    <div class="stop-header">
+                        <span class="stop-kicker">Lesson 1 &bull; Step 2 of 7 &bull; Motivation (Pratt)</span>
+                        <h2>6 Primary Reasons to Study Programming Languages</h2>
+                    </div>
+
+                    <div class="hub-container">
+                        <div class="hub-core">
+                            <svg class="ico ico-lg" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+                            Why Study Programming Language Concepts?
+                        </div>
+                        <p style="font-size:0.82rem; color:var(--text-muted); text-align:center;">Select any of the 6 primary reasons below to inspect how it improves your engineering capability:</p>
+                        <div class="orbit-ring" id="l1ReasonOrbit">
+                            <button class="orbit-pill active" onclick="showReasonDetail(0, this)" type="button">1. Effective Algorithms</button>
+                            <button class="orbit-pill" onclick="showReasonDetail(1, this)" type="button">2. Use of Existing PL</button>
+                            <button class="orbit-pill" onclick="showReasonDetail(2, this)" type="button">3. Construct Vocabulary</button>
+                            <button class="orbit-pill" onclick="showReasonDetail(3, this)" type="button">4. Better PL Choice</button>
+                            <button class="orbit-pill" onclick="showReasonDetail(4, this)" type="button">5. Learn New PLs Easily</button>
+                            <button class="orbit-pill" onclick="showReasonDetail(5, this)" type="button">6. Design a New PL</button>
+                        </div>
+                        <div class="spotlight-box" id="l1ReasonSpotlight"></div>
+                    </div>
+
+                    <div class="next-step-bar">
+                        <button class="next-btn" onclick="goNextStop('t1-s2', 't1-s1')" type="button">&uarr; Previous</button>
+                        <button class="next-btn" onclick="goNextStop('t1-s2', 't1-s3')" type="button">Next: 8 Characteristics of a Good PL &darr;</button>
+                    </div>
+                </article>
+
+                <!-- STOP 1.3: WHAT MAKES A GOOD LANGUAGE? (8 CHARACTERISTICS + 6 COST FACTORS) -->
+                <article class="lesson-stop" id="t1-s3">
+                    <div class="stop-node">03</div>
+                    <div class="stop-header">
+                        <span class="stop-kicker">Lesson 1 &bull; Step 3 of 7 &bull; Language Evaluation</span>
+                        <h2>8 Characteristics of a Good Language &amp; 6 Cost Factors</h2>
+                    </div>
+
+                    <p style="font-size:0.84rem; color:var(--text-muted); margin-bottom:0.75rem;">New languages are continuously created to overcome defects in older ones. Tap any of the 8 evaluation criteria below:</p>
+
+                    <div class="tile-grid" id="goodPlGrid">
+                        <div class="icon-tile active" onclick="showGoodPl(0, this)">
+                            <svg class="ico ico-lg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                            <span class="t-lbl">1. Clarity &amp; Unity</span>
+                        </div>
+                        <div class="icon-tile" onclick="showGoodPl(1, this)">
+                            <svg class="ico ico-lg" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                            <span class="t-lbl">2. Orthogonality</span>
+                        </div>
+                        <div class="icon-tile" onclick="showGoodPl(2, this)">
+                            <svg class="ico ico-lg" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/></svg>
+                            <span class="t-lbl">3. Naturalness</span>
+                        </div>
+                        <div class="icon-tile" onclick="showGoodPl(3, this)">
+                            <svg class="ico ico-lg" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+                            <span class="t-lbl">4. Abstraction</span>
+                        </div>
+                        <div class="icon-tile" onclick="showGoodPl(4, this)">
+                            <svg class="ico ico-lg" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                            <span class="t-lbl">5. Verification</span>
+                        </div>
+                        <div class="icon-tile" onclick="showGoodPl(5, this)">
+                            <svg class="ico ico-lg" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                            <span class="t-lbl">6. Environment</span>
+                        </div>
+                        <div class="icon-tile" onclick="showGoodPl(6, this)">
+                            <svg class="ico ico-lg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                            <span class="t-lbl">7. Portability</span>
+                        </div>
+                        <div class="icon-tile" onclick="showGoodPl(7, this)">
+                            <svg class="ico ico-lg" viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                            <span class="t-lbl">8. Total Cost</span>
+                        </div>
+                    </div>
+
+                    <div class="spotlight-box" id="goodPlSpotlight"></div>
+
+                    <div class="next-step-bar">
+                        <button class="next-btn" onclick="goNextStop('t1-s3', 't1-s2')" type="button">&uarr; Previous</button>
+                        <button class="next-btn" onclick="goNextStop('t1-s3', 't1-s4')" type="button">Next: Host vs. Target Environments &darr;</button>
+                    </div>
+                </article>
+
+                <!-- STOP 1.4: EFFECTS OF ENVIRONMENT ON LANGUAGES -->
+                <article class="lesson-stop" id="t1-s4">
+                    <div class="stop-node">04</div>
+                    <div class="stop-header">
+                        <span class="stop-kicker">Lesson 1 &bull; Step 4 of 7 &bull; Operating Context</span>
+                        <h2>Effects of Environment: Host vs. Target &amp; 4 Environment Classes</h2>
+                    </div>
+
+                    <div class="visual-versus" style="margin-bottom:1rem;">
+                        <div class="vs-pane" style="border-top:4px solid var(--primary);">
+                            <h4 style="color:var(--primary); margin-bottom:0.45rem;">Host Environment (Development)</h4>
+                            <div class="point-stack">
+                                <div class="point-row"><span class="point-num">H</span><div>The environment in which a program is <span class="hl">designed, coded, tested, and debugged</span>.</div></div>
+                            </div>
+                        </div>
+
+                        <div class="vs-pane" style="border-top:4px solid var(--indigo);">
+                            <h4 style="color:var(--indigo); margin-bottom:0.45rem;">Operating / Target Environment (Execution)</h4>
+                            <div class="point-stack">
+                                <div class="point-row"><span class="point-num indigo">T</span><div>The external hardware/software environment supporting the <span class="hl">ultimate execution</span> of the program (may differ from the host).</div></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h4 style="font-size:0.92rem; margin-bottom:0.45rem;">4 Classes of Programming Environments (Each Imposes Distinct Language Requirements):</h4>
+                    <div class="point-stack">
+                        <div class="point-row"><span class="point-num">1</span><div><strong>Batch Processing Environment:</strong> Jobs execute without user interaction; requires strong file I/O and error recovery.</div></div>
+                        <div class="point-row"><span class="point-num">2</span><div><strong>Interactive Environment:</strong> Direct terminal/GUI interaction with users during execution; requires responsive I/O and incremental feedback.</div></div>
+                        <div class="point-row"><span class="point-num">3</span><div><strong>Embedded System Environment:</strong> Runs inside dedicated hardware devices; requires strict real-time constraints, low memory footprint, and hardware access.</div></div>
+                        <div class="point-row"><span class="point-num">4</span><div><strong>Programming Environment:</strong> Integrated toolset (compilers, editors, debuggers, version control) supporting large-scale software construction.</div></div>
+                    </div>
+
+                    <div class="next-step-bar">
+                        <button class="next-btn" onclick="goNextStop('t1-s4', 't1-s3')" type="button">&uarr; Previous</button>
+                        <button class="next-btn" onclick="goNextStop('t1-s4', 't1-s5')" type="button">Next: Binding &amp; 4 Binding Times &darr;</button>
+                    </div>
+                </article>
+
+                <!-- STOP 1.5: BINDINGS & 4 CLASSES OF BINDING TIME -->
+                <article class="lesson-stop" id="t1-s5">
+                    <div class="stop-node">05</div>
+                    <div class="stop-header">
+                        <span class="stop-kicker">Lesson 1 &bull; Step 5 of 7 &bull; Language Design Issues</span>
+                        <h2>Bindings &amp; The 4 Classes of Binding Time</h2>
+                    </div>
+
+                    <div class="takeaway-banner">
+                        <strong>Binding vs. Binding Time:</strong><br>
+                        &bull; <span class="hl">Binding:</span> Associating a program element with a specific property from a set of possible properties.<br>
+                        &bull; <span class="hl">Binding Time:</span> The exact moment during program formulation or processing when that binding choice is made.
+                    </div>
+
+                    <div class="pill-group" id="bindingPills">
+                        <button class="pill-btn active" onclick="showBindingClass('exec', this)" type="button">1. Execution Time (Runtime)</button>
+                        <button class="pill-btn" onclick="showBindingClass('trans', this)" type="button">2. Translation Time (Compile Time)</button>
+                        <button class="pill-btn" onclick="showBindingClass('impl', this)" type="button">3. Implementation Time</button>
+                        <button class="pill-btn" onclick="showBindingClass('def', this)" type="button">4. Definition Time</button>
+                    </div>
+                    <div id="bindingDisplay" class="vs-pane"></div>
+
+                    <div class="next-step-bar">
+                        <button class="next-btn" onclick="goNextStop('t1-s5', 't1-s4')" type="button">&uarr; Previous</button>
+                        <button class="next-btn" onclick="goNextStop('t1-s5', 't1-s6')" type="button">Next: 6 Programming Paradigms &darr;</button>
+                    </div>
+                </article>
+
+                <!-- STOP 1.6: 6 CLASSES OF PROGRAMMING PARADIGMS -->
+                <article class="lesson-stop" id="t1-s6">
+                    <div class="stop-node">06</div>
+                    <div class="stop-header">
+                        <span class="stop-kicker">Lesson 1 &bull; Step 6 of 7 &bull; Language Classification</span>
+                        <h2>Interactive Explorer: 6 Classes of Programming Paradigms</h2>
+                    </div>
+
+                    <div class="tile-grid" id="paradigmGrid">
+                        <div class="icon-tile active" onclick="showPlParadigm(0, this)">
+                            <svg class="ico ico-lg" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+                            <span class="t-lbl">1. Imperative</span>
+                        </div>
+                        <div class="icon-tile" onclick="showPlParadigm(1, this)">
+                            <svg class="ico ico-lg" viewBox="0 0 24 24"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" y1="20" x2="15" y2="20"/><line x1="12" y1="4" x2="12" y2="20"/></svg>
+                            <span class="t-lbl">2. Functional</span>
+                        </div>
+                        <div class="icon-tile" onclick="showPlParadigm(2, this)">
+                            <svg class="ico ico-lg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                            <span class="t-lbl">3. Logic (Rule-Based)</span>
+                        </div>
+                        <div class="icon-tile" onclick="showPlParadigm(3, this)">
+                            <svg class="ico ico-lg" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+                            <span class="t-lbl">4. Object-Oriented</span>
+                        </div>
+                        <div class="icon-tile" onclick="showPlParadigm(4, this)">
+                            <svg class="ico ico-lg" viewBox="0 0 24 24"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/></svg>
+                            <span class="t-lbl">5. Concurrent</span>
+                        </div>
+                        <div class="icon-tile" onclick="showPlParadigm(5, this)">
+                            <svg class="ico ico-lg" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+                            <span class="t-lbl">6. Other (4GL / Spec)</span>
+                        </div>
+                    </div>
+                    <div class="spotlight-box" id="paradigmPlSpotlight"></div>
+
+                    <div class="next-step-bar">
+                        <button class="next-btn" onclick="goNextStop('t1-s6', 't1-s5')" type="button">&uarr; Previous</button>
+                        <button class="next-btn" onclick="goNextStop('t1-s6', 't1-s7')" type="button">Next: Paradigm Reference Table &darr;</button>
+                    </div>
+                </article>
+
+                <!-- STOP 1.7: PARADIGM MASTER REFERENCE TABLE -->
+                <article class="lesson-stop" id="t1-s7">
+                    <div class="stop-node">07</div>
+                    <div class="stop-header">
+                        <span class="stop-kicker">Lesson 1 &bull; Step 7 of 7 &bull; Exam Quick-Reference</span>
+                        <h2>Master Summary Table: Paradigms &amp; Key Languages</h2>
+                    </div>
+
+                    <div class="table-wrap">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Paradigm Class</th>
+                                    <th>Core Mechanism</th>
+                                    <th>Representative Languages &amp; Meanings</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>1. Imperative (Procedural)</strong></td>
+                                    <td>Action/statement-oriented; command-driven sequential execution.</td>
+                                    <td><code>BASIC</code>, <code>FORTRAN</code>, <code>COBOL</code>, <code>PASCAL</code></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>2. Functional</strong></td>
+                                    <td>Mathematical function evaluation; functions passed/returned as first-class values.</td>
+                                    <td>
+                                        &bull; <code>LISP</code> (List Processing — John McCarthy for IBM 704)<br>
+                                        &bull; <code>Scheme</code> (Lisp dialect)<br>
+                                        &bull; <code>ML</code> (Meta Language)<br>
+                                        &bull; <code>CLOS</code> (Object-Oriented extension of Lisp)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>3. Logic (Rule-Based)</strong></td>
+                                    <td>Predicates and relationships; used for Artificial Intelligence (AI).</td>
+                                    <td>
+                                        &bull; <code>PROLOG</code> (Programming in LOGic)<br>
+                                        &bull; <code>OPS5</code> (Official Production System)<br>
+                                        &bull; <code>CLIPS</code>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>4. Object-Oriented</strong></td>
+                                    <td>Classes and objects; instances created dynamically during execution.</td>
+                                    <td><code>SmallTalk</code>, <code>ADA</code>, <code>C++</code>, <code>Eiffel</code>, <code>Java</code></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>5. Concurrent</strong></td>
+                                    <td>Parallel execution (multiprogramming, multiprocessing, or distributed).</td>
+                                    <td><code>ALGOL 68</code>, <code>Concurrent Pascal</code>, <code>CSP</code>, <code>ADA</code>, <code>Occam</code></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>6. Other Languages</strong></td>
+                                    <td>Database querying and formal hardware/software specification.</td>
+                                    <td><strong>4GL Query Languages</strong> (database interface) &amp; <strong>Specification Languages</strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="next-step-bar">
+                        <button class="next-btn" onclick="goNextStop('t1-s7', 't1-s6')" type="button">&uarr; Previous</button>
+                        <button class="next-btn" onclick="switchTab('tab2', document.querySelectorAll('.nav-tab')[1])" type="button">Continue to Lesson 2: Syntax &amp; Semantics &rarr;</button>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+
+        <!-- =========================================================================
+             TAB 2: DESCRIBING SYNTAX AND SEMANTICS (LESSON 2)
+             ========================================================================= -->
+        <section id="tab2" class="module-pane">
+            <div class="linear-feed">
+
+                <!-- STOP 2.1: SYNTAX DEFINITIONS & TERMINOLOGY -->
+                <article class="lesson-stop focused-stop" id="t2-s1">
+                    <div class="stop-node">01</div>
+                    <div class="stop-header">
+                        <span class="stop-kicker">Lesson 2 &bull; Step 1 of 7 &bull; Form vs. Meaning</span>
+                        <h2>Syntax Definitions &amp; Fundamental Terminology</h2>
+                    </div>
+
+                    <div class="takeaway-banner">
+                        <strong>Two Major Components of Every PL:</strong> <span class="hl">Syntax</span> defines the <em>form/structure</em> of valid programs, while <span class="hl">Semantics</span> defines the <em>meaning</em> of those programs.
+                    </div>
+
+                    <div class="point-stack" style="margin-bottom:1rem;">
+                        <div class="point-row"><span class="point-num">1</span><div><strong>Ghezzi (Composition):</strong> Formal rules specifying the composition of programs from letters, digits, and other characters.</div></div>
+                        <div class="point-row"><span class="point-num">2</span><div><strong>Rosenberg (Structure vs. Meaning):</strong> Relationship among characters or groups of characters, <span class="hl">independent of their meaning</span> or manner of interpretation and use.</div></div>
+                        <div class="point-row"><span class="point-num">3</span><div><strong>Ghezzi (Word Sequences):</strong> Rules defining how sentences may be formed as sequences of basic constituents called words.</div></div>
+                        <div class="point-row"><span class="point-num">4</span><div><strong>Horowitz (Well-Formedness):</strong> Rules determining whether a sentence is <span class="hl">well-formed or not</span>.</div></div>
+                    </div>
+
+                    <h4 style="font-size:0.92rem; margin-bottom:0.45rem;">4 Core Syntax Terms (Sebesta Hierarchy):</h4>
+                    <div class="funnel-wrap">
+                        <div class="funnel-layer" style="width:100%; background:#0f172a;">
+                            <strong>1. LANGUAGE:</strong> A set of valid sentences.
+                        </div>
+                        <div class="funnel-layer" style="width:88%; background:#1e3a8a;">
+                            <strong>2. SENTENCE:</strong> A string of characters over some alphabet.
+                        </div>
+                        <div class="funnel-layer" style="width:76%; background:#0284c7;">
+                            <strong>3. TOKEN:</strong> A category of lexemes (e.g., <code>identifier</code>, <code>operator</code>).
+                        </div>
+                        <div class="funnel-layer" style="width:64%; background:#0d9488;">
+                            <strong>4. LEXEME:</strong> The lowest-level syntactic unit of a language (e.g., <code>*</code>, <code>sum</code>, <code>begin</code>).
+                        </div>
+                    </div>
+
+                    <div class="next-step-bar">
+                        <span>Clear on Lexemes vs. Tokens?</span>
+                        <button class="next-btn" onclick="goNextStop('t2-s1', 't2-s2')" type="button">Next: Recognizers, CFG &amp; BNF &darr;</button>
+                    </div>
+                </article>
+
+                <!-- STOP 2.2: RECOGNIZERS, GENERATORS, CFG & BNF FUNDAMENTALS -->
+                <article class="lesson-stop" id="t2-s2">
+                    <div class="stop-node">02</div>
+                    <div class="stop-header">
+                        <span class="stop-kicker">Lesson 2 &bull; Step 2 of 7 &bull; Formal Grammars</span>
+                        <h2>Recognizers vs. Generators, Context-Free Grammars &amp; BNF</h2>
+                    </div>
+
+                    <div class="visual-versus" style="margin-bottom:1rem;">
+                        <div class="vs-pane" style="border-top:4px solid var(--primary);">
+                            <h4 style="color:var(--primary); margin-bottom:0.45rem;">Recognizers (Syntax Checkers)</h4>
+                            <div class="point-stack">
+                                <div class="point-row"><span class="point-num">R</span><div>Reads input strings over the alphabet of the language and <span class="hl">decides whether the input strings belong</span> to the language (used in compiler parsers).</div></div>
+                            </div>
+                        </div>
+
+                        <div class="vs-pane" style="border-top:4px solid var(--indigo);">
+                            <h4 style="color:var(--indigo); margin-bottom:0.45rem;">Generators (Sentence Producers)</h4>
+                            <div class="point-stack">
+                                <div class="point-row"><span class="point-num indigo">G</span><div>A device that <span class="hl">generates valid sentences</span> of a language. Syntax correctness is determined by comparing a sentence to the generator's structure.</div></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="point-stack" style="margin-bottom:1rem;">
+                        <div class="point-row"><span class="point-num cyan">CFG</span><div><strong>Context-Free Grammars (Noam Chomsky, mid-1950s):</strong> Language generators developed to describe natural language syntax; define the class of <em>context-free languages</em>.</div></div>
+                        <div class="point-row"><span class="point-num emerald">BNF</span><div><strong>Backus-Naur Form (John Backus, 1959):</strong> Invented to describe the syntax of <strong>Algol 58</strong>; mathematically equivalent to context-free grammars.</div></div>
+                        <div class="point-row"><span class="point-num">LHS</span><div><strong>Nonterminals (Syntactic Variables / Abstractions):</strong> Enclosed in angle brackets (e.g., <code>&lt;if_stmt&gt;</code>); appear on the <strong>Left-Hand Side (LHS)</strong> of a rule.</div></div>
+                        <div class="point-row"><span class="point-num">RHS</span><div><strong>Terminals &amp; Rules:</strong> Terminals are actual lexemes/tokens. A rule's <strong>Right-Hand Side (RHS)</strong> is a string of terminals and/or nonterminals.</div></div>
+                        <div class="point-row"><span class="point-num">S</span><div><strong>Grammar &amp; Start Symbol:</strong> A <em>Grammar</em> is a finite, non-empty set of rules; the <em>Start Symbol</em> is the special top-level nonterminal (e.g., <code>&lt;program&gt;</code>).</div></div>
+                    </div>
+
+                    <div class="code-block"><span class="hl-cm">// Classic BNF Rule Examples (Recursive list &amp; Selection statement):</span>
+<span class="hl-nt">&lt;ident_list&gt;</span> &rarr; identifier | identifier, <span class="hl-nt">&lt;ident_list&gt;</span>
+<span class="hl-nt">&lt;if_stmt&gt;</span>    &rarr; <span class="hl-kw">if</span> <span class="hl-nt">&lt;logic_expr&gt;</span> <span class="hl-kw">then</span> <span class="hl-nt">&lt;stmt&gt;</span></div>
+
+                    <div class="next-step-bar">
+                        <button class="next-btn" onclick="goNextStop('t2-s2', 't2-s1')" type="button">&uarr; Previous</button>
+                        <button class="next-btn" onclick="goNextStop('t2-s2', 't2-s3')" type="button">Next: Interactive Derivation &amp; Parse Tree &darr;</button>
+                    </div>
+                </article>
+
+                <!-- STOP 2.3: INTERACTIVE LEFTMOST DERIVATION & PARSE TREE -->
+                <article class="lesson-stop" id="t2-s3">
+                    <div class="stop-node">03</div>
+                    <div class="stop-header">
+                        <span class="stop-kicker">Lesson 2 &bull; Step 3 of 7 &bull; Derivations &amp; Trees</span>
+                        <h2>Interactive Leftmost Derivation &amp; Parse Tree Visualizer</h2>
+                    </div>
+
+                    <div class="point-stack" style="margin-bottom:0.9rem;">
+                        <div class="point-row"><span class="point-num">1</span><div><strong>Sentential Form:</strong> Every string of symbols at any step in a derivation.</div></div>
+                        <div class="point-row"><span class="point-num">2</span><div><strong>Sentence:</strong> A sentential form containing <span class="hl">only terminal symbols</span> (e.g., <code>a = b + const</code>).</div></div>
+                        <div class="point-row"><span class="point-num">3</span><div><strong>Leftmost Derivation:</strong> In every step, the <span class="hl">leftmost nonterminal</span> is the one expanded. (Note: A derivation may be neither leftmost nor rightmost).</div></div>
+                        <div class="point-row"><span class="point-num">4</span><div><strong>Parse Tree:</strong> A hierarchical tree representation of a derivation.</div></div>
+                    </div>
+
+                    <div class="code-block" style="margin-bottom:0.9rem;"><span class="hl-cm">// Reference Grammar:</span>
+<span class="hl-nt">&lt;program&gt;</span> &rarr; <span class="hl-nt">&lt;stmts&gt;</span>
+<span class="hl-nt">&lt;stmts&gt;</span>   &rarr; <span class="hl-nt">&lt;stmt&gt;</span> | <span class="hl-nt">&lt;stmt&gt;</span> ; <span class="hl-nt">&lt;stmts&gt;</span>
+<span class="hl-nt">&lt;stmt&gt;</span>    &rarr; <span class="hl-nt">&lt;var&gt;</span> = <span class="hl-nt">&lt;expr&gt;</span>
+<span class="hl-nt">&lt;var&gt;</span>     &rarr; a | b | c | d
+<span class="hl-nt">&lt;expr&gt;</span>    &rarr; <span class="hl-nt">&lt;term&gt;</span> + <span class="hl-nt">&lt;term&gt;</span> | <span class="hl-nt">&lt;term&gt;</span> - <span class="hl-nt">&lt;term&gt;</span>
+<span class="hl-nt">&lt;term&gt;</span>    &rarr; <span class="hl-nt">&lt;var&gt;</span> | const</div>
+
+                    <p style="font-size:0.84rem; font-weight:700; margin-bottom:0.4rem;">Step-by-Step Leftmost Derivation Player for <code>a = b + const</code>:</p>
+                    <div class="stepper-player" style="margin-bottom:1rem;">
+                        <div class="stepper-dots" id="derivDots"></div>
+                        <div class="stepper-stage">
+                            <div id="derivStepText" style="flex:1; font-family:'JetBrains Mono', monospace; font-size:0.86rem;"></div>
+                            <button class="pill-btn" onclick="advanceDerivStep()" type="button">Expand Next &rarr;</button>
+                        </div>
+                    </div>
+
+                    <!-- SVG Parse Tree for a = b + const -->
+                    <div style="background:var(--bg-subtle); border:1px solid var(--border-strong); border-radius:var(--radius-md); padding:1rem; text-align:center;">
+                        <h4 style="font-size:0.9rem; margin-bottom:0.5rem;">Hierarchical Parse Tree for <code>a = b + const</code></h4>
+                        <svg viewBox="0 0 560 275" style="width:100%; max-width:520px; height:auto;" role="img" aria-label="Parse Tree for a = b + const">
+                            <g stroke="#64748b" stroke-width="1.8">
+                                <line x1="280" y1="28" x2="280" y2="55"/>
+                                <line x1="280" y1="75" x2="280" y2="102"/>
+                                <line x1="280" y1="122" x2="170" y2="152"/>
+                                <line x1="280" y1="122" x2="280" y2="152"/>
+                                <line x1="280" y1="122" x2="390" y2="152"/>
+                                <line x1="170" y1="172" x2="170" y2="202"/>
+                                <line x1="390" y1="172" x2="310" y2="202"/>
+                                <line x1="390" y1="172" x2="390" y2="202"/>
+                                <line x1="390" y1="172" x2="470" y2="202"/>
+                                <line x1="310" y1="222" x2="310" y2="245"/>
+                                <line x1="470" y1="222" x2="470" y2="245"/>
+                            </g>
+                            <g font-family="JetBrains Mono, monospace" font-size="12" font-weight="700" text-anchor="middle">
+                                <text x="280" y="22" fill="#0d9488">&lt;program&gt;</text>
+                                <text x="280" y="70" fill="#0d9488">&lt;stmts&gt;</text>
+                                <text x="280" y="117" fill="#0d9488">&lt;stmt&gt;</text>
+                                <text x="170" y="167" fill="#0d9488">&lt;var&gt;</text>
+                                <text x="280" y="167" fill="#e11d48">=</text>
+                                <text x="390" y="167" fill="#0d9488">&lt;expr&gt;</text>
+                                <text x="170" y="217" fill="#4f46e5">a</text>
+                                <text x="310" y="217" fill="#0d9488">&lt;term&gt;</text>
+                                <text x="390" y="217" fill="#e11d48">+</text>
+                                <text x="470" y="217" fill="#0d9488">&lt;term&gt;</text>
+                                <text x="310" y="260" fill="#0d9488">&lt;var&gt; &rarr; <tspan fill="#4f46e5">b</tspan></text>
+                                <text x="470" y="260" fill="#4f46e5">const</text>
+                            </g>
+                        </svg>
+                    </div>
+
+                    <div class="next-step-bar">
+                        <button class="next-btn" onclick="goNextStop('t2-s3', 't2-s2')" type="button">&uarr; Previous</button>
+                        <button class="next-btn" onclick="goNextStop('t2-s3', 't2-s4')" type="button">Next: Ambiguity in Grammars &darr;</button>
+                    </div>
+                </article>
+
+                <!-- STOP 2.4: AMBIGUITY IN GRAMMARS (VISUAL DUAL PARSE TREES) -->
+                <article class="lesson-stop" id="t2-s4">
+                    <div class="stop-node">04</div>
+                    <div class="stop-header">
+                        <span class="stop-kicker">Lesson 2 &bull; Step 4 of 7 &bull; Grammar Defects</span>
+                        <h2>Ambiguity in Grammars: Visual Dual Parse Tree Proof</h2>
+                    </div>
+
+                    <div class="takeaway-banner">
+                        <strong>Definition of Ambiguity:</strong> A grammar is <span class="hl">ambiguous</span> if and only if it generates a sentential form that has <strong>two or more distinct parse trees</strong>.
+                    </div>
+
+                    <div class="code-block" style="margin-bottom:0.9rem;"><span class="hl-cm">// Ambiguous Grammar Rules:</span>
+<span class="hl-nt">&lt;expr&gt;</span> &rarr; <span class="hl-nt">&lt;expr&gt;</span> <span class="hl-nt">&lt;op&gt;</span> <span class="hl-nt">&lt;expr&gt;</span> | const
+<span class="hl-nt">&lt;op&gt;</span>   &rarr; / | -</div>
+
+                    <!-- Side-by-Side SVG Parse Trees Proving Ambiguity -->
+                    <div class="visual-versus">
+                        <div class="vs-pane" style="text-align:center;">
+                            <h4 style="color:var(--rose); font-size:0.9rem; margin-bottom:0.4rem;">Parse Tree 1: Groups <code>(const - const) / const</code></h4>
+                            <svg viewBox="0 0 280 185" style="width:100%; max-width:260px; height:auto;" role="img" aria-label="Ambiguous Parse Tree 1">
+                                <g stroke="#64748b" stroke-width="1.6">
+                                    <line x1="140" y1="22" x2="80" y2="60"/><line x1="140" y1="22" x2="140" y2="60"/><line x1="140" y1="22" x2="210" y2="60"/>
+                                    <line x1="80" y1="75" x2="35" y2="115"/><line x1="80" y1="75" x2="80" y2="115"/><line x1="80" y1="75" x2="125" y2="115"/>
+                                    <line x1="35" y1="130" x2="35" y2="155"/><line x1="80" y1="130" x2="80" y2="155"/><line x1="125" y1="130" x2="125" y2="155"/>
+                                    <line x1="140" y1="75" x2="172" y2="155"/><line x1="210" y1="75" x2="225" y2="155"/>
+                                </g>
+                                <g font-family="JetBrains Mono, monospace" font-size="10.5" font-weight="700" text-anchor="middle">
+                                    <text x="140" y="17" fill="#0d9488">&lt;expr&gt;</text>
+                                    <text x="80" y="72" fill="#0d9488">&lt;expr&gt;</text><text x="140" y="72" fill="#0d9488">&lt;op&gt;</text><text x="210" y="72" fill="#0d9488">&lt;expr&gt;</text>
+                                    <text x="35" y="126" fill="#0d9488">&lt;expr&gt;</text><text x="80" y="126" fill="#0d9488">&lt;op&gt;</text><text x="125" y="126" fill="#0d9488">&lt;expr&gt;</text>
+                                    <text x="35" y="170" fill="#4f46e5">const</text><text x="80" y="170" fill="#e11d48">-</text><text x="125" y="170" fill="#4f46e5">const</text>
+                                    <text x="172" y="170" fill="#e11d48">/</text><text x="225" y="170" fill="#4f46e5">const</text>
+                                </g>
+                            </svg>
+                        </div>
+
+                        <div class="vs-pane" style="text-align:center;">
+                            <h4 style="color:var(--indigo); font-size:0.9rem; margin-bottom:0.4rem;">Parse Tree 2: Groups <code>const - (const / const)</code></h4>
+                            <svg viewBox="0 0 280 185" style="width:100%; max-width:260px; height:auto;" role="img" aria-label="Ambiguous Parse Tree 2">
+                                <g stroke="#64748b" stroke-width="1.6">
+                                    <line x1="140" y1="22" x2="70" y2="60"/><line x1="140" y1="22" x2="140" y2="60"/><line x1="140" y1="22" x2="200" y2="60"/>
+                                    <line x1="200" y1="75" x2="155" y2="115"/><line x1="200" y1="75" x2="200" y2="115"/><line x1="200" y1="75" x2="245" y2="115"/>
+                                    <line x1="70" y1="75" x2="55" y2="155"/><line x1="140" y1="75" x2="108" y2="155"/>
+                                    <line x1="155" y1="130" x2="155" y2="155"/><line x1="200" y1="130" x2="200" y2="155"/><line x1="245" y1="130" x2="245" y2="155"/>
+                                </g>
+                                <g font-family="JetBrains Mono, monospace" font-size="10.5" font-weight="700" text-anchor="middle">
+                                    <text x="140" y="17" fill="#0d9488">&lt;expr&gt;</text>
+                                    <text x="70" y="72" fill="#0d9488">&lt;expr&gt;</text><text x="140" y="72" fill="#0d9488">&lt;op&gt;</text><text x="200" y="72" fill="#0d9488">&lt;expr&gt;</text>
+                                    <text x="155" y="126" fill="#0d9488">&lt;expr&gt;</text><text x="200" y="126" fill="#0d9488">&lt;op&gt;</text><text x="245" y="126" fill="#0d9488">&lt;expr&gt;</text>
+                                    <text x="55" y="170" fill="#4f46e5">const</text><text x="108" y="170" fill="#e11d48">-</text>
+                                    <text x="155" y="170" fill="#4f46e5">const</text><text x="200" y="170" fill="#e11d48">/</text><text x="245" y="170" fill="#4f46e5">const</text>
+                                </g>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <div class="next-step-bar">
+                        <button class="next-btn" onclick="goNextStop('t2-s4', 't2-s3')" type="button">&uarr; Previous</button>
+                        <button class="next-btn" onclick="goNextStop('t2-s4', 't2-s5')" type="button">Next: Lexical Rules, Criteria &amp; 11 Elements &darr;</button>
+                    </div>
+                </article>
+
+                <!-- STOP 2.5: LEXICAL VS SYNTACTIC RULES, 5 CRITERIA & 11 ELEMENTS -->
+                <article class="lesson-stop" id="t2-s5">
+                    <div class="stop-node">05</div>
+                    <div class="stop-header">
+                        <span class="stop-kicker">Lesson 2 &bull; Step 5 of 7 &bull; External Appearance</span>
+                        <h2>Lexical vs. Syntactic Rules, 5 Criteria &amp; 11 Syntactic Elements</h2>
+                    </div>
+
+                    <div class="point-stack" style="margin-bottom:1rem;">
+                        <div class="point-row"><span class="point-num">Lex</span><div><strong>Lexical Rules:</strong> Define the set of characters constituting the language's alphabet and how characters combine to form valid words.</div></div>
+                        <div class="point-row"><span class="point-num">Syn</span><div><strong>Syntactic Rules:</strong> Define how words/tokens combine to form valid sentences and statements.</div></div>
+                        <div class="point-row"><span class="point-num amber">Ex</span><div><strong>Cross-Language "Not Equal" Operator Comparison:</strong><br>
+                            &bull; <strong>Pascal:</strong> Uses <code>&lt;&gt;</code> for <em>not equal</em>.<br>
+                            &bull; <strong>C:</strong> <code>&lt;&gt;</code> is invalid; uses <code>!=</code> for <em>not equal</em>.<br>
+                            &bull; <strong>Ada:</strong> Uses <code>/=</code> for <em>not equal</em>, while <code>&lt;&gt;</code> stands for an <span class="hl">undefined range of an array index</span>.
+                        </div></div>
+                    </div>
+
+                    <div class="accordion-stack">
+                        <details class="acc-item" open>
+                            <summary><span class="sum-left"><svg class="ico" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> 5 Syntactic Design Criteria</span></summary>
+                            <div class="acc-body">
+                                <div class="point-stack">
+                                    <div class="point-row"><span class="point-num">1</span><div><strong>Readability:</strong> Ease with which programs can be read and understood.</div></div>
+                                    <div class="point-row"><span class="point-num">2</span><div><strong>Writability:</strong> Ease of creating programs in the language.</div></div>
+                                    <div class="point-row"><span class="point-num">3</span><div><strong>Ease of Verifiability:</strong> Supporting correctness proofs and testing.</div></div>
+                                    <div class="point-row"><span class="point-num">4</span><div><strong>Ease of Translation:</strong> Simplicity of parsing and compiling source code.</div></div>
+                                    <div class="point-row"><span class="point-num">5</span><div><strong>Lack of Ambiguity:</strong> Every construct has exactly one syntactic interpretation.</div></div>
+                                </div>
+                            </div>
+                        </details>
+
+                        <details class="acc-item">
+                            <summary><span class="sum-left"><svg class="ico" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg> 11 Syntactic Elements of a Programming Language (Pratt)</span></summary>
+                            <div class="acc-body">
+                                <div class="point-stack">
+                                    <div class="point-row"><span class="point-num indigo">1</span><div><strong>Character Set:</strong> Underlying alphabet (e.g., ASCII).</div></div>
+                                    <div class="point-row"><span class="point-num indigo">2</span><div><strong>Identifiers:</strong> Programmer-chosen names for variables, functions, and types.</div></div>
+                                    <div class="point-row"><span class="point-num indigo">3</span><div><strong>Operation Symbols:</strong> Arithmetic, relational, and logical operators (<code>+</code>, <code>*</code>, <code>!=</code>).</div></div>
+                                    <div class="point-row"><span class="point-num indigo">4</span><div><strong>Keywords and Reserved Words:</strong> Special control/type words (<code>if</code>, <code>while</code>, <code>int</code>).</div></div>
+                                    <div class="point-row"><span class="point-num indigo">5</span><div><strong>Noise Words:</strong> Optional words inserted to improve readability (e.g., optional <code>THEN</code>).</div></div>
+                                    <div class="point-row"><span class="point-num indigo">6</span><div><strong>Comments:</strong> Non-executable documentation notes for human readers.</div></div>
+                                    <div class="point-row"><span class="point-num indigo">7</span><div><strong>Blanks (Spaces):</strong> Whitespace rules separating tokens.</div></div>
+                                    <div class="point-row"><span class="point-num indigo">8</span><div><strong>Delimiters and Brackets:</strong> Syntactic markers (<code>;</code>, <code>{ }</code>, <code>( )</code>, <code>begin...end</code>).</div></div>
+                                    <div class="point-row"><span class="point-num indigo">9</span><div><strong>Free- and Fixed-Field Formats:</strong> Column-sensitive vs. free-form statement layout.</div></div>
+                                    <div class="point-row"><span class="point-num indigo">10</span><div><strong>Expressions:</strong> Combinations of operands and operators computing a value.</div></div>
+                                    <div class="point-row"><span class="point-num indigo">11</span><div><strong>Statements:</strong> Complete executable sentences commanding an action.</div></div>
+                                </div>
+                            </div>
+                        </details>
+                    </div>
+
+                    <div class="next-step-bar">
+                        <button class="next-btn" onclick="goNextStop('t2-s5', 't2-s4')" type="button">&uarr; Previous</button>
+                        <button class="next-btn" onclick="goNextStop('t2-s5', 't2-s6')" type="button">Next: Semantics &amp; Compiler Architecture &darr;</button>
+                    </div>
+                </article>
+
+                <!-- STOP 2.6: SEMANTICS & TWO-PASS COMPILER ARCHITECTURE -->
+                <article class="lesson-stop" id="t2-s6">
+                    <div class="stop-node">06</div>
+                    <div class="stop-header">
+                        <span class="stop-kicker">Lesson 2 &bull; Step 6 of 7 &bull; Meaning &amp; Translation</span>
+                        <h2>Semantics &amp; The Two-Pass Compiler Architecture</h2>
+                    </div>
+
+                    <div class="point-stack" style="margin-bottom:1rem;">
+                        <div class="point-row"><span class="point-num">Sem</span><div><strong>Semantics:</strong> Defines the <span class="hl">meaning of any syntactically valid program</span>. Formally specified in two ways:<br>
+                            1. <strong>Axiomatic Semantics</strong> (logical assertions/pre- and post-conditions)<br>
+                            2. <strong>Denotational Semantics</strong> (mapping language constructs to mathematical objects)
+                        </div></div>
+                        <div class="point-row"><span class="point-num indigo">Mod</span><div><strong>Formal Translation Models:</strong> Syntax diagrams and <span class="hl">Extended Backus-Naur Form (EBNF)</span> are the standard for formal syntax description.</div></div>
+                    </div>
+
+                    <h4 style="font-size:0.92rem; margin-bottom:0.45rem;">Compiler Two-Part Translation Pipeline (Connected to the Symbol Table):</h4>
+                    <div class="visual-versus" style="margin-bottom:0.9rem;">
+                        <div class="vs-pane" style="border-top:4px solid var(--primary);">
+                            <h4 style="color:var(--primary); margin-bottom:0.45rem;">Part 1: Analysis (Source Recognition / Pass 1)</h4>
+                            <div class="point-stack">
+                                <div class="point-row"><span class="point-num">1</span><div><strong>Source Program (Text) &rarr; Lexical Analysis (Scanner):</strong> Identifies statement components and outputs <em>Lexical Tokens</em>.</div></div>
+                                <div class="point-row"><span class="point-num">2</span><div><strong>Syntactic Analysis (Parser):</strong> Verifies grammar rules and builds the <em>Parse Tree</em>.</div></div>
+                                <div class="point-row"><span class="point-num">3</span><div><strong>Semantic Analysis (Central Bridge):</strong> Bridges Analysis &amp; Synthesis; outputs <em>Intermediate Code</em>.</div></div>
+                            </div>
+                        </div>
+
+                        <div class="vs-pane" style="border-top:4px solid var(--indigo);">
+                            <h4 style="color:var(--indigo); margin-bottom:0.45rem;">Part 2: Synthesis (Object Code Generation / Pass 2)</h4>
+                            <div class="point-stack">
+                                <div class="point-row"><span class="point-num indigo">4</span><div><strong>Optimization:</strong> Manipulates intermediate code into <em>Optimized Intermediate Code</em>.</div></div>
+                                <div class="point-row"><span class="point-num indigo">5</span><div><strong>Code Generation:</strong> Produces <em>Object Code</em> from collected symbol &amp; intermediate data.</div></div>
+                                <div class="point-row"><span class="point-num indigo">6</span><div><strong>Linking:</strong> Combines object code with <em>Object Code from Other Compilations</em> to output final <strong>Executable Code</strong>.</div></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="takeaway-banner" style="margin-bottom:0;">
+                        <strong>The Symbol Table Hub:</strong> Created by the compiler or assembler to <span class="hl">relate symbolic addresses (variable names) to absolute machine addresses</span>. It interacts directly with Lexical Analysis, Syntactic Analysis, Semantic Analysis, Optimization, and Code Generation.
+                    </div>
+
+                    <div class="next-step-bar">
+                        <button class="next-btn" onclick="goNextStop('t2-s6', 't2-s5')" type="button">&uarr; Previous</button>
+                        <button class="next-btn" onclick="goNextStop('t2-s6', 't2-s7')" type="button">Next: Deep Dive into Semantic Bridge &darr;</button>
+                    </div>
+                </article>
+
+                <!-- STOP 2.7: DEEP DIVE INTO ANALYSIS & SEMANTIC FUNCTIONS -->
+                <article class="lesson-stop" id="t2-s7">
+                    <div class="stop-node">07</div>
+                    <div class="stop-header">
+                        <span class="stop-kicker">Lesson 2 &bull; Step 7 of 7 &bull; Translator Functions</span>
+                        <h2>Key Functions of the Semantic Analyzer</h2>
+                    </div>
+
+                    <div class="point-stack">
+                        <div class="point-row"><span class="point-num">1</span><div><strong>Bridge Between Analysis &amp; Synthesis:</strong> Semantic analysis is the central phase of translation connecting source recognition to object code synthesis.</div></div>
+                        <div class="point-row"><span class="point-num">2</span><div><strong>Symbol-Table Maintenance:</strong> Recording and updating variable attributes and address mappings.</div></div>
+                        <div class="point-row"><span class="point-num">3</span><div><strong>Error Detection:</strong> Catching type mismatches and semantic violations that syntax rules alone cannot detect.</div></div>
+                        <div class="point-row"><span class="point-num">4</span><div><strong>Expansion of Macros:</strong> Substituting macro definitions inline before code generation.</div></div>
+                        <div class="point-row"><span class="point-num">5</span><div><strong>Execution of Compile-Time Statements:</strong> Evaluating directives and constants fixed at compile time.</div></div>
+                    </div>
+
+                    <div class="next-step-bar">
+                        <button class="next-btn" onclick="goNextStop('t2-s7', 't2-s6')" type="button">&uarr; Previous</button>
+                        <button class="next-btn" onclick="switchTab('tab3', document.querySelectorAll('.nav-tab')[2])" type="button">Continue to Lesson 3: Names, Bindings &amp; Scopes &rarr;</button>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+
+        <!-- =========================================================================
+             TAB 3: NAMES, BINDINGS, TYPE CHECKING, AND SCOPES (LESSON 3)
+             ========================================================================= -->
+        <section id="tab3" class="module-pane">
+            <div class="linear-feed">
+
+                <!-- STOP 3.1: VON NEUMANN ARCHITECTURE & NAMING DESIGN ISSUES -->
+                <article class="lesson-stop focused-stop" id="t3-s1">
+                    <div class="stop-node">01</div>
+                    <div class="stop-header">
+                        <span class="stop-kicker">Lesson 3 &bull; Step 1 of 6 &bull; Hardware &amp; Identifiers</span>
+                        <h2>Von Neumann Architecture &amp; Variable Naming Issues</h2>
+                    </div>
+
+                    <div class="takeaway-banner">
+                        <strong>Von Neumann Foundation:</strong> Imperative languages are direct abstractions of the <span class="hl">von Neumann computer architecture</span>, which consists of <strong>Memory</strong> (stores data &amp; instructions), <strong>Processor (CPU)</strong> (executes operations), and <strong>Peripherals</strong>.
+                    </div>
+
+                    <div class="visual-versus">
+                        <div class="vs-pane" style="border-top:4px solid var(--primary);">
+                            <h4 style="color:var(--primary); margin-bottom:0.5rem;">2 Core Design Questions for Names</h4>
+                            <div class="point-stack">
+                                <div class="point-row"><span class="point-num">1</span><div>Are identifier names <span class="hl">case sensitive</span>?</div></div>
+                                <div class="point-row"><span class="point-num">2</span><div>Are special words <span class="hl">reserved words</span> (cannot be redefined by programmer) or <span class="hl">keywords</span> (contextual)?</div></div>
+                            </div>
+                        </div>
+
+                        <div class="vs-pane" style="border-top:4px solid var(--indigo);">
+                            <h4 style="color:var(--indigo); margin-bottom:0.5rem;">4 Factors to Consider in Name Design</h4>
+                            <div class="point-stack">
+                                <div class="point-row"><span class="point-num indigo">1</span><div><strong>Length:</strong> Allowed character count in an identifier.</div></div>
+                                <div class="point-row"><span class="point-num indigo">2</span><div><strong>Special Characters:</strong> Symbols permitted (e.g., <code>_</code>, <code>-</code>).</div></div>
+                                <div class="point-row"><span class="point-num indigo">3</span><div><strong>Case Sensitivity:</strong> Distinguishing uppercase vs. lowercase.</div></div>
+                                <div class="point-row"><span class="point-num indigo">4</span><div><strong>Special Words:</strong> Handling of built-in language words.</div></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="next-step-bar">
+                        <span>Ready to inspect what a variable really is?</span>
+                        <button class="next-btn" onclick="goNextStop('t3-s1', 't3-s2')" type="button">Next: The Sextuple of a Variable &darr;</button>
+                    </div>
+                </article>
+
+                <!-- STOP 3.2: THE SEXTUPLE OF A VARIABLE -->
+                <article class="lesson-stop" id="t3-s2">
+                    <div class="stop-node">02</div>
+                    <div class="stop-header">
+                        <span class="stop-kicker">Lesson 3 &bull; Step 2 of 6 &bull; Memory Cell Abstraction</span>
+                        <h2>Variables as a Sextuple (6 Attributes)</h2>
+                    </div>
+
+                    <p style="font-size:0.84rem; color:var(--text-muted); margin-bottom:0.75rem;">A <strong>variable</strong> is an abstraction of a memory cell characterized as a <strong>sextuple of 6 attributes</strong>. Tap any attribute below:</p>
+
+                    <div class="tile-grid" id="sextupleGrid">
+                        <div class="icon-tile active" onclick="showSextuple(0, this)">
+                            <svg class="ico ico-lg" viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+                            <span class="t-lbl">1. Name</span>
+                        </div>
+                        <div class="icon-tile" onclick="showSextuple(1, this)">
+                            <svg class="ico ico-lg" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                            <span class="t-lbl">2. Address</span>
+                        </div>
+                        <div class="icon-tile" onclick="showSextuple(2, this)">
+                            <svg class="ico ico-lg" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M7 15h0M2 9.5h20"/></svg>
+                            <span class="t-lbl">3. Value</span>
+                        </div>
+                        <div class="icon-tile" onclick="showSextuple(3, this)">
+                            <svg class="ico ico-lg" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/></svg>
+                            <span class="t-lbl">4. Type</span>
+                        </div>
+                        <div class="icon-tile" onclick="showSextuple(4, this)">
+                            <svg class="ico ico-lg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                            <span class="t-lbl">5. Lifetime</span>
+                        </div>
+                        <div class="icon-tile" onclick="showSextuple(5, this)">
+                            <svg class="ico ico-lg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/></svg>
+                            <span class="t-lbl">6. Scope</span>
+                        </div>
+                    </div>
+                    <div class="spotlight-box" id="sextupleSpotlight"></div>
+
+                    <div class="next-step-bar">
+                        <button class="next-btn" onclick="goNextStop('t3-s2', 't3-s1')" type="button">&uarr; Previous</button>
+                        <button class="next-btn" onclick="goNextStop('t3-s2', 't3-s3')" type="button">Next: Variable Categories by Lifetime &darr;</button>
+                    </div>
+                </article>
+
+                <!-- STOP 3.3: CATEGORIES OF VARIABLES BY LIFETIME -->
+                <article class="lesson-stop" id="t3-s3">
+                    <div class="stop-node">03</div>
+                    <div class="stop-header">
+                        <span class="stop-kicker">Lesson 3 &bull; Step 3 of 6 &bull; Storage Bindings</span>
+                        <h2>Categories of Variables by Lifetimes</h2>
+                    </div>
+
+                    <div class="point-stack">
+                        <div class="point-row"><span class="point-num">1</span><div><strong>Static Variables:</strong> Bound to memory cells <span class="hl">before execution begins</span> and remain bound to the same memory cell throughout execution.</div></div>
+                        <div class="point-row"><span class="point-num indigo">2</span><div><strong>Stack-Dynamic Variables:</strong> Storage bindings are created when their <span class="hl">declaration statements are elaborated</span> at runtime. For <strong>scalar</strong> variables, all attributes <em>except address</em> are statically bound.</div></div>
+                        <div class="point-row"><span class="point-num emerald">3</span><div><strong>Explicit Heap-Dynamic Variables:</strong> Allocated and deallocated by <span class="hl">explicit programmer directives</span> (e.g., <code>new</code> / <code>delete</code>) taking effect during execution.</div></div>
+                        <div class="point-row"><span class="point-num amber">4</span><div><strong>Implicit Heap-Dynamic Variables:</strong> Allocation and deallocation of storage are caused automatically by <span class="hl">assignment statements</span> during execution.</div></div>
+                    </div>
+
+                    <div class="next-step-bar">
+                        <button class="next-btn" onclick="goNextStop('t3-s3', 't3-s2')" type="button">&uarr; Previous</button>
+                        <button class="next-btn" onclick="goNextStop('t3-s3', 't3-s4')" type="button">Next: Static &amp; Global Scoping &darr;</button>
+                    </div>
+                </article>
+
+                <!-- STOP 3.4: SCOPE, STATIC SCOPING & GLOBAL SCOPING -->
+                <article class="lesson-stop" id="t3-s4">
+                    <div class="stop-node">04</div>
+                    <div class="stop-header">
+                        <span class="stop-kicker">Lesson 3 &bull; Step 4 of 6 &bull; Visibility Rules</span>
+                        <h2>Local vs. Nonlocal Variables, Static Scoping &amp; Global Scoping</h2>
+                    </div>
+
+                    <div class="pillars-visual" style="margin-bottom:1rem;">
+                        <div class="pillar-col" style="border-top-color:var(--primary);">
+                            <div class="pillar-head">Local Variables</div>
+                            <p style="font-size:0.83rem;">Declared <strong>inside</strong> that specific program unit; visible only within that unit.</p>
+                        </div>
+                        <div class="pillar-col" style="border-top-color:var(--indigo);">
+                            <div class="pillar-head">Nonlocal Variables</div>
+                            <p style="font-size:0.83rem;">Visible within a program unit, but <strong>not declared</strong> inside that unit.</p>
+                        </div>
+                        <div class="pillar-col" style="border-top-color:var(--emerald);">
+                            <div class="pillar-head">Global Variables</div>
+                            <p style="font-size:0.83rem;">A special category of nonlocal variables declared <strong>outside function definitions</strong>.</p>
+                        </div>
+                    </div>
+
+                    <div class="point-stack">
+                        <div class="point-row"><span class="point-num">1</span><div><strong>Static Scoping (Introduced in Algol 60):</strong> Binds names to variables at compile time based on spatial/textual layout. Searches declarations <span class="hl">locally first, then outward through enclosing static scopes</span>.</div></div>
+                        <div class="point-row"><span class="point-num">2</span><div><strong>Static Ancestors &amp; Static Parent:</strong> Enclosing static scopes are called <strong>static ancestors</strong>; the nearest enclosing static ancestor is the <span class="hl">static parent</span>.</div></div>
+                        <div class="point-row"><span class="point-num">3</span><div><strong>Languages with Nested Static Scopes:</strong> <code>Ada</code>, <code>JavaScript</code>, <code>Common LISP</code>, <code>Scheme</code>, <code>Fortran 2003+</code>, <code>F#</code>, and <code>Python</code>.</div></div>
+                        <div class="point-row"><span class="point-num indigo">4</span><div><strong>Global Scoping (C, C++, PHP, Python):</strong> Program consists of a sequence of function definitions in a file with variables declared outside functions.</div></div>
+                        <div class="point-row"><span class="point-num rose">C/C++</span><div><strong>Declaration vs. Definition in C and C++:</strong><br>
+                            &bull; <strong>Declaration:</strong> Specifies <span class="hl">only attributes</span> (a declaration outside a function specifies that the variable is defined in another file).<br>
+                            &bull; <strong>Definition:</strong> Specifies <span class="hl">both attributes and storage allocation</span>.
+                        </div></div>
+                    </div>
+
+                    <div class="next-step-bar">
+                        <button class="next-btn" onclick="goNextStop('t3-s4', 't3-s3')" type="button">&uarr; Previous</button>
+                        <button class="next-btn" onclick="goNextStop('t3-s4', 't3-s5')" type="button">Next: Dynamic Scoping &amp; Scope vs. Lifetime &darr;</button>
+                    </div>
+                </article>
+
+                <!-- STOP 3.5: DYNAMIC SCOPING VS STATIC SCOPING & SCOPE VS LIFETIME -->
+                <article class="lesson-stop" id="t3-s5">
+                    <div class="stop-node">05</div>
+                    <div class="stop-header">
+                        <span class="stop-kicker">Lesson 3 &bull; Step 5 of 6 &bull; Temporal vs. Spatial</span>
+                        <h2>Dynamic Scoping Evaluation &amp; Scope vs. Lifetime</h2>
+                    </div>
+
+                    <div class="visual-versus" style="margin-bottom:1rem;">
+                        <div class="vs-pane" style="border-left:4px solid var(--amber);">
+                            <h4 style="color:var(--amber); margin-bottom:0.45rem;">Dynamic Scoping (Temporal / Call-Chain)</h4>
+                            <div class="point-stack">
+                                <div class="point-row"><span class="point-num amber">Rule</span><div>Based on the <span class="hl">runtime calling sequence</span> of program units (searches backward through the chain of active subprogram calls).</div></div>
+                                <div class="point-row"><span class="point-num emerald">Pro</span><div><strong>Advantage:</strong> Convenience (no need to pass every shared variable as an explicit parameter).</div></div>
+                            </div>
+                        </div>
+
+                        <div class="vs-pane" style="border-left:4px solid var(--rose);">
+                            <h4 style="color:var(--rose); margin-bottom:0.45rem;">3 Disadvantages of Dynamic Scoping</h4>
+                            <div class="point-stack">
+                                <div class="point-row"><span class="point-num rose">1</span><div><strong>No Local Variable Protection:</strong> While a subprogram executes, its local variables are visible to <em>all</em> subprograms it calls.</div></div>
+                                <div class="point-row"><span class="point-num rose">2</span><div><strong>Impossible to Statically Type Check:</strong> Compiler cannot verify variable types before execution.</div></div>
+                                <div class="point-row"><span class="point-num rose">3</span><div><strong>Poor Readability:</strong> Impossible to statically determine the type or declaration of a variable from source text.</div></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="takeaway-banner" style="margin-bottom:0;">
+                        <strong>Scope vs. Lifetime (Classic C/C++ Exam Case):</strong> Scope (where a name is visible) and Lifetime (how long memory exists) are different! A <code>static</code> variable declared inside a C/C++ function has <span class="hl">local scope</span> (visible only inside that function) but <span class="hl">static lifetime</span> (bound to memory for the entire program execution).
+                    </div>
+
+                    <div class="next-step-bar">
+                        <button class="next-btn" onclick="goNextStop('t3-s5', 't3-s4')" type="button">&uarr; Previous</button>
+                        <button class="next-btn" onclick="goNextStop('t3-s5', 't3-s6')" type="button">Next: Referencing Environments &amp; Named Constants &darr;</button>
+                    </div>
+                </article>
+
+                <!-- STOP 3.6: REFERENCING ENVIRONMENTS & NAMED CONSTANTS -->
+                <article class="lesson-stop" id="t3-s6">
+                    <div class="stop-node">06</div>
+                    <div class="stop-header">
+                        <span class="stop-kicker">Lesson 3 &bull; Step 6 of 6 &bull; Visibility &amp; Constants</span>
+                        <h2>Referencing Environments &amp; Named Constants (<code>const</code> vs. <code>readonly</code>)</h2>
+                    </div>
+
+                    <div class="point-stack" style="margin-bottom:1rem;">
+                        <div class="point-row"><span class="point-num">Ref</span><div><strong>Referencing Environment:</strong> The collection of <span class="hl">all names that are visible</span> in a statement.</div></div>
+                        <div class="point-row"><span class="point-num">1</span><div><strong>In a Static-Scoped Language:</strong> Local variables + all visible variables in all enclosing static scopes.</div></div>
+                        <div class="point-row"><span class="point-num">2</span><div><strong>In a Dynamic-Scoped Language:</strong> Local variables + all visible variables in all currently <strong>active subprograms</strong> (a subprogram is <em>active</em> if its execution has begun but has not yet terminated).</div></div>
+                    </div>
+
+                    <div class="visual-versus">
+                        <div class="vs-pane" style="border-top:4px solid var(--primary);">
+                            <h4 style="color:var(--primary); margin-bottom:0.45rem;">Named Constants Overview</h4>
+                            <div class="point-stack">
+                                <div class="point-row"><span class="point-num">Def</span><div>A variable bound to a value <span class="hl">only when it is bound to storage</span>.</div></div>
+                                <div class="point-row"><span class="point-num">Pro</span><div>Improves <strong>readability</strong> and <strong>modifiability</strong>; used to parameterize programs.</div></div>
+                                <div class="point-row"><span class="point-num">Bind</span><div>Can be bound <strong>statically</strong> (called <span class="hl">manifest constants</span>) or <strong>dynamically</strong> (supported in <code>Ada</code>, <code>C++</code>, and <code>Java</code> using expressions of any kind).</div></div>
+                            </div>
+                        </div>
+
+                        <div class="vs-pane" style="border-top:4px solid var(--indigo);">
+                            <h4 style="color:var(--indigo); margin-bottom:0.45rem;">C# Named Constants: <code>const</code> vs. <code>readonly</code></h4>
+                            <div class="point-stack">
+                                <div class="point-row"><span class="point-num indigo">1</span><div><strong><code>const</code> in C#:</strong> Values are bound statically at <span class="hl">compile time</span> (manifest constants).</div></div>
+                                <div class="point-row"><span class="point-num emerald">2</span><div><strong><code>readonly</code> in C#:</strong> Values are <span class="hl">dynamically bound</span> at runtime (can be assigned when the object is constructed).</div></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="next-step-bar">
+                        <button class="next-btn" onclick="goNextStop('t3-s6', 't3-s5')" type="button">&uarr; Previous</button>
+                        <button class="next-btn" onclick="switchTab('tab4', document.querySelectorAll('.nav-tab')[3])" type="button">Continue to Lesson 4: Data Types &rarr;</button>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+
+        <!-- =========================================================================
+             TAB 4: DATA TYPES (LESSON 4)
+             ========================================================================= -->
+        <section id="tab4" class="module-pane">
+            <div class="linear-feed">
+
+                <!-- STOP 4.1: ELEMENTARY DATA TYPES: INTEGER & OPERATIONS -->
+                <article class="lesson-stop focused-stop" id="t4-s1">
+                    <div class="stop-node">01</div>
+                    <div class="stop-header">
+                        <span class="stop-kicker">Lesson 4 &bull; Step 1 of 7 &bull; Primitive Types</span>
+                        <h2>Elementary Data Types: Integers &amp; Arithmetic/Relational Operations</h2>
+                    </div>
+
+                    <div class="takeaway-banner">
+                        <strong>Elementary (Primitive) Data Types:</strong> Atomic data types directly supported by hardware or language specifications—primarily <span class="hl">Numeric (Integer &amp; Real)</span>, <span class="hl">Boolean</span>, and <span class="hl">Character</span>.
+                    </div>
+
+                    <div class="point-stack" style="margin-bottom:0.9rem;">
+                        <div class="point-row"><span class="point-num">Int</span><div><strong>Integer Data Type:</strong> Whole numbers with or without sign; forms an ordered subset within finite hardware bounds. Usually has no attributes besides its type. Supports <strong>Arithmetic, Relational, Assignment, and Bit operations</strong>.</div></div>
+                        <div class="point-row"><span class="point-num indigo">1</span><div><strong>Unary Arithmetic Operation (<code>integer &rarr; integer</code>):</strong> Operates on 1 operand, such as negation (<code>-</code>), identity (<code>+</code>), or prefix increment (<code>++I</code> in C).</div></div>
+                        <div class="point-row"><span class="point-num indigo">2</span><div><strong>Binary Arithmetic Operation (<code>integer &times; integer &rarr; integer</code>):</strong> Operates on 2 operands: addition (<code>+</code>), subtraction (<code>-</code>), multiplication (<code>*</code>), division (<code>/</code>), integer quotient (<code>DIV</code>), and remainder (<code>MOD</code>).<br>
+                            <em>Examples:</em> <code>x := x + 1</code> (Pascal) &bull; <code>c = c * 1</code> (C).</div></div>
+                        <div class="point-row"><span class="point-num indigo">3</span><div><strong>Ternary Operation (<code>Pr1 ? opr2 : opr3</code>):</strong> Conditional shorthand for <code>if...else</code> (in C/Java)—returns <code>opr2</code> if <code>Pr1</code> is true, or <code>opr3</code> if <code>Pr1</code> is false.</div></div>
+                        <div class="point-row"><span class="point-num emerald">Rel</span><div><strong>Relational Operations (<code>integer &times; integer &rarr; Boolean</code>):</strong> Compares two data values (<code>=</code>, <code>&lt;</code>, <code>&gt;</code>, <code>!=</code>, <code>&lt;=</code>, <code>&gt;=</code>) and returns a <span class="hl">Boolean (True or False)</span> result.</div></div>
+                    </div>
+
+                    <div class="next-step-bar">
+                        <span>Understand Unary, Binary, Ternary &amp; Relational ops?</span>
+                        <button class="next-btn" onclick="goNextStop('t4-s1', 't4-s2')" type="button">Next: Real, Complex &amp; Rational Numbers &darr;</button>
+                    </div>
+                </article>
+
+                <!-- STOP 4.2: REAL, COMPLEX & RATIONAL NUMBERS -->
+                <article class="lesson-stop" id="t4-s2">
+                    <div class="stop-node">02</div>
+                    <div class="stop-header">
+                        <span class="stop-kicker">Lesson 4 &bull; Step 2 of 7 &bull; Numeric Representations</span>
+                        <h2>Real Numbers, Complex Numbers &amp; Rational Numbers</h2>
+                    </div>
+
+                    <div class="point-stack">
+                        <div class="point-row"><span class="point-num">1</span><div><strong>Real Numbers (Floating-Point):</strong> Numbers with a decimal point, with or without sign (<code>1.25</code>, <code>+1.25</code>, <code>-1.25</code>).<br>
+                            &bull; Called <code>real</code> in <strong>Fortran and Pascal</strong>.<br>
+                            &bull; Called <code>float</code> in <strong>C and C++</strong>.<br>
+                            &bull; Supports arithmetic, relational, and assignment operations (with restrictions in Boolean operations).
+                        </div></div>
+                        <div class="point-row"><span class="point-num indigo">2</span><div><strong>Complex Numbers (Rosenberg):</strong> Ordered pair of real numbers expressible as <code>a + bi</code> (where <code>a</code> and <code>b</code> are real numbers and <code>i&sup2; = -1</code>). Represented in memory as a <span class="hl">block of two storage locations</span> (real part + imaginary part).</div></div>
+                        <div class="point-row"><span class="point-num emerald">3</span><div><strong>Rational Numbers:</strong> The quotient of two integers (<code>a / b</code>). Primary advantage is to <span class="hl">avoid round-off and truncation problems</span> encountered in floating-point and fixed-point representations of real numbers.</div></div>
+                    </div>
+
+                    <div class="next-step-bar">
+                        <button class="next-btn" onclick="goNextStop('t4-s2', 't4-s1')" type="button">&uarr; Previous</button>
+                        <button class="next-btn" onclick="goNextStop('t4-s2', 't4-s3')" type="button">Next: Booleans &amp; Characters &darr;</button>
+                    </div>
+                </article>
+
+                <!-- STOP 4.3: BOOLEANS & CHARACTERS ACROSS LANGUAGES -->
+                <article class="lesson-stop" id="t4-s3">
+                    <div class="stop-node">03</div>
+                    <div class="stop-header">
+                        <span class="stop-kicker">Lesson 4 &bull; Step 3 of 7 &bull; Logical &amp; Character Types</span>
+                        <h2>Booleans (5 Logical Operations) &amp; Character Data Types</h2>
+                    </div>
+
+                    <div class="code-block" style="margin-bottom:1rem;"><span class="hl-cm">// 5 Boolean Operations Expressed as Conditional (if-then-else) Equivalents:</span>
+1. <span class="hl-kw">Conjunction (and):</span>          r and j   =  <span class="hl-nt">if</span> r <span class="hl-nt">then</span> j <span class="hl-nt">else</span> false
+2. <span class="hl-kw">Inclusive Disjunction (or):</span> j or r    =  <span class="hl-nt">if</span> j <span class="hl-nt">then</span> true <span class="hl-nt">else</span> r
+3. <span class="hl-kw">Negation Complement (not):</span>  not k     =  <span class="hl-nt">if</span> k <span class="hl-nt">then</span> false <span class="hl-nt">else</span> true
+4. <span class="hl-kw">Implication (imp):</span>          x imp y   =  <span class="hl-nt">if</span> x <span class="hl-nt">then</span> y <span class="hl-nt">else</span> true
+5. <span class="hl-kw">Equivalence (equiv):</span>        r equiv j =  <span class="hl-nt">if</span> r <span class="hl-nt">then</span> j <span class="hl-nt">else</span> not j</div>
+
+                    <div class="point-stack">
+                        <div class="point-row"><span class="point-num">ALG</span><div><strong>ALGOL 60 Booleans:</strong> Uses literals <code>true</code> and <code>false</code>; strictly forbids mixing them with numeric values.</div></div>
+                        <div class="point-row"><span class="point-num indigo">PAS</span><div><strong>Pascal &amp; Ada Booleans:</strong> Viewed as a predefined ordered <span class="hl">enumerated type</span> (<code>FALSE &lt; TRUE</code>); can be redefined by the programmer since they are not literals.</div></div>
+                        <div class="point-row"><span class="point-num amber">PL/I</span><div><strong>PL/I Booleans:</strong> False is any string containing <span class="hl">all zeros or the empty string</span>, while True must contain <span class="hl">at least one non-zero</span>.</div></div>
+                        <div class="point-row"><span class="point-num emerald">Chr</span><div><strong>Character Data Type (<code>'B'</code>, <code>'K'</code>, <code>'g'</code>):</strong> Single character value mapped to hardware/OS sets like <strong>ASCII</strong>. Operations include relational comparisons, assignment, and testing character class (<code>letter</code>, <code>digit</code>, <code>special character</code>).</div></div>
+                    </div>
+
+                    <div class="next-step-bar">
+                        <button class="next-btn" onclick="goNextStop('t4-s3', 't4-s2')" type="button">&uarr; Previous</button>
+                        <button class="next-btn" onclick="goNextStop('t4-s3', 't4-s4')" type="button">Next: Vectors, Arrays &amp; Matrix Order &darr;</button>
+                    </div>
+                </article>
+
+                <!-- STOP 4.4: VECTORS, ARRAYS & MULTIDIMENSIONAL MATRIX ORDER -->
+                <article class="lesson-stop" id="t4-s4">
+                    <div class="stop-node">04</div>
+                    <div class="stop-header">
+                        <span class="stop-kicker">Lesson 4 &bull; Step 4 of 7 &bull; Homogeneous Structures</span>
+                        <h2>Vectors, Arrays &amp; Interactive Row-Major vs. Column-Major Matrix</h2>
+                    </div>
+
+                    <div class="point-stack" style="margin-bottom:0.9rem;">
+                        <div class="point-row"><span class="point-num">Def</span><div><strong>Structured Data Type:</strong> A data object containing other data objects as its elements (Vectors/Arrays, Records, Lists, Strings, Pointers).</div></div>
+                        <div class="point-row"><span class="point-num">Vec</span><div><strong>Vector (1D / Linear Array):</strong> Fixed number of components of the <span class="hl">same data type (homogeneous)</span> organized as a linear segment.</div></div>
+                        <div class="point-row"><span class="point-num indigo">Attr</span><div><strong>3 Attributes of an Array:</strong><br>
+                            1. Number of components (implicitly indicated)<br>
+                            2. Single homogeneous data type for all components<br>
+                            3. Subscript used to select each component
+                        </div></div>
+                        <div class="point-row"><span class="point-num emerald">Ops</span><div><strong>4 Operations on Arrays:</strong><br>
+                            1. <strong>Subscripting:</strong> Selects a component and returns its <span class="hl">l-value (memory location)</span><br>
+                            2. Create and destroy vectors<br>
+                            3. Assignment to a vector component<br>
+                            4. Arithmetic operations on vectors/slices (note: an <strong>array slice</strong> is a substructure of an array that is itself an array, used in <code>PL/I</code> and <code>FORTRAN</code>)
+                        </div></div>
+                    </div>
+
+                    <div class="code-block" style="margin-bottom:1rem;"><span class="hl-cm">// Array Declarations Across Languages:</span>
+<span class="hl-kw">PASCAL:</span>  v : array[1..10] of integer;
+<span class="hl-kw">FORTRAN:</span> DIMENSION A(10)
+<span class="hl-kw">C:</span>       int j[10];</div>
+
+                    <!-- Interactive Row-Major vs Column-Major Matrix Visualizer -->
+                    <div style="background:var(--bg-subtle); border:1px solid var(--border-strong); border-radius:var(--radius-md); padding:1rem;">
+                        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.65rem;">
+                            <h4 style="font-size:0.92rem;">Interactive 2D Matrix Memory Layout Visualizer:</h4>
+                            <div class="pill-group" style="margin-bottom:0;">
+                                <button class="pill-btn active" onclick="showMatrixOrder('row', this)" type="button">1. Row-Major Order</button>
+                                <button class="pill-btn" onclick="showMatrixOrder('col', this)" type="button">2. Column-Major Order</button>
+                            </div>
+                        </div>
+                        <div id="matrixVisualDisplay"></div>
+                    </div>
+
+                    <div class="next-step-bar">
+                        <button class="next-btn" onclick="goNextStop('t4-s4', 't4-s3')" type="button">&uarr; Previous</button>
+                        <button class="next-btn" onclick="goNextStop('t4-s4', 't4-s5')" type="button">Next: Records (Structures) &darr;</button>
+                    </div>
+                </article>
+
+                <!-- STOP 4.5: RECORDS (STRUCTURES) -->
+                <article class="lesson-stop" id="t4-s5">
+                    <div class="stop-node">05</div>
+                    <div class="stop-header">
+                        <span class="stop-kicker">Lesson 4 &bull; Step 5 of 7 &bull; Heterogeneous Structures</span>
+                        <h2>Records (Structures in C): Characteristics, Attributes &amp; Code</h2>
+                    </div>
+
+                    <div class="point-stack" style="margin-bottom:1rem;">
+                        <div class="point-row"><span class="point-num">1</span><div><strong>Heterogeneous Components:</strong> Composed of a fixed number of components of <span class="hl">different data types</span> (mixed types rather than homogeneous).</div></div>
+                        <div class="point-row"><span class="point-num">2</span><div><strong>Symbolic Field Selectors:</strong> Components are named using symbolic variable names and accessed via <span class="hl">dot notation</span> (<code>Student.SNO</code>) in <strong>C, Pascal, and Ada</strong> rather than indexed with subscripts.</div></div>
+                        <div class="point-row"><span class="point-num indigo">Attr</span><div><strong>3 Attributes of a Record:</strong><br>
+                            1. Number of components<br>
+                            2. Data type of each component<br>
+                            3. Selector used to name every component
+                        </div></div>
+                        <div class="point-row"><span class="point-num emerald">Ops</span><div><strong>2 Operations on Records:</strong><br>
+                            1. <strong>Component Selection</strong> (dot <code>.</code> operator, e.g., <code>Student.SNO := 12345</code>)<br>
+                            2. <strong>Assignment</strong> of entire records of identical structure
+                        </div></div>
+                    </div>
+
+                    <div class="visual-versus">
+                        <div>
+                            <div class="code-block"><span class="hl-cm">// C Structure Declaration:</span>
+<span class="hl-kw">struct</span> StudentType {
+    int SNO;
+    char Name;
+    int Age;
+    float Tuitionfee;
+    char Dept;
+} Student;
+
+<span class="hl-cm">// Field Selection:</span>
+Student.SNO;</div>
+                        </div>
+                        <div>
+                            <div class="code-block"><span class="hl-cm">// Pascal Record Declaration:</span>
+<span class="hl-kw">Type</span> Studentype = <span class="hl-kw">Record</span>
+    SNO: array [1..8] of integer;
+    Name: array [1..30] of char;
+    Age: integer;
+<span class="hl-kw">End</span>;
+<span class="hl-kw">var</span> student : studentype;
+
+<span class="hl-cm">// Field Assignment:</span>
+Student.SNO := 12345;
+Student.Name := "Kyra";</div>
+                        </div>
+                    </div>
+
+                    <div class="next-step-bar">
+                        <button class="next-btn" onclick="goNextStop('t4-s5', 't4-s4')" type="button">&uarr; Previous</button>
+                        <button class="next-btn" onclick="goNextStop('t4-s5', 't4-s6')" type="button">Next: Lists &amp; Character Strings &darr;</button>
+                    </div>
+                </article>
+
+                <!-- STOP 4.6: LISTS & CHARACTER STRINGS -->
+                <article class="lesson-stop" id="t4-s6">
+                    <div class="stop-node">06</div>
+                    <div class="stop-header">
+                        <span class="stop-kicker">Lesson 4 &bull; Step 6 of 7 &bull; Dynamic Sequences</span>
+                        <h2>Lists (vs. Arrays) &amp; Character String Treatments</h2>
+                    </div>
+
+                    <div class="visual-versus" style="margin-bottom:1rem;">
+                        <div class="vs-pane" style="border-top:4px solid var(--primary);">
+                            <h4 style="color:var(--primary); margin-bottom:0.5rem;">Lists vs. Arrays (3 Key Differences)</h4>
+                            <div class="point-stack">
+                                <div class="point-row"><span class="point-num">1</span><div><strong>Length:</strong> Arrays have <em>fixed length</em>; lists are <span class="hl">rarely of fixed length</span>.</div></div>
+                                <div class="point-row"><span class="point-num">2</span><div><strong>Homogeneity:</strong> Array elements must share one type; list elements <span class="hl">may differ in type</span> from their neighbors.</div></div>
+                                <div class="point-row"><span class="point-num">3</span><div><strong>Declaration:</strong> List languages (like <code>LISP</code>) declare data <span class="hl">implicitly</span> without explicit member declarations.</div></div>
+                                <div class="point-row"><span class="point-num indigo">Var</span><div><strong>3 List Variations:</strong><br>
+                                    1. Stacks and Queues<br>
+                                    2. Trees<br>
+                                    3. Directed Graphs
+                                </div></div>
+                            </div>
+                        </div>
+
+                        <div class="vs-pane" style="border-top:4px solid var(--indigo);">
+                            <h4 style="color:var(--indigo); margin-bottom:0.5rem;">Character Strings (3 Length Treatments &amp; 4 Ops)</h4>
+                            <div class="point-stack">
+                                <div class="point-row"><span class="point-num indigo">1</span><div><strong>Fixed Declared Length:</strong> Static length fixed at compile time.</div></div>
+                                <div class="point-row"><span class="point-num indigo">2</span><div><strong>Variable Length to a Declared Bound:</strong> Dynamic up to a maximum cap.</div></div>
+                                <div class="point-row"><span class="point-num indigo">3</span><div><strong>Unbounded Length:</strong> Fully dynamic length with no preset limit.</div></div>
+                                <div class="point-row"><span class="point-num emerald">Ops</span><div><strong>4 String Operations:</strong><br>
+                                    1. Concatenation<br>
+                                    2. Relational operations<br>
+                                    3. Substring selection (positioning &amp; pattern matching)<br>
+                                    4. Formatting for input-output
+                                </div></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="takeaway-banner" style="margin-bottom:0;">
+                        <strong>SNOBOL Language Highlight:</strong> Created specifically for string processing capabilities. In <code>SNOBOL</code>, the <span class="hl">concatenation operator is implicit</span>, and its simplest fundamental statement is the <span class="hl">pattern matching statement</span>.
+                    </div>
+
+                    <div class="next-step-bar">
+                        <button class="next-btn" onclick="goNextStop('t4-s6', 't4-s5')" type="button">&uarr; Previous</button>
+                        <button class="next-btn" onclick="goNextStop('t4-s6', 't4-s7')" type="button">Next: Pointers &amp; Notation Table &darr;</button>
+                    </div>
+                </article>
+
+                <!-- STOP 4.7: POINTERS: PROBLEMS, OPERATIONS & NOTATION TABLE -->
+                <article class="lesson-stop" id="t4-s7">
+                    <div class="stop-node">07</div>
+                    <div class="stop-header">
+                        <span class="stop-kicker">Lesson 4 &bull; Step 7 of 7 &bull; Indirect Referencing</span>
+                        <h2>Pointers: 3 Classic Problems, 3 Operations &amp; Notation Table</h2>
+                    </div>
+
+                    <div class="point-stack" style="margin-bottom:1rem;">
+                        <div class="point-row"><span class="point-num">Def</span><div><strong>Why Use Pointers (Pascal, C, Ada):</strong> Identifier whose value is a reference to some object. Solves the problem of producing an <span class="hl">undetermined number of items</span> linked dynamically without explicitly naming every object.</div></div>
+                        <div class="point-row"><span class="point-num rose">1</span><div><strong>Pointer Problem 1 (Aliasing):</strong> Several pointer variables pointing to the <span class="hl">same object</span> simultaneously.</div></div>
+                        <div class="point-row"><span class="point-num rose">2</span><div><strong>Pointer Problem 2 (Unreferenced Objects / Garbage):</strong> Objects are <span class="hl">no longer pointed at</span> by any pointer variable.</div></div>
+                        <div class="point-row"><span class="point-num rose">3</span><div><strong>Pointer Problem 3 (Location vs. Value):</strong> Ambiguity when a variable denotes either a memory location (l-value) or a value (r-value).</div></div>
+                        <div class="point-row"><span class="point-num emerald">Ops</span><div><strong>3 Operations on Pointers:</strong><br>
+                            1. <strong>Assignment</strong> (setting pointer address)<br>
+                            2. <strong>Equality</strong> (comparing two pointer addresses)<br>
+                            3. <strong>Dereferencing</strong> (accessing the referenced target value/field)
+                        </div></div>
+                    </div>
+
+                    <h4 style="font-size:0.92rem; margin-bottom:0.45rem;">Pointer Notation Comparison Across Programming Languages:</h4>
+                    <div class="table-wrap">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Language</th>
+                                    <th>Pointer Assignment (Copy Address)</th>
+                                    <th>Value Assignment (Copy Target Value)</th>
+                                    <th>Field Selection via Pointer</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>ALGOL 68</strong></td>
+                                    <td><code>p := q</code></td>
+                                    <td><code>T(p) := q</code></td>
+                                    <td><code>field of p</code></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>PASCAL</strong></td>
+                                    <td><code>p := q</code></td>
+                                    <td><code>P&uarr; := q&uarr;</code></td>
+                                    <td><code>p&uarr;.field</code></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>ADA</strong></td>
+                                    <td><code>p := q</code></td>
+                                    <td><code>p.all := q.all</code></td>
+                                    <td><code>p.field</code></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="next-step-bar">
+                        <button class="next-btn" onclick="goNextStop('t4-s7', 't4-s6')" type="button">&uarr; Previous</button>
+                        <button class="next-btn" onclick="window.scrollTo({top:0, behavior:'smooth'})" type="button">Back to Top &uarr;</button>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // 1. SCROLL READING PROGRESS BAR
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const pct = docHeight > 0 ? Math.min(100, (scrollTop / docHeight) * 100) : 0;
+            document.getElementById('scrollProgress').style.width = pct + '%';
+        });
+
+        // 2. TAB SWITCHING
+        function switchTab(tabId, btnEl) {
+            document.querySelectorAll('.module-pane').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+
+            const target = document.getElementById(tabId);
+            if (target) {
+                target.classList.add('active');
+                const stops = target.querySelectorAll('.lesson-stop');
+                stops.forEach((s, i) => s.classList.toggle('focused-stop', i === 0));
+            }
+            if (btnEl) btnEl.classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // 3. LINEAR STEP NAVIGATION & ONE-STEP FOCUS MODE
+        let isFocusMode = false;
+        function toggleFocusMode() {
+            isFocusMode = !isFocusMode;
+            document.body.classList.toggle('step-focus-mode', isFocusMode);
+            const btn = document.getElementById('focusModeBtn');
+            const txt = document.getElementById('focusModeText');
+            btn.classList.toggle('active-mode', isFocusMode);
+            txt.textContent = isFocusMode ? 'One-Step Mode: On' : 'One-Step Mode: Off';
+        }
+
+        function goNextStop(currentId, targetId) {
+            const curr = document.getElementById(currentId);
+            const next = document.getElementById(targetId);
+            if (!next) return;
+            if (curr) curr.classList.remove('focused-stop');
+            next.classList.add('focused-stop');
+            next.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        // 4. DARK / LIGHT THEME TOGGLE (Pure SVG Icons)
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+        const themeText = document.getElementById('themeText');
+
+        const moonSvg = `<svg class="ico" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>`;
+        const sunSvg = `<svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>`;
+
+        function applyTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            themeIcon.innerHTML = theme === 'dark' ? sunSvg : moonSvg;
+            themeText.textContent = theme === 'dark' ? 'Light' : 'Dark';
+        }
+
+        applyTheme(localStorage.getItem('ppl_guide_theme') || 'light');
+        themeToggle.addEventListener('click', () => {
+            const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+            applyTheme(next);
+            localStorage.setItem('ppl_guide_theme', next);
+        });
+
+        // 5. LESSON 1 INTERACTIVE DATA
+        const reasonDetails = [
+            `<div class="point-stack">
+                <div class="point-row"><span class="point-num">1</span><div><strong>Improve Your Ability to Develop Effective Algorithms:</strong> Every language has its own features; understanding the language as a whole increases our capacity to express ideas and maximize the use of the language.</div></div>
+            </div>`,
+            `<div class="point-stack">
+                <div class="point-row"><span class="point-num">2</span><div><strong>Improve Your Use of Existing Programming Languages:</strong> Understanding how each feature of a language is implemented under the hood enables writing much more efficient programs.</div></div>
+            </div>`,
+            `<div class="point-stack">
+                <div class="point-row"><span class="point-num">3</span><div><strong>Increase Your Vocabulary of Useful Programming Constructs:</strong> Knowing only one language forces you to bend solutions to that language's constraints. Knowing diverse control-flow and data constructs (such as C's rich control statements) lets you pick the best implementation for any problem.</div></div>
+            </div>`,
+            `<div class="point-stack">
+                <div class="point-row"><span class="point-num">4</span><div><strong>Allow a Better Choice of Programming Language:</strong> Studying every available language is a mistake, but knowing how to evaluate languages lets you select the best language for the specific application you are building.</div></div>
+            </div>`,
+            `<div class="point-stack">
+                <div class="point-row"><span class="point-num">5</span><div><strong>Make It Easier to Learn a New Language:</strong> Most languages share control statements, assignment statements, and basic data types (integer, real, character); learning a new language only requires studying its unique characteristics and implementation.</div></div>
+            </div>`,
+            `<div class="point-stack">
+                <div class="point-row"><span class="point-num">6</span><div><strong>Make It Easier to Design a New Language:</strong> Mastering language design principles gives you the foundation needed to design and implement your own programming language.</div></div>
+            </div>`
+        ];
+
+        function showReasonDetail(idx, btn) {
+            document.querySelectorAll('#l1ReasonOrbit .orbit-pill').forEach(b => b.classList.remove('active'));
+            if (btn) btn.classList.add('active');
+            document.getElementById('l1ReasonSpotlight').innerHTML = reasonDetails[idx];
+        }
+        showReasonDetail(0, null);
+
+        // 8 Characteristics of a Good Language
+        const goodPlData = [
+            `<div class="point-stack">
+                <div class="point-row"><span class="point-num">1</span><div><strong>Clarity, Simplicity, and Unity:</strong> Provides a clear conceptual framework for developing algorithms. A simple, readable program is <span class="hl">easy to write and easy to decipher</span> when it needs modification.</div></div>
+            </div>`,
+            `<div class="point-stack">
+                <div class="point-row"><span class="point-num">2</span><div><strong>Orthogonality (Horowitz):</strong> The language should have only a few basic features, each of which is <span class="hl">separately understandable and free from interaction</span> when combined.</div></div>
+            </div>`,
+            `<div class="point-stack">
+                <div class="point-row"><span class="point-num">3</span><div><strong>Naturalness for the Application (Pratt):</strong> Provides appropriate data structures, operations, control structures, and a <span class="hl">natural syntax</span> suited to the specific problem domain.</div></div>
+            </div>`,
+            `<div class="point-stack">
+                <div class="point-row"><span class="point-num">4</span><div><strong>Support for Abstraction:</strong> Allows data types, data structures, and operations to be defined and maintained as <span class="hl">self-contained abstractions</span>.</div></div>
+            </div>`,
+            `<div class="point-stack">
+                <div class="point-row"><span class="point-num">5</span><div><strong>Ease of Program Verification (Reliability):</strong> Performs specifications under all circumstances. Includes:<br>
+                    &bull; <strong>Type Checking:</strong> Testing type compatibility between two variables.<br>
+                    &bull; <strong>Exception Handling:</strong> Intercepting runtime errors to take corrective measures and continue execution.<br>
+                    &bull; <strong>Aliasing Control:</strong> Managing <span class="hl">two distinct referencing methods or names for the same memory location</span>.
+                </div></div>
+            </div>`,
+            `<div class="point-stack">
+                <div class="point-row"><span class="point-num">6</span><div><strong>Programming Environment (Pratt):</strong> Availability of a reliable, efficient, well-documented implementation, plus special editors, testing packages, and facilities for maintaining multiple versions of large programs.</div></div>
+            </div>`,
+            `<div class="point-stack">
+                <div class="point-row"><span class="point-num">7</span><div><strong>Portability of Programs:</strong> A language that is <span class="hl">small (few keywords) yet very powerful</span> is portable. <strong>C language</strong> became famous and widely used because of its portability.</div></div>
+            </div>`,
+            `<div class="point-stack">
+                <div class="point-row"><span class="point-num">8</span><div><strong>Cost (6 Evaluation Elements):</strong><br>
+                    a. Training the programmer<br>
+                    b. Writing programs in the language<br>
+                    c. Compiling programs<br>
+                    d. Executing programs<br>
+                    e. Maintenance<br>
+                    f. Optimization
+                </div></div>
+            </div>`
+        ];
+
+        function showGoodPl(idx, el) {
+            document.querySelectorAll('#goodPlGrid .icon-tile').forEach(t => t.classList.remove('active'));
+            if (el) el.classList.add('active');
+            document.getElementById('goodPlSpotlight').innerHTML = goodPlData[idx];
+        }
+        showGoodPl(0, null);
+
+        // 4 Binding Time Classes
+        const bindingData = {
+            'exec': `<h4 style="color:var(--primary); margin-bottom:0.5rem;">1. Execution Time (Runtime) — 2 Sub-Categories</h4>
+            <div class="point-stack">
+                <div class="point-row"><span class="point-num">Def</span><div>Bindings performed during program execution (binding variables to values or storage locations).</div></div>
+                <div class="point-row"><span class="point-num">1.1</span><div><strong>Entry to a Subprogram or Block:</strong> Bindings are restricted only to access at the entry into a subprogram or block during execution.<br><em>Examples:</em> <span class="hl">C and Pascal</span>.</div></div>
+                <div class="point-row"><span class="point-num">1.2</span><div><strong>Arbitrary Points During Execution:</strong> Binding variables to values via assignment, or binding names to storage locations at arbitrary points in the program.<br><em>Examples:</em> <span class="hl">LISP and ML</span>.</div></div>
+            </div>`,
+            'trans': `<h4 style="color:var(--indigo); margin-bottom:0.5rem;">2. Translation Time (Compile Time) — 3 Sub-Classes</h4>
+            <div class="point-stack">
+                <div class="point-row"><span class="point-num indigo">a</span><div><strong>Bindings Chosen by the Programmer:</strong> Variable names, variable types, and statement structures chosen by the programmer and used by the translator to build the object program.</div></div>
+                <div class="point-row"><span class="point-num indigo">b</span><div><strong>Bindings Chosen by the Translator:</strong> Chosen without programmer specification (e.g., how arrays are stored and how <span class="hl">array descriptors</span> are created).</div></div>
+                <div class="point-row"><span class="point-num indigo">c</span><div><strong>Bindings Chosen by the Loader:</strong> Translator assigns relative addresses within each subprogram, while <span class="hl">load time (or link time)</span> binds the actual physical computer addresses.</div></div>
+            </div>`,
+            'impl': `<h4 style="color:var(--amber); margin-bottom:0.5rem;">3. Implementation Time</h4>
+            <div class="point-stack">
+                <div class="point-row"><span class="point-num amber">!</span><div>A feature whose definition is fixed by a specific compiler/implementation (e.g., integer bit width). A program using it may not run on another implementation of the same language, or may <span class="hl">run and produce different results</span>.</div></div>
+            </div>`,
+            'def': `<h4 style="color:var(--emerald); margin-bottom:0.5rem;">4. Definition Time</h4>
+            <div class="point-stack">
+                <div class="point-row"><span class="point-num emerald">Def</span><div>Structure fixed when the programming language itself is defined (e.g., available statement forms, built-in data structure types, and keywords).</div></div>
+            </div>`
+        };
+
+        function showBindingClass(key, btn) {
+            document.querySelectorAll('#bindingPills .pill-btn').forEach(b => b.classList.remove('active'));
+            if (btn) btn.classList.add('active');
+            document.getElementById('bindingDisplay').innerHTML = bindingData[key];
+        }
+        showBindingClass('exec', null);
+
+        // 6 Programming Paradigms
+        const plParadigms = [
+            `<div class="point-stack">
+                <div class="point-row"><span class="point-num">1</span><div><strong>Imperative (Procedural) Languages:</strong> Action-oriented, statement-oriented, or command-driven; instructions execute sequentially.</div></div>
+                <div class="point-row"><span class="point-num">Ex</span><div><code>BASIC</code>, <code>FORTRAN</code>, <code>COBOL</code>, <code>PASCAL</code>.</div></div>
+            </div>`,
+            `<div class="point-stack">
+                <div class="point-row"><span class="point-num">2</span><div><strong>Functional Languages:</strong> Rooted in mathematical function theory; computes values via expressions and functions (functions are passed as parameters and returned as results).</div></div>
+                <div class="point-row"><span class="point-num">Ex</span><div>
+                    &bull; <code>LISP</code>: List Processing (designed for IBM 704 by John McCarthy)<br>
+                    &bull; <code>Scheme</code>: A Lisp dialect<br>
+                    &bull; <code>ML</code>: Meta Language<br>
+                    &bull; <code>CLOS</code>: Object-Oriented extension of Lisp
+                </div></div>
+            </div>`,
+            `<div class="point-stack">
+                <div class="point-row"><span class="point-num">3</span><div><strong>Logic (Rule-Based) Languages:</strong> Deals with predicates or relationships; widely used for <span class="hl">Artificial Intelligence (AI)</span> applications.</div></div>
+                <div class="point-row"><span class="point-num">Ex</span><div>
+                    &bull; <code>PROLOG</code>: Programming in LOGic<br>
+                    &bull; <code>OPS5</code>: Official Production System<br>
+                    &bull; <code>CLIPS</code>
+                </div></div>
+            </div>`,
+            `<div class="point-stack">
+                <div class="point-row"><span class="point-num">4</span><div><strong>Object-Oriented Programming Languages:</strong> Emphasizes defining classes and objects; instances of classes are created as needed during execution.</div></div>
+                <div class="point-row"><span class="point-num">Ex</span><div><code>SmallTalk</code>, <code>ADA</code>, <code>C++</code>, <code>Eiffel</code>, <code>Java</code>.</div></div>
+            </div>`,
+            `<div class="point-stack">
+                <div class="point-row"><span class="point-num">5</span><div><strong>Concurrent Languages:</strong> Programs executed in parallel (multiprogramming, multiprocessing, or distributed).</div></div>
+                <div class="point-row"><span class="point-num">Ex</span><div><code>ALGOL 68</code>, <code>Concurrent Pascal</code>, <code>CSP</code>, <code>ADA</code>, <code>Occam</code>.</div></div>
+            </div>`,
+            `<div class="point-stack">
+                <div class="point-row"><span class="point-num">6</span><div><strong>Other Languages:</strong><br>
+                    &bull; <strong>Fourth Generation Languages (4GL) / Query Languages:</strong> Interface to a database.<br>
+                    &bull; <strong>Specification Languages:</strong> Used for hardware and software design.
+                </div></div>
+            </div>`
+        ];
+
+        function showPlParadigm(idx, el) {
+            document.querySelectorAll('#paradigmGrid .icon-tile').forEach(t => t.classList.remove('active'));
+            if (el) el.classList.add('active');
+            document.getElementById('paradigmPlSpotlight').innerHTML = plParadigms[idx];
+        }
+        showPlParadigm(0, null);
+
+        // 6. LESSON 2: STEP-BY-STEP LEFTMOST DERIVATION PLAYER
+        const derivSteps = [
+            "Step 1 (Start Symbol):  <strong>&lt;program&gt;</strong> &rArr; <span class='hl'>&lt;stmts&gt;</span>",
+            "Step 2 (Expand &lt;stmts&gt;): &rArr; <span class='hl'>&lt;stmt&gt;</span>",
+            "Step 3 (Expand &lt;stmt&gt;):  &rArr; <span class='hl'>&lt;var&gt;</span> = &lt;expr&gt;",
+            "Step 4 (Leftmost &lt;var&gt;): &rArr; <span class='hl'>a</span> = &lt;expr&gt;",
+            "Step 5 (Expand &lt;expr&gt;):  &rArr; a = <span class='hl'>&lt;term&gt; + &lt;term&gt;</span>",
+            "Step 6 (Leftmost &lt;term&gt;):&rArr; a = <span class='hl'>&lt;var&gt;</span> + &lt;term&gt; &rArr; a = <span class='hl'>b</span> + &lt;term&gt;",
+            "Step 7 (Final Sentence): &rArr; <strong>a = b + <span class='hl'>const</span></strong> (All terminals!)"
+        ];
+
+        let activeDerivIdx = 0;
+        function renderDerivPlayer() {
+            const dotsEl = document.getElementById('derivDots');
+            dotsEl.innerHTML = derivSteps.map((_, idx) =>
+                `<button type="button" class="step-dot ${idx === activeDerivIdx ? 'active' : ''}" onclick="setDerivStep(${idx})">${idx + 1}</button>`
+            ).join('');
+            document.getElementById('derivStepText').innerHTML = derivSteps[activeDerivIdx];
+        }
+
+        function setDerivStep(idx) {
+            activeDerivIdx = idx;
+            renderDerivPlayer();
+        }
+
+        function advanceDerivStep() {
+            activeDerivIdx = (activeDerivIdx + 1) % derivSteps.length;
+            renderDerivPlayer();
+        }
+        renderDerivPlayer();
+
+        // 7. LESSON 3: SEXTUPLE OF A VARIABLE
+        const sextupleData = [
+            `<div class="point-stack">
+                <div class="point-row"><span class="point-num">1</span><div><strong>Name:</strong> The identifier string used to refer to the variable in source code. <em>(Note: Not all variables have names—anonymous heap-dynamic variables have none).</em></div></div>
+            </div>`,
+            `<div class="point-stack">
+                <div class="point-row"><span class="point-num">2</span><div><strong>Address (L-Value):</strong> The physical memory address with which the variable is associated (may change at different times during execution for stack-dynamic variables).</div></div>
+            </div>`,
+            `<div class="point-stack">
+                <div class="point-row"><span class="point-num">3</span><div><strong>Value (R-Value):</strong> The contents of the memory location with which the variable is associated.</div></div>
+            </div>`,
+            `<div class="point-stack">
+                <div class="point-row"><span class="point-num">4</span><div><strong>Type:</strong> Determines the <span class="hl">range of values</span> the variable can store and the <span class="hl">set of operations</span> defined for values of that type (in floating-point types, also determines <strong>precision</strong>).</div></div>
+            </div>`,
+            `<div class="point-stack">
+                <div class="point-row"><span class="point-num">5</span><div><strong>Lifetime:</strong> The time interval during execution when the variable is bound to a specific memory location.</div></div>
+            </div>`,
+            `<div class="point-stack">
+                <div class="point-row"><span class="point-num">6</span><div><strong>Scope:</strong> The range of program statements over which the variable is visible and can be referenced.</div></div>
+            </div>`
+        ];
+
+        function showSextuple(idx, el) {
+            document.querySelectorAll('#sextupleGrid .icon-tile').forEach(t => t.classList.remove('active'));
+            if (el) el.classList.add('active');
+            document.getElementById('sextupleSpotlight').innerHTML = sextupleData[idx];
+        }
+        showSextuple(0, null);
+
+        // 8. LESSON 4: ROW-MAJOR VS COLUMN-MAJOR MATRIX VISUALIZER
+        const matrixOrderData = {
+            'row': `<div class="point-stack">
+                <div class="point-row"><span class="point-num">Row</span><div><strong>Row-Major Order ("Row of Columns"):</strong> Array is divided into a vector of row sub-vectors first. Memory stores <span class="hl">Row 1 completely, then Row 2</span>:</div></div>
+                <div class="point-row"><span class="point-num emerald">Mem</span><div style="font-family:'JetBrains Mono',monospace; font-size:0.83rem;"><strong>Linear Memory Sequence:</strong> [A(1,1)] &rarr; [A(1,2)] &rarr; [A(1,3)] &rarr; [A(2,1)] &rarr; [A(2,2)] &rarr; [A(2,3)]</div></div>
+            </div>`,
+            'col': `<div class="point-stack">
+                <div class="point-row"><span class="point-num indigo">Col</span><div><strong>Column-Major Order ("Column of Rows"):</strong> Matrix is treated as a sequence of columns. Memory stores <span class="hl">Column 1 completely, then Column 2</span>:</div></div>
+                <div class="point-row"><span class="point-num indigo">Mem</span><div style="font-family:'JetBrains Mono',monospace; font-size:0.83rem;"><strong>Linear Memory Sequence:</strong> [A(1,1)] &rarr; [A(2,1)] &rarr; [A(1,2)] &rarr; [A(2,2)] &rarr; [A(1,3)] &rarr; [A(2,3)]</div></div>
+            </div>`
+        };
+
+        function showMatrixOrder(key, btn) {
+            const parent = btn ? btn.parentElement : null;
+            if (parent) {
+                parent.querySelectorAll('.pill-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            }
+            document.getElementById('matrixVisualDisplay').innerHTML = matrixOrderData[key];
+        }
+        showMatrixOrder('row', null);
+
+        // 9. GLOBAL SEARCH FILTER
+        const searchInput = document.getElementById('globalSearch');
+        const searchStatus = document.getElementById('searchStatus');
+        const searchStatusText = document.getElementById('searchStatusText');
+
+        searchInput.addEventListener('input', function() {
+            const q = this.value.trim().toLowerCase();
+            const panes = document.querySelectorAll('.module-pane');
+            const stops = document.querySelectorAll('.lesson-stop');
+
+            if (!q) {
+                clearSearch();
+                return;
+            }
+
+            document.body.classList.remove('step-focus-mode');
+            panes.forEach(p => p.classList.add('active'));
+            let matchCount = 0;
+
+            stops.forEach(st => {
+                if (st.textContent.toLowerCase().includes(q)) {
+                    st.style.display = 'block';
+                    matchCount++;
+                } else {
+                    st.style.display = 'none';
+                }
+            });
+
+            searchStatus.style.display = 'flex';
+            searchStatusText.textContent = 'Showing ' + matchCount + ' matching lesson stop(s) for "' + this.value.trim() + '" across all 4 lessons';
+        });
+
+        function clearSearch() {
+            searchInput.value = '';
+            searchStatus.style.display = 'none';
+            document.body.classList.toggle('step-focus-mode', isFocusMode);
+            document.querySelectorAll('.lesson-stop').forEach(st => {
+                st.style.display = '';
+            });
+            const activeTabIdx = Array.from(document.querySelectorAll('.nav-tab')).findIndex(t => t.classList.contains('active'));
+            document.querySelectorAll('.module-pane').forEach((p, idx) => {
+                p.classList.toggle('active', idx === (activeTabIdx >= 0 ? activeTabIdx : 0));
+            });
+        }
+    </script>
+</body>
+</html>
