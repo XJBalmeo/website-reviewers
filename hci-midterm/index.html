@@ -1,0 +1,2528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Human-Computer Interaction (HCI) — Interactive Midterm Reviewer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
+    <style>
+/* ==========================================================================
+   1. THEME VARIABLES (OPTION E: OCEAN CYAN & ELECTRIC SKY FOR HCI)
+   ========================================================================== */
+:root {
+    --bg-page: #f4f7f9;
+    --bg-card: #ffffff;
+    --bg-subtle: #f8fafc;
+    --bg-elevated: #f1f5f9;
+    --bg-code: #0f172a;
+
+    --text-main: #334155;
+    --text-muted: #64748b;
+    --text-bold: #0f172a;
+
+    /* Subject Accent Palette: Ocean Cyan & Electric Sky */
+    --primary: #0284c7;
+    --primary-soft: #e0f2fe;
+    --primary-border: #7dd3fc;
+    --secondary: #0891b2;
+    --secondary-soft: #cffafe;
+    --header-bg: linear-gradient(135deg, #06131f 0%, #0c4a6e 55%, #155e75 100%);
+    --header-border: #06b6d4;
+    --progress-grad: linear-gradient(90deg, #22d3ee, #0284c7, #38bdf8);
+
+    /* Semantic Accent Colors for Visual Variety */
+    --emerald: #059669;
+    --emerald-soft: #d1fae5;
+    --amber: #d97706;
+    --amber-soft: #fef3c7;
+    --rose: #e11d48;
+    --rose-soft: #ffe4e6;
+    --purple: #7c3aed;
+    --purple-soft: #ede9fe;
+    --sky: #0284c7;
+    --sky-soft: #e0f2fe;
+
+    /* Highlighted Keyword Pill */
+    --hl-bg: #e0f2fe;
+    --hl-text: #075985;
+    --hl-border: #bae6fd;
+
+    --border: #e2e8f0;
+    --line-spine: #cbd5e1;
+    --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.05);
+    --shadow-md: 0 10px 25px -5px rgba(15, 23, 42, 0.08);
+    --radius-lg: 18px;
+    --radius-md: 12px;
+}
+
+[data-theme="dark"] {
+    --bg-page: #090d16;
+    --bg-card: #111827;
+    --bg-subtle: #1e293b;
+    --bg-elevated: #0f172a;
+    --bg-code: #030712;
+
+    --text-main: #cbd5e1;
+    --text-muted: #94a3b8;
+    --text-bold: #f8fafc;
+
+    /* Subject Accent Palette (Dark Mode) */
+    --primary: #38bdf8;
+    --primary-soft: rgba(56, 189, 248, 0.16);
+    --primary-border: #0369a1;
+    --secondary: #22d3ee;
+    --secondary-soft: rgba(6, 182, 212, 0.16);
+
+    --emerald: #34d399;
+    --emerald-soft: rgba(16, 185, 129, 0.15);
+    --amber: #fbbf24;
+    --amber-soft: rgba(245, 158, 11, 0.15);
+    --rose: #fb7185;
+    --rose-soft: rgba(244, 63, 94, 0.15);
+    --purple: #c084fc;
+    --purple-soft: rgba(139, 92, 246, 0.16);
+    --sky: #38bdf8;
+    --sky-soft: rgba(14, 165, 233, 0.15);
+
+    --hl-bg: rgba(56, 189, 248, 0.18);
+    --hl-text: #bae6fd;
+    --hl-border: rgba(56, 189, 248, 0.35);
+
+    --border: #1f2937;
+    --line-spine: #334155;
+    --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.35);
+    --shadow-md: 0 12px 30px -5px rgba(0, 0, 0, 0.55);
+}
+
+/* ==========================================================================
+   2. RESET & BASE TYPOGRAPHY
+   ========================================================================== */
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+body {
+    margin: 0;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: var(--bg-page);
+    color: var(--text-main);
+    line-height: 1.6;
+    overflow-x: hidden;
+    transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+h1, h2, h3, h4 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    color: var(--text-bold);
+    margin-top: 0;
+    line-height: 1.28;
+}
+
+strong, b { color: var(--text-bold); font-weight: 700; }
+
+code, pre, .mono {
+    font-family: 'JetBrains Mono', monospace;
+}
+
+/* Inline SVG Icon Standard */
+svg.ico {
+    width: 18px;
+    height: 18px;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    fill: none;
+    flex-shrink: 0;
+    display: inline-block;
+    vertical-align: middle;
+}
+svg.ico-lg { width: 22px; height: 22px; }
+svg.ico-sm { width: 15px; height: 15px; }
+
+/* Highlighted Keyword Pill */
+.hl {
+    background-color: var(--hl-bg);
+    color: var(--hl-text);
+    border: 1px solid var(--hl-border);
+    padding: 0.06rem 0.4rem;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.93em;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+}
+
+/* Notebook-Style Elaboration Sentence */
+.elab {
+    display: block;
+    margin-top: 0.2rem;
+    color: var(--text-muted);
+    font-size: 0.88rem;
+}
+
+/* Mnemonic / Memory Aid Box */
+.mnemonic-box {
+    background: var(--secondary-soft);
+    border: 1px solid var(--primary-border);
+    border-left: 4px solid var(--secondary);
+    border-radius: 10px;
+    padding: 0.7rem 1rem;
+    margin: 0.85rem 0 1.1rem 0;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+}
+.mnemonic-badge {
+    background: var(--primary);
+    color: #ffffff;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    font-size: 0.78rem;
+    padding: 0.2rem 0.55rem;
+    border-radius: 6px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+.mnemonic-code {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    color: var(--text-bold);
+    font-size: 0.95rem;
+}
+
+/* ==========================================================================
+   3. SCROLL PROGRESS BAR, HEADER & STICKY NAVIGATION TABS
+   ========================================================================== */
+.progress-rail {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: rgba(148, 163, 184, 0.2);
+    z-index: 1000;
+}
+.progress-fill {
+    height: 100%;
+    width: 0%;
+    background: var(--progress-grad);
+    transition: width 0.1s linear;
+}
+
+.app-header {
+    background: var(--header-bg);
+    color: #f8fafc;
+    padding: 1.4rem 5%;
+    border-bottom: 3px solid var(--header-border);
+}
+.header-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+.brand-box h1 {
+    color: #ffffff;
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin: 0;
+    letter-spacing: -0.02em;
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+}
+.brand-icon {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    flex-shrink: 0;
+}
+.brand-box p {
+    margin: 0.25rem 0 0 0;
+    font-size: 0.86rem;
+    color: #cbd5e1;
+}
+
+.header-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    flex-wrap: wrap;
+}
+.search-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+.search-wrap svg.ico {
+    position: absolute;
+    left: 11px;
+    color: #94a3b8;
+    pointer-events: none;
+}
+.search-input {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    color: #ffffff;
+    padding: 0.48rem 0.85rem 0.48rem 2.2rem;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    width: 210px;
+    outline: none;
+    transition: all 0.2s ease;
+}
+.search-input::placeholder { color: #cbd5e1; }
+.search-input:focus {
+    background: rgba(255, 255, 255, 0.18);
+    border-color: #ffffff;
+    width: 250px;
+}
+
+.ctrl-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    color: #f8fafc;
+    padding: 0.48rem 0.9rem;
+    border-radius: 999px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+.ctrl-btn:hover { background: rgba(255, 255, 255, 0.2); }
+
+/* Sticky Lesson Tabs */
+.module-bar {
+    position: sticky;
+    top: 4px;
+    z-index: 900;
+    background: var(--bg-card);
+    border-bottom: 1px solid var(--border);
+    box-shadow: var(--shadow-sm);
+    padding: 0.65rem 5%;
+}
+.module-tabs {
+    max-width: 900px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(185px, 1fr));
+    gap: 0.5rem;
+}
+.module-tab {
+    background: var(--bg-subtle);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    padding: 0.65rem 0.9rem;
+    border-radius: 11px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 700;
+    font-size: 0.84rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    transition: all 0.2s ease;
+    text-align: left;
+}
+.module-tab:hover {
+    color: var(--text-bold);
+    border-color: var(--primary);
+}
+.module-tab.active {
+    background: var(--primary);
+    color: #ffffff;
+    border-color: var(--primary);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+}
+.tab-num {
+    width: 24px; height: 24px;
+    border-radius: 7px;
+    background: rgba(15, 23, 42, 0.08);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.76rem;
+    font-weight: 800;
+    flex-shrink: 0;
+}
+.module-tab.active .tab-num {
+    background: rgba(255, 255, 255, 0.22);
+    color: #ffffff;
+}
+
+/* ==========================================================================
+   4. SINGLE-COLUMN LINEAR FEED & LESSON STOP CARDS
+   ========================================================================== */
+.feed-shell {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem 5% 5rem 5%;
+}
+
+.module-pane { display: none; animation: fadeSlide 0.3s ease; }
+.module-pane.active { display: block; }
+@keyframes fadeSlide {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.module-intro {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-left: 5px solid var(--primary);
+    border-radius: var(--radius-lg);
+    padding: 1.4rem 1.75rem;
+    margin-bottom: 2.2rem;
+    box-shadow: var(--shadow-sm);
+}
+.module-intro .intro-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.74rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--primary);
+    background: var(--primary-soft);
+    padding: 0.25rem 0.7rem;
+    border-radius: 999px;
+    margin-bottom: 0.5rem;
+}
+.module-intro h2 { font-size: 1.55rem; margin-bottom: 0.35rem; }
+.module-intro p { margin: 0; color: var(--text-muted); font-size: 0.95rem; }
+
+/* Single-Column Timeline Spine */
+.linear-feed {
+    position: relative;
+    padding-left: 3.1rem;
+}
+.linear-feed::before {
+    content: "";
+    position: absolute;
+    left: 19px;
+    top: 12px;
+    bottom: 12px;
+    width: 3px;
+    background: var(--line-spine);
+    border-radius: 3px;
+}
+
+.lesson-stop {
+    position: relative;
+    margin-bottom: 2.25rem;
+}
+.stop-node {
+    position: absolute;
+    left: -3.1rem;
+    top: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    background: var(--primary);
+    color: #ffffff;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 800;
+    font-size: 0.88rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.18);
+    border: 3px solid var(--bg-page);
+    z-index: 2;
+}
+
+.stop-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1.65rem;
+    box-shadow: var(--shadow-md);
+}
+.stop-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.9rem;
+}
+.stop-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.73rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    padding: 0.25rem 0.65rem;
+    border-radius: 6px;
+    background: var(--primary-soft);
+    color: var(--primary);
+}
+.stop-card h3 {
+    font-size: 1.32rem;
+    margin: 0.35rem 0 0 0;
+}
+.sub-label {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.98rem;
+    font-weight: 800;
+    color: var(--text-bold);
+    margin: 1.35rem 0 0.55rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+}
+.sub-label svg.ico { color: var(--primary); }
+
+/* ==========================================================================
+   5. VISUAL COMPONENT LIBRARY STYLES (ALL ALWAYS-VISIBLE)
+   ========================================================================== */
+
+/* 5A. Takeaway Banner */
+.takeaway-banner {
+    background: var(--bg-subtle);
+    border-left: 4px solid var(--primary);
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    padding: 0.9rem 1.15rem;
+    margin-bottom: 1.1rem;
+    font-size: 0.94rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+}
+.takeaway-banner svg.ico {
+    color: var(--primary);
+    margin-top: 0.2rem;
+}
+
+/* 5B. One-Point-Per-Line Stack (.point-stack & .point-row) */
+.point-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin: 0.75rem 0;
+}
+.point-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.8rem;
+    background: var(--bg-subtle);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0.7rem 0.95rem;
+    font-size: 0.91rem;
+}
+.point-num {
+    min-width: 26px;
+    height: 26px;
+    padding: 0 0.35rem;
+    border-radius: 7px;
+    background: var(--primary-soft);
+    color: var(--primary);
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    font-size: 0.78rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 0.08rem;
+}
+
+/* 5C. Multi-Pillar Concept Grid */
+.pillars-visual {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 0.9rem;
+    margin: 1rem 0;
+}
+.pillar-col {
+    background: var(--bg-subtle);
+    border: 1px solid var(--border);
+    border-top: 4px solid var(--primary);
+    border-radius: var(--radius-md);
+    padding: 1.05rem;
+}
+.pillar-head {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 800;
+    font-size: 0.96rem;
+    color: var(--text-bold);
+    margin-bottom: 0.5rem;
+}
+.pillar-head svg.ico { color: var(--primary); }
+
+/* 5D. Side-by-Side Comparison Cards (.visual-versus) */
+.visual-versus {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 0.95rem;
+    align-items: stretch;
+    margin: 1.1rem 0;
+}
+.vs-pane {
+    background: var(--bg-subtle);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 1.1rem;
+}
+.vs-pane h4 {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    margin-bottom: 0.6rem;
+    font-size: 1rem;
+}
+.vs-pane h4 svg.ico { color: var(--primary); }
+.vs-badge {
+    align-self: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 999px;
+    background: var(--primary);
+    color: #ffffff;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 800;
+    font-size: 0.76rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 5E. Process / Stage Pipeline Flow */
+.pipeline-flow {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(165px, 1fr));
+    gap: 0.8rem;
+    margin: 1rem 0;
+}
+.pipe-node {
+    background: var(--bg-subtle);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--primary);
+    border-radius: 10px;
+    padding: 0.85rem 0.95rem;
+}
+.pipe-step {
+    font-size: 0.71rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--primary);
+    margin-bottom: 0.2rem;
+}
+.pipe-node h4 {
+    font-size: 0.93rem;
+    margin: 0 0 0.3rem 0;
+}
+.pipe-node p {
+    margin: 0;
+    font-size: 0.84rem;
+    color: var(--text-muted);
+}
+
+/* 5F. Hierarchy Funnel & Staircase */
+.funnel-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 1.1rem 0;
+}
+.funnel-layer {
+    background: var(--bg-subtle);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--primary);
+    border-radius: 10px;
+    padding: 0.75rem 1.1rem;
+    text-align: center;
+    font-size: 0.89rem;
+}
+.funnel-layer.w-100 { width: 100%; }
+.funnel-layer.w-88  { width: 88%; }
+.funnel-layer.w-76  { width: 76%; }
+.funnel-layer.w-64  { width: 64%; }
+
+.staircase {
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+    margin: 1rem 0;
+}
+.stair-step {
+    background: var(--bg-subtle);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--primary);
+    border-radius: 10px;
+    padding: 0.8rem 1.05rem;
+    font-size: 0.91rem;
+}
+.stair-1 { margin-left: 0%; }
+.stair-2 { margin-left: 4%; }
+.stair-3 { margin-left: 8%; }
+.stair-4 { margin-left: 12%; }
+.stair-5 { margin-left: 16%; }
+
+/* 5G. Responsive Data & Comparison Tables */
+.table-wrap {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin: 1rem 0;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+}
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.87rem;
+    min-width: 520px;
+}
+.data-table th {
+    background: var(--bg-elevated);
+    color: var(--text-bold);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 700;
+    text-align: left;
+    padding: 0.75rem 0.95rem;
+    border-bottom: 2px solid var(--border);
+}
+.data-table td {
+    padding: 0.7rem 0.95rem;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+}
+.data-table tr:last-child td { border-bottom: none; }
+.data-table tr:nth-child(even) td { background: var(--bg-subtle); }
+
+/* 5H. Custom Inline SVG Graphic Container */
+.svg-diagram-box {
+    background: var(--bg-subtle);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 1rem;
+    margin: 1rem 0;
+    text-align: center;
+    overflow-x: auto;
+}
+.svg-diagram-box svg {
+    max-width: 100%;
+    height: auto;
+}
+
+/* ==========================================================================
+   6. MOBILE RESPONSIVENESS (@media max-width: 720px)
+   ========================================================================== */
+@media screen and (max-width: 720px) {
+    .app-header { padding: 1.15rem 4%; }
+    .brand-box h1 { font-size: 1.22rem; }
+    .header-controls { width: 100%; justify-content: space-between; }
+    .search-wrap { flex: 1; }
+    .search-input, .search-input:focus { width: 100%; }
+
+    .module-bar { padding: 0.5rem 4%; }
+    .module-tabs { grid-template-columns: 1fr 1fr; gap: 0.4rem; }
+    .module-tab { padding: 0.55rem 0.65rem; font-size: 0.76rem; }
+
+    .feed-shell { padding: 1.25rem 4% 4rem 4%; }
+    .linear-feed { padding-left: 2.3rem; }
+    .linear-feed::before { left: 13px; }
+    .stop-node {
+        left: -2.3rem;
+        width: 30px;
+        height: 30px;
+        font-size: 0.75rem;
+        border-radius: 9px;
+    }
+    .stop-card { padding: 1.15rem; }
+    .stop-card h3 { font-size: 1.12rem; }
+
+    .visual-versus { grid-template-columns: 1fr; }
+    .vs-badge { margin: -0.25rem auto; }
+    .pillars-visual, .pipeline-flow { grid-template-columns: 1fr; }
+
+    .funnel-layer.w-100,
+    .funnel-layer.w-88,
+    .funnel-layer.w-76,
+    .funnel-layer.w-64 { width: 100%; }
+
+    .stair-1, .stair-2, .stair-3, .stair-4, .stair-5 { margin-left: 0; }
+    .point-row { padding: 0.65rem 0.8rem; font-size: 0.88rem; }
+}
+    </style>
+</head>
+<body>
+
+    <!-- Top Scroll Progress Rail -->
+    <div class="progress-rail">
+        <div class="progress-fill" id="progressBar"></div>
+    </div>
+
+    <!-- Application Header -->
+    <header class="app-header">
+        <div class="header-inner">
+            <div class="brand-box">
+                <h1>
+                    <span class="brand-icon">
+                        <svg class="ico ico-lg" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/></svg>
+                    </span>
+                    Human-Computer Interaction
+                </h1>
+                <p>Notebook-Style Exam Reviewer &bull; Fast Identification, Enumerations &amp; Mnemonics</p>
+            </div>
+            <div class="header-controls">
+                <div class="search-wrap">
+                    <svg class="ico" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    <input type="text" id="searchInput" class="search-input" placeholder="Filter concepts or mnemonics..." aria-label="Filter concepts in lesson">
+                </div>
+                <button type="button" class="ctrl-btn" id="themeBtn" aria-label="Toggle color theme">
+                    <svg class="ico" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                    <span id="themeLabel">Dark Mode</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sticky Module / Lesson Navigation Bar -->
+    <nav class="module-bar" aria-label="Course Modules">
+        <div class="module-tabs">
+            <button type="button" class="module-tab active" data-target="mod-1">
+                <span class="tab-num">01</span>
+                <span>Intro to HCI</span>
+            </button>
+            <button type="button" class="module-tab" data-target="mod-2">
+                <span class="tab-num">02</span>
+                <span>Psychology of Action</span>
+            </button>
+            <button type="button" class="module-tab" data-target="mod-3">
+                <span class="tab-num">03</span>
+                <span>Interaction Design</span>
+            </button>
+            <button type="button" class="module-tab" data-target="mod-4">
+                <span class="tab-num">04</span>
+                <span>User-Centered Design</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Single-Column Linear Feed Shell -->
+    <main class="feed-shell">
+
+        <!-- ==================================================================
+             MODULE 1: INTRODUCTION TO HUMAN-COMPUTER INTERACTION (HCI)
+             ================================================================== -->
+        <section class="module-pane active" id="mod-1">
+            <div class="module-intro">
+                <div class="intro-badge">
+                    <svg class="ico ico-sm" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                    Lesson 01 &bull; Quick Notebook Review
+                </div>
+                <h2>Introduction to Human-Computer Interaction (HCI)</h2>
+                <p>Concise definitions, enumeration checklists, and memory mnemonics covering HCI goals, usability, the 9 HCI factors, and 10 contributing disciplines.</p>
+            </div>
+
+            <div class="linear-feed">
+
+                <!-- STOP 01 -->
+                <article class="lesson-stop">
+                    <div class="stop-node">01</div>
+                    <div class="stop-card">
+                        <div class="stop-header">
+                            <div>
+                                <span class="stop-tag">
+                                    <svg class="ico ico-sm" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                                    Identification Key
+                                </span>
+                                <h3>What is Human-Computer Interaction (HCI)?</h3>
+                            </div>
+                        </div>
+
+                        <div class="takeaway-banner">
+                            <svg class="ico" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                            <div><strong>Core Rule:</strong> &ldquo;We must design for the way <span class="hl">people behave</span>, not for how we would <span class="hl">wish them to behave</span>.&rdquo;</div>
+                        </div>
+
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">1</span>
+                                <div>
+                                    <strong>Human-Computer Interaction (HCI):</strong> The study of <span class="hl">how people interact with computers</span> and how well computers are developed for successful human use.
+                                    <span class="elab">It bridges human behavior and technology so machines adapt to people instead of forcing people to adapt to machines.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- STOP 02 -->
+                <article class="lesson-stop">
+                    <div class="stop-node">02</div>
+                    <div class="stop-card">
+                        <div class="stop-header">
+                            <div>
+                                <span class="stop-tag">
+                                    <svg class="ico ico-sm" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+                                    Enumeration (4 Items)
+                                </span>
+                                <h3>Goals of HCI</h3>
+                            </div>
+                        </div>
+
+                        <div class="mnemonic-box">
+                            <span class="mnemonic-badge">Mnemonic</span>
+                            <span class="mnemonic-code">U - D - A - P</span>
+                            <span>&rarr; <strong>U</strong>nderstand factors &bull; <strong>D</strong>evelop tools &bull; <strong>A</strong>chieve efficient/effective/safe interaction &bull; <strong>P</strong>ut people first</span>
+                        </div>
+
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">U</span>
+                                <div>
+                                    <strong>Understand the factors that determine how people use technology:</strong> Identify what drives or blocks human technology use.
+                                    <span class="elab">Designers study user habits, environments, and limits before building a system.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">D</span>
+                                <div>
+                                    <strong>Develop tools and techniques to enable building suitable systems:</strong> Create methods and frameworks for building user-friendly software.
+                                    <span class="elab">This gives developers reliable prototyping and testing tools to build better interfaces.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">A</span>
+                                <div>
+                                    <strong>Achieve <span class="hl">efficient, effective, and safe</span> interaction:</strong> Ensure tasks are fast (efficient), accurate (effective), and error-free (safe).
+                                    <span class="elab">Users can finish their goals quickly without making costly or dangerous mistakes.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">P</span>
+                                <div>
+                                    <strong>Put people first:</strong> Prioritize human needs and comfort above machine convenience.
+                                    <span class="elab">Every design choice is judged by how well it serves the human user.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- STOP 03 -->
+                <article class="lesson-stop">
+                    <div class="stop-node">03</div>
+                    <div class="stop-card">
+                        <div class="stop-header">
+                            <div>
+                                <span class="stop-tag">
+                                    <svg class="ico ico-sm" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                                    Enumeration (7 Items)
+                                </span>
+                                <h3>Importance of HCI</h3>
+                            </div>
+                        </div>
+
+                        <div class="mnemonic-box">
+                            <span class="mnemonic-badge">Mnemonic</span>
+                            <span class="mnemonic-code">U - E - S - U - I - E - A</span>
+                            <span>(&ldquo;<strong>USE UI EA</strong>&rdquo;) &rarr; <strong>U</strong>sability &bull; <strong>E</strong>fficiency &bull; <strong>S</strong>afety &bull; <strong>U</strong>ser Engagement &bull; <strong>I</strong>nnovation &bull; <strong>E</strong>thical Design &bull; <strong>A</strong>daptability</span>
+                        </div>
+
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">1</span>
+                                <div>
+                                    <strong>Improved Usability:</strong> Ensures systems are <span class="hl">easy to learn and use</span>.
+                                    <span class="elab">New users can operate the software right away without needing complex manuals.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">2</span>
+                                <div>
+                                    <strong>Enhanced Efficiency:</strong> Helps users accomplish tasks <span class="hl">faster and more accurately</span>.
+                                    <span class="elab">Streamlined steps save time and reduce daily workload effort.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">3</span>
+                                <div>
+                                    <strong>Safety:</strong> <span class="hl">Reduces errors and risks</span>, especially in critical systems.
+                                    <span class="elab">Prevents dangerous mistakes in medical, aviation, or financial software.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">4</span>
+                                <div>
+                                    <strong>User Engagement:</strong> Encourages <span class="hl">positive interaction and continued use</span>.
+                                    <span class="elab">Enjoyable interfaces keep users interested and coming back to the product.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">5</span>
+                                <div>
+                                    <strong>Innovation:</strong> Enables <span class="hl">new and better ways of interacting</span> with technology.
+                                    <span class="elab">Drives breakthroughs like touchscreens, voice control, and gesture interfaces.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">6</span>
+                                <div>
+                                    <strong>Ethical Design:</strong> Promotes <span class="hl">fairness, accessibility, and responsible</span> technology use.
+                                    <span class="elab">Protects user privacy and ensures nobody is excluded or tricked by the interface.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">7</span>
+                                <div>
+                                    <strong>Adaptability:</strong> Allows systems to meet the needs of <span class="hl">diverse users and contexts</span>.
+                                    <span class="elab">The software adjusts smoothly across different devices, environments, and user skill levels.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- STOP 04 -->
+                <article class="lesson-stop">
+                    <div class="stop-node">04</div>
+                    <div class="stop-card">
+                        <div class="stop-header">
+                            <div>
+                                <span class="stop-tag">
+                                    <svg class="ico ico-sm" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+                                    Enumerations (6 &amp; 5 Items)
+                                </span>
+                                <h3>Usability: 6 Characteristics &amp; 5 Reasons Why It Matters</h3>
+                            </div>
+                        </div>
+
+                        <div class="sub-label">
+                            <svg class="ico" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                            A Usable System Is (6 Characteristics)
+                        </div>
+                        <div class="mnemonic-box">
+                            <span class="mnemonic-badge">Mnemonic</span>
+                            <span class="mnemonic-code">L - M - E - E - S - S</span>
+                            <span>&rarr; Easy to <strong>L</strong>earn &bull; Easy to <strong>M</strong>emorize/Remember &bull; <strong>E</strong>ffective &bull; <strong>E</strong>fficient &bull; <strong>S</strong>afe &bull; <strong>S</strong>atisfying (Enjoyable)</span>
+                        </div>
+
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">L</span>
+                                <div>
+                                    <strong>Easy to learn (Learnability):</strong> Beginners can figure out how to use it <span class="hl">quickly on their first try</span>.
+                                    <span class="elab">Clear buttons and layouts let new users start working without formal training.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">M</span>
+                                <div>
+                                    <strong>Easy to remember how to use (Memorability):</strong> Users <span class="hl">don&rsquo;t forget how it works</span> after taking a break from it.
+                                    <span class="elab">When you return weeks later, you can still use the interface without relearning it.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">E</span>
+                                <div>
+                                    <strong>Effective to use (Effectiveness):</strong> Allows users to complete their goals <span class="hl">accurately and completely</span>.
+                                    <span class="elab">The system produces the exact result the user intended to achieve.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">E</span>
+                                <div>
+                                    <strong>Efficient to use (Efficiency):</strong> Tasks can be finished <span class="hl">quickly with minimal effort</span> once learned.
+                                    <span class="elab">It avoids unnecessary clicks or repetitive steps that waste the user&rsquo;s time.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">S</span>
+                                <div>
+                                    <strong>Safe to use (Safety):</strong> Protects users from <span class="hl">making severe mistakes</span> and lets them recover easily.
+                                    <span class="elab">Includes confirmation prompts and an Undo button to prevent accidental data loss.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">S</span>
+                                <div>
+                                    <strong>Enjoyable to use (Satisfaction):</strong> Using the system feels <span class="hl">pleasant, comfortable, and stress-free</span>.
+                                    <span class="elab">A smooth experience leaves the user feeling happy rather than frustrated.</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="sub-label">
+                            <svg class="ico" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+                            Why is Usability Important? (5 Key Reasons)
+                        </div>
+                        <div class="mnemonic-box">
+                            <span class="mnemonic-badge">Mnemonic</span>
+                            <span class="mnemonic-code">U - E - E - A - A</span>
+                            <span>&rarr; Improves <strong>U</strong>X &bull; Enhances <strong>E</strong>fficiency &bull; Reduces <strong>E</strong>rrors &bull; Increases <strong>A</strong>ccessibility &bull; Boosts <strong>A</strong>doption</span>
+                        </div>
+
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">1</span>
+                                <div>
+                                    <strong>Improves User Experience:</strong> Users interact <span class="hl">easily and with less frustration</span>.
+                                    <span class="elab">Smooth navigation removes confusion and annoyance during daily use.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">2</span>
+                                <div>
+                                    <strong>Enhances Efficiency:</strong> Tasks are completed <span class="hl">faster and with less effort</span>.
+                                    <span class="elab">Users spend less mental energy figuring out the screen and more energy finishing work.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">3</span>
+                                <div>
+                                    <strong>Reduces Errors:</strong> Clear and intuitive design <span class="hl">minimizes user mistakes</span>.
+                                    <span class="elab">Well-labeled controls stop users from clicking the wrong action by accident.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">4</span>
+                                <div>
+                                    <strong>Increases Accessibility:</strong> More users, <span class="hl">including those with disabilities</span>, can use the system.
+                                    <span class="elab">Inclusive design makes software usable for people with visual, motor, or hearing impairments.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">5</span>
+                                <div>
+                                    <strong>Boosts Adoption:</strong> Users are more likely to <span class="hl">accept and continue using</span> the system.
+                                    <span class="elab">People naturally stick with tools that make their lives easier instead of harder.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- STOP 05 -->
+                <article class="lesson-stop">
+                    <div class="stop-node">05</div>
+                    <div class="stop-card">
+                        <div class="stop-header">
+                            <div>
+                                <span class="stop-tag">
+                                    <svg class="ico ico-sm" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/></svg>
+                                    Enumeration &amp; Identification (9 Items)
+                                </span>
+                                <h3>The Nine Factors in HCI</h3>
+                            </div>
+                        </div>
+
+                        <div class="mnemonic-box">
+                            <span class="mnemonic-badge">3x3 Chunk Mnemonic</span>
+                            <span class="mnemonic-code">OEU &bull; CUT &bull; CSP</span>
+                            <span>&rarr; <strong>O</strong>rg, <strong>E</strong>nv, <strong>U</strong>ser &bull; <strong>C</strong>omfort, <strong>U</strong>I, <strong>T</strong>ask &bull; <strong>C</strong>onstraints, <strong>S</strong>ystem Func, <strong>P</strong>roductivity</span>
+                        </div>
+
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">O</span>
+                                <div>
+                                    <strong>1. Organizational Factors:</strong> The <span class="hl">rules, policies, culture, and structure</span> of an organization where the system is used.
+                                    <span class="elab">Company policies control who is allowed to access features and what workflows employees must follow.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">E</span>
+                                <div>
+                                    <strong>2. Environmental Factors:</strong> The <span class="hl">physical surroundings</span> where interaction happens (lighting, noise, temperature, space).
+                                    <span class="elab">An app designed for a quiet office may fail outdoors in bright sunlight or on a loud factory floor.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">U</span>
+                                <div>
+                                    <strong>3. The User:</strong> The <span class="hl">people who use the system</span> (age, skills, experience, physical/cognitive abilities, culture).
+                                    <span class="elab">Systems must be tailored to match the actual capabilities and limits of their target users.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">C</span>
+                                <div>
+                                    <strong>4. Comfort Factors:</strong> <span class="hl">Physical ease and ergonomics</span> while using a system (posture, screen position, keyboard/mouse design).
+                                    <span class="elab">Poor ergonomics cause fatigue, stress, or physical injury that lowers user performance.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">U</span>
+                                <div>
+                                    <strong>5. User Interface (UI):</strong> The <span class="hl">part of the system users directly interact with</span> (screens, buttons, menus, icons, gestures).
+                                    <span class="elab">A clear, consistent interface lets users complete tasks easily with fewer mistakes.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">T</span>
+                                <div>
+                                    <strong>6. Task Factors:</strong> The <span class="hl">type of work users need to accomplish</span> (task complexity, frequency, and time pressure).
+                                    <span class="elab">Understanding the task helps designers structure steps so work gets done accurately.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">C</span>
+                                <div>
+                                    <strong>7. Constraints:</strong> <span class="hl">Limitations affecting system design and usage</span> (budget, time, legal rules, technical or hardware limits).
+                                    <span class="elab">Good HCI design works within project budgets and hardware limits while still prioritizing usability.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">S</span>
+                                <div>
+                                    <strong>8. System Functionality:</strong> What the system <span class="hl">can actually do</span>&mdash;its features and capabilities.
+                                    <span class="elab">It must provide the exact features needed for user tasks without cluttering the screen with useless extras.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">P</span>
+                                <div>
+                                    <strong>9. Productivity Factors:</strong> How the system helps users perform tasks <span class="hl">faster, better, and with less effort</span>.
+                                    <span class="elab">A well-designed tool boosts output quality and helps users reach their goals efficiently.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- STOP 06 -->
+                <article class="lesson-stop">
+                    <div class="stop-node">06</div>
+                    <div class="stop-card">
+                        <div class="stop-header">
+                            <div>
+                                <span class="stop-tag">
+                                    <svg class="ico ico-sm" viewBox="0 0 24 24"><line x1="6" y1="3" x2="6" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></svg>
+                                    Enumeration &amp; Identification (10 Items)
+                                </span>
+                                <h3>Disciplines Contributing to HCI</h3>
+                            </div>
+                        </div>
+
+                        <div class="mnemonic-box">
+                            <span class="mnemonic-badge">Group Mnemonic</span>
+                            <span class="mnemonic-code">3 Tech &bull; 4 Mind/Body &bull; 3 Society</span>
+                            <span>&rarr; <strong>CS, AI, Eng/Design</strong> &bull; <strong>CogPsy, SocPsy, Ergo, Linguistics</strong> &bull; <strong>Philosophy, Sociology, Anthropology</strong></span>
+                        </div>
+
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">1</span>
+                                <div>
+                                    <strong>Computer Science:</strong> Provides the <span class="hl">software, code, and technical architecture</span> behind interactive systems.
+                                    <span class="elab">Covers programming languages, algorithms, operating systems, and user interface toolkits.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">2</span>
+                                <div>
+                                    <strong>Cognitive Psychology:</strong> Studies <span class="hl">internal mental processes</span> like memory, perception, attention, and learning.
+                                    <span class="elab">Helps designers build screens that match how the human brain naturally thinks and remembers.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">3</span>
+                                <div>
+                                    <strong>Social Psychology:</strong> Studies <span class="hl">how people behave in social situations</span>.
+                                    <span class="elab">Explains how users interact with each other inside chat apps, social media, and team tools.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">4</span>
+                                <div>
+                                    <strong>Ergonomics / Human Factors:</strong> Designs hardware around the <span class="hl">physical body to ensure comfort and safety</span>.
+                                    <span class="elab">Shapes physical devices like keyboards, chairs, and VR headsets to prevent muscle strain.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">5</span>
+                                <div>
+                                    <strong>Linguistics:</strong> Studies the <span class="hl">structure and meaning of human language</span>.
+                                    <span class="elab">Used to write clear button labels and build voice assistants or natural language chatbots.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">6</span>
+                                <div>
+                                    <strong>Artificial Intelligence (AI):</strong> Simulates human intelligence to create <span class="hl">smart, adaptive interfaces</span>.
+                                    <span class="elab">Powers features like voice recognition, predictive text, and personalized recommendations.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">7</span>
+                                <div>
+                                    <strong>Philosophy:</strong> Emphasizes <span class="hl">critical thinking, logical reasoning, and ethical reflection</span>.
+                                    <span class="elab">Guides moral decisions in tech, such as protecting user privacy, fairness, and human rights.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">8</span>
+                                <div>
+                                    <strong>Sociology:</strong> Helps us understand <span class="hl">why people behave the way they do in groups</span>.
+                                    <span class="elab">Examines how technology affects teamwork, workplaces, and larger social institutions.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">9</span>
+                                <div>
+                                    <strong>Anthropology:</strong> Studies <span class="hl">who we are, how we live, and how cultures and societies develop</span> over time.
+                                    <span class="elab">Gives HCI field-observation methods to study users in their real everyday cultural environments.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">10</span>
+                                <div>
+                                    <strong>Engineering and Design:</strong> Combines technical engineering with <span class="hl">visual and industrial product design</span>.
+                                    <span class="elab">Turns abstract ideas into tangible, functional, and visually appealing hardware and software.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+
+        <!-- ==================================================================
+             MODULE 2: THE PSYCHOLOGY OF EVERYDAY THINGS
+             ================================================================== -->
+        <section class="module-pane" id="mod-2">
+            <div class="module-intro">
+                <div class="intro-badge">
+                    <svg class="ico ico-sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+                    Lesson 02 &bull; Quick Notebook Review
+                </div>
+                <h2>The Psychology of Everyday Things</h2>
+                <p>Easy-to-memorize notes and mnemonics for the Gulfs of Execution and Evaluation, the Seven Stages of Action (GPSPPIC), subconscious thought, overlearning, memory types, and the 3 Levels of Processing (VBR).</p>
+            </div>
+
+            <div class="linear-feed">
+
+                <!-- STOP 01 -->
+                <article class="lesson-stop">
+                    <div class="stop-node">01</div>
+                    <div class="stop-card">
+                        <div class="stop-header">
+                            <div>
+                                <span class="stop-tag">
+                                    <svg class="ico ico-sm" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                                    Identification &amp; Contrast
+                                </span>
+                                <h3>The Gulfs of Execution and Evaluation</h3>
+                            </div>
+                        </div>
+
+                        <div class="takeaway-banner">
+                            <svg class="ico" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                            <div><strong>Role of the Designer:</strong> Help people <span class="hl">bridge the two gulfs</span> so they never need another person to explain how a machine works.</div>
+                        </div>
+
+                        <div class="visual-versus">
+                            <div class="vs-pane">
+                                <h4>
+                                    <svg class="ico" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                                    Gulf of Execution (Doing)
+                                </h4>
+                                <div class="point-stack">
+                                    <div class="point-row">
+                                        <span class="point-num">1</span>
+                                        <div>
+                                            <strong>Short Definition:</strong> Where users try to figure out <span class="hl">how it operates</span>.
+                                            <span class="elab">It is the gap between the user&rsquo;s goal and the controls available to perform the action.</span>
+                                        </div>
+                                    </div>
+                                    <div class="point-row">
+                                        <span class="point-num">2</span>
+                                        <div>
+                                            <strong>User Questions:</strong> <span class="hl">&ldquo;How do I work this?&rdquo;</span> and <span class="hl">&ldquo;What can I do?&rdquo;</span>
+                                            <span class="elab">Example: A customer at a fast-food kiosk gets confused by cluttered menus and selects the wrong meal twice.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="vs-badge">VS</div>
+                            <div class="vs-pane">
+                                <h4>
+                                    <svg class="ico" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                                    Gulf of Evaluation (Checking)
+                                </h4>
+                                <div class="point-stack">
+                                    <div class="point-row">
+                                        <span class="point-num">1</span>
+                                        <div>
+                                            <strong>Short Definition:</strong> Where users try to figure out <span class="hl">what happened</span>.
+                                            <span class="elab">It is the gap between the system&rsquo;s new state and the user&rsquo;s ability to tell if their goal succeeded.</span>
+                                        </div>
+                                    </div>
+                                    <div class="point-row">
+                                        <span class="point-num">2</span>
+                                        <div>
+                                            <strong>User Questions:</strong> <span class="hl">&ldquo;What happened?&rdquo;</span> and <span class="hl">&ldquo;Is this what I wanted?&rdquo;</span>
+                                            <span class="elab">Example: The kiosk asks for payment without showing an order summary, leaving the customer unsure what they ordered.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- STOP 02 -->
+                <article class="lesson-stop">
+                    <div class="stop-node">02</div>
+                    <div class="stop-card">
+                        <div class="stop-header">
+                            <div>
+                                <span class="stop-tag">
+                                    <svg class="ico ico-sm" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+                                    Enumeration (7 Stages)
+                                </span>
+                                <h3>The Seven Stages of Action</h3>
+                            </div>
+                        </div>
+
+                        <div class="mnemonic-box">
+                            <span class="mnemonic-badge">Mnemonic</span>
+                            <span class="mnemonic-code">G - P - S - P - P - I - C</span>
+                            <span>&rarr; <strong>G</strong>oal + Execution (<strong>P</strong>lan, <strong>S</strong>pecify, <strong>P</strong>erform) + Evaluation (<strong>P</strong>erceive, <strong>I</strong>nterpret, <strong>C</strong>ompare)</span>
+                        </div>
+
+                        <!-- Custom Inline SVG Diagram: Norman's Seven Stages of Action -->
+                        <div class="svg-diagram-box">
+                            <svg viewBox="0 0 640 310" role="img" aria-label="The Seven Stages of Action Diagram">
+                                <!-- Top Goal Box -->
+                                <rect x="190" y="12" width="260" height="42" rx="10" fill="var(--primary)" />
+                                <text x="320" y="38" text-anchor="middle" fill="#ffffff" font-size="14" font-weight="800">1. GOAL (Form the Goal)</text>
+
+                                <!-- Left Side: Bridge of Execution -->
+                                <text x="48" y="145" text-anchor="middle" fill="var(--primary)" font-size="11" font-weight="800" transform="rotate(-90 48 145)">BRIDGE OF EXECUTION (PSP)</text>
+                                <line x1="230" y1="54" x2="175" y2="78" stroke="var(--primary)" stroke-width="2.5"/>
+
+                                <rect x="90" y="78" width="170" height="38" rx="8" fill="var(--bg-card)" stroke="var(--primary)" stroke-width="2"/>
+                                <text x="175" y="102" text-anchor="middle" fill="var(--text-bold)" font-size="12" font-weight="700">2. PLAN (the action)</text>
+                                <line x1="175" y1="116" x2="175" y2="136" stroke="var(--primary)" stroke-width="2.5"/>
+
+                                <rect x="90" y="136" width="170" height="38" rx="8" fill="var(--bg-card)" stroke="var(--primary)" stroke-width="2"/>
+                                <text x="175" y="160" text-anchor="middle" fill="var(--text-bold)" font-size="12" font-weight="700">3. SPECIFY (sequence)</text>
+                                <line x1="175" y1="174" x2="175" y2="194" stroke="var(--primary)" stroke-width="2.5"/>
+
+                                <rect x="90" y="194" width="170" height="38" rx="8" fill="var(--bg-card)" stroke="var(--primary)" stroke-width="2"/>
+                                <text x="175" y="218" text-anchor="middle" fill="var(--text-bold)" font-size="12" font-weight="700">4. PERFORM (action)</text>
+                                <line x1="175" y1="232" x2="230" y2="256" stroke="var(--primary)" stroke-width="2.5"/>
+
+                                <!-- Right Side: Bridge of Evaluation -->
+                                <text x="592" y="145" text-anchor="middle" fill="var(--secondary)" font-size="11" font-weight="800" transform="rotate(90 592 145)">BRIDGE OF EVALUATION (PIC)</text>
+
+                                <rect x="380" y="78" width="170" height="38" rx="8" fill="var(--bg-card)" stroke="var(--secondary)" stroke-width="2"/>
+                                <text x="465" y="102" text-anchor="middle" fill="var(--text-bold)" font-size="12" font-weight="700">7. COMPARE (with goal)</text>
+                                <line x1="465" y1="78" x2="410" y2="54" stroke="var(--secondary)" stroke-width="2.5"/>
+
+                                <rect x="380" y="136" width="170" height="38" rx="8" fill="var(--bg-card)" stroke="var(--secondary)" stroke-width="2"/>
+                                <text x="465" y="160" text-anchor="middle" fill="var(--text-bold)" font-size="12" font-weight="700">6. INTERPRET (meaning)</text>
+                                <line x1="465" y1="136" x2="465" y2="116" stroke="var(--secondary)" stroke-width="2.5"/>
+
+                                <rect x="380" y="194" width="170" height="38" rx="8" fill="var(--bg-card)" stroke="var(--secondary)" stroke-width="2"/>
+                                <text x="465" y="218" text-anchor="middle" fill="var(--text-bold)" font-size="12" font-weight="700">5. PERCEIVE (state)</text>
+                                <line x1="465" y1="194" x2="465" y2="174" stroke="var(--secondary)" stroke-width="2.5"/>
+                                <line x1="410" y1="256" x2="465" y2="232" stroke="var(--secondary)" stroke-width="2.5"/>
+
+                                <!-- Bottom World Box -->
+                                <rect x="140" y="256" width="360" height="42" rx="12" fill="var(--bg-elevated)" stroke="var(--border)" stroke-width="2.5"/>
+                                <text x="320" y="282" text-anchor="middle" fill="var(--text-bold)" font-size="14" font-weight="800">THE WORLD</text>
+                            </svg>
+                        </div>
+
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">G</span>
+                                <div>
+                                    <strong>1. Goal (Form the goal):</strong> Decide <span class="hl">what you want to achieve</span>.
+                                    <span class="elab">You set an intention in your mind before taking any action (e.g., &ldquo;I want to order lunch&rdquo;).</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">P</span>
+                                <div>
+                                    <strong>2. Plan (the action):</strong> Think of a <span class="hl">general way to reach your goal</span> (Bridge of Execution).
+                                    <span class="elab">You choose which tool or path to use (e.g., deciding to use the self-service kiosk).</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">S</span>
+                                <div>
+                                    <strong>3. Specify (an action sequence):</strong> Pick the <span class="hl">exact steps or buttons</span> to press (Bridge of Execution).
+                                    <span class="elab">You mentally map out the exact taps needed on the screen.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">P</span>
+                                <div>
+                                    <strong>4. Perform (the action sequence):</strong> <span class="hl">Physically do the steps</span> with your body (Bridge of Execution).
+                                    <span class="elab">You tap the buttons or click the mouse to act upon the world.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">P</span>
+                                <div>
+                                    <strong>5. Perceive (the state of the world):</strong> <span class="hl">See or hear what changed</span> after your action (Bridge of Evaluation).
+                                    <span class="elab">Your eyes or ears detect a new message, color change, or sound on the device.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">I</span>
+                                <div>
+                                    <strong>6. Interpret (the perception):</strong> <span class="hl">Figure out what that change means</span> (Bridge of Evaluation).
+                                    <span class="elab">Your brain translates the visual cue into meaning (e.g., &ldquo;A checkmark means my item was added&rdquo;).</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">C</span>
+                                <div>
+                                    <strong>7. Compare (the outcome with the goal):</strong> Check if the <span class="hl">result matches your original goal</span> (Bridge of Evaluation).
+                                    <span class="elab">You decide if your task is finished or if you need to take another action.</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="sub-label">
+                            <svg class="ico" viewBox="0 0 24 24"><line x1="6" y1="3" x2="6" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></svg>
+                            Key Notes on the Action Cycle
+                        </div>
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">1</span>
+                                <div>
+                                    <strong>Two Parts of an Action:</strong> <span class="hl">Executing (Doing)</span> and <span class="hl">Evaluating (Interpreting)</span>.
+                                    <span class="elab">Both require understanding how the item works and what results it produces.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">2</span>
+                                <div>
+                                    <strong>Subgoals &amp; Subplans:</strong> Complex activities are not satisfied by a single action; <span class="hl">goals lead to subgoals</span> and <span class="hl">plans lead to subplans</span>.
+                                    <span class="elab">Most behaviors don&rsquo;t go through all stages in rigid order and use multiple feedback loops over hours or days.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">3</span>
+                                <div>
+                                    <strong>Opportunity for Product Enhancement:</strong> Detecting where users struggle in either gulf is the <span class="hl">starting point for product innovation</span>.
+                                    <span class="elab">Most innovation is done as an incremental enhancement of existing products by observing users.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- STOP 03 -->
+                <article class="lesson-stop">
+                    <div class="stop-node">03</div>
+                    <div class="stop-card">
+                        <div class="stop-header">
+                            <div>
+                                <span class="stop-tag">
+                                    <svg class="ico ico-sm" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/></svg>
+                                    Identification &amp; Enumeration
+                                </span>
+                                <h3>Human Thought: Subconscious Mind &amp; Overlearning</h3>
+                            </div>
+                        </div>
+
+                        <div class="mnemonic-box">
+                            <span class="mnemonic-badge">5 Mind Disciplines Mnemonic</span>
+                            <span class="mnemonic-code">B - C - N - P - I</span>
+                            <span>&rarr; <strong>B</strong>ehavioral/Social &bull; <strong>C</strong>ognitive Science &bull; <strong>N</strong>euroscience &bull; <strong>P</strong>hilosophy &bull; <strong>I</strong>nformation/Computer Sciences</span>
+                        </div>
+
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">1</span>
+                                <div>
+                                    <strong>Why We Study the Mind:</strong> Without deep understanding of people, designs become <span class="hl">faulty, difficult to use, and difficult to understand</span>.
+                                    <span class="elab">Because things are built for humans, interfaces must fit how the human brain actually works.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">2</span>
+                                <div>
+                                    <strong>Mostly Subconscious Operations:</strong> Most of the brain&rsquo;s operations are <span class="hl">subconscious</span>, hidden beneath our awareness.
+                                    <span class="elab">Only the highest level of processing, called the <span class="hl">reflective level</span>, is conscious.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">3</span>
+                                <div>
+                                    <strong>Conscious Attention:</strong> Required when <span class="hl">initially learning</span> most new things.
+                                    <span class="elab">Beginners must focus carefully on every single step before a skill becomes a habit.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">4</span>
+                                <div>
+                                    <strong>Overlearning:</strong> Continued practice and study (sometimes for thousands of hours over years) until <span class="hl">performance becomes effortless and automatic</span>.
+                                    <span class="elab">Once overlearned, skills are performed automatically with little or no conscious awareness.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- STOP 04 -->
+                <article class="lesson-stop">
+                    <div class="stop-node">04</div>
+                    <div class="stop-card">
+                        <div class="stop-header">
+                            <div>
+                                <span class="stop-tag">
+                                    <svg class="ico ico-sm" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+                                    Identification Key
+                                </span>
+                                <h3>Declarative Memory vs. Procedural Memory</h3>
+                            </div>
+                        </div>
+
+                        <div class="mnemonic-box">
+                            <span class="mnemonic-badge">Memory Shortcut</span>
+                            <span class="mnemonic-code">Declarative = Facts (&ldquo;What&rdquo;) &bull; Procedural = Actions (&ldquo;How&rdquo;)</span>
+                        </div>
+
+                        <div class="visual-versus">
+                            <div class="vs-pane">
+                                <h4>
+                                    <svg class="ico" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                                    Declarative Memory
+                                </h4>
+                                <div class="point-stack">
+                                    <div class="point-row">
+                                        <span class="point-num">1</span>
+                                        <div>
+                                            <strong>Short Definition:</strong> Memory for <span class="hl">factual information</span>.
+                                            <span class="elab">Used when recalling facts like a friend&rsquo;s phone number or the capital of a country.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="vs-badge">VS</div>
+                            <div class="vs-pane">
+                                <h4>
+                                    <svg class="ico" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                                    Procedural Memory
+                                </h4>
+                                <div class="point-stack">
+                                    <div class="point-row">
+                                        <span class="point-num">1</span>
+                                        <div>
+                                            <strong>Short Definition:</strong> Memory for <span class="hl">activities and motor actions</span> performed.
+                                            <span class="elab">Used when remembering which side an old doorknob was on by mentally picturing yourself reaching for the door.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- STOP 05 -->
+                <article class="lesson-stop">
+                    <div class="stop-node">05</div>
+                    <div class="stop-card">
+                        <div class="stop-header">
+                            <div>
+                                <span class="stop-tag">
+                                    <svg class="ico ico-sm" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+                                    Enumeration &amp; Identification (3 Levels)
+                                </span>
+                                <h3>Human Cognition &amp; Emotion: The Three Levels of Processing</h3>
+                            </div>
+                        </div>
+
+                        <div class="mnemonic-box">
+                            <span class="mnemonic-badge">Mnemonic</span>
+                            <span class="mnemonic-code">V - B - R</span>
+                            <span>&rarr; <strong>V</strong>isceral (Looks/Feels) &bull; <strong>B</strong>ehavioral (Works/Tasks) &bull; <strong>R</strong>eflective (Meaning/Conscious Thought)</span>
+                        </div>
+
+                        <div class="staircase">
+                            <div class="stair-step stair-1">
+                                <strong>1. Visceral Level (&ldquo;Lizard Brain&rdquo; &bull; Subconscious):</strong> The <span class="hl">most basic level of processing</span> focused on <span class="hl">how it looks and feels</span> (first impression).
+                                <span class="elab">Just like a lizard reacting instantly to movement, humans have fast, automatic reactions to visual appearance.</span>
+                            </div>
+                            <div class="stair-step stair-2">
+                                <strong>2. Behavioral Level (Doing Tasks &bull; Subconscious):</strong> The <span class="hl">home of learned skills and interaction</span> focused on <span class="hl">how it works</span>.
+                                <span class="elab">It triggers expectation-based emotions like hope and joy when tasks go smoothly, or frustration and anger when they fail.</span>
+                            </div>
+                            <div class="stair-step stair-3">
+                                <strong>3. Reflective Level (Conscious Cognition &bull; Conscious):</strong> The <span class="hl">home of conscious cognition</span> focused on <span class="hl">what it means to the user</span> (thinking and evaluation).
+                                <span class="elab">This is the only conscious level, where users judge a product&rsquo;s value, pride of ownership, and overall reputation.</span>
+                            </div>
+                        </div>
+
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">1</span>
+                                <div>
+                                    <strong>Understanding vs. Enjoyment:</strong> <span class="hl">Understanding</span> combines the Behavioral and Reflective levels, while <span class="hl">Enjoyment</span> requires all three levels (Visceral, Behavioral, and Reflective) working together.
+                                    <span class="elab">All three levels work in concert to determine a person&rsquo;s like or dislike of a product or service.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">2</span>
+                                <div>
+                                    <strong>Impact of Extreme Experiences:</strong> One <span class="hl">nasty experience</span> can spoil all future experiences, while one <span class="hl">superb experience</span> can make up for past deficiencies.
+                                    <span class="elab">Strong emotional moments leave lasting impressions in the user&rsquo;s reflective memory.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+
+        <!-- ==================================================================
+             MODULE 3: GOOD VS. BAD DESIGN & INTERACTION DESIGN (IxD)
+             ================================================================== -->
+        <section class="module-pane" id="mod-3">
+            <div class="module-intro">
+                <div class="intro-badge">
+                    <svg class="ico ico-sm" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                    Lesson 03 &bull; Quick Notebook Review
+                </div>
+                <h2>Good vs. Bad Design &amp; Interaction Design (IxD)</h2>
+                <p>Short definitions and mnemonics for Smoke vs. Mirror design, Goals of IxD (UUS), the 5 Dimensions (WVPTB), Core Components (UTC), 5 Key Principles (VFCCA), and the 5-Step IxD Process (IDBDI).</p>
+            </div>
+
+            <div class="linear-feed">
+
+                <!-- STOP 01 -->
+                <article class="lesson-stop">
+                    <div class="stop-node">01</div>
+                    <div class="stop-card">
+                        <div class="stop-header">
+                            <div>
+                                <span class="stop-tag">
+                                    <svg class="ico ico-sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+                                    Identification &amp; Enumeration (8 vs. 8)
+                                </span>
+                                <h3>Good vs. Bad Design</h3>
+                            </div>
+                        </div>
+
+                        <div class="mnemonic-box">
+                            <span class="mnemonic-badge">Metaphor Key</span>
+                            <span class="mnemonic-code">Bad Design = Smoke (Misleads/Obscures) &bull; Good Design = Mirror (Reflective/Clear Truth)</span>
+                        </div>
+
+                        <div class="visual-versus">
+                            <div class="vs-pane">
+                                <h4>
+                                    <svg class="ico" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                                    8 Characteristics of Bad Design (CPCC-IIDU)
+                                </h4>
+                                <div class="point-stack">
+                                    <div class="point-row"><span class="point-num">C</span><div><strong>Cluttered interface:</strong> Overcrowded screen with too many elements.</div></div>
+                                    <div class="point-row"><span class="point-num">P</span><div><strong>Poor navigation:</strong> Hard to find menus or move between pages.</div></div>
+                                    <div class="point-row"><span class="point-num">C</span><div><strong>Confusing layout:</strong> Disorganized placement of buttons and content.</div></div>
+                                    <div class="point-row"><span class="point-num">C</span><div><strong>Complex tasks:</strong> Simple goals require too many difficult steps.</div></div>
+                                    <div class="point-row"><span class="point-num">I</span><div><strong>Irrelevant user feedback:</strong> Unhelpful or confusing system alerts.</div></div>
+                                    <div class="point-row"><span class="point-num">I</span><div><strong>Inconsistent experience:</strong> Controls change look or behavior across screens.</div></div>
+                                    <div class="point-row"><span class="point-num">D</span><div><strong>Difficult content:</strong> Hard-to-read text or confusing jargon.</div></div>
+                                    <div class="point-row"><span class="point-num">U</span><div><strong>Unpleasant color scheme:</strong> Harsh, clashing colors that hurt readability.</div></div>
+                                </div>
+                            </div>
+                            <div class="vs-badge">VS</div>
+                            <div class="vs-pane">
+                                <h4>
+                                    <svg class="ico" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                                    8 Characteristics of Good Design (TSRU-PEEF)
+                                </h4>
+                                <div class="point-stack">
+                                    <div class="point-row"><span class="point-num">T</span><div><strong>Transparent and visible to users:</strong> Actions and system status are clearly seen.</div></div>
+                                    <div class="point-row"><span class="point-num">S</span><div><strong>Simple:</strong> Clean, minimal, and focused only on what matters.</div></div>
+                                    <div class="point-row"><span class="point-num">R</span><div><strong>Relevant:</strong> Information directly matches the user&rsquo;s current need.</div></div>
+                                    <div class="point-row"><span class="point-num">U</span><div><strong>Usable:</strong> Easy and effortless for anyone to operate.</div></div>
+                                    <div class="point-row"><span class="point-num">P</span><div><strong>Problem solver:</strong> Directly resolves the user&rsquo;s actual task or issue.</div></div>
+                                    <div class="point-row"><span class="point-num">E</span><div><strong>Easy to understand:</strong> Self-explanatory without needing instructions.</div></div>
+                                    <div class="point-row"><span class="point-num">E</span><div><strong>Effective to meet the goals:</strong> Reliably achieves the desired outcome.</div></div>
+                                    <div class="point-row"><span class="point-num">F</span><div><strong>Fresh with pleasant color scheme:</strong> Visually balanced and comfortable to view.</div></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- STOP 02 -->
+                <article class="lesson-stop">
+                    <div class="stop-node">02</div>
+                    <div class="stop-card">
+                        <div class="stop-header">
+                            <div>
+                                <span class="stop-tag">
+                                    <svg class="ico ico-sm" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                                    Identification &amp; Enumeration (3 Goals)
+                                </span>
+                                <h3>What is Interaction Design (IxD) &amp; Its Goal</h3>
+                            </div>
+                        </div>
+
+                        <div class="mnemonic-box">
+                            <span class="mnemonic-badge">Goal Mnemonic</span>
+                            <span class="mnemonic-code">U - U - S</span>
+                            <span>&rarr; Ensure systems are <strong>U</strong>seful, <strong>U</strong>sable, and <strong>S</strong>atisfying for users</span>
+                        </div>
+
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">1</span>
+                                <div>
+                                    <strong>Interaction Design (IxD):</strong> Designing <span class="hl">interactive products to support the way people communicate and interact</span> in their everyday and working lives.
+                                    <span class="elab">It is the central axis of UX work for digital products, and also applies to non-digital products.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">2</span>
+                                <div>
+                                    <strong>Dialogue Definition:</strong> The creation of a <span class="hl">physical and emotional dialogue</span> between a person and a product, system, or service.
+                                    <span class="elab">This dialogue unfolds over time through the interplay of form, function, and technology.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">3</span>
+                                <div>
+                                    <strong>Main Goal of IxD (<span class="hl">Useful, Usable, and Satisfying</span>):</strong> Systems must solve real needs (useful), be easy to operate (usable), and feel rewarding to use (satisfying).
+                                    <span class="elab">All three qualities must be present for an interactive product to succeed with users.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- STOP 03 -->
+                <article class="lesson-stop">
+                    <div class="stop-node">03</div>
+                    <div class="stop-card">
+                        <div class="stop-header">
+                            <div>
+                                <span class="stop-tag">
+                                    <svg class="ico ico-sm" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+                                    Enumeration &amp; Identification (1D to 5D)
+                                </span>
+                                <h3>Five Dimensions of Interactive Design</h3>
+                            </div>
+                        </div>
+
+                        <div class="mnemonic-box">
+                            <span class="mnemonic-badge">Mnemonic (1D&ndash;5D)</span>
+                            <span class="mnemonic-code">W - V - P - T - B</span>
+                            <span>&rarr; <strong>1D W</strong>ords &bull; <strong>2D V</strong>isual representations &bull; <strong>3D P</strong>hysical objects/space &bull; <strong>4D T</strong>ime &bull; <strong>5D B</strong>ehavior</span>
+                        </div>
+
+                        <div class="staircase">
+                            <div class="stair-step stair-1">
+                                <strong>1D &mdash; Words:</strong> Text elements such as <span class="hl">button labels</span> that give users the right amount of information.
+                                <span class="elab">Words should be simple and clear so users immediately understand what a control does.</span>
+                            </div>
+                            <div class="stair-step stair-2">
+                                <strong>2D &mdash; Visual representations:</strong> Graphical elements like <span class="hl">images, typography, and icons</span> that aid interaction.
+                                <span class="elab">Visuals work alongside text so users can recognize options quickly at a glance.</span>
+                            </div>
+                            <div class="stair-step stair-3">
+                                <strong>3D &mdash; Physical objects / space:</strong> The <span class="hl">hardware medium and physical space</span> through which users interact with the product.
+                                <span class="elab">Examples include using a laptop via a physical mouse or a mobile phone via fingers on a screen.</span>
+                            </div>
+                            <div class="stair-step stair-4">
+                                <strong>4D &mdash; Time:</strong> Media that <span class="hl">changes over time</span>, such as animations, videos, and sounds.
+                                <span class="elab">Includes motion transitions, audio alerts, and how users track progress over time.</span>
+                            </div>
+                            <div class="stair-step stair-5">
+                                <strong>5D &mdash; Behavior:</strong> How the first four dimensions define the <span class="hl">actions a user performs</span> and how the <span class="hl">product reacts with feedback</span>.
+                                <span class="elab">Covers both how users operate the system and how the system responds to their inputs.</span>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- STOP 04 -->
+                <article class="lesson-stop">
+                    <div class="stop-node">04</div>
+                    <div class="stop-card">
+                        <div class="stop-header">
+                            <div>
+                                <span class="stop-tag">
+                                    <svg class="ico ico-sm" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/></svg>
+                                    Enumeration (3 Components)
+                                </span>
+                                <h3>Core Components of Interaction Design</h3>
+                            </div>
+                        </div>
+
+                        <div class="mnemonic-box">
+                            <span class="mnemonic-badge">Mnemonic</span>
+                            <span class="mnemonic-code">U - T - C</span>
+                            <span>&rarr; <strong>U</strong>sers (Who) &bull; <strong>T</strong>asks (What) &bull; <strong>C</strong>ontext of Use (Where/How)</span>
+                        </div>
+
+                        <div class="pillars-visual">
+                            <div class="pillar-col">
+                                <div class="pillar-head">
+                                    <svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M6 20v-2a6 6 0 0 1 12 0v2"/></svg>
+                                    1. Users
+                                </div>
+                                <div class="point-stack">
+                                    <div class="point-row">
+                                        <span class="point-num">U</span>
+                                        <div>
+                                            <strong>Who uses the system:</strong> The target people interacting with the product.
+                                            <span class="elab">Designers study their skills, needs, and limitations.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="pillar-col">
+                                <div class="pillar-head">
+                                    <svg class="ico" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                                    2. Tasks
+                                </div>
+                                <div class="point-stack">
+                                    <div class="point-row">
+                                        <span class="point-num">T</span>
+                                        <div>
+                                            <strong>What they want to do:</strong> The specific goals and activities to complete.
+                                            <span class="elab">Workflows are structured around these steps.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="pillar-col">
+                                <div class="pillar-head">
+                                    <svg class="ico" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+                                    3. Context of Use
+                                </div>
+                                <div class="point-stack">
+                                    <div class="point-row">
+                                        <span class="point-num">C</span>
+                                        <div>
+                                            <strong>Where interaction happens:</strong> The physical, social, and device setting.
+                                            <span class="elab">Shapes how the interface works in real-world conditions.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- STOP 05 -->
+                <article class="lesson-stop">
+                    <div class="stop-node">05</div>
+                    <div class="stop-card">
+                        <div class="stop-header">
+                            <div>
+                                <span class="stop-tag">
+                                    <svg class="ico ico-sm" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                                    Enumeration &amp; Identification (5 Principles)
+                                </span>
+                                <h3>Key Principles of Interaction Design</h3>
+                            </div>
+                        </div>
+
+                        <div class="mnemonic-box">
+                            <span class="mnemonic-badge">Mnemonic</span>
+                            <span class="mnemonic-code">V - F - C - C - A</span>
+                            <span>&rarr; <strong>V</strong>isibility &bull; <strong>F</strong>eedback &bull; <strong>C</strong>onsistency &bull; <strong>C</strong>onstraints &bull; <strong>A</strong>ffordances</span>
+                        </div>
+
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">V</span>
+                                <div>
+                                    <strong>1. Visibility:</strong> Users should <span class="hl">easily see what actions are possible</span>.
+                                    <span class="elab">Important buttons and options are placed in plain sight instead of hidden in secret menus.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">F</span>
+                                <div>
+                                    <strong>2. Feedback:</strong> The system <span class="hl">informs users about what is happening after an action</span>.
+                                    <span class="elab">Visual highlights, loading bars, or confirmation messages show that a click worked.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">C</span>
+                                <div>
+                                    <strong>3. Consistency:</strong> <span class="hl">Similar actions behave in the same way</span> throughout the system.
+                                    <span class="elab">Keeping icons, colors, and menus uniform makes the interface predictable and easy to learn.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">C</span>
+                                <div>
+                                    <strong>4. Constraints:</strong> <span class="hl">Limits that prevent users from making mistakes</span>.
+                                    <span class="elab">Examples include graying out a Submit button until all required fields are filled.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">A</span>
+                                <div>
+                                    <strong>5. Affordances:</strong> Design elements <span class="hl">suggest how they are used</span>.
+                                    <span class="elab">A raised 3D button visually suggests pushing/clicking, while a slider suggests dragging.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- STOP 06 -->
+                <article class="lesson-stop">
+                    <div class="stop-node">06</div>
+                    <div class="stop-card">
+                        <div class="stop-header">
+                            <div>
+                                <span class="stop-tag">
+                                    <svg class="ico ico-sm" viewBox="0 0 24 24"><line x1="6" y1="3" x2="6" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></svg>
+                                    Enumeration (5 Stages &amp; Sub-Lists)
+                                </span>
+                                <h3>The Interaction Design Process</h3>
+                            </div>
+                        </div>
+
+                        <div class="mnemonic-box">
+                            <span class="mnemonic-badge">5 Stages Mnemonic</span>
+                            <span class="mnemonic-code">I - D - B - D - I</span>
+                            <span>&rarr; <strong>1. I</strong>dentify needs &bull; <strong>2. D</strong>evelop alternatives &bull; <strong>3. B</strong>uild prototypes &bull; <strong>4. D</strong>esign evaluation &bull; <strong>5. I</strong>teration</span>
+                        </div>
+
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">1</span>
+                                <div>
+                                    <strong>Identify User Needs:</strong> Understand the <span class="hl">users, their needs, and the problems</span> to be solved.
+                                    <span class="elab">Gathered via 5 methods (<strong>U-S-O-T-S</strong>): <span class="hl">User interviews</span>, <span class="hl">Surveys</span>, <span class="hl">Observation of users</span>, <span class="hl">Task analysis</span>, and <span class="hl">Stakeholder meetings</span>.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">2</span>
+                                <div>
+                                    <strong>Develop Alternative Designs:</strong> Create <span class="hl">multiple possible solutions</span> to address user needs.
+                                    <span class="elab">Includes exploring 3 areas: <span class="hl">Different layouts</span>, <span class="hl">Various navigation structures</span>, and <span class="hl">Alternative interaction methods</span>.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">3</span>
+                                <div>
+                                    <strong>Build Interactive Prototypes:</strong> Create an <span class="hl">early version of the system to test ideas</span> before full development.
+                                    <span class="elab">Helps designers in 3 ways: <span class="hl">Visualize how the system will work</span>, <span class="hl">Identify usability problems early</span>, and <span class="hl">Gather feedback from users and stakeholders</span>.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">4</span>
+                                <div>
+                                    <strong>Design Evaluation:</strong> Test the design using 3 common methods (<span class="hl">Usability Testing, Expert Evaluation, and User Feedback</span>).
+                                    <span class="elab"><strong>A. Usability Testing:</strong> real users perform tasks on the prototype &bull; <strong>B. Expert Evaluation:</strong> usability experts analyze the design &bull; <strong>C. User Feedback:</strong> collect comments and suggestions from users.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">5</span>
+                                <div>
+                                    <strong>Iteration and Refinement:</strong> <span class="hl">Revise and improve the system</span> based on evaluation results.
+                                    <span class="elab">Interaction design is not a one-time process; teams repeat testing and fixing until the product works well.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+
+        <!-- ==================================================================
+             MODULE 4: USER-CENTERED DESIGN (UCD)
+             ================================================================== -->
+        <section class="module-pane" id="mod-4">
+            <div class="module-intro">
+                <div class="intro-badge">
+                    <svg class="ico ico-sm" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M6 20v-2a6 6 0 0 1 12 0v2"/></svg>
+                    Lesson 04 &bull; Quick Notebook Review
+                </div>
+                <h2>User-Centered Design (UCD)</h2>
+                <p>Concise notebook definitions and mnemonics for UCD vs. HCD, 5 UCD Principles (IEIMF), 4 Essential Elements (VALL), 6 Research Methods (FQIUCP), and the 3-Stage UCD Process (RIV).</p>
+            </div>
+
+            <div class="linear-feed">
+
+                <!-- STOP 01 -->
+                <article class="lesson-stop">
+                    <div class="stop-node">01</div>
+                    <div class="stop-card">
+                        <div class="stop-header">
+                            <div>
+                                <span class="stop-tag">
+                                    <svg class="ico ico-sm" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M6 20v-2a6 6 0 0 1 12 0v2"/></svg>
+                                    Identification &amp; Contrast
+                                </span>
+                                <h3>What is User-Centered Design (UCD)?</h3>
+                            </div>
+                        </div>
+
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">1</span>
+                                <div>
+                                    <strong>User-Centered Design (UCD):</strong> An <span class="hl">iterative design process</span> where designers focus on <span class="hl">users and their needs in each phase</span> of development.
+                                    <span class="elab">It involves users throughout the entire product lifecycle, from initial planning to post-release assessment.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">2</span>
+                                <div>
+                                    <strong>Key to Being Truly User-Centric:</strong> Continuously <span class="hl">collect feedback and iterate on designs</span> accordingly.
+                                    <span class="elab">Ongoing iteration future-proofs the product and keeps it relevant to users over time.</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="visual-versus">
+                            <div class="vs-pane">
+                                <h4>
+                                    <svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M6 20v-2a6 6 0 0 1 12 0v2"/></svg>
+                                    Human-Centered Design (HCD)
+                                </h4>
+                                <div class="point-stack">
+                                    <div class="point-row">
+                                        <span class="point-num">H</span>
+                                        <div>
+                                            <strong>Broad &amp; Holistic:</strong> Focuses on <span class="hl">general human needs, emotions, and perspectives</span>.
+                                            <span class="elab">Looks at the whole person and broader societal impact across every step.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="vs-badge">VS</div>
+                            <div class="vs-pane">
+                                <h4>
+                                    <svg class="ico" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/></svg>
+                                    User-Centered Design (UCD)
+                                </h4>
+                                <div class="point-stack">
+                                    <div class="point-row">
+                                        <span class="point-num">U</span>
+                                        <div>
+                                            <strong>Specific &amp; Task-Focused:</strong> Focuses on a <span class="hl">specific target audience and their direct tasks</span>.
+                                            <span class="elab">Requires deep knowledge of the exact target users who will operate the product.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- STOP 02 -->
+                <article class="lesson-stop">
+                    <div class="stop-node">02</div>
+                    <div class="stop-card">
+                        <div class="stop-header">
+                            <div>
+                                <span class="stop-tag">
+                                    <svg class="ico ico-sm" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                                    Enumerations (7 Questions &amp; 5 Benefits)
+                                </span>
+                                <h3>Why User-Centered Design?</h3>
+                            </div>
+                        </div>
+
+                        <div class="takeaway-banner">
+                            <svg class="ico" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                            <div><strong>Main Goal of UCD:</strong> Create products that users find <span class="hl">useful (relevance)</span> and <span class="hl">usable (ease-of-use)</span>, cutting costs while increasing satisfaction and productivity.</div>
+                        </div>
+
+                        <div class="sub-label">
+                            <svg class="ico" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                            7 Questions UCD Seeks to Answer (Mnemonic: I-T-W-P-E-O-C)
+                        </div>
+                        <div class="point-stack">
+                            <div class="point-row"><span class="point-num">I</span><div>What is <span class="hl">important</span> to users?</div></div>
+                            <div class="point-row"><span class="point-num">T</span><div>What <span class="hl">tasks</span> users do, how frequently, and in what order?</div></div>
+                            <div class="point-row"><span class="point-num">W</span><div>What is the users&rsquo; <span class="hl">work environment</span>?</div></div>
+                            <div class="point-row"><span class="point-num">P</span><div>What are the users&rsquo; <span class="hl">problems and constraints</span>?</div></div>
+                            <div class="point-row"><span class="point-num">E</span><div>What are users&rsquo; <span class="hl">expectations in terms of functionality</span>?</div></div>
+                            <div class="point-row"><span class="point-num">O</span><div>What <span class="hl">output is required</span> and in what form?</div></div>
+                            <div class="point-row"><span class="point-num">C</span><div>How can the design <span class="hl">facilitate users&rsquo; cognitive processes</span>?</div></div>
+                        </div>
+
+                        <div class="sub-label">
+                            <svg class="ico" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                            5 Business Benefits of UCD (Mnemonic: E-S-D-A-I)
+                        </div>
+                        <div class="point-stack">
+                            <div class="point-row"><span class="point-num">E</span><div><strong>Easy-to-use products:</strong> Builds intuitive products that require minimal effort to operate.</div></div>
+                            <div class="point-row"><span class="point-num">S</span><div><strong>Satisfy customers:</strong> Meets real user goals, increasing loyalty and happiness.</div></div>
+                            <div class="point-row"><span class="point-num">D</span><div><strong>Decrease expenditures on technical support and training:</strong> Fewer user mistakes mean lower help-desk and training costs.</div></div>
+                            <div class="point-row"><span class="point-num">A</span><div><strong>Advertise ease-to-use successes:</strong> Great usability becomes a strong selling point in marketing.</div></div>
+                            <div class="point-row"><span class="point-num">I</span><div><strong>Ultimately increase market share:</strong> Better products attract more buyers and outperform competitors.</div></div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- STOP 03 -->
+                <article class="lesson-stop">
+                    <div class="stop-node">03</div>
+                    <div class="stop-card">
+                        <div class="stop-header">
+                            <div>
+                                <span class="stop-tag">
+                                    <svg class="ico ico-sm" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+                                    Enumerations (5 Principles &amp; 4 Elements)
+                                </span>
+                                <h3>UCD Principles &amp; Essential Elements</h3>
+                            </div>
+                        </div>
+
+                        <div class="takeaway-banner">
+                            <svg class="ico" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                            <div><strong>Core Quote:</strong> &ldquo;<span class="hl">People ignore design that ignores people.</span>&rdquo;</div>
+                        </div>
+
+                        <div class="sub-label">
+                            <svg class="ico" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                            5 Important UCD Principles (Mnemonic: I-E-I-M-F)
+                        </div>
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">I</span>
+                                <div>
+                                    <strong>1. Involve users from the very beginning:</strong> Evaluate critical design decisions based on <span class="hl">how they work for end-users</span> right from the start.
+                                    <span class="elab">Never wait until the end of development to test if users understand the product.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">E</span>
+                                <div>
+                                    <strong>2. User-centered design should be empathetic:</strong> Step into your user&rsquo;s shoes and <span class="hl">focus on solving their pain points</span>.
+                                    <span class="elab">Prioritize fixing real user struggles rather than just launching what is easy to build.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">I</span>
+                                <div>
+                                    <strong>3. Use an iterative design process:</strong> Go through repeated cycles (<span class="hl">Define &rarr; Ideate / Prototype / User Test &rarr; Build &amp; Deploy &rarr; Analyse &amp; Iterate</span>).
+                                    <span class="elab">New discoveries about users may require looping back to change fundamental parts of the design.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">M</span>
+                                <div>
+                                    <strong>4. Involve multiple feedback loops:</strong> Gather <span class="hl">qualitative and quantitative data</span> at multiple steps (<em>Action &rarr; Effect &rarr; Feedback</em>).
+                                    <span class="elab">Collect frequent feedback from both internal team members and external end-users.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">F</span>
+                                <div>
+                                    <strong>5. Follow the fundamentals of design:</strong> <span class="hl">Keep things simple</span> and think like your user.
+                                    <span class="elab">Apply core visual design rules like clean layout, contrast, and hierarchy so the interface stays clear.</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="sub-label">
+                            <svg class="ico" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/></svg>
+                            4 Essential Elements of UCD (Mnemonic: V-A-L-L)
+                        </div>
+                        <div class="mnemonic-box">
+                            <span class="mnemonic-badge">Mnemonic</span>
+                            <span class="mnemonic-code">V - A - L - L</span>
+                            <span>&rarr; <strong>V</strong>isibility &bull; <strong>A</strong>ccessibility &bull; <strong>L</strong>egibility &bull; <strong>L</strong>anguage</span>
+                        </div>
+
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">V</span>
+                                <div>
+                                    <strong>1. Visibility:</strong> Users see from the beginning <span class="hl">what they can do with the product</span>, what it is about, and how to use it.
+                                    <span class="elab">The purpose and main actions of the interface are immediately obvious on screen.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">A</span>
+                                <div>
+                                    <strong>2. Accessibility:</strong> Users can <span class="hl">find information easily and quickly</span>.
+                                    <span class="elab">Provides multiple ways to locate content, such as Call-to-Action (CTA) buttons, search bars, and menus.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">L</span>
+                                <div>
+                                    <strong>3. Legibility:</strong> Text must be <span class="hl">easy to read</span>.
+                                    <span class="elab">Uses clean fonts, readable sizes, and clear contrast so users never strain their eyes.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">L</span>
+                                <div>
+                                    <strong>4. Language:</strong> <span class="hl">Short sentences and easy words</span> are preferred.
+                                    <span class="elab">Simple, everyday phrasing lets users understand instructions instantly.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- STOP 04 -->
+                <article class="lesson-stop">
+                    <div class="stop-node">04</div>
+                    <div class="stop-card">
+                        <div class="stop-header">
+                            <div>
+                                <span class="stop-tag">
+                                    <svg class="ico ico-sm" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+                                    Enumeration &amp; Identification (6 Methods)
+                                </span>
+                                <h3>User-Centered Design Methods</h3>
+                            </div>
+                        </div>
+
+                        <div class="mnemonic-box">
+                            <span class="mnemonic-badge">Mnemonic</span>
+                            <span class="mnemonic-code">F - Q - I - U - C - P</span>
+                            <span>&rarr; <strong>F</strong>ocus Groups &bull; <strong>Q</strong>uestionnaires &amp; Surveys &bull; <strong>I</strong>nterviews &bull; <strong>U</strong>sability Testing &bull; <strong>C</strong>ard Sorting &bull; <strong>P</strong>articipatory Design</span>
+                        </div>
+
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">F</span>
+                                <div>
+                                    <strong>1. Focus Groups:</strong> A group of intended users <span class="hl">collectively share thoughts and opinions</span> to define product use cases.
+                                    <span class="elab"><strong>Traits:</strong> Multiple perspectives at once &bull; <span class="hl">Qualitative</span> data &bull; Small sample size &bull; Low cost &bull; Needs an experienced moderator.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">Q</span>
+                                <div>
+                                    <strong>2. Questionnaires and Surveys:</strong> Written questions used to obtain a <span class="hl">large amount of statistical data</span> on user challenges.
+                                    <span class="elab"><strong>Traits:</strong> Brief/simple feedback &bull; <span class="hl">Qualitative &amp; Quantitative</span> data &bull; Larger sample size &bull; Low cost &bull; Questions must be unbiased.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">I</span>
+                                <div>
+                                    <strong>3. Interviews:</strong> One-on-one open conversations in the <span class="hl">early stages</span> to dig for <span class="hl">in-depth individual insights</span>.
+                                    <span class="elab"><strong>Traits:</strong> Deep individual needs/behaviors &bull; Mostly <span class="hl">Qualitative</span> &bull; Small sample size &bull; Time-consuming (<span class="hl">high opportunity cost</span>).</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">U</span>
+                                <div>
+                                    <strong>4. Usability Testing:</strong> Users <span class="hl">interact with the product directly</span> while a moderator records feedback.
+                                    <span class="elab"><strong>Traits:</strong> Requires a <span class="hl">developed prototype</span> &bull; <span class="hl">Qualitative &amp; Quantitative</span> &bull; Small-to-medium sample &bull; High cost live, cheaper with tools.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">C</span>
+                                <div>
+                                    <strong>5. Card Sorting:</strong> Users sort content cards into groups to test and design the <span class="hl">overall architecture</span> of a website or app.
+                                    <span class="elab"><strong>Traits:</strong> Matches how users think &bull; <span class="hl">Quantitative</span> data &bull; Medium sample size &bull; Time-consuming &bull; Steps: <em>Get stack &rarr; Sort into groups &rarr; Label groups</em>.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">P</span>
+                                <div>
+                                    <strong>6. Participatory Design:</strong> Actively involves users as <span class="hl">co-designers</span> alongside the product team during design workshops.
+                                    <span class="elab">Users help sketch and shape solutions directly so the final interface matches their real workflow.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- STOP 05 -->
+                <article class="lesson-stop">
+                    <div class="stop-node">05</div>
+                    <div class="stop-card">
+                        <div class="stop-header">
+                            <div>
+                                <span class="stop-tag">
+                                    <svg class="ico ico-sm" viewBox="0 0 24 24"><line x1="6" y1="3" x2="6" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></svg>
+                                    Enumeration &amp; Identification (3 Stages)
+                                </span>
+                                <h3>The UCD Process: Research, Ideation &amp; Validation</h3>
+                            </div>
+                        </div>
+
+                        <div class="mnemonic-box">
+                            <span class="mnemonic-badge">UCD Process Mnemonic</span>
+                            <span class="mnemonic-code">R - I - V</span>
+                            <span>&rarr; <strong>1. R</strong>esearch (Personas &amp; Scenarios) &bull; <strong>2. I</strong>deation (Journey Map &amp; Storyboard) &bull; <strong>3. V</strong>alidation (Usability Testing &amp; Contextual Inquiry)</span>
+                        </div>
+
+                        <div class="sub-label">
+                            <svg class="ico" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                            Stage 1: Research (&ldquo;Who We Design For &amp; How They Use It&rdquo;)
+                        </div>
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">1</span>
+                                <div>
+                                    <strong>Personas (&ldquo;Who uses our product?&rdquo;):</strong> <span class="hl">Archetypes of real users</span> representing a group with similar behaviors, needs, goals, and skills.
+                                    <span class="elab">Personas bring users to life so designers make right decisions on features, navigation, and visual design.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">2</span>
+                                <div>
+                                    <strong>Interactions / Context of Use (&ldquo;How will they use it?&rdquo;):</strong> Always <span class="hl">start with a problem a user faces</span>, since people use products as solutions to problems.
+                                    <span class="elab">Highlight 3 scenario factors (<strong>E-M-M</strong>): <span class="hl">User environment</span> (where it happens), <span class="hl">Medium</span> (what device/screen size), and <span class="hl">Mood</span> (emotional state).</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="sub-label">
+                            <svg class="ico" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+                            Stage 2: Concept Ideation (Visualizing Holistic Interactions)
+                        </div>
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">1</span>
+                                <div>
+                                    <strong>User Journey Map:</strong> A timeline that <span class="hl">visualizes how a user interacts with a product</span> from the user&rsquo;s point of view.
+                                    <span class="elab">Shows each phase (e.g., Consider, Explore, Compare, Test, Negotiate), user actions, and emotional highs and lows.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">2</span>
+                                <div>
+                                    <strong>Storyboarding:</strong> Sequential <span class="hl">comic-strip illustrations</span> showing a user interacting with the product in real life.
+                                    <span class="elab">Helps teams see how the product fits into the user&rsquo;s physical environment and existing routine.</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="sub-label">
+                            <svg class="ico" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                            Stage 3: Validation (Constant Activity Along the Way)
+                        </div>
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">1</span>
+                                <div>
+                                    <strong>Usability Testing:</strong> Evaluates design decisions with <span class="hl">actual users</span> to see what problems they face when interacting with the design.
+                                    <span class="elab">Direct observation reveals interface flaws before and during development.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">2</span>
+                                <div>
+                                    <strong>Contextual Inquiry:</strong> Observing and interviewing people <span class="hl">while they perform tasks in context</span> (in their natural environment).
+                                    <span class="elab">A mix of qualitative research and interviews where participants talk aloud about what they are doing as they work.</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="sub-label">
+                            <svg class="ico" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                            4 Key Takeaways to Remember About UCD
+                        </div>
+                        <div class="point-stack">
+                            <div class="point-row"><span class="point-num">1</span><div>Turning <span class="hl">empathy concepts into specific product requirements</span>.</div></div>
+                            <div class="point-row"><span class="point-num">2</span><div><span class="hl">No guessing, no personal opinions</span>&mdash;rely on real user data.</div></div>
+                            <div class="point-row"><span class="point-num">3</span><div><span class="hl">Involving all team members</span> in product design.</div></div>
+                            <div class="point-row"><span class="point-num">4</span><div>Connecting <span class="hl">UCD and business</span> success.</div></div>
+                        </div>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        // 1. Top Scroll Progress Bar
+        const progressBar = document.getElementById('progressBar');
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.scrollY || document.documentElement.scrollTop;
+            const docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const pct = docHeight > 0 ? Math.min(100, Math.max(0, (scrollTop / docHeight) * 100)) : 0;
+            if (progressBar) progressBar.style.width = pct + '%';
+        }, { passive: true });
+
+        // 2. Top-Level Lesson Tab Switching
+        const tabButtons = document.querySelectorAll('.module-tab');
+        const modulePanes = document.querySelectorAll('.module-pane');
+
+        tabButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const targetId = btn.getAttribute('data-target');
+                tabButtons.forEach(b => b.classList.remove('active'));
+                modulePanes.forEach(p => p.classList.remove('active'));
+                btn.classList.add('active');
+                const targetPane = document.getElementById(targetId);
+                if (targetPane) targetPane.classList.add('active');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+
+        // 3. Dark / Light Theme Toggle
+        const themeBtn = document.getElementById('themeBtn');
+        const themeLabel = document.getElementById('themeLabel');
+        let savedTheme = null;
+        try {
+            savedTheme = localStorage.getItem('reviewer_theme');
+        } catch (e) {
+            savedTheme = null;
+        }
+        if (savedTheme === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            if (themeLabel) themeLabel.textContent = 'Light Mode';
+        }
+        if (themeBtn) {
+            themeBtn.addEventListener('click', () => {
+                const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+                if (isDark) {
+                    document.documentElement.removeAttribute('data-theme');
+                    try { localStorage.setItem('reviewer_theme', 'light'); } catch (e) {}
+                    if (themeLabel) themeLabel.textContent = 'Dark Mode';
+                } else {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                    try { localStorage.setItem('reviewer_theme', 'dark'); } catch (e) {}
+                    if (themeLabel) themeLabel.textContent = 'Light Mode';
+                }
+            });
+        }
+
+        // 4. Instant Keyword Filter (Filters Lesson Stops in Active Tab)
+        const searchInput = document.getElementById('searchInput');
+        if (searchInput) {
+            searchInput.addEventListener('input', (e) => {
+                const query = e.target.value.trim().toLowerCase();
+                document.querySelectorAll('.lesson-stop').forEach(stop => {
+                    const text = stop.textContent.toLowerCase();
+                    stop.style.display = (!query || text.includes(query)) ? '' : 'none';
+                });
+            });
+        }
+    </script>
+</body>
+</html>
