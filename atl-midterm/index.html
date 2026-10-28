@@ -1,0 +1,1878 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Automata and Language Theory</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
+    <style>
+/* ==========================================================================
+   1. THEME VARIABLES (OPTION B: DEEP AMETHYST & MAGENTA-PLUM FOR AUTOMATA)
+   ========================================================================== */
+:root {
+    --bg-page: #f4f7f9;
+    --bg-card: #ffffff;
+    --bg-subtle: #f8fafc;
+    --bg-elevated: #f1f5f9;
+    --bg-code: #0f172a;
+
+    --text-main: #334155;
+    --text-muted: #64748b;
+    --text-bold: #0f172a;
+
+    /* Subject Accent Palette: Deep Amethyst & Magenta-Plum */
+    --primary: #9333ea;
+    --primary-soft: #f3e8ff;
+    --primary-border: #d8b4fe;
+    --secondary: #db2777;
+    --secondary-soft: #fce7f3;
+    --header-bg: linear-gradient(135deg, #0f071e 0%, #2e1065 55%, #581c87 100%);
+    --header-border: #a855f7;
+    --progress-grad: linear-gradient(90deg, #c084fc, #9333ea, #ec4899);
+
+    /* Semantic Accent Colors for Visual Variety */
+    --emerald: #059669;
+    --emerald-soft: #d1fae5;
+    --amber: #d97706;
+    --amber-soft: #fef3c7;
+    --rose: #e11d48;
+    --rose-soft: #ffe4e6;
+    --purple: #7c3aed;
+    --purple-soft: #ede9fe;
+    --sky: #0284c7;
+    --sky-soft: #e0f2fe;
+
+    /* Highlighted Keyword Pill */
+    --hl-bg: #f3e8ff;
+    --hl-text: #6b21a8;
+    --hl-border: #d8b4fe;
+
+    --border: #e2e8f0;
+    --line-spine: #cbd5e1;
+    --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.05);
+    --shadow-md: 0 10px 25px -5px rgba(15, 23, 42, 0.08);
+    --radius-lg: 18px;
+    --radius-md: 12px;
+}
+
+[data-theme="dark"] {
+    --bg-page: #090d16;
+    --bg-card: #111827;
+    --bg-subtle: #1e293b;
+    --bg-elevated: #0f172a;
+    --bg-code: #030712;
+
+    --text-main: #cbd5e1;
+    --text-muted: #94a3b8;
+    --text-bold: #f8fafc;
+
+    /* Subject Accent Palette (Dark Mode) */
+    --primary: #c084fc;
+    --primary-soft: rgba(168, 85, 247, 0.16);
+    --primary-border: #7e22ce;
+    --secondary: #f472b6;
+    --secondary-soft: rgba(236, 72, 153, 0.16);
+
+    --emerald: #34d399;
+    --emerald-soft: rgba(16, 185, 129, 0.15);
+    --amber: #fbbf24;
+    --amber-soft: rgba(245, 158, 11, 0.15);
+    --rose: #fb7185;
+    --rose-soft: rgba(244, 63, 94, 0.15);
+    --purple: #c084fc;
+    --purple-soft: rgba(139, 92, 246, 0.16);
+    --sky: #38bdf8;
+    --sky-soft: rgba(14, 165, 233, 0.15);
+
+    --hl-bg: rgba(192, 132, 252, 0.18);
+    --hl-text: #e9d5ff;
+    --hl-border: rgba(192, 132, 252, 0.35);
+
+    --border: #1f2937;
+    --line-spine: #334155;
+    --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.35);
+    --shadow-md: 0 12px 30px -5px rgba(0, 0, 0, 0.55);
+}
+
+/* ==========================================================================
+   2. RESET & BASE TYPOGRAPHY
+   ========================================================================== */
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+body {
+    margin: 0;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: var(--bg-page);
+    color: var(--text-main);
+    line-height: 1.6;
+    overflow-x: hidden;
+    transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+h1, h2, h3, h4 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    color: var(--text-bold);
+    margin-top: 0;
+    line-height: 1.28;
+}
+
+strong, b { color: var(--text-bold); font-weight: 700; }
+
+code, pre, .mono {
+    font-family: 'JetBrains Mono', monospace;
+}
+
+p code, li code, td code, div code {
+    background: var(--bg-elevated);
+    color: var(--primary);
+    padding: 0.1rem 0.4rem;
+    border-radius: 5px;
+    font-size: 0.86em;
+    font-weight: 600;
+    border: 1px solid var(--border);
+}
+
+/* Inline SVG Icon Standard */
+svg.ico {
+    width: 18px;
+    height: 18px;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    fill: none;
+    flex-shrink: 0;
+    display: inline-block;
+    vertical-align: middle;
+}
+svg.ico-lg { width: 22px; height: 22px; }
+svg.ico-sm { width: 15px; height: 15px; }
+
+/* Highlighted Keyword Pill */
+.hl {
+    background-color: var(--hl-bg);
+    color: var(--hl-text);
+    border: 1px solid var(--hl-border);
+    padding: 0.06rem 0.4rem;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.93em;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+}
+
+/* Block Header + Newline Description Formatting */
+.point-body {
+    flex: 1;
+    min-width: 0;
+}
+.item-title {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 800;
+    font-size: 0.98rem;
+    color: var(--text-bold);
+    margin: 0 0 0.28rem 0;
+    line-height: 1.35;
+    display: block;
+}
+.item-desc {
+    color: var(--text-main);
+    font-size: 0.91rem;
+    line-height: 1.58;
+    display: block;
+}
+.elab {
+    display: block;
+    margin-top: 0.28rem;
+    color: var(--text-muted);
+    font-size: 0.87rem;
+    line-height: 1.52;
+}
+
+/* ==========================================================================
+   3. SCROLL PROGRESS BAR, HEADER & STICKY NAVIGATION TABS
+   ========================================================================== */
+.progress-rail {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: rgba(148, 163, 184, 0.2);
+    z-index: 1000;
+}
+.progress-fill {
+    height: 100%;
+    width: 0%;
+    background: var(--progress-grad);
+    transition: width 0.1s linear;
+}
+
+.app-header {
+    background: var(--header-bg);
+    color: #f8fafc;
+    padding: 1.25rem 5%;
+    border-bottom: 3px solid var(--header-border);
+}
+.header-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+.brand-box h1 {
+    color: #ffffff;
+    font-size: 1.42rem;
+    font-weight: 800;
+    margin: 0;
+    letter-spacing: -0.02em;
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+}
+.brand-icon {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    flex-shrink: 0;
+}
+
+.header-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    flex-wrap: wrap;
+}
+.search-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+.search-wrap svg.ico {
+    position: absolute;
+    left: 11px;
+    color: #94a3b8;
+    pointer-events: none;
+}
+.search-input {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    color: #ffffff;
+    padding: 0.48rem 0.85rem 0.48rem 2.2rem;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    width: 210px;
+    outline: none;
+    transition: all 0.2s ease;
+}
+.search-input::placeholder { color: #cbd5e1; }
+.search-input:focus {
+    background: rgba(255, 255, 255, 0.18);
+    border-color: #ffffff;
+    width: 250px;
+}
+
+.ctrl-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    color: #f8fafc;
+    padding: 0.48rem 0.9rem;
+    border-radius: 999px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+.ctrl-btn:hover { background: rgba(255, 255, 255, 0.2); }
+
+/* Sticky Lesson Tabs */
+.module-bar {
+    position: sticky;
+    top: 4px;
+    z-index: 900;
+    background: var(--bg-card);
+    border-bottom: 1px solid var(--border);
+    box-shadow: var(--shadow-sm);
+    padding: 0.65rem 5%;
+}
+.module-tabs {
+    max-width: 900px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 0.5rem;
+}
+.module-tab {
+    background: var(--bg-subtle);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    padding: 0.6rem 0.8rem;
+    border-radius: 11px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 700;
+    font-size: 0.82rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.2s ease;
+    text-align: left;
+}
+.module-tab:hover {
+    color: var(--text-bold);
+    border-color: var(--primary);
+}
+.module-tab.active {
+    background: var(--primary);
+    color: #ffffff;
+    border-color: var(--primary);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+}
+.tab-num {
+    width: 24px; height: 24px;
+    border-radius: 7px;
+    background: rgba(15, 23, 42, 0.08);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 800;
+    flex-shrink: 0;
+}
+.module-tab.active .tab-num {
+    background: rgba(255, 255, 255, 0.22);
+    color: #ffffff;
+}
+
+/* ==========================================================================
+   4. SINGLE-COLUMN LINEAR FEED & LESSON STOP CARDS
+   ========================================================================== */
+.feed-shell {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem 5% 5rem 5%;
+}
+
+.module-pane { display: none; animation: fadeSlide 0.3s ease; }
+.module-pane.active { display: block; }
+@keyframes fadeSlide {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.module-intro {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-left: 5px solid var(--primary);
+    border-radius: var(--radius-lg);
+    padding: 1.25rem 1.65rem;
+    margin-bottom: 2.2rem;
+    box-shadow: var(--shadow-sm);
+}
+.module-intro h2 {
+    font-size: 1.45rem;
+    margin: 0;
+}
+
+/* Single-Column Timeline Spine */
+.linear-feed {
+    position: relative;
+    padding-left: 3.1rem;
+}
+.linear-feed::before {
+    content: "";
+    position: absolute;
+    left: 19px;
+    top: 12px;
+    bottom: 12px;
+    width: 3px;
+    background: var(--line-spine);
+    border-radius: 3px;
+}
+
+.lesson-stop {
+    position: relative;
+    margin-bottom: 2.25rem;
+}
+.stop-node {
+    position: absolute;
+    left: -3.1rem;
+    top: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    background: var(--primary);
+    color: #ffffff;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 800;
+    font-size: 0.88rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.18);
+    border: 3px solid var(--bg-page);
+    z-index: 2;
+}
+
+.stop-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1.65rem;
+    box-shadow: var(--shadow-md);
+}
+.stop-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.9rem;
+}
+.stop-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.73rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    padding: 0.25rem 0.65rem;
+    border-radius: 6px;
+    background: var(--primary-soft);
+    color: var(--primary);
+}
+.stop-card h3 {
+    font-size: 1.32rem;
+    margin: 0.35rem 0 0 0;
+}
+.sub-label {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.98rem;
+    font-weight: 800;
+    color: var(--text-bold);
+    margin: 1.35rem 0 0.55rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+}
+.sub-label svg.ico { color: var(--primary); }
+
+/* ==========================================================================
+   5. VISUAL COMPONENT LIBRARY STYLES (ALL ALWAYS-VISIBLE)
+   ========================================================================== */
+
+/* 5A. Takeaway Banner */
+.takeaway-banner {
+    background: var(--bg-subtle);
+    border-left: 4px solid var(--primary);
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    padding: 0.95rem 1.15rem;
+    margin-bottom: 1.1rem;
+    font-size: 0.94rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+}
+.takeaway-banner svg.ico {
+    color: var(--primary);
+    margin-top: 0.18rem;
+}
+
+/* 5B. One-Box-Per-Item Stack (.point-stack & .point-row) */
+.point-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin: 0.8rem 0;
+}
+.point-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.85rem;
+    background: var(--bg-subtle);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 0.9rem 1.1rem;
+    font-size: 0.91rem;
+}
+.point-num {
+    min-width: 28px;
+    height: 28px;
+    padding: 0 0.35rem;
+    border-radius: 8px;
+    background: var(--primary-soft);
+    color: var(--primary);
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    font-size: 0.78rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 0.05rem;
+}
+
+/* 5C. Multi-Pillar Concept Grid */
+.pillars-visual {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 0.9rem;
+    margin: 1rem 0;
+}
+.pillar-col {
+    background: var(--bg-subtle);
+    border: 1px solid var(--border);
+    border-top: 4px solid var(--primary);
+    border-radius: var(--radius-md);
+    padding: 1.05rem;
+}
+.pillar-head {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 800;
+    font-size: 0.96rem;
+    color: var(--text-bold);
+    margin-bottom: 0.5rem;
+}
+.pillar-head svg.ico { color: var(--primary); }
+
+/* 5D. Side-by-Side Comparison Cards (.visual-versus) */
+.visual-versus {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 0.95rem;
+    align-items: stretch;
+    margin: 1.1rem 0;
+}
+.vs-pane {
+    background: var(--bg-subtle);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 1.1rem;
+}
+.vs-pane h4 {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    margin-bottom: 0.6rem;
+    font-size: 1rem;
+}
+.vs-pane h4 svg.ico { color: var(--primary); }
+.vs-badge {
+    align-self: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 999px;
+    background: var(--primary);
+    color: #ffffff;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 800;
+    font-size: 0.76rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 5E. Code / Formal Expression Block */
+.code-block {
+    background: var(--bg-code);
+    color: #e2e8f0;
+    border-radius: 10px;
+    padding: 0.7rem 1rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.83rem;
+    line-height: 1.55;
+    overflow-x: auto;
+    margin: 0.55rem 0 0.1rem 0;
+    border: 1px solid #1e293b;
+    white-space: pre;
+}
+.code-block .c-kw  { color: #38bdf8; font-weight: 600; }
+.code-block .c-str { color: #4ade80; }
+.code-block .c-num { color: #fbbf24; }
+.code-block .c-cmt { color: #94a3b8; font-style: italic; }
+.code-block .c-nt  { color: #c084fc; font-weight: 600; }
+
+/* 5F. Custom Inline SVG Graphic Container */
+.svg-diagram-box {
+    background: var(--bg-subtle);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 1rem;
+    margin: 1rem 0;
+    text-align: center;
+    overflow-x: auto;
+}
+.svg-diagram-box svg {
+    max-width: 100%;
+    height: auto;
+}
+
+/* ==========================================================================
+   6. MOBILE RESPONSIVENESS (@media max-width: 720px)
+   ========================================================================== */
+@media screen and (max-width: 720px) {
+    .app-header { padding: 1.15rem 4%; }
+    .brand-box h1 { font-size: 1.15rem; }
+    .header-controls { width: 100%; justify-content: space-between; }
+    .search-wrap { flex: 1; }
+    .search-input, .search-input:focus { width: 100%; }
+
+    .module-bar { padding: 0.5rem 4%; }
+    .module-tabs { grid-template-columns: 1fr 1fr; gap: 0.4rem; }
+    .module-tab { padding: 0.55rem 0.65rem; font-size: 0.75rem; }
+
+    .feed-shell { padding: 1.25rem 4% 4rem 4%; }
+    .module-intro { padding: 1rem 1.25rem; }
+    .module-intro h2 { font-size: 1.2rem; }
+    .linear-feed { padding-left: 2.3rem; }
+    .linear-feed::before { left: 13px; }
+    .stop-node {
+        left: -2.3rem;
+        width: 30px;
+        height: 30px;
+        font-size: 0.75rem;
+        border-radius: 9px;
+    }
+    .stop-card { padding: 1.15rem; }
+    .stop-card h3 { font-size: 1.12rem; }
+
+    .visual-versus { grid-template-columns: 1fr; }
+    .vs-badge { margin: -0.25rem auto; }
+    .pillars-visual { grid-template-columns: 1fr; }
+
+    .point-row { padding: 0.75rem 0.85rem; font-size: 0.88rem; }
+}
+    </style>
+</head>
+<body>
+
+    <!-- Top Scroll Progress Rail -->
+    <div class="progress-rail">
+        <div class="progress-fill" id="progressBar"></div>
+    </div>
+
+    <!-- Application Header -->
+    <header class="app-header">
+        <div class="header-inner">
+            <div class="brand-box">
+                <h1>
+                    <span class="brand-icon">
+                        <svg class="ico ico-lg" viewBox="0 0 24 24"><circle cx="6" cy="12" r="3"/><circle cx="18" cy="6" r="3"/><circle cx="18" cy="18" r="3"/><line x1="8.7" y1="10.7" x2="15.3" y2="7.3"/><line x1="8.7" y1="13.3" x2="15.3" y2="16.7"/></svg>
+                    </span>
+                    Automata and Language Theory
+                </h1>
+            </div>
+            <div class="header-controls">
+                <div class="search-wrap">
+                    <svg class="ico" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    <input type="text" id="searchInput" class="search-input" placeholder="Search concepts..." aria-label="Search concepts">
+                </div>
+                <button type="button" class="ctrl-btn" id="themeBtn" aria-label="Toggle color theme">
+                    <svg class="ico" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                    <span id="themeLabel">Dark Mode</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sticky Module / Lesson Navigation Bar -->
+    <nav class="module-bar" aria-label="Course Modules">
+        <div class="module-tabs">
+            <button type="button" class="module-tab active" data-target="mod-1">
+                <span class="tab-num">01</span>
+                <span>Automata &amp; DFA</span>
+            </button>
+            <button type="button" class="module-tab" data-target="mod-2">
+                <span class="tab-num">02</span>
+                <span>NFA &amp; Equivalence</span>
+            </button>
+            <button type="button" class="module-tab" data-target="mod-3">
+                <span class="tab-num">03</span>
+                <span>&epsilon;-Moves &amp; Closure</span>
+            </button>
+            <button type="button" class="module-tab" data-target="mod-4">
+                <span class="tab-num">04</span>
+                <span>Regular Expressions</span>
+            </button>
+            <button type="button" class="module-tab" data-target="mod-5">
+                <span class="tab-num">05</span>
+                <span>Mealy &amp; Moore</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Single-Column Linear Feed Shell -->
+    <main class="feed-shell">
+
+        <!-- ==================================================================
+             LESSON 1: THEORY OF AUTOMATA & FINITE STATE MACHINES
+             ================================================================== -->
+        <section class="module-pane active" id="mod-1">
+            <div class="module-intro">
+                <h2>Lesson 1: Theory of Automata &amp; Finite State Machines</h2>
+            </div>
+
+            <div class="linear-feed">
+
+                <!-- STOP 01 -->
+                <article class="lesson-stop">
+                    <div class="stop-node">01</div>
+                    <div class="stop-card">
+                        <div class="stop-header">
+                            <div>
+                                <span class="stop-tag">
+                                    <svg class="ico ico-sm" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/></svg>
+                                    Foundations
+                                </span>
+                                <h3>Theory of Automata, Automaton &amp; Finite State System</h3>
+                            </div>
+                        </div>
+
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">1</span>
+                                <div class="point-body">
+                                    <div class="item-title">Theory of Automata</div>
+                                    <div class="item-desc">The study of <span class="hl">abstract computing devices, or &ldquo;machines&rdquo;</span>, dealing with different properties of mathematical models.</div>
+                                    <span class="elab">An excellent starting point for the theory of computation (computability and complexity require a precise definition of a computer) and introduces formal concepts used across applied Computer Science.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">2</span>
+                                <div class="point-body">
+                                    <div class="item-title">Automaton</div>
+                                    <div class="item-desc">An <span class="hl">abstract model computing machine</span> that processes input sequences according to defined state rules.</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">3</span>
+                                <div class="point-body">
+                                    <div class="item-title">Finite State System</div>
+                                    <div class="item-desc">A <span class="hl">mathematical model of a system with discrete inputs and outputs</span> that can be in any one of a <span class="hl">finite number of states</span>.</div>
+                                    <span class="elab">The states of the system summarize the information concerning past inputs needed to determine the behavior of the system on subsequent inputs.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- STOP 02 -->
+                <article class="lesson-stop">
+                    <div class="stop-node">02</div>
+                    <div class="stop-card">
+                        <div class="stop-header">
+                            <div>
+                                <span class="stop-tag">
+                                    <svg class="ico ico-sm" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                                    Formal Language Building Blocks
+                                </span>
+                                <h3>Symbols, Strings, Languages, Powers of &Sigma; &amp; Cardinality</h3>
+                            </div>
+                        </div>
+
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">1</span>
+                                <div class="point-body">
+                                    <div class="item-title">Symbol</div>
+                                    <div class="item-desc">The <span class="hl">fundamental building blocks</span> of an alphabet (such as characters <code>0</code>, <code>1</code>, <code>a</code>, or <code>b</code>).</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">2</span>
+                                <div class="point-body">
+                                    <div class="item-title">String</div>
+                                    <div class="item-desc">A finite <span class="hl">sequence of symbols</span> chosen from an alphabet (for example, <code>0101</code>).</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">3</span>
+                                <div class="point-body">
+                                    <div class="item-title">Language</div>
+                                    <div class="item-desc">A <span class="hl">set of strings</span> formed from an alphabet <code>&Sigma;</code>.</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">4</span>
+                                <div class="point-body">
+                                    <div class="item-title">Length of String ( <code>|S|</code> )</div>
+                                    <div class="item-desc">The <span class="hl">total number of symbols</span> present in a string <code>S</code>.</div>
+                                    <div class="code-block">|0110| = 4</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">5</span>
+                                <div class="point-body">
+                                    <div class="item-title">Empty String ( <code>&epsilon;</code> )</div>
+                                    <div class="item-desc">A string with zero symbols where <span class="hl"><code>|S| = 0</code></span>, denoted by <span class="hl"><code>&epsilon;</code></span> (epsilon).</div>
+                                    <div class="code-block">|&epsilon;| = 0</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">6</span>
+                                <div class="point-body">
+                                    <div class="item-title">Powers of &Sigma; ( <code>&Sigma;<sup>n</sup></code> )</div>
+                                    <div class="item-desc">The <span class="hl">set of all strings of a certain length <code>n</code></span> over the alphabet <code>&Sigma;</code>.</div>
+                                    <div class="code-block">&Sigma; = {0, 1}  &rarr;  &Sigma;<sup>2</sup> = {00, 01, 10, 11}</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">7</span>
+                                <div class="point-body">
+                                    <div class="item-title">Cardinality ( <code>|&Sigma;<sup>n</sup>|</code> )</div>
+                                    <div class="item-desc">The <span class="hl">number of elements in a set</span>. Given binary alphabet <code>&Sigma; = {0, 1}</code>, the total possible strings of length <code>n</code> is <span class="hl"><code>|&Sigma;<sup>n</sup>| = 2<sup>n</sup></code></span>.</div>
+                                    <div class="code-block">Given &Sigma; = {0, 1},  |&Sigma;<sup>n</sup>| = 2<sup>n</sup></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- STOP 03 -->
+                <article class="lesson-stop">
+                    <div class="stop-node">03</div>
+                    <div class="stop-card">
+                        <div class="stop-header">
+                            <div>
+                                <span class="stop-tag">
+                                    <svg class="ico ico-sm" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+                                    Automata Classification
+                                </span>
+                                <h3>Types of Finite Automata: DFA vs. NFA Overview</h3>
+                            </div>
+                        </div>
+
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">1</span>
+                                <div class="point-body">
+                                    <div class="item-title">Deterministic Finite Automata (DFA)</div>
+                                    <div class="item-desc">The <span class="hl">simplest model of computation</span> with a fixed number of states where the machine can only be in <span class="hl">one state at a time</span>.</div>
+                                    <span class="elab">After reading any sequence of inputs, it is in a single state; on each input symbol, there is one and only one state to which it can transition, and it has very limited memory.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">2</span>
+                                <div class="point-body">
+                                    <div class="item-title">Non-Deterministic Finite Automata (NFA)</div>
+                                    <div class="item-desc">A finite automaton with a fixed number of states where the machine can be in <span class="hl">multiple states at one time</span>.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- STOP 04 -->
+                <article class="lesson-stop">
+                    <div class="stop-node">04</div>
+                    <div class="stop-card">
+                        <div class="stop-header">
+                            <div>
+                                <span class="stop-tag">
+                                    <svg class="ico ico-sm" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                                    Formal Definition &amp; Diagram
+                                </span>
+                                <h3>DFA 5-Tuple &amp; Graphical Representation</h3>
+                            </div>
+                        </div>
+
+                        <div class="sub-label">
+                            <svg class="ico" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                            DFA 5-Tuple Components: M = (Q, &Sigma;, &delta;, s, F)
+                        </div>
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">Q</span>
+                                <div class="point-body">
+                                    <div class="item-title"><code>Q</code> &mdash; State Alphabet</div>
+                                    <div class="item-desc">An <span class="hl">alphabet (finite set) of state symbols</span>.</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">&Sigma;</span>
+                                <div class="point-body">
+                                    <div class="item-title"><code>&Sigma;</code> &mdash; Input Alphabet</div>
+                                    <div class="item-desc">An <span class="hl">alphabet of input symbols</span> read by the machine.</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">&delta;</span>
+                                <div class="point-body">
+                                    <div class="item-title"><code>&delta;</code> &mdash; DFA Transition Function</div>
+                                    <div class="item-desc">The transition function mapping a state and input symbol to a <span class="hl">single next state</span>.</div>
+                                    <div class="code-block">&delta; : Q &times; &Sigma; &rarr; Q</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">s</span>
+                                <div class="point-body">
+                                    <div class="item-title"><code>s</code> &mdash; Start State</div>
+                                    <div class="item-desc">The <span class="hl">start (initial) state</span> in <code>Q</code> (<code>s &isin; Q</code>).</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">F</span>
+                                <div class="point-body">
+                                    <div class="item-title"><code>F</code> &mdash; Final State(s)</div>
+                                    <div class="item-desc">A <span class="hl">set of final (accepting) state or states</span> where <code>F &sube; Q</code>.</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="sub-label">
+                            <svg class="ico" viewBox="0 0 24 24"><circle cx="6" cy="12" r="3"/><circle cx="18" cy="6" r="3"/><circle cx="18" cy="18" r="3"/><line x1="8.7" y1="10.7" x2="15.3" y2="7.3"/><line x1="8.7" y1="13.3" x2="15.3" y2="16.7"/></svg>
+                            Graphical Representation of a Finite Automaton
+                        </div>
+
+                        <!-- Inline SVG Diagram showing Initial Arrow, Vertices, Arcs, and Double-Circle Final State -->
+                        <div class="svg-diagram-box">
+                            <svg viewBox="0 0 560 135" role="img" aria-label="Graphical Representation of a Finite Automaton">
+                                <!-- Incoming Arrow from Nowhere -->
+                                <line x1="25" y1="70" x2="88" y2="70" stroke="var(--primary)" stroke-width="2.5"/>
+                                <polygon points="88,64 100,70 88,76" fill="var(--primary)"/>
+                                <text x="55" y="55" text-anchor="middle" fill="var(--text-muted)" font-size="11" font-weight="700">Initial Arrow</text>
+
+                                <!-- Initial State Node q0 -->
+                                <circle cx="132" cy="70" r="30" fill="var(--bg-card)" stroke="var(--primary)" stroke-width="2.5"/>
+                                <text x="132" y="75" text-anchor="middle" fill="var(--text-bold)" font-size="14" font-weight="800">s (q0)</text>
+                                <text x="132" y="118" text-anchor="middle" fill="var(--text-muted)" font-size="11" font-weight="700">Initial State</text>
+
+                                <!-- Transition Arc (Edge) -->
+                                <line x1="162" y1="70" x2="365" y2="70" stroke="var(--text-bold)" stroke-width="2.5"/>
+                                <polygon points="365,64 377,70 365,76" fill="var(--text-bold)"/>
+                                <text x="270" y="56" text-anchor="middle" fill="var(--primary)" font-size="12" font-weight="800">Arc / Edge (Input Symbol a)</text>
+
+                                <!-- Final State Node q1 (Double Concentric Circles) -->
+                                <circle cx="412" cy="70" r="32" fill="var(--bg-card)" stroke="var(--secondary)" stroke-width="2.5"/>
+                                <circle cx="412" cy="70" r="25" fill="none" stroke="var(--secondary)" stroke-width="2"/>
+                                <text x="412" y="75" text-anchor="middle" fill="var(--text-bold)" font-size="14" font-weight="800">q1 &isin; F</text>
+                                <text x="412" y="118" text-anchor="middle" fill="var(--text-muted)" font-size="11" font-weight="700">Final State (Double Circle)</text>
+                            </svg>
+                        </div>
+
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">1</span>
+                                <div class="point-body">
+                                    <div class="item-title">Vertices (Nodes)</div>
+                                    <div class="item-desc">Circles that <span class="hl">represent the states</span> of the system.</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">2</span>
+                                <div class="point-body">
+                                    <div class="item-title">Arcs (Edges)</div>
+                                    <div class="item-desc">Directed arrows <span class="hl">labeled with an input alphabet symbol</span>, showing state transitions.</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">3</span>
+                                <div class="point-body">
+                                    <div class="item-title">Initial State</div>
+                                    <div class="item-desc">Denoted by an <span class="hl">incoming arrow pointing to the state from nowhere</span>.</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">4</span>
+                                <div class="point-body">
+                                    <div class="item-title">Final State(s)</div>
+                                    <div class="item-desc">Indicated by <span class="hl">double concentric circles</span>.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+
+        <!-- ==================================================================
+             LESSON 2: NON-DETERMINISTIC FINITE AUTOMATA (NFA)
+             ================================================================== -->
+        <section class="module-pane" id="mod-2">
+            <div class="module-intro">
+                <h2>Lesson 2: Non-Deterministic Finite Automata (NFA)</h2>
+            </div>
+
+            <div class="linear-feed">
+
+                <!-- STOP 01 -->
+                <article class="lesson-stop">
+                    <div class="stop-node">01</div>
+                    <div class="stop-card">
+                        <div class="stop-header">
+                            <div>
+                                <span class="stop-tag">
+                                    <svg class="ico ico-sm" viewBox="0 0 24 24"><line x1="6" y1="3" x2="6" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></svg>
+                                    NFA Properties
+                                </span>
+                                <h3>Characteristics of Non-Deterministic Finite Automata (NFA)</h3>
+                            </div>
+                        </div>
+
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">1</span>
+                                <div class="point-body">
+                                    <div class="item-title">Multiple Next States</div>
+                                    <div class="item-desc">Given the current state, there <span class="hl">could be multiple next states</span> for a single input symbol.</div>
+                                    <span class="elab">Can have multiple transitions for the same symbol from the same state.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">2</span>
+                                <div class="point-body">
+                                    <div class="item-title">Random or Parallel State Selection</div>
+                                    <div class="item-desc">The next state <span class="hl">may be chosen at random</span>, or <span class="hl">all next states may be chosen in parallel</span>.</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">3</span>
+                                <div class="point-body">
+                                    <div class="item-title">Zero, One, Two, or More Transitions</div>
+                                    <div class="item-desc">For each state, there can be <span class="hl">zero, one, two, or more transitions</span> corresponding to a particular symbol.</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">4</span>
+                                <div class="point-body">
+                                    <div class="item-title">Fewer Restrictions &amp; Simpler Diagrams</div>
+                                    <div class="item-desc">NFAs have <span class="hl">fewer restrictions than DFAs</span> and therefore make complicated automata easier to understand and depict in a diagram.</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">5</span>
+                                <div class="point-body">
+                                    <div class="item-title">Empty String Transitions Permitted</div>
+                                    <div class="item-desc">Permits <span class="hl">empty string (<code>&epsilon;</code>) transitions</span> without consuming an input symbol.</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">6</span>
+                                <div class="point-body">
+                                    <div class="item-title">Backtracking &amp; Space Usage</div>
+                                    <div class="item-desc"><span class="hl">Backtracking is not always possible</span>, and an NFA <span class="hl">requires less space</span> (fewer states) than an equivalent DFA.</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">7</span>
+                                <div class="point-body">
+                                    <div class="item-title">String Acceptance Condition in NFA</div>
+                                    <div class="item-desc">A string is accepted if <span class="hl">at least one of all possible transition paths ends in a final state</span>.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- STOP 02 -->
+                <article class="lesson-stop">
+                    <div class="stop-node">02</div>
+                    <div class="stop-card">
+                        <div class="stop-header">
+                            <div>
+                                <span class="stop-tag">
+                                    <svg class="ico ico-sm" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                                    Formal Definition
+                                </span>
+                                <h3>NFA 5-Tuple: M = (Q, &Sigma;, &delta;, s, F)</h3>
+                            </div>
+                        </div>
+
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">Q</span>
+                                <div class="point-body">
+                                    <div class="item-title"><code>Q</code> &mdash; State Alphabet</div>
+                                    <div class="item-desc">An <span class="hl">alphabet of state symbols</span>.</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">&Sigma;</span>
+                                <div class="point-body">
+                                    <div class="item-title"><code>&Sigma;</code> &mdash; Input Alphabet</div>
+                                    <div class="item-desc">An <span class="hl">alphabet of input symbols</span>.</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">&delta;</span>
+                                <div class="point-body">
+                                    <div class="item-title"><code>&delta;</code> &mdash; NFA Transition Function (Maps to <code>2<sup>Q</sup></code>)</div>
+                                    <div class="item-desc">The transition function mapping a state and input symbol to a <span class="hl">subset of states in the power set <code>2<sup>Q</sup></code></span>.</div>
+                                    <div class="code-block">&delta; : Q &times; &Sigma; &rarr; 2<sup>Q</sup></div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">s</span>
+                                <div class="point-body">
+                                    <div class="item-title"><code>s</code> &mdash; Start State</div>
+                                    <div class="item-desc">The <span class="hl">start state</span> in <code>Q</code> (<code>s &isin; Q</code>).</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">F</span>
+                                <div class="point-body">
+                                    <div class="item-title"><code>F</code> &mdash; Final State(s)</div>
+                                    <div class="item-desc">A <span class="hl">set of final state or states</span> where <code>F &sube; Q</code>.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- STOP 03 -->
+                <article class="lesson-stop">
+                    <div class="stop-node">03</div>
+                    <div class="stop-card">
+                        <div class="stop-header">
+                            <div>
+                                <span class="stop-tag">
+                                    <svg class="ico ico-sm" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                                    Comparison &amp; Conversion
+                                </span>
+                                <h3>DFA vs. NFA Comparison &amp; Conversion Rules</h3>
+                            </div>
+                        </div>
+
+                        <div class="visual-versus">
+                            <div class="vs-pane">
+                                <h4>
+                                    <svg class="ico" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/></svg>
+                                    DFA Properties
+                                </h4>
+                                <div class="point-stack">
+                                    <div class="point-row">
+                                        <span class="point-num">1</span>
+                                        <div class="point-body">
+                                            <div class="item-title">Single Next State</div>
+                                            <div class="item-desc">Transition from a state is to a <span class="hl">single particular next state</span> for each input symbol (<code>&delta; : Q &times; &Sigma; &rarr; Q</code>).</div>
+                                        </div>
+                                    </div>
+                                    <div class="point-row">
+                                        <span class="point-num">2</span>
+                                        <div class="point-body">
+                                            <div class="item-title">No Empty String Transitions</div>
+                                            <div class="item-desc"><span class="hl">Empty string (<code>&epsilon;</code>) transitions are not seen</span> in a DFA.</div>
+                                        </div>
+                                    </div>
+                                    <div class="point-row">
+                                        <span class="point-num">3</span>
+                                        <div class="point-body">
+                                            <div class="item-title">Backtracking &amp; Space</div>
+                                            <div class="item-desc"><span class="hl">Backtracking is allowed</span>, and a DFA <span class="hl">requires more space</span>.</div>
+                                        </div>
+                                    </div>
+                                    <div class="point-row">
+                                        <span class="point-num">4</span>
+                                        <div class="point-body">
+                                            <div class="item-title">String Acceptance</div>
+                                            <div class="item-desc">A string is accepted <span class="hl">if its single path transits to a final state</span>.</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="vs-badge">VS</div>
+                            <div class="vs-pane">
+                                <h4>
+                                    <svg class="ico" viewBox="0 0 24 24"><line x1="6" y1="3" x2="6" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></svg>
+                                    NFA to DFA Conversion Rules
+                                </h4>
+                                <div class="point-stack">
+                                    <div class="point-row">
+                                        <span class="point-num">1</span>
+                                        <div class="point-body">
+                                            <div class="item-title">Every DFA is an NFA</div>
+                                            <div class="item-desc"><span class="hl">Every DFA is an NFA, but not vice versa</span>.</div>
+                                            <span class="elab">A DFA is simply a special case of an NFA where every transition set has size 1.</span>
+                                        </div>
+                                    </div>
+                                    <div class="point-row">
+                                        <span class="point-num">2</span>
+                                        <div class="point-body">
+                                            <div class="item-title">Equivalent DFA Exists for Every NFA</div>
+                                            <div class="item-desc">There is an <span class="hl">equivalent DFA for every NFA</span> that recognizes the exact same language.</div>
+                                            <span class="elab">Any NFA with <code>|Q|</code> states can be converted into a DFA with up to <code>2<sup>|Q|</sup></code> states.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+
+        <!-- ==================================================================
+             LESSON 3: FINITE AUTOMATA WITH EPSILON (&epsilon;) MOVES
+             ================================================================== -->
+        <section class="module-pane" id="mod-3">
+            <div class="module-intro">
+                <h2>Lesson 3: Finite Automata with Epsilon (&epsilon;) Moves</h2>
+            </div>
+
+            <div class="linear-feed">
+
+                <!-- STOP 01 -->
+                <article class="lesson-stop">
+                    <div class="stop-node">01</div>
+                    <div class="stop-card">
+                        <div class="stop-header">
+                            <div>
+                                <span class="stop-tag">
+                                    <svg class="ico ico-sm" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+                                    Epsilon Transitions
+                                </span>
+                                <h3>Epsilon (&epsilon;), Union of Epsilon &amp; &epsilon;-Closure</h3>
+                            </div>
+                        </div>
+
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">1</span>
+                                <div class="point-body">
+                                    <div class="item-title">Epsilon ( <code>&epsilon;</code> )</div>
+                                    <div class="item-desc">Means the <span class="hl">empty string</span> (a transition taken without reading or consuming any input symbol).</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">2</span>
+                                <div class="point-body">
+                                    <div class="item-title">Union of Epsilon</div>
+                                    <div class="item-desc">Any state on getting a particular input could go to <span class="hl">any of the <code>2<sup>Q</sup></code> states, or to no states</span>.</div>
+                                    <span class="elab">Means that a state on seeing nothing (an empty symbol <code>&epsilon;</code>) can also transition spontaneously to one or more states.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">3</span>
+                                <div class="point-body">
+                                    <div class="item-title">Reflexive Property: Every State on &epsilon; Goes to Itself</div>
+                                    <div class="item-desc"><span class="hl">Every state on epsilon always goes to itself</span>.</div>
+                                    <span class="elab">Even if a state diagram does not explicitly draw an <code>&epsilon;</code> self-loop on state <code>q</code>, we always include <code>q</code> itself inside <code>&epsilon;-closure(q)</code>.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">4</span>
+                                <div class="point-body">
+                                    <div class="item-title"><code>&epsilon;</code>-Closure (Epsilon Closure)</div>
+                                    <div class="item-desc"><span class="hl">All the states that can be reached from a particular state only by seeing the epsilon (<code>&epsilon;</code>) symbol</span>.</div>
+                                    <span class="elab">Includes the starting state itself plus all states reachable by following one or more consecutive <code>&epsilon;</code> arrows.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- STOP 02 -->
+                <article class="lesson-stop">
+                    <div class="stop-node">02</div>
+                    <div class="stop-card">
+                        <div class="stop-header">
+                            <div>
+                                <span class="stop-tag">
+                                    <svg class="ico ico-sm" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                                    Conversion Algorithm
+                                </span>
+                                <h3>Procedure for Converting &epsilon;-NFA to NFA</h3>
+                            </div>
+                        </div>
+
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">1</span>
+                                <div class="point-body">
+                                    <div class="item-title">Step 1 &mdash; Find Initial &epsilon;-Closure</div>
+                                    <div class="item-desc">Determine the <span class="hl"><code>&epsilon;</code>-closure of the current state</span> <code>q</code>.</div>
+                                    <div class="code-block">S<sub>1</sub> = &epsilon;-closure(q) = &delta;(q, &epsilon;)</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">2</span>
+                                <div class="point-body">
+                                    <div class="item-title">Step 2 &mdash; Follow Input Symbol Transitions</div>
+                                    <div class="item-desc">For each input symbol <code>a</code>, <span class="hl">evaluate the set of states reached</span> from the result of Step 1.</div>
+                                    <div class="code-block">S<sub>2</sub> = &delta;(S<sub>1</sub>, a) = &delta;(&delta;(q, &epsilon;), a)</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">3</span>
+                                <div class="point-body">
+                                    <div class="item-title">Step 3 &mdash; Take Final &epsilon;-Closure</div>
+                                    <div class="item-desc">Take the <span class="hl"><code>&epsilon;</code>-closure of all states obtained in Step 2</span> to produce the final transition set.</div>
+                                    <div class="code-block">S<sub>3</sub> = &epsilon;-closure(S<sub>2</sub>)</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">4</span>
+                                <div class="point-body">
+                                    <div class="item-title">Step 4 &mdash; Complete &epsilon;-NFA to NFA Transition Formula</div>
+                                    <div class="item-desc">Combines Steps 1&ndash;3 into a single formal transition equation for state <code>q</code> and input symbol <code>a</code>.</div>
+                                    <div class="code-block">&delta;(q, a) = &epsilon;-closure( &delta;( &delta;(q, &epsilon;), a ) )</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+
+        <!-- ==================================================================
+             LESSON 4: REGULAR EXPRESSIONS & IDENTITIES
+             ================================================================== -->
+        <section class="module-pane" id="mod-4">
+            <div class="module-intro">
+                <h2>Lesson 4: Regular Expressions &amp; Simplification Identities</h2>
+            </div>
+
+            <div class="linear-feed">
+
+                <!-- STOP 01 -->
+                <article class="lesson-stop">
+                    <div class="stop-node">01</div>
+                    <div class="stop-card">
+                        <div class="stop-header">
+                            <div>
+                                <span class="stop-tag">
+                                    <svg class="ico ico-sm" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                                    Definitions &amp; Closures
+                                </span>
+                                <h3>Regular Expressions, Regular Languages, <code>x*</code> &amp; <code>x+</code></h3>
+                            </div>
+                        </div>
+
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">1</span>
+                                <div class="point-body">
+                                    <div class="item-title">Regular Expressions</div>
+                                    <div class="item-desc">Simple expressions that <span class="hl">easily describe the languages accepted by finite automata</span>.</div>
+                                    <span class="elab">Can also be described as a sequence of pattern that defines a string.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">2</span>
+                                <div class="point-body">
+                                    <div class="item-title">Regular Languages</div>
+                                    <div class="item-desc">The <span class="hl">languages accepted by some regular expression</span> (and recognized by a DFA or NFA).</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">3</span>
+                                <div class="point-body">
+                                    <div class="item-title"><code>x*</code> (Kleene Star)</div>
+                                    <div class="item-desc">In a regular expression, means <span class="hl">zero or more occurrences of <code>x</code></span>.</div>
+                                    <div class="code-block">x* = { &epsilon;, x, xx, xxx, ... }</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">4</span>
+                                <div class="point-body">
+                                    <div class="item-title"><code>x+</code> (Positive Closure)</div>
+                                    <div class="item-desc">In a regular expression, means <span class="hl">one or more occurrences of <code>x</code></span> (excludes <code>&epsilon;</code> unless <code>&epsilon; &isin; x</code>).</div>
+                                    <div class="code-block">x+ = xx* = { x, xx, xxx, ... }</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- STOP 02 -->
+                <article class="lesson-stop">
+                    <div class="stop-node">02</div>
+                    <div class="stop-card">
+                        <div class="stop-header">
+                            <div>
+                                <span class="stop-tag">
+                                    <svg class="ico ico-sm" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+                                    Regular Expression Operators
+                                </span>
+                                <h3>Operators Used in Regular Expressions &amp; Regular Languages</h3>
+                            </div>
+                        </div>
+
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">1</span>
+                                <div class="point-body">
+                                    <div class="item-title">Union ( <code>&cup;</code>, <code>|</code>, or <code>+</code> )</div>
+                                    <div class="item-desc">If <code>R1</code> and <code>R2</code> are regular expressions, then <span class="hl"><code>R1 | R2</code> (also written as <code>R1 &cup; R2</code> or <code>R1 + R2</code>)</span> is also a regular expression.</div>
+                                    <span class="elab">Matches any string that belongs to <code>L(R1)</code> or <code>L(R2)</code>.</span>
+                                    <div class="code-block">L(R1 | R2) = L(R1) &cup; L(R2) = R1 &cup; R2</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">2</span>
+                                <div class="point-body">
+                                    <div class="item-title">Concatenation ( <code>R1R2</code> or <code>R1.R2</code> )</div>
+                                    <div class="item-desc">If <code>R1</code> and <code>R2</code> are regular expressions, then <span class="hl"><code>R1R2</code> (also written as <code>R1.R2</code>)</span> is also a regular expression.</div>
+                                    <span class="elab">Joins a string from <code>R1</code> followed immediately by a string from <code>R2</code>.</span>
+                                    <div class="code-block">L(R1R2) = L(R1) concatenated with L(R2) = { xy : x &isin; R1 and y &isin; R2 }</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">3</span>
+                                <div class="point-body">
+                                    <div class="item-title">Kleene Closure ( <code>R1*</code> )</div>
+                                    <div class="item-desc">If <code>R1</code> is a regular expression, then <span class="hl"><code>R1*</code> (the Kleene closure of <code>R1</code>)</span> is also a regular expression.</div>
+                                    <span class="elab">Concatenates zero or more strings chosen from <code>R1</code>.</span>
+                                    <div class="code-block">L(R1*) = &epsilon; &cup; L(R1) &cup; L(R1R1) &cup; L(R1R1R1) &cup; ...
+       = { x<sub>1</sub>x<sub>2</sub>x<sub>3</sub>...x<sub>k</sub> : k &ge; 0 and each x<sub>i</sub> &isin; R1 }</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- STOP 03 -->
+                <article class="lesson-stop">
+                    <div class="stop-node">03</div>
+                    <div class="stop-card">
+                        <div class="stop-header">
+                            <div>
+                                <span class="stop-tag">
+                                    <svg class="ico ico-sm" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                                    Simplification Laws
+                                </span>
+                                <h3>Identities of Regular Expressions (Simplification)</h3>
+                            </div>
+                        </div>
+
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">1</span>
+                                <div class="point-body">
+                                    <div class="item-title">Union with Empty Set ( <code>&Phi;</code> )</div>
+                                    <div class="item-desc">Adding the empty language <code>&Phi;</code> via union leaves <code>R</code> unchanged.</div>
+                                    <div class="code-block">&Phi; + R = R</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">2</span>
+                                <div class="point-body">
+                                    <div class="item-title">Concatenation with Empty Set ( <code>&Phi;</code> )</div>
+                                    <div class="item-desc">Concatenating any regular expression <code>R</code> with the empty set <code>&Phi;</code> always yields the <span class="hl">empty set <code>&Phi;</code></span>.</div>
+                                    <div class="code-block">&Phi;R = R&Phi; = &Phi;</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">3</span>
+                                <div class="point-body">
+                                    <div class="item-title">Concatenation with Empty String ( <code>&epsilon;</code> )</div>
+                                    <div class="item-desc">Concatenating <code>R</code> with the empty string <code>&epsilon;</code> leaves <span class="hl"><code>R</code> unchanged</span>.</div>
+                                    <div class="code-block">&epsilon;R = R&epsilon; = R</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">4</span>
+                                <div class="point-body">
+                                    <div class="item-title">Kleene Closure of <code>&epsilon;</code> and <code>&Phi;</code></div>
+                                    <div class="item-desc">The Kleene star of both the empty string and the empty set equals the <span class="hl">empty string <code>&epsilon;</code></span>.</div>
+                                    <div class="code-block">&epsilon;* = &epsilon;   and   &Phi;* = &epsilon;</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">5</span>
+                                <div class="point-body">
+                                    <div class="item-title">Union of Empty Set and Empty String</div>
+                                    <div class="item-desc">The union of <code>&Phi;</code> and <code>&epsilon;</code> simplifies to <span class="hl"><code>&epsilon;</code></span>.</div>
+                                    <div class="code-block">&Phi; + &epsilon; = &epsilon;</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">6</span>
+                                <div class="point-body">
+                                    <div class="item-title">Idempotent Law of Union</div>
+                                    <div class="item-desc">Taking the union of a regular expression <code>R</code> with itself yields <span class="hl"><code>R</code></span>.</div>
+                                    <div class="code-block">R + R = R</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">7</span>
+                                <div class="point-body">
+                                    <div class="item-title">Product of Identical Kleene Closures</div>
+                                    <div class="item-desc">Concatenating <code>R*</code> with <code>R*</code> produces <span class="hl"><code>R*</code></span>.</div>
+                                    <div class="code-block">R*R* = R*</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">8</span>
+                                <div class="point-body">
+                                    <div class="item-title">Positive Closure Identity ( <code>R+</code> )</div>
+                                    <div class="item-desc">Concatenating <code>R</code> with <code>R*</code> in either order produces <span class="hl">one or more occurrences (<code>R+</code>)</span>.</div>
+                                    <div class="code-block">RR* = R*R = R+</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">9</span>
+                                <div class="point-body">
+                                    <div class="item-title">Nested Kleene Closure</div>
+                                    <div class="item-desc">Applying Kleene closure twice is redundant and simplifies to <span class="hl"><code>R*</code></span>.</div>
+                                    <div class="code-block">(R*)* = R*</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">10</span>
+                                <div class="point-body">
+                                    <div class="item-title">Kleene Star Expansion Identity</div>
+                                    <div class="item-desc">Zero occurrences (<code>&epsilon;</code>) unioned with one or more occurrences (<code>RR*</code> or <code>R*R</code>) equals <span class="hl"><code>R*</code></span>.</div>
+                                    <div class="code-block">&epsilon; + RR* = &epsilon; + R*R = R*</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">11</span>
+                                <div class="point-body">
+                                    <div class="item-title">Absorption of <code>Q</code> into <code>P*Q</code> and <code>QP*</code></div>
+                                    <div class="item-desc">Since <code>P*</code> already includes <code>&epsilon;</code>, <code>Q</code> is already contained inside <code>P*Q</code> and <code>QP*</code>.</div>
+                                    <div class="code-block">P*Q + Q = P*Q   and   QP* + Q = QP*</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">12</span>
+                                <div class="point-body">
+                                    <div class="item-title">Idempotent Union of <code>P*Q</code></div>
+                                    <div class="item-desc">Unioning <code>P*Q</code> with itself simplifies to <span class="hl"><code>P*Q</code></span>.</div>
+                                    <div class="code-block">P*Q + P*Q = P*Q</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">13</span>
+                                <div class="point-body">
+                                    <div class="item-title">Sliding / Shift Rule for Concatenation</div>
+                                    <div class="item-desc">Repeating <code>PQ</code> followed by <code>P</code> is identical to starting with <code>P</code> followed by repeating <code>QP</code>.</div>
+                                    <div class="code-block">(PQ)*P = P(QP)*</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">14</span>
+                                <div class="point-body">
+                                    <div class="item-title">Closure of Union Equivalences</div>
+                                    <div class="item-desc">All three closure expressions generate the exact same set of strings over <code>P</code> and <code>Q</code>.</div>
+                                    <div class="code-block">(P + Q)* = (P*Q*)* = (P* + Q*)*</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">15</span>
+                                <div class="point-body">
+                                    <div class="item-title">Left and Right Distributive Laws</div>
+                                    <div class="item-desc">Concatenation <span class="hl">distributes over union</span> from both the right and the left.</div>
+                                    <div class="code-block">(P + Q)R = PR + QR   and   R(P + Q) = RP + RQ</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">16</span>
+                                <div class="point-body">
+                                    <div class="item-title">Product of <code>(R + &epsilon;)</code> with <code>R*</code></div>
+                                    <div class="item-desc">Multiplying <code>R*</code> by <code>(R + &epsilon;)</code> on either side simplifies to <span class="hl"><code>R*</code></span>.</div>
+                                    <div class="code-block">(R + &epsilon;)R* = R*(R + &epsilon;) = R*</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">17</span>
+                                <div class="point-body">
+                                    <div class="item-title">Union of <code>(R + &epsilon;)</code> with <code>R*</code></div>
+                                    <div class="item-desc">Since both <code>R</code> and <code>&epsilon;</code> are already in <code>R*</code>, their union simplifies to <span class="hl"><code>R*</code></span>.</div>
+                                    <div class="code-block">(R + &epsilon;) + R* = R*</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">18</span>
+                                <div class="point-body">
+                                    <div class="item-title">Optional <code>R</code> Followed by Its Closure</div>
+                                    <div class="item-desc"><code>(R + &epsilon;)</code> concatenated with <code>(R + &epsilon;)*</code> simplifies to <span class="hl"><code>R*</code></span>.</div>
+                                    <div class="code-block">(R + &epsilon;)(R + &epsilon;)* = R*</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">19</span>
+                                <div class="point-body">
+                                    <div class="item-title">Two-Sided Optional <code>R</code> Closure</div>
+                                    <div class="item-desc">Multiplying <code>(R + &epsilon;)*</code> by <code>(R + &epsilon;)</code> on both sides still simplifies to <span class="hl"><code>R*</code></span>.</div>
+                                    <div class="code-block">(R + &epsilon;)(R + &epsilon;)*(R + &epsilon;) = R*</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+
+        <!-- ==================================================================
+             LESSON 5: MEALY AND MOORE MACHINES
+             ================================================================== -->
+        <section class="module-pane" id="mod-5">
+            <div class="module-intro">
+                <h2>Lesson 5: Mealy and Moore Machines</h2>
+            </div>
+
+            <div class="linear-feed">
+
+                <!-- STOP 01 -->
+                <article class="lesson-stop">
+                    <div class="stop-node">01</div>
+                    <div class="stop-card">
+                        <div class="stop-header">
+                            <div>
+                                <span class="stop-tag">
+                                    <svg class="ico ico-sm" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/></svg>
+                                    Transducers
+                                </span>
+                                <h3>Finite Automata with Output &amp; Sequential Machines</h3>
+                            </div>
+                        </div>
+
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">1</span>
+                                <div class="point-body">
+                                    <div class="item-title">Finite Automaton with Output</div>
+                                    <div class="item-desc">A finite-state machine that <span class="hl">produces an output sequence as it reads an input sequence</span>.</div>
+                                    <span class="elab">Unlike DFAs and NFAs (which only accept or reject strings), output machines emit symbols from an output alphabet <code>&Delta;</code>.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">2</span>
+                                <div class="point-body">
+                                    <div class="item-title">Sequential Machines</div>
+                                    <div class="item-desc">Finite automata that <span class="hl">generate output based on input symbols</span> and machine states.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- STOP 02 -->
+                <article class="lesson-stop">
+                    <div class="stop-node">02</div>
+                    <div class="stop-card">
+                        <div class="stop-header">
+                            <div>
+                                <span class="stop-tag">
+                                    <svg class="ico ico-sm" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                                    6-Tuple Definition
+                                </span>
+                                <h3>Mealy &amp; Moore Machine 6-Tuple Components</h3>
+                            </div>
+                        </div>
+
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">Q</span>
+                                <div class="point-body">
+                                    <div class="item-title"><code>Q</code> &mdash; Set of States</div>
+                                    <div class="item-desc">A <span class="hl">finite set of states</span>.</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">&Sigma;</span>
+                                <div class="point-body">
+                                    <div class="item-title"><code>&Sigma;</code> &mdash; Input Alphabet</div>
+                                    <div class="item-desc">The finite set of <span class="hl">input symbols</span>.</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">q0</span>
+                                <div class="point-body">
+                                    <div class="item-title"><code>q<sub>0</sub></code> &mdash; Initial State</div>
+                                    <div class="item-desc">The <span class="hl">initial (start) state</span> where <code>q<sub>0</sub> &isin; Q</code>.</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">&delta;</span>
+                                <div class="point-body">
+                                    <div class="item-title"><code>&delta;</code> &mdash; Transition Function</div>
+                                    <div class="item-desc">The transition function which maps the current state and current input symbol to the <span class="hl">next state</span>.</div>
+                                    <div class="code-block">&delta; : Q &times; &Sigma; &rarr; Q</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">&Delta;</span>
+                                <div class="point-body">
+                                    <div class="item-title"><code>&Delta;</code> &mdash; Output Alphabet</div>
+                                    <div class="item-desc">The finite set of <span class="hl">output symbols</span> emitted by the machine.</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">&lambda;</span>
+                                <div class="point-body">
+                                    <div class="item-title"><code>&lambda;</code> &mdash; Output Function</div>
+                                    <div class="item-desc">Defines how output symbols are generated: <span class="hl"><code>Q &times; &Sigma; &rarr; &Delta;</code> in a Mealy Machine</span>, or <span class="hl"><code>Q &rarr; &Delta;</code> in a Moore Machine</span>.</div>
+                                    <div class="code-block">Mealy Output Function:  &lambda; : Q &times; &Sigma; &rarr; &Delta;
+Moore Output Function:  &lambda; : Q &rarr; &Delta;</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- STOP 03 -->
+                <article class="lesson-stop">
+                    <div class="stop-node">03</div>
+                    <div class="stop-card">
+                        <div class="stop-header">
+                            <div>
+                                <span class="stop-tag">
+                                    <svg class="ico ico-sm" viewBox="0 0 24 24"><line x1="6" y1="3" x2="6" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></svg>
+                                    Mealy vs. Moore
+                                </span>
+                                <h3>Comparing Mealy Machine and Moore Machine</h3>
+                            </div>
+                        </div>
+
+                        <div class="visual-versus">
+                            <div class="vs-pane">
+                                <h4>
+                                    <svg class="ico" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                                    Mealy Machine
+                                </h4>
+                                <div class="point-stack">
+                                    <div class="point-row">
+                                        <span class="point-num">1</span>
+                                        <div class="point-body">
+                                            <div class="item-title">Output Dependency</div>
+                                            <div class="item-desc">Output symbol depends upon the <span class="hl">present input symbol AND the present state</span> of the machine.</div>
+                                        </div>
+                                    </div>
+                                    <div class="point-row">
+                                        <span class="point-num">2</span>
+                                        <div class="point-body">
+                                            <div class="item-title">Where Output is Placed</div>
+                                            <div class="item-desc">Output is associated with the <span class="hl">transitions (arcs/edges)</span>, written as <code>input / output</code> on each arrow.</div>
+                                        </div>
+                                    </div>
+                                    <div class="point-row">
+                                        <span class="point-num">3</span>
+                                        <div class="point-body">
+                                            <div class="item-title">Mealy Output Function</div>
+                                            <div class="item-desc">Maps state and input symbol to an output symbol.</div>
+                                            <div class="code-block">&lambda; : Q &times; &Sigma; &rarr; &Delta;</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="vs-badge">VS</div>
+                            <div class="vs-pane">
+                                <h4>
+                                    <svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/></svg>
+                                    Moore Machine
+                                </h4>
+                                <div class="point-stack">
+                                    <div class="point-row">
+                                        <span class="point-num">1</span>
+                                        <div class="point-body">
+                                            <div class="item-title">Output Dependency</div>
+                                            <div class="item-desc">Next state is decided by current state and input symbol, but the <span class="hl">output symbol depends ONLY on the present state</span> of the machine.</div>
+                                        </div>
+                                    </div>
+                                    <div class="point-row">
+                                        <span class="point-num">2</span>
+                                        <div class="point-body">
+                                            <div class="item-title">Where Output is Placed</div>
+                                            <div class="item-desc">The output is <span class="hl">associated in the states</span> themselves (written inside each state node as <code>q / output</code>).</div>
+                                        </div>
+                                    </div>
+                                    <div class="point-row">
+                                        <span class="point-num">3</span>
+                                        <div class="point-body">
+                                            <div class="item-title">Moore Output Function</div>
+                                            <div class="item-desc">Maps each state directly to an output symbol.</div>
+                                            <div class="code-block">&lambda; : Q &rarr; &Delta;</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        // 1. Top Scroll Progress Bar
+        const progressBar = document.getElementById('progressBar');
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.scrollY || document.documentElement.scrollTop;
+            const docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const pct = docHeight > 0 ? Math.min(100, Math.max(0, (scrollTop / docHeight) * 100)) : 0;
+            if (progressBar) progressBar.style.width = pct + '%';
+        }, { passive: true });
+
+        // 2. Top-Level Lesson Tab Switching
+        const tabButtons = document.querySelectorAll('.module-tab');
+        const modulePanes = document.querySelectorAll('.module-pane');
+
+        tabButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const targetId = btn.getAttribute('data-target');
+                tabButtons.forEach(b => b.classList.remove('active'));
+                modulePanes.forEach(p => p.classList.remove('active'));
+                btn.classList.add('active');
+                const targetPane = document.getElementById(targetId);
+                if (targetPane) targetPane.classList.add('active');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+
+        // 3. Dark / Light Theme Toggle
+        const themeBtn = document.getElementById('themeBtn');
+        const themeLabel = document.getElementById('themeLabel');
+        let savedTheme = null;
+        try {
+            savedTheme = localStorage.getItem('reviewer_theme');
+        } catch (e) {
+            savedTheme = null;
+        }
+        if (savedTheme === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            if (themeLabel) themeLabel.textContent = 'Light Mode';
+        }
+        if (themeBtn) {
+            themeBtn.addEventListener('click', () => {
+                const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+                if (isDark) {
+                    document.documentElement.removeAttribute('data-theme');
+                    try { localStorage.setItem('reviewer_theme', 'light'); } catch (e) {}
+                    if (themeLabel) themeLabel.textContent = 'Dark Mode';
+                } else {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                    try { localStorage.setItem('reviewer_theme', 'dark'); } catch (e) {}
+                    if (themeLabel) themeLabel.textContent = 'Light Mode';
+                }
+            });
+        }
+
+        // 4. Instant Keyword Filter (Filters Lesson Stops in Active Tab)
+        const searchInput = document.getElementById('searchInput');
+        if (searchInput) {
+            searchInput.addEventListener('input', (e) => {
+                const query = e.target.value.trim().toLowerCase();
+                document.querySelectorAll('.lesson-stop').forEach(stop => {
+                    const text = stop.textContent.toLowerCase();
+                    stop.style.display = (!query || text.includes(query)) ? '' : 'none';
+                });
+            });
+        }
+    </script>
+</body>
+</html>
