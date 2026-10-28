@@ -1,0 +1,2715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Application Development and Emerging Technologies</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
+    <style>
+/* ==========================================================================
+   1. THEME VARIABLES (OPTION C: COPPER TERRACOTTA & GOLD FOR APP DEV)
+   ========================================================================== */
+:root {
+    --bg-page: #f4f7f9;
+    --bg-card: #ffffff;
+    --bg-subtle: #f8fafc;
+    --bg-elevated: #f1f5f9;
+    --bg-code: #0f172a;
+
+    --text-main: #334155;
+    --text-muted: #64748b;
+    --text-bold: #0f172a;
+
+    /* Subject Accent Palette: Copper Terracotta & Gold */
+    --primary: #ea580c;
+    --primary-soft: #ffedd5;
+    --primary-border: #fdba74;
+    --secondary: #ca8a04;
+    --secondary-soft: #fef9c3;
+    --header-bg: linear-gradient(135deg, #1c1008 0%, #431407 55%, #7c2d12 100%);
+    --header-border: #f97316;
+    --progress-grad: linear-gradient(90deg, #fb923c, #ea580c, #eab308);
+
+    /* Semantic Accent Colors for Visual Variety */
+    --emerald: #059669;
+    --emerald-soft: #d1fae5;
+    --amber: #d97706;
+    --amber-soft: #fef3c7;
+    --rose: #e11d48;
+    --rose-soft: #ffe4e6;
+    --purple: #7c3aed;
+    --purple-soft: #ede9fe;
+    --sky: #0284c7;
+    --sky-soft: #e0f2fe;
+
+    /* Highlighted Keyword Pill */
+    --hl-bg: #ffedd5;
+    --hl-text: #9a3412;
+    --hl-border: #fed7aa;
+
+    --border: #e2e8f0;
+    --line-spine: #cbd5e1;
+    --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.05);
+    --shadow-md: 0 10px 25px -5px rgba(15, 23, 42, 0.08);
+    --radius-lg: 18px;
+    --radius-md: 12px;
+}
+
+[data-theme="dark"] {
+    --bg-page: #090d16;
+    --bg-card: #111827;
+    --bg-subtle: #1e293b;
+    --bg-elevated: #0f172a;
+    --bg-code: #030712;
+
+    --text-main: #cbd5e1;
+    --text-muted: #94a3b8;
+    --text-bold: #f8fafc;
+
+    /* Subject Accent Palette (Dark Mode) */
+    --primary: #fb923c;
+    --primary-soft: rgba(249, 115, 22, 0.16);
+    --primary-border: #c2410c;
+    --secondary: #facc15;
+    --secondary-soft: rgba(234, 179, 8, 0.16);
+
+    --emerald: #34d399;
+    --emerald-soft: rgba(16, 185, 129, 0.15);
+    --amber: #fbbf24;
+    --amber-soft: rgba(245, 158, 11, 0.15);
+    --rose: #fb7185;
+    --rose-soft: rgba(244, 63, 94, 0.15);
+    --purple: #c084fc;
+    --purple-soft: rgba(139, 92, 246, 0.16);
+    --sky: #38bdf8;
+    --sky-soft: rgba(14, 165, 233, 0.15);
+
+    --hl-bg: rgba(251, 146, 60, 0.18);
+    --hl-text: #fed7aa;
+    --hl-border: rgba(251, 146, 60, 0.35);
+
+    --border: #1f2937;
+    --line-spine: #334155;
+    --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.35);
+    --shadow-md: 0 12px 30px -5px rgba(0, 0, 0, 0.55);
+}
+
+/* ==========================================================================
+   2. RESET & BASE TYPOGRAPHY
+   ========================================================================== */
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+body {
+    margin: 0;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: var(--bg-page);
+    color: var(--text-main);
+    line-height: 1.6;
+    overflow-x: hidden;
+    transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+h1, h2, h3, h4 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    color: var(--text-bold);
+    margin-top: 0;
+    line-height: 1.28;
+}
+
+strong, b { color: var(--text-bold); font-weight: 700; }
+
+code, pre, .mono {
+    font-family: 'JetBrains Mono', monospace;
+}
+
+p code, li code, td code, div code {
+    background: var(--bg-elevated);
+    color: var(--primary);
+    padding: 0.1rem 0.38rem;
+    border-radius: 5px;
+    font-size: 0.86em;
+    font-weight: 600;
+    border: 1px solid var(--border);
+}
+
+/* Inline SVG Icon Standard */
+svg.ico {
+    width: 18px;
+    height: 18px;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    fill: none;
+    flex-shrink: 0;
+    display: inline-block;
+    vertical-align: middle;
+}
+svg.ico-lg { width: 22px; height: 22px; }
+svg.ico-sm { width: 15px; height: 15px; }
+
+/* Highlighted Keyword Pill */
+.hl {
+    background-color: var(--hl-bg);
+    color: var(--hl-text);
+    border: 1px solid var(--hl-border);
+    padding: 0.06rem 0.4rem;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.93em;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+}
+
+/* Concise Supporting Explanation Sentence */
+.elab {
+    display: block;
+    margin-top: 0.2rem;
+    color: var(--text-muted);
+    font-size: 0.88rem;
+}
+
+/* ==========================================================================
+   3. SCROLL PROGRESS BAR, HEADER & STICKY NAVIGATION TABS
+   ========================================================================== */
+.progress-rail {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: rgba(148, 163, 184, 0.2);
+    z-index: 1000;
+}
+.progress-fill {
+    height: 100%;
+    width: 0%;
+    background: var(--progress-grad);
+    transition: width 0.1s linear;
+}
+
+.app-header {
+    background: var(--header-bg);
+    color: #f8fafc;
+    padding: 1.25rem 5%;
+    border-bottom: 3px solid var(--header-border);
+}
+.header-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+.brand-box h1 {
+    color: #ffffff;
+    font-size: 1.42rem;
+    font-weight: 800;
+    margin: 0;
+    letter-spacing: -0.02em;
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+}
+.brand-icon {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    flex-shrink: 0;
+}
+
+.header-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    flex-wrap: wrap;
+}
+.search-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+.search-wrap svg.ico {
+    position: absolute;
+    left: 11px;
+    color: #94a3b8;
+    pointer-events: none;
+}
+.search-input {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    color: #ffffff;
+    padding: 0.48rem 0.85rem 0.48rem 2.2rem;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    width: 210px;
+    outline: none;
+    transition: all 0.2s ease;
+}
+.search-input::placeholder { color: #cbd5e1; }
+.search-input:focus {
+    background: rgba(255, 255, 255, 0.18);
+    border-color: #ffffff;
+    width: 250px;
+}
+
+.ctrl-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    color: #f8fafc;
+    padding: 0.48rem 0.9rem;
+    border-radius: 999px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+.ctrl-btn:hover { background: rgba(255, 255, 255, 0.2); }
+
+/* Sticky Lesson Tabs */
+.module-bar {
+    position: sticky;
+    top: 4px;
+    z-index: 900;
+    background: var(--bg-card);
+    border-bottom: 1px solid var(--border);
+    box-shadow: var(--shadow-sm);
+    padding: 0.65rem 5%;
+}
+.module-tabs {
+    max-width: 900px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 0.5rem;
+}
+.module-tab {
+    background: var(--bg-subtle);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    padding: 0.6rem 0.8rem;
+    border-radius: 11px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 700;
+    font-size: 0.82rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.2s ease;
+    text-align: left;
+}
+.module-tab:hover {
+    color: var(--text-bold);
+    border-color: var(--primary);
+}
+.module-tab.active {
+    background: var(--primary);
+    color: #ffffff;
+    border-color: var(--primary);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+}
+.tab-num {
+    width: 24px; height: 24px;
+    border-radius: 7px;
+    background: rgba(15, 23, 42, 0.08);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 800;
+    flex-shrink: 0;
+}
+.module-tab.active .tab-num {
+    background: rgba(255, 255, 255, 0.22);
+    color: #ffffff;
+}
+
+/* ==========================================================================
+   4. SINGLE-COLUMN LINEAR FEED & LESSON STOP CARDS
+   ========================================================================== */
+.feed-shell {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem 5% 5rem 5%;
+}
+
+.module-pane { display: none; animation: fadeSlide 0.3s ease; }
+.module-pane.active { display: block; }
+@keyframes fadeSlide {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.module-intro {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-left: 5px solid var(--primary);
+    border-radius: var(--radius-lg);
+    padding: 1.25rem 1.65rem;
+    margin-bottom: 2.2rem;
+    box-shadow: var(--shadow-sm);
+}
+.module-intro h2 {
+    font-size: 1.45rem;
+    margin: 0;
+}
+
+/* Single-Column Timeline Spine */
+.linear-feed {
+    position: relative;
+    padding-left: 3.1rem;
+}
+.linear-feed::before {
+    content: "";
+    position: absolute;
+    left: 19px;
+    top: 12px;
+    bottom: 12px;
+    width: 3px;
+    background: var(--line-spine);
+    border-radius: 3px;
+}
+
+.lesson-stop {
+    position: relative;
+    margin-bottom: 2.25rem;
+}
+.stop-node {
+    position: absolute;
+    left: -3.1rem;
+    top: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    background: var(--primary);
+    color: #ffffff;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 800;
+    font-size: 0.88rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.18);
+    border: 3px solid var(--bg-page);
+    z-index: 2;
+}
+
+.stop-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1.65rem;
+    box-shadow: var(--shadow-md);
+}
+.stop-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.9rem;
+}
+.stop-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.73rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    padding: 0.25rem 0.65rem;
+    border-radius: 6px;
+    background: var(--primary-soft);
+    color: var(--primary);
+}
+.stop-card h3 {
+    font-size: 1.32rem;
+    margin: 0.35rem 0 0 0;
+}
+.sub-label {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.98rem;
+    font-weight: 800;
+    color: var(--text-bold);
+    margin: 1.35rem 0 0.55rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+}
+.sub-label svg.ico { color: var(--primary); }
+
+/* ==========================================================================
+   5. VISUAL COMPONENT LIBRARY STYLES (ALL ALWAYS-VISIBLE)
+   ========================================================================== */
+
+/* 5A. Takeaway Banner */
+.takeaway-banner {
+    background: var(--bg-subtle);
+    border-left: 4px solid var(--primary);
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    padding: 0.9rem 1.15rem;
+    margin-bottom: 1.1rem;
+    font-size: 0.94rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+}
+.takeaway-banner svg.ico {
+    color: var(--primary);
+    margin-top: 0.2rem;
+}
+
+/* 5B. One-Point-Per-Line Stack (.point-stack & .point-row) */
+.point-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin: 0.75rem 0;
+}
+.point-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.8rem;
+    background: var(--bg-subtle);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0.7rem 0.95rem;
+    font-size: 0.91rem;
+}
+.point-num {
+    min-width: 26px;
+    height: 26px;
+    padding: 0 0.35rem;
+    border-radius: 7px;
+    background: var(--primary-soft);
+    color: var(--primary);
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    font-size: 0.78rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 0.08rem;
+}
+
+/* 5C. Multi-Pillar Concept Grid */
+.pillars-visual {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 0.9rem;
+    margin: 1rem 0;
+}
+.pillar-col {
+    background: var(--bg-subtle);
+    border: 1px solid var(--border);
+    border-top: 4px solid var(--primary);
+    border-radius: var(--radius-md);
+    padding: 1.05rem;
+}
+.pillar-head {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 800;
+    font-size: 0.96rem;
+    color: var(--text-bold);
+    margin-bottom: 0.5rem;
+}
+.pillar-head svg.ico { color: var(--primary); }
+
+/* 5D. Side-by-Side Comparison Cards (.visual-versus) */
+.visual-versus {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 0.95rem;
+    align-items: stretch;
+    margin: 1.1rem 0;
+}
+.vs-pane {
+    background: var(--bg-subtle);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 1.1rem;
+}
+.vs-pane h4 {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    margin-bottom: 0.6rem;
+    font-size: 1rem;
+}
+.vs-pane h4 svg.ico { color: var(--primary); }
+.vs-badge {
+    align-self: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 999px;
+    background: var(--primary);
+    color: #ffffff;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 800;
+    font-size: 0.76rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 5E. Process / Stage Pipeline Flow */
+.pipeline-flow {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(165px, 1fr));
+    gap: 0.8rem;
+    margin: 1rem 0;
+}
+.pipe-node {
+    background: var(--bg-subtle);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--primary);
+    border-radius: 10px;
+    padding: 0.85rem 0.95rem;
+}
+.pipe-step {
+    font-size: 0.71rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--primary);
+    margin-bottom: 0.2rem;
+}
+.pipe-node h4 {
+    font-size: 0.93rem;
+    margin: 0 0 0.3rem 0;
+}
+.pipe-node p {
+    margin: 0;
+    font-size: 0.84rem;
+    color: var(--text-muted);
+}
+
+/* 5F. Hierarchy Funnel & Staircase */
+.funnel-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 1.1rem 0;
+}
+.funnel-layer {
+    background: var(--bg-subtle);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--primary);
+    border-radius: 10px;
+    padding: 0.75rem 1.1rem;
+    text-align: center;
+    font-size: 0.89rem;
+}
+.funnel-layer.w-100 { width: 100%; }
+.funnel-layer.w-88  { width: 88%; }
+.funnel-layer.w-76  { width: 76%; }
+.funnel-layer.w-64  { width: 64%; }
+
+.staircase {
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+    margin: 1rem 0;
+}
+.stair-step {
+    background: var(--bg-subtle);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--primary);
+    border-radius: 10px;
+    padding: 0.8rem 1.05rem;
+    font-size: 0.91rem;
+}
+.stair-1 { margin-left: 0%; }
+.stair-2 { margin-left: 4%; }
+.stair-3 { margin-left: 8%; }
+.stair-4 { margin-left: 12%; }
+.stair-5 { margin-left: 16%; }
+
+/* 5G. Responsive Data & Comparison Tables */
+.table-wrap {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin: 1rem 0;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+}
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.87rem;
+    min-width: 520px;
+}
+.data-table th {
+    background: var(--bg-elevated);
+    color: var(--text-bold);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 700;
+    text-align: left;
+    padding: 0.75rem 0.95rem;
+    border-bottom: 2px solid var(--border);
+}
+.data-table td {
+    padding: 0.7rem 0.95rem;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+}
+.data-table tr:last-child td { border-bottom: none; }
+.data-table tr:nth-child(even) td { background: var(--bg-subtle); }
+
+/* 5H. Code / Syntax / CLI Block */
+.code-block {
+    background: var(--bg-code);
+    color: #e2e8f0;
+    border-radius: var(--radius-md);
+    padding: 0.95rem 1.15rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.83rem;
+    line-height: 1.6;
+    overflow-x: auto;
+    margin: 0.75rem 0;
+    border: 1px solid #1e293b;
+    white-space: pre;
+}
+.code-block .c-kw  { color: #38bdf8; font-weight: 600; }
+.code-block .c-str { color: #4ade80; }
+.code-block .c-num { color: #fbbf24; }
+.code-block .c-cmt { color: #94a3b8; font-style: italic; }
+.code-block .c-nt  { color: #c084fc; font-weight: 600; }
+
+/* 5I. Custom Inline SVG Graphic Container */
+.svg-diagram-box {
+    background: var(--bg-subtle);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 1rem;
+    margin: 1rem 0;
+    text-align: center;
+    overflow-x: auto;
+}
+.svg-diagram-box svg {
+    max-width: 100%;
+    height: auto;
+}
+
+/* ==========================================================================
+   6. MOBILE RESPONSIVENESS (@media max-width: 720px)
+   ========================================================================== */
+@media screen and (max-width: 720px) {
+    .app-header { padding: 1.15rem 4%; }
+    .brand-box h1 { font-size: 1.15rem; }
+    .header-controls { width: 100%; justify-content: space-between; }
+    .search-wrap { flex: 1; }
+    .search-input, .search-input:focus { width: 100%; }
+
+    .module-bar { padding: 0.5rem 4%; }
+    .module-tabs { grid-template-columns: 1fr 1fr; gap: 0.4rem; }
+    .module-tab { padding: 0.55rem 0.65rem; font-size: 0.75rem; }
+
+    .feed-shell { padding: 1.25rem 4% 4rem 4%; }
+    .module-intro { padding: 1rem 1.25rem; }
+    .module-intro h2 { font-size: 1.2rem; }
+    .linear-feed { padding-left: 2.3rem; }
+    .linear-feed::before { left: 13px; }
+    .stop-node {
+        left: -2.3rem;
+        width: 30px;
+        height: 30px;
+        font-size: 0.75rem;
+        border-radius: 9px;
+    }
+    .stop-card { padding: 1.15rem; }
+    .stop-card h3 { font-size: 1.12rem; }
+
+    .visual-versus { grid-template-columns: 1fr; }
+    .vs-badge { margin: -0.25rem auto; }
+    .pillars-visual, .pipeline-flow { grid-template-columns: 1fr; }
+
+    .funnel-layer.w-100,
+    .funnel-layer.w-88,
+    .funnel-layer.w-76,
+    .funnel-layer.w-64 { width: 100%; }
+
+    .stair-1, .stair-2, .stair-3, .stair-4, .stair-5 { margin-left: 0; }
+    .point-row { padding: 0.65rem 0.8rem; font-size: 0.88rem; }
+}
+    </style>
+</head>
+<body>
+
+    <!-- Top Scroll Progress Rail -->
+    <div class="progress-rail">
+        <div class="progress-fill" id="progressBar"></div>
+    </div>
+
+    <!-- Application Header -->
+    <header class="app-header">
+        <div class="header-inner">
+            <div class="brand-box">
+                <h1>
+                    <span class="brand-icon">
+                        <svg class="ico ico-lg" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                    </span>
+                    Application Development and Emerging Technologies
+                </h1>
+            </div>
+            <div class="header-controls">
+                <div class="search-wrap">
+                    <svg class="ico" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    <input type="text" id="searchInput" class="search-input" placeholder="Search concepts..." aria-label="Search concepts">
+                </div>
+                <button type="button" class="ctrl-btn" id="themeBtn" aria-label="Toggle color theme">
+                    <svg class="ico" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                    <span id="themeLabel">Dark Mode</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sticky Module / Lesson Navigation Bar -->
+    <nav class="module-bar" aria-label="Course Modules">
+        <div class="module-tabs">
+            <button type="button" class="module-tab active" data-target="mod-1">
+                <span class="tab-num">01</span>
+                <span>SDLC, MVC &amp; DevOps</span>
+            </button>
+            <button type="button" class="module-tab" data-target="mod-2">
+                <span class="tab-num">02</span>
+                <span>C# Fundamentals</span>
+            </button>
+            <button type="button" class="module-tab" data-target="mod-3">
+                <span class="tab-num">03</span>
+                <span>Git Version Control</span>
+            </button>
+            <button type="button" class="module-tab" data-target="mod-4">
+                <span class="tab-num">04</span>
+                <span>Agile &amp; Manifesto</span>
+            </button>
+            <button type="button" class="module-tab" data-target="mod-5">
+                <span class="tab-num">05</span>
+                <span>Scrum &amp; Planning</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Single-Column Linear Feed Shell -->
+    <main class="feed-shell">
+
+        <!-- ==================================================================
+             LESSON 1: SDLC, MODERN ARCHITECTURE, MVC & DEVOPS
+             ================================================================== -->
+        <section class="module-pane active" id="mod-1">
+            <div class="module-intro">
+                <h2>Lesson 1: SDLC, Modern Architecture, MVC &amp; DevOps</h2>
+            </div>
+
+            <div class="linear-feed">
+
+                <!-- STOP 01 -->
+                <article class="lesson-stop">
+                    <div class="stop-node">01</div>
+                    <div class="stop-card">
+                        <div class="stop-header">
+                            <div>
+                                <span class="stop-tag">
+                                    <svg class="ico ico-sm" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+                                    Lifecycle Phases
+                                </span>
+                                <h3>Software Development Life Cycle (SDLC) Phases</h3>
+                            </div>
+                        </div>
+
+                        <div class="takeaway-banner">
+                            <svg class="ico" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                            <div><strong>Core Concept:</strong> The <span class="hl">Software Development Life Cycle (SDLC)</span> is a shared map of how a product moves from an initial idea to running software.</div>
+                        </div>
+
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">1</span>
+                                <div>
+                                    <strong>Planning:</strong> Define the <span class="hl">goal, constraints, people, and success criteria</span> before writing code.
+                                    <span class="elab">Establishes project scope, timelines, resources, and feasibility at the very start.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">2</span>
+                                <div>
+                                    <strong>Analysis:</strong> Gather and clarify <span class="hl">requirements</span>: what the system must do and for whom.
+                                    <span class="elab">Translates user and business needs into clear functional and non-functional specifications.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">3</span>
+                                <div>
+                                    <strong>Design:</strong> Choose <span class="hl">architecture, data models, interfaces</span>, and how system parts will collaborate.
+                                    <span class="elab">Produces technical blueprints, database schemas, and UI wireframes before implementation begins.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">4</span>
+                                <div>
+                                    <strong>Implementation:</strong> <span class="hl">Build working software</span> from the design, in small verifiable pieces when possible.
+                                    <span class="elab">Developers write, compile, and integrate the actual source code for the application.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">5</span>
+                                <div>
+                                    <strong>Testing:</strong> Check that the product <span class="hl">meets requirements and is safe to release</span>.
+                                    <span class="elab">Verifies functionality, performance, and security while catching defects before users see them.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">6</span>
+                                <div>
+                                    <strong>Deployment:</strong> <span class="hl">Release the application to users</span> in a controlled, repeatable way.
+                                    <span class="elab">Packages and publishes the validated build to production servers or app stores.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">7</span>
+                                <div>
+                                    <strong>Maintenance:</strong> <span class="hl">Fix defects, adapt to change</span>, and keep the system healthy after launch.
+                                    <span class="elab">Covers ongoing bug patches, performance tuning, security updates, and new feature enhancements.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- STOP 02 -->
+                <article class="lesson-stop">
+                    <div class="stop-node">02</div>
+                    <div class="stop-card">
+                        <div class="stop-header">
+                            <div>
+                                <span class="stop-tag">
+                                    <svg class="ico ico-sm" viewBox="0 0 24 24"><line x1="6" y1="3" x2="6" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></svg>
+                                    Lifecycle Models
+                                </span>
+                                <h3>Comparing SDLC Models: Waterfall, Agile &amp; Spiral</h3>
+                            </div>
+                        </div>
+
+                        <div class="pillars-visual">
+                            <div class="pillar-col">
+                                <div class="pillar-head">
+                                    <svg class="ico" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+                                    1. Waterfall
+                                </div>
+                                <div class="point-stack">
+                                    <div class="point-row">
+                                        <span class="point-num">A</span>
+                                        <div>
+                                            <strong>When to Use:</strong> Requirements are <span class="hl">stable</span>, the domain is well understood, and a <span class="hl">linear plan</span> is realistic.
+                                            <span class="elab">Best for fixed-scope projects with predictable rules.</span>
+                                        </div>
+                                    </div>
+                                    <div class="point-row">
+                                        <span class="point-num">B</span>
+                                        <div>
+                                            <strong>Waterfall Flow:</strong> <span class="hl">Phases run once, in order</span>.
+                                            <span class="elab">Each phase finishes completely before the next starts; change late in the project is expensive.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="pillar-col">
+                                <div class="pillar-head">
+                                    <svg class="ico" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                                    2. Agile
+                                </div>
+                                <div class="point-stack">
+                                    <div class="point-row">
+                                        <span class="point-num">A</span>
+                                        <div>
+                                            <strong>When to Use:</strong> You need <span class="hl">working software often</span> and expect <span class="hl">requirements to evolve</span>.
+                                            <span class="elab">Ideal for fast-moving products where customer needs change over time.</span>
+                                        </div>
+                                    </div>
+                                    <div class="point-row">
+                                        <span class="point-num">B</span>
+                                        <div>
+                                            <strong>Agile Flow:</strong> <span class="hl">Phases repeat in short cycles</span>.
+                                            <span class="elab">Short cycles repeat analysis, design, build, and test, while user feedback steers the next increment.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="pillar-col">
+                                <div class="pillar-head">
+                                    <svg class="ico" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                                    3. Spiral
+                                </div>
+                                <div class="point-stack">
+                                    <div class="point-row">
+                                        <span class="point-num">A</span>
+                                        <div>
+                                            <strong>When to Use:</strong> Larger, <span class="hl">riskier efforts</span> where <span class="hl">prototypes and risk reviews</span> drive each cycle.
+                                            <span class="elab">Used when technical or safety risks must be evaluated before committing to full builds.</span>
+                                        </div>
+                                    </div>
+                                    <div class="point-row">
+                                        <span class="point-num">B</span>
+                                        <div>
+                                            <strong>Spiral Flow:</strong> <span class="hl">Risk-driven iterative loops</span>.
+                                            <span class="elab">Each loop plans, assesses risk, builds a prototype or increment, and evaluates before the next loop.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- STOP 03 -->
+                <article class="lesson-stop">
+                    <div class="stop-node">03</div>
+                    <div class="stop-card">
+                        <div class="stop-header">
+                            <div>
+                                <span class="stop-tag">
+                                    <svg class="ico ico-sm" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/></svg>
+                                    Application Architecture
+                                </span>
+                                <h3>Modern Applications &amp; Client-Server Layers</h3>
+                            </div>
+                        </div>
+
+                        <div class="takeaway-banner">
+                            <svg class="ico" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                            <div><strong>Core Architecture:</strong> A modern web application is a <span class="hl">client that talks to a server over HTTP</span>. The <span class="hl">server owns business rules and data</span>, while the <span class="hl">client owns the user experience</span>.</div>
+                        </div>
+
+                        <div class="sub-label">
+                            <svg class="ico" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+                            Three-Tier Layer Explorer
+                        </div>
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">1</span>
+                                <div>
+                                    <strong>Client Layer:</strong> The <span class="hl">browser or front-end app</span> users interact with directly (such as an Angular or React web app).
+                                    <span class="elab">It renders screens, collects user inputs or answers, and calls backend APIs over HTTP.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">2</span>
+                                <div>
+                                    <strong>Server Layer:</strong> The <span class="hl">backend application and API</span> (such as an ASP.NET Core Web API) that processes requests.
+                                    <span class="elab">It enforces business rules, validates inputs, handles security/authentication, and communicates with the database.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">3</span>
+                                <div>
+                                    <strong>Database Layer:</strong> The <span class="hl">persistent data storage system</span> (such as SQL Server) that stores and retrieves records.
+                                    <span class="elab">It keeps application entities, user accounts, and transactions safe and organized on disk.</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="sub-label">
+                            <svg class="ico" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                            Modern Application Concepts
+                        </div>
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">1</span>
+                                <div>
+                                    <strong>SPA (Single-Page Application):</strong> The client stays loaded in the browser and <span class="hl">updates the page without a full reload</span>.
+                                    <span class="elab">Only the needed data is fetched in the background, making navigation feel instant and fluid.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">2</span>
+                                <div>
+                                    <strong>API (Application Programming Interface):</strong> <span class="hl">JSON over HTTP</span> lets many different clients (web, mobile, desktop) share one server.
+                                    <span class="elab">The backend exposes clean endpoints that any authorized front-end device can call.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">3</span>
+                                <div>
+                                    <strong>Separation of Concerns:</strong> <span class="hl">UI, business rules, and data storage</span> are kept in separate layers rather than mixed into one file.
+                                    <span class="elab">This modular structure makes code easier to read, test, debug, and maintain over time.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- STOP 04 -->
+                <article class="lesson-stop">
+                    <div class="stop-node">04</div>
+                    <div class="stop-card">
+                        <div class="stop-header">
+                            <div>
+                                <span class="stop-tag">
+                                    <svg class="ico ico-sm" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+                                    Architectural Pattern
+                                </span>
+                                <h3>Model-View-Controller (MVC) Architecture</h3>
+                            </div>
+                        </div>
+
+                        <div class="takeaway-banner">
+                            <svg class="ico" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                            <div><strong>Purpose of MVC:</strong> MVC separates <span class="hl">data (Model)</span>, <span class="hl">presentation (View)</span>, and <span class="hl">request handling (Controller)</span> so each part can change with less chaos.</div>
+                        </div>
+
+                        <div class="pillars-visual">
+                            <div class="pillar-col">
+                                <div class="pillar-head">
+                                    <svg class="ico" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+                                    1. Model
+                                </div>
+                                <div class="point-stack">
+                                    <div class="point-row">
+                                        <span class="point-num">M</span>
+                                        <div>
+                                            <strong>Data and Rules:</strong> Represents <span class="hl">domain entities, business logic, and data state</span> (e.g., users, questions, orders).
+                                            <span class="elab">Defines what data the application holds and how it is stored in the database.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="pillar-col">
+                                <div class="pillar-head">
+                                    <svg class="ico" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/></svg>
+                                    2. View
+                                </div>
+                                <div class="point-stack">
+                                    <div class="point-row">
+                                        <span class="point-num">V</span>
+                                        <div>
+                                            <strong>Presentation / UI:</strong> The <span class="hl">visual interface</span> shown to the user (screens, forms, buttons, templates).
+                                            <span class="elab">Displays data from the system and captures user actions like clicking Submit.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="pillar-col">
+                                <div class="pillar-head">
+                                    <svg class="ico" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                                    3. Controller
+                                </div>
+                                <div class="point-stack">
+                                    <div class="point-row">
+                                        <span class="point-num">C</span>
+                                        <div>
+                                            <strong>Request Handler:</strong> <span class="hl">Receives a request, uses models, and returns a result</span>.
+                                            <span class="elab">Acts as the traffic coordinator between incoming HTTP requests and backend Models.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="sub-label">
+                            <svg class="ico" viewBox="0 0 24 24"><line x1="6" y1="3" x2="6" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></svg>
+                            How an MVC Request Flows End-to-End
+                        </div>
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">1</span>
+                                <div><strong>Step 1 (View):</strong> The user interacts with the <span class="hl">View</span> (e.g., clicking a Submit button in the front-end app).</div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">2</span>
+                                <div><strong>Step 2 (Controller):</strong> The <span class="hl">Controller</span> receives the HTTP request (such as <code>POST /api/submit</code>) and invokes the appropriate business logic.</div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">3</span>
+                                <div><strong>Step 3 (Model &amp; Database):</strong> The <span class="hl">Model</span> is validated and saved in the database (such as SQL Server), and a response is returned.</div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- STOP 05 -->
+                <article class="lesson-stop">
+                    <div class="stop-node">05</div>
+                    <div class="stop-card">
+                        <div class="stop-header">
+                            <div>
+                                <span class="stop-tag">
+                                    <svg class="ico ico-sm" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                                    CI/CD &amp; Automation
+                                </span>
+                                <h3>DevOps and the 5-Stage CI/CD Pipeline</h3>
+                            </div>
+                        </div>
+
+                        <div class="takeaway-banner">
+                            <svg class="ico" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                            <div><strong>What is DevOps?</strong> A way of working where <span class="hl">development and operations share one path</span> from code change to production, with <span class="hl">fast feedback</span> and minimal manual effort.</div>
+                        </div>
+
+                        <div class="sub-label">
+                            <svg class="ico" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+                            The 5 Steps of a CI/CD Pipeline
+                        </div>
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">1</span>
+                                <div>
+                                    <strong>Commit:</strong> A developer <span class="hl">records a change in version control</span> (Git).
+                                    <span class="elab">Pushing that commit automatically triggers the start of the CI/CD pipeline.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">2</span>
+                                <div>
+                                    <strong>Build:</strong> Automation <span class="hl">compiles the backend API and front-end app</span> so everyone uses the exact same recipe.
+                                    <span class="elab">Catches missing dependencies or compilation errors immediately on a clean build server.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">3</span>
+                                <div>
+                                    <strong>Test:</strong> <span class="hl">Automated checks catch regressions</span> before a person has to click through every screen manually.
+                                    <span class="elab">Runs unit, integration, and end-to-end tests automatically on every build.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">4</span>
+                                <div>
+                                    <strong>Deploy:</strong> Automation <span class="hl">releases the verified build</span> to staging or production environments in a repeatable way.
+                                    <span class="elab">Eliminates risky manual file copying and ensures consistent, fast software delivery.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">5</span>
+                                <div>
+                                    <strong>Monitor:</strong> <span class="hl">Logs, system health, and user feedback</span> flow back so the next commit is better informed.
+                                    <span class="elab">Tracks live performance, uptime, and error rates in production to guide future improvements.</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="sub-label">
+                            <svg class="ico" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                            Key DevOps Automation Practices
+                        </div>
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">1</span>
+                                <div>
+                                    <strong>Continuous Integration (CI):</strong> <span class="hl">Every commit is built and tested automatically</span> when pushed to the shared repository.
+                                    <span class="elab">Prevents "integration hell" by catching broken code or failing tests within minutes.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">2</span>
+                                <div>
+                                    <strong>Infrastructure as Code (IaC):</strong> <span class="hl">Servers and environments are described in versioned files</span>, not manual "tribal knowledge".
+                                    <span class="elab">Allows teams to spin up identical test and production servers automatically from code scripts.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">3</span>
+                                <div>
+                                    <strong>Feedback Loops:</strong> <span class="hl">Test results, live monitoring, and user metrics</span> inform the team&rsquo;s very next change.
+                                    <span class="elab">Continuous telemetry connects daily engineering decisions directly to real-world system behavior.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+
+        <!-- ==================================================================
+             LESSON 2: C# PROGRAMMING & .NET FUNDAMENTALS
+             ================================================================== -->
+        <section class="module-pane" id="mod-2">
+            <div class="module-intro">
+                <h2>Lesson 2: C# Programming &amp; .NET Fundamentals</h2>
+            </div>
+
+            <div class="linear-feed">
+
+                <!-- STOP 01 -->
+                <article class="lesson-stop">
+                    <div class="stop-node">01</div>
+                    <div class="stop-card">
+                        <div class="stop-header">
+                            <div>
+                                <span class="stop-tag">
+                                    <svg class="ico ico-sm" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                                    Language &amp; Runtime
+                                </span>
+                                <h3>Introduction to C#, .NET &amp; Compilation</h3>
+                            </div>
+                        </div>
+
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">1</span>
+                                <div>
+                                    <strong>What is C#?</strong> A modern, <span class="hl">object-oriented</span> and <span class="hl">type-safe (statically typed)</span> programming language from Microsoft.
+                                    <span class="elab"><strong>Object-oriented</strong> means modeling data and behavior with classes; <strong>type-safe</strong> means the compiler checks data types (like <code>int count = 3;</code>) before the program runs.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">2</span>
+                                <div>
+                                    <strong>.NET and Tools:</strong> C# source files end in <span class="hl"><code>.cs</code></span> and target the <span class="hl">.NET platform</span>.
+                                    <span class="elab">Edited and debugged using <strong>Visual Studio</strong> or <strong>Visual Studio Code</strong>, and managed from the terminal with the <strong><code>dotnet</code> CLI</strong>.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">3</span>
+                                <div>
+                                    <strong>Compilation vs. Runtime:</strong> <span class="hl">Compile (Build)</span> translates <code>.cs</code> files into intermediate language; <span class="hl">Run (Runtime)</span> executes the built program.
+                                    <span class="elab">If your code has a syntax error (such as a missing semicolon <code>;</code>), compilation fails and the program never starts executing.</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="sub-label">
+                            <svg class="ico" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                            .NET CLI Commands &amp; Hello World Styles
+                        </div>
+                        <div class="code-block"><span class="c-cmt"># Create, enter, and run a new C# console project via dotnet CLI</span>
+dotnet new console -n HelloLab
+cd HelloLab
+dotnet run</div>
+
+                        <div class="code-block"><span class="c-cmt">// Style 1: Modern Top-Level Statements (Program.cs)</span>
+Console.WriteLine(<span class="c-str">"Hello, World!"</span>);
+
+<span class="c-cmt">// Style 2: Classic Program Class with Main Entry Point</span>
+<span class="c-kw">class</span> <span class="c-nt">Program</span>
+{
+    <span class="c-kw">static void</span> Main()
+    {
+        Console.WriteLine(<span class="c-str">"Hello, World!"</span>);
+    }
+}</div>
+                    </div>
+                </article>
+
+                <!-- STOP 02 -->
+                <article class="lesson-stop">
+                    <div class="stop-node">02</div>
+                    <div class="stop-card">
+                        <div class="stop-header">
+                            <div>
+                                <span class="stop-tag">
+                                    <svg class="ico ico-sm" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+                                    Data &amp; Expressions
+                                </span>
+                                <h3>Data Types, Variables, Constants &amp; Operators</h3>
+                            </div>
+                        </div>
+
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">1</span>
+                                <div>
+                                    <strong><code>int</code> &amp; <code>double</code> (Numeric Types):</strong> <code>int</code> stores <span class="hl">whole numbers</span> (e.g., <code>18</code>), while <code>double</code> stores <span class="hl">decimal numbers</span> (e.g., <code>3.5</code>).
+                                    <span class="elab">Remember that dividing two <code>int</code> values truncates the decimal part; use <code>double</code> when you need decimals.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">2</span>
+                                <div>
+                                    <strong><code>string</code> &amp; <code>bool</code> (Text &amp; Logic Types):</strong> <code>string</code> holds <span class="hl">text in double quotes</span> (e.g., <code>"Alex"</code>); <code>bool</code> holds <span class="hl"><code>true</code> or <code>false</code></span>.
+                                    <span class="elab">Every condition inside an <code>if</code> or <code>while</code> statement must evaluate to a <code>bool</code>.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">3</span>
+                                <div>
+                                    <strong><code>const</code> (Constants):</strong> Declares a <span class="hl">fixed value that cannot change</span> after you set it (e.g., <code>const int MaxScore = 100;</code>).
+                                    <span class="elab">Attempting to reassign a constant later in the code causes a compile-time error.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">4</span>
+                                <div>
+                                    <strong>Arithmetic Operators:</strong> <span class="hl"><code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, and <code>%</code> (modulo/remainder)</span>.
+                                    <span class="elab">The modulo operator <code>%</code> returns the remainder of division (e.g., <code>10 % 2 == 0</code> prints <code>True</code> because 10 is even).</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">5</span>
+                                <div>
+                                    <strong>Comparison &amp; Logical Operators:</strong> Comparison (<span class="hl"><code>==</code>, <code>!=</code>, <code>&lt;</code>, <code>&gt;</code>, <code>&lt;=</code>, <code>&gt;=</code></span>) and Logical (<span class="hl"><code>&amp;&amp;</code> AND, <code>||</code> OR, <code>!</code> NOT</span>).
+                                    <span class="elab"><code>&amp;&amp;</code> requires both conditions to be true, <code>||</code> requires at least one to be true, and <code>!</code> flips true/false.</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="code-block"><span class="c-kw">int</span> age = <span class="c-num">18</span>;
+<span class="c-kw">double</span> gpa = <span class="c-num">3.5</span>;
+<span class="c-kw">string</span> name = <span class="c-str">"Alex"</span>;
+<span class="c-kw">bool</span> isEnrolled = <span class="c-kw">true</span>;
+<span class="c-kw">const int</span> MaxScore = <span class="c-num">100</span>;
+
+<span class="c-kw">int</span> n = <span class="c-num">10</span>;
+Console.WriteLine(n % <span class="c-num">2</span> == <span class="c-num">0</span>); <span class="c-cmt">// Prints True (remainder of 10 / 2 is 0)</span></div>
+                    </div>
+                </article>
+
+                <!-- STOP 03 -->
+                <article class="lesson-stop">
+                    <div class="stop-node">03</div>
+                    <div class="stop-card">
+                        <div class="stop-header">
+                            <div>
+                                <span class="stop-tag">
+                                    <svg class="ico ico-sm" viewBox="0 0 24 24"><line x1="6" y1="3" x2="6" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></svg>
+                                    Control Flow &amp; Methods
+                                </span>
+                                <h3>Decisions (<code>if</code> / <code>else</code>), Loops &amp; Methods</h3>
+                            </div>
+                        </div>
+
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">1</span>
+                                <div>
+                                    <strong><code>if</code> / <code>else if</code> / <code>else</code> Statements:</strong> Evaluates a <span class="hl"><code>bool</code> condition in parentheses</span> and runs only the first matching branch.
+                                    <span class="elab">Allows programs to make decisions such as checking whether a student&rsquo;s grade passes or needs a retry.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">2</span>
+                                <div>
+                                    <strong><code>for</code> Loop vs. <code>while</code> Loop:</strong> Use a <span class="hl"><code>for</code> loop when you know the count</span> in advance; use a <span class="hl"><code>while</code> loop to repeat while a condition stays true</span>.
+                                    <span class="elab">Both loops repeat a block of statements enclosed in curly braces <code>{ }</code> until their condition becomes false.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">3</span>
+                                <div>
+                                    <strong>Methods and Local Scope:</strong> A <span class="hl">method is a named reusable block of code</span> with parameters and a return type.
+                                    <span class="elab">Variables declared inside a method have <strong>local scope</strong>&mdash;they exist only inside that method and are invisible outside it.</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="code-block"><span class="c-cmt">// 1. Decision: if / else if / else</span>
+<span class="c-kw">int</span> grade = <span class="c-num">80</span>;
+<span class="c-kw">if</span> (grade &gt;= <span class="c-num">90</span>)
+{
+    Console.WriteLine(<span class="c-str">"A"</span>);
+}
+<span class="c-kw">else if</span> (grade &gt;= <span class="c-num">75</span>)
+{
+    Console.WriteLine(<span class="c-str">"B"</span>); <span class="c-cmt">// Runs when grade is 80</span>
+}
+<span class="c-kw">else</span>
+{
+    Console.WriteLine(<span class="c-str">"Keep practicing"</span>);
+}
+
+<span class="c-cmt">// 2. Loops: for (known count) vs. while (condition-based)</span>
+<span class="c-kw">for</span> (<span class="c-kw">int</span> i = <span class="c-num">0</span>; i &lt; <span class="c-num">5</span>; i++)
+{
+    Console.WriteLine(i);
+}
+
+<span class="c-kw">int</span> count = <span class="c-num">3</span>;
+<span class="c-kw">while</span> (count &gt; <span class="c-num">0</span>)
+{
+    count--;
+}
+
+<span class="c-cmt">// 3. Reusable Method with parameters and return value</span>
+<span class="c-kw">int</span> <span class="c-nt">Add</span>(<span class="c-kw">int</span> a, <span class="c-kw">int</span> b)
+{
+    <span class="c-kw">return</span> a + b;
+}</div>
+                    </div>
+                </article>
+
+                <!-- STOP 04 -->
+                <article class="lesson-stop">
+                    <div class="stop-node">04</div>
+                    <div class="stop-card">
+                        <div class="stop-header">
+                            <div>
+                                <span class="stop-tag">
+                                    <svg class="ico ico-sm" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                                    Syntax Rules
+                                </span>
+                                <h3>Basic Syntax: Delimiters, Comments, Keywords &amp; Naming</h3>
+                            </div>
+                        </div>
+
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">1</span>
+                                <div>
+                                    <strong>Statements &amp; Semicolons (<code>;</code>):</strong> Most C# statements (declarations, assignments, method calls) <span class="hl">end with a semicolon <code>;</code></span>.
+                                    <span class="elab">Omitting a required semicolon at the end of a statement causes a compile error.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">2</span>
+                                <div>
+                                    <strong>Braces <code>{ }</code>, Parentheses <code>( )</code> &amp; Square Brackets <code>[ ]</code>:</strong> <span class="hl"><code>{ }</code> group statements</span> into a block; <span class="hl"><code>( )</code> hold conditions or arguments</span>; <span class="hl"><code>[ ]</code> index arrays</span>.
+                                    <span class="elab">Each pair of symbols has a distinct grammatical role in C# syntax.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">3</span>
+                                <div>
+                                    <strong>Comments &amp; Reserved Keywords:</strong> Use <span class="hl"><code>//</code> for single-line comments</span> and <span class="hl"><code>/* ... */</code> for multi-line comments</span>.
+                                    <span class="elab">Reserved keywords (such as <code>int</code>, <code>class</code>, <code>return</code>, and <code>if</code>) have special meaning to the compiler and cannot be used as variable names.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">4</span>
+                                <div>
+                                    <strong>Naming Conventions (<code>camelCase</code> vs. <code>PascalCase</code>):</strong> Use <span class="hl"><code>camelCase</code> for local variables and parameters</span> (<code>itemCount</code>); use <span class="hl"><code>PascalCase</code> for methods, classes, and properties</span> (<code>CalculateTotal</code>).
+                                    <span class="elab">Always choose descriptive names that explain what a value represents, not just its data type.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- STOP 05 -->
+                <article class="lesson-stop">
+                    <div class="stop-node">05</div>
+                    <div class="stop-card">
+                        <div class="stop-header">
+                            <div>
+                                <span class="stop-tag">
+                                    <svg class="ico ico-sm" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/></svg>
+                                    Console Apps &amp; Collections
+                                </span>
+                                <h3>Basic Applications: Console I/O, Parsing &amp; Arrays</h3>
+                            </div>
+                        </div>
+
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">1</span>
+                                <div>
+                                    <strong>Console Input &amp; Number Parsing:</strong> <code>Console.ReadLine()</code> reads user input as <span class="hl">text (<code>string?</code>)</span>; convert it with <span class="hl"><code>int.Parse</code> or <code>int.TryParse</code></span> when you need a number.
+                                    <span class="elab">String interpolation (<code>$"Hello, {name}"</code>) cleanly embeds variable values directly inside output strings.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">2</span>
+                                <div>
+                                    <strong>Integer Division Truncation:</strong> Dividing two integers (<code>int / int</code>) <span class="hl">discards any decimal remainder</span>.
+                                    <span class="elab">Cast or declare values as <code>double</code> when your calculation requires a decimal result.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">3</span>
+                                <div>
+                                    <strong>Arrays vs. <code>List&lt;T&gt;</code>:</strong> An <span class="hl">array (<code>int[]</code>)</span> holds a fixed number of values of the same type with <span class="hl">zero-based indexing (starts at <code>0</code>)</span>, whereas a <span class="hl"><code>List&lt;int&gt;</code> can grow dynamically</span>.
+                                    <span class="elab">Use <code>scores[0]</code> to access the first element and <code>scores.Length</code> to get the total number of items in the array.</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="code-block"><span class="c-cmt">// 1. Console I/O and String Interpolation</span>
+Console.Write(<span class="c-str">"Enter your name: "</span>);
+<span class="c-kw">string</span>? name = Console.ReadLine();
+Console.WriteLine(<span class="c-str">$"Hello, {name}"</span>);
+
+<span class="c-cmt">// 2. Zero-Indexed Array and .Length Property</span>
+<span class="c-kw">int</span>[] scores = { <span class="c-num">88</span>, <span class="c-num">91</span>, <span class="c-num">74</span> };
+Console.WriteLine(scores[<span class="c-num">0</span>]);      <span class="c-cmt">// Prints 88 (first item is at index 0)</span>
+Console.WriteLine(scores.Length);  <span class="c-cmt">// Prints 3 (total items in array)</span></div>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+
+        <!-- ==================================================================
+             LESSON 3: GIT VERSION CONTROL & REPOSITORY COMMANDS
+             ================================================================== -->
+        <section class="module-pane" id="mod-3">
+            <div class="module-intro">
+                <h2>Lesson 3: Git Version Control &amp; Repository Commands</h2>
+            </div>
+
+            <div class="linear-feed">
+
+                <!-- STOP 01 -->
+                <article class="lesson-stop">
+                    <div class="stop-node">01</div>
+                    <div class="stop-card">
+                        <div class="stop-header">
+                            <div>
+                                <span class="stop-tag">
+                                    <svg class="ico ico-sm" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+                                    Git Architecture
+                                </span>
+                                <h3>The Four Core Git Areas</h3>
+                            </div>
+                        </div>
+
+                        <div class="takeaway-banner">
+                            <svg class="ico" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                            <div><strong>How Git Tracks Changes:</strong> Files move from your <span class="hl">Working Tree</span> &rarr; into the <span class="hl">Staging Area (Index)</span> via <code>git add</code> &rarr; into the <span class="hl">HEAD Snapshot (Commit Graph)</span> via <code>git commit</code>.</div>
+                        </div>
+
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">1</span>
+                                <div>
+                                    <strong>Working Tree (Working Directory):</strong> Your active project folder where you <span class="hl">create, edit, or delete files</span> before staging them.
+                                    <span class="elab">Changes made here are unstaged (or untracked for brand-new files) until you run <code>git add</code>.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">2</span>
+                                <div>
+                                    <strong>Staging Area (Index):</strong> The middle preparation zone that holds <span class="hl">changes queued for the next commit</span>.
+                                    <span class="elab">Lets you carefully select which modified files to group together into a single clean snapshot.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">3</span>
+                                <div>
+                                    <strong>HEAD Snapshot:</strong> A pointer to the <span class="hl">latest committed snapshot on your currently active branch</span>.
+                                    <span class="elab">Whenever you create a new commit or switch branches, <code>HEAD</code> updates to point to that current state.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">4</span>
+                                <div>
+                                    <strong>Commit Graph:</strong> The historical chain of <span class="hl">parent-to-child commit snapshots</span> across all branches in the repository.
+                                    <span class="elab">Allows teams to inspect project history, branch off safely, and merge features back together.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- STOP 02 -->
+                <article class="lesson-stop">
+                    <div class="stop-node">02</div>
+                    <div class="stop-card">
+                        <div class="stop-header">
+                            <div>
+                                <span class="stop-tag">
+                                    <svg class="ico ico-sm" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                                    Basic Snapshot Workflow
+                                </span>
+                                <h3>Repository Setup, Staging &amp; History Commands</h3>
+                            </div>
+                        </div>
+
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">1</span>
+                                <div>
+                                    <strong><code>git init</code>:</strong> <span class="hl">Creates a new Git repository</span> in the current folder.
+                                    <span class="elab"><code>HEAD</code> points at <code>main</code> with no commits yet.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">2</span>
+                                <div>
+                                    <strong><code>git status</code>:</strong> Shows the <span class="hl">current branch, staged changes, unstaged edits, and untracked files</span>.
+                                    <span class="elab">The most frequently used inspection command to see what state your working tree and index are in.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">3</span>
+                                <div>
+                                    <strong><code>git add &lt;file&gt;</code> | <code>git add .</code>:</strong> Copies working-tree files <span class="hl">into the index (staging area)</span>.
+                                    <span class="elab">Use <code>git add readme.txt</code> to stage a single file, or <code>git add .</code> to stage all modified and new files.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">4</span>
+                                <div>
+                                    <strong><code>git commit -m "message"</code>:</strong> Records a <span class="hl">permanent snapshot of the index</span> and moves the current branch forward.
+                                    <span class="elab">Always write a clear, concise commit message describing what changed and why.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">5</span>
+                                <div>
+                                    <strong><code>git log [--oneline]</code>:</strong> <span class="hl">Walks parent commits</span> starting backward from <code>HEAD</code>.
+                                    <span class="elab">Passing <code>--oneline</code> prints a compact one-line summary (commit hash + message) for each commit.</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="code-block"><span class="c-cmt"># Initialize a repository, stage a file, commit it, and view history</span>
+git init
+git status
+git add readme.txt
+git commit -m <span class="c-str">"Add initial readme file"</span>
+git log --oneline</div>
+                    </div>
+                </article>
+
+                <!-- STOP 03 -->
+                <article class="lesson-stop">
+                    <div class="stop-node">03</div>
+                    <div class="stop-card">
+                        <div class="stop-header">
+                            <div>
+                                <span class="stop-tag">
+                                    <svg class="ico ico-sm" viewBox="0 0 24 24"><line x1="6" y1="3" x2="6" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></svg>
+                                    Branching &amp; Merging
+                                </span>
+                                <h3>Branching, Switching &amp; Merging Commands</h3>
+                            </div>
+                        </div>
+
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">1</span>
+                                <div>
+                                    <strong><code>git branch [name]</code>:</strong> <span class="hl">Lists existing branches</span> (when run with no arguments) or <span class="hl">creates a new branch</span> pointing at <code>HEAD</code>.
+                                    <span class="elab">Note that <code>git branch feature-login</code> creates the branch pointer but keeps you on your current branch until you switch.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">2</span>
+                                <div>
+                                    <strong><code>git switch [-c] &lt;branch&gt;</code>:</strong> Moves <code>HEAD</code> to a target branch and <span class="hl">updates the working tree</span>.
+                                    <span class="elab">Adding the <code>-c</code> flag (<code>git switch -c feature-login</code>) creates a new branch and switches to it in one step.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">3</span>
+                                <div>
+                                    <strong><code>git checkout [-b] &lt;branch&gt;</code>:</strong> <span class="hl">Older command for switching or creating branches</span>.
+                                    <span class="elab">Running <code>git checkout -b feature-login</code> creates and switches to a new branch, just like <code>git switch -c</code>.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">4</span>
+                                <div>
+                                    <strong><code>git merge &lt;branch&gt;</code>:</strong> <span class="hl">Joins another branch into the current branch</span> (via fast-forward or 3-way merge).
+                                    <span class="elab">First switch to the receiving branch (e.g., <code>git switch main</code>), then run <code>git merge feature-login</code>.</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="code-block"><span class="c-cmt"># Create and switch to a feature branch, commit work, and merge into main</span>
+git switch -c feature-ui
+git add .
+git commit -m <span class="c-str">"Add header layout"</span>
+git switch main
+git merge feature-ui</div>
+                    </div>
+                </article>
+
+                <!-- STOP 04 -->
+                <article class="lesson-stop">
+                    <div class="stop-node">04</div>
+                    <div class="stop-card">
+                        <div class="stop-header">
+                            <div>
+                                <span class="stop-tag">
+                                    <svg class="ico ico-sm" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                                    Diffs, Undo &amp; Removal
+                                </span>
+                                <h3>Inspecting Differences, Undoing Changes &amp; Removing Files</h3>
+                            </div>
+                        </div>
+
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">1</span>
+                                <div>
+                                    <strong><code>git diff [--staged]</code>:</strong> Shows <span class="hl">unstaged differences</span> (working tree vs. index) or <span class="hl">staged differences</span> (<code>--staged</code>: index vs. <code>HEAD</code>).
+                                    <span class="elab">Lets you review exact line-by-line additions and deletions before staging or committing.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">2</span>
+                                <div>
+                                    <strong><code>git restore [--staged] &lt;file&gt;</code>:</strong> <span class="hl">Undoes uncommitted changes</span> in the working tree or index.
+                                    <span class="elab"><code>git restore app.cs</code> discards unstaged edits in the file; <code>git restore --staged app.cs</code> unstages the file from the index without losing your edits.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">3</span>
+                                <div>
+                                    <strong><code>git reset [--soft|--mixed|--hard] &lt;rev&gt;</code>:</strong> Moves <code>HEAD</code> to a target commit and <span class="hl">optionally resets the index and working tree</span>.
+                                    <span class="elab"><code>--soft</code> moves <code>HEAD</code> only (keeps changes staged); <code>--mixed</code> (default) unstages changes; <code>--hard</code> discards changes in both the index and working tree.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">4</span>
+                                <div>
+                                    <strong><code>git rm &lt;file&gt;</code>:</strong> <span class="hl">Removes a tracked file</span> from the working tree and <span class="hl">stages the deletion</span> in the index.
+                                    <span class="elab">On the next commit, the file will no longer exist in the current branch snapshot.</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="code-block"><span class="c-cmt"># Inspect changes, unstage a file, discard edits, or remove a tracked file</span>
+git diff                  <span class="c-cmt"># Compare working tree vs. staging index</span>
+git diff --staged         <span class="c-cmt"># Compare staging index vs. HEAD commit</span>
+git restore --staged a.cs <span class="c-cmt"># Unstage a.cs back to working tree</span>
+git restore a.cs          <span class="c-cmt"># Discard unstaged local edits in a.cs</span>
+git reset --soft HEAD~1   <span class="c-cmt"># Undo last commit but keep its changes staged</span>
+git rm obsolete.txt       <span class="c-cmt"># Delete tracked file and stage the deletion</span></div>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+
+        <!-- ==================================================================
+             LESSON 4: AGILE MINDSET, MANIFESTO, PRINCIPLES & MVP
+             ================================================================== -->
+        <section class="module-pane" id="mod-4">
+            <div class="module-intro">
+                <h2>Lesson 4: Agile Mindset, Manifesto, Principles &amp; MVP</h2>
+            </div>
+
+            <div class="linear-feed">
+
+                <!-- STOP 01 -->
+                <article class="lesson-stop">
+                    <div class="stop-node">01</div>
+                    <div class="stop-card">
+                        <div class="stop-header">
+                            <div>
+                                <span class="stop-tag">
+                                    <svg class="ico ico-sm" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+                                    Agile Umbrella
+                                </span>
+                                <h3>Agile vs. Scrum &amp; The Agile Umbrella</h3>
+                            </div>
+                        </div>
+
+                        <div class="takeaway-banner">
+                            <svg class="ico" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                            <div><strong>Core Distinction:</strong> <span class="hl">Agile</span> is a broad umbrella of software development approaches focused on the final product and customer value, whereas <span class="hl">Scrum</span> is one specific framework under that umbrella.</div>
+                        </div>
+
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">1</span>
+                                <div>
+                                    <strong>Why Today&rsquo;s Projects Need Agile:</strong> Modern projects require close collaboration across different departments and backgrounds with a <span class="hl">common understanding of the project&rsquo;s goal</span>.
+                                    <span class="elab">Without continuous communication and shared alignment, what the customer wanted, what was designed, and what was built end up completely mismatched.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">2</span>
+                                <div>
+                                    <strong>Scrum:</strong> The most popular lightweight Agile framework, built around <span class="hl">short time-boxed iterations (Sprints)</span>, defined roles, events, and artifacts.
+                                    <span class="elab">Plans, builds, and delivers small, potentially shippable product increments every 2 to 4 weeks.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">3</span>
+                                <div>
+                                    <strong>Kanban:</strong> A visual workflow method that uses a <span class="hl">board with columns and Work-In-Progress (WIP) limits</span>.
+                                    <span class="elab">Focuses on continuous flow and removing bottlenecks without requiring fixed-length Sprints.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">4</span>
+                                <div>
+                                    <strong>Extreme Programming (XP):</strong> An engineering-focused Agile method emphasizing <span class="hl">pair programming, Test-Driven Development (TDD), and continuous integration</span>.
+                                    <span class="elab">Improves software quality and responsiveness to changing customer requirements through strict technical practices.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">5</span>
+                                <div>
+                                    <strong>Feature Driven Development (FDD):</strong> An iterative approach that organizes project work around <span class="hl">designing and building specific client-valued features</span>.
+                                    <span class="elab">Breaks domain models into small feature lists that can each be implemented in no more than two weeks.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">6</span>
+                                <div>
+                                    <strong>Adaptive Software Development (ASD), Crystal Clear &amp; RUP:</strong> Additional iterative approaches under the Agile umbrella.
+                                    <span class="elab"><strong>ASD</strong> cycles through <em>Speculate, Collaborate, Learn</em>; <strong>Crystal Clear</strong> prioritizes people and communication in small teams; <strong>Rational Unified Process (RUP)</strong> structures iterative development into four phases.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- STOP 02 -->
+                <article class="lesson-stop">
+                    <div class="stop-node">02</div>
+                    <div class="stop-card">
+                        <div class="stop-header">
+                            <div>
+                                <span class="stop-tag">
+                                    <svg class="ico ico-sm" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                                    Benefits &amp; Delivery Model
+                                </span>
+                                <h3>Advantages of Agile, Incremental vs. Iterative &amp; Success Factors</h3>
+                            </div>
+                        </div>
+
+                        <div class="sub-label">
+                            <svg class="ico" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                            Five Advantages of Agile Approaches
+                        </div>
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">1</span>
+                                <div>
+                                    <strong>Value- or Product-Orientation:</strong> Requirements are prioritized based on <span class="hl">added value for the company and product</span>.
+                                    <span class="elab">Teams always build the highest-value features first while respecting technical dependencies.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">2</span>
+                                <div>
+                                    <strong>Reduced &ldquo;Time to Market&rdquo;:</strong> Produces <span class="hl">potentially shippable deliverables (increments) early on</span>.
+                                    <span class="elab">Eliminates risky &ldquo;big bang&rdquo; releases and gets working features into users&rsquo; hands faster.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">3</span>
+                                <div>
+                                    <strong>Reduced Risk:</strong> Early review loops and stakeholder feedback <span class="hl">prevent major flaws</span> in the overall development process.
+                                    <span class="elab">Ensures customer requirements are continuously verified rather than discovered too late.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">4</span>
+                                <div>
+                                    <strong>High Quality:</strong> Early, well-established testing procedures and review loops allow <span class="hl">early identification of bugs and issues</span>.
+                                    <span class="elab">Quality is built into every iteration instead of being tacked on at the end.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">5</span>
+                                <div>
+                                    <strong>More Flexibility:</strong> Short development cycles (iterations) allow <span class="hl">early adaptation and change</span> without disrupting the overall process.
+                                    <span class="elab">Teams can pivot smoothly when market conditions or customer priorities shift.</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="sub-label">
+                            <svg class="ico" viewBox="0 0 24 24"><line x1="6" y1="3" x2="6" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></svg>
+                            Incremental vs. Iterative Development
+                        </div>
+                        <div class="visual-versus">
+                            <div class="vs-pane">
+                                <h4>
+                                    <svg class="ico" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                                    Iterative Approach
+                                </h4>
+                                <div class="point-stack">
+                                    <div class="point-row">
+                                        <span class="point-num">1</span>
+                                        <div>
+                                            <strong>Continuous Refinement:</strong> Focuses on <span class="hl">continuous improvement of existing features</span> across repeated cycles.
+                                            <span class="elab">Like sketching a rough outline first and refining the quality and detail in each pass.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="vs-badge">+</div>
+                            <div class="vs-pane">
+                                <h4>
+                                    <svg class="ico" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+                                    Incremental Approach
+                                </h4>
+                                <div class="point-stack">
+                                    <div class="point-row">
+                                        <span class="point-num">2</span>
+                                        <div>
+                                            <strong>Piece-by-Piece Addition:</strong> Focuses on <span class="hl">adding new features</span> to the overall product step by step.
+                                            <span class="elab">Scrum combines <strong>both</strong>: refining existing features (iterative) while adding new features (incremental).</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="sub-label">
+                            <svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M6 20v-2a6 6 0 0 1 12 0v2"/></svg>
+                            Key Factors That Make Agile Projects Successful
+                        </div>
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">1</span>
+                                <div><strong>People &amp; Culture:</strong> <span class="hl">Teamwork</span>, <span class="hl">Open Communication</span>, <span class="hl">Trust and Respect</span>, and an <span class="hl">Open Approach to Mistakes</span>.</div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">2</span>
+                                <div><strong>Planning &amp; Scope:</strong> <span class="hl">Precise Requirements</span>, <span class="hl">&ldquo;Real&rdquo; Business Value</span>, <span class="hl">Reliable Planning</span>, and <span class="hl">Realistic Expectations and Project Goals</span>.</div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">3</span>
+                                <div><strong>Execution &amp; Delivery:</strong> <span class="hl">Flexibility</span>, <span class="hl">Great Tool Support</span>, and <span class="hl">Proper Handover of Project Results</span>.</div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- STOP 03 -->
+                <article class="lesson-stop">
+                    <div class="stop-node">03</div>
+                    <div class="stop-card">
+                        <div class="stop-header">
+                            <div>
+                                <span class="stop-tag">
+                                    <svg class="ico ico-sm" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                                    Values &amp; Principles
+                                </span>
+                                <h3>The Agile Manifesto &amp; Core Agile Principles</h3>
+                            </div>
+                        </div>
+
+                        <div class="sub-label">
+                            <svg class="ico" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                            The 4 Core Value Statements of the Agile Manifesto
+                        </div>
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">1</span>
+                                <div>
+                                    <strong><span class="hl">Individuals and Interactions</span> over Processes and Tools:</strong> Software is developed by people.
+                                    <span class="elab">Processes and tools are important, but should always support&mdash;rather than replace&mdash;human interaction.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">2</span>
+                                <div>
+                                    <strong><span class="hl">Working Software (Deliverables, Results)</span> over Comprehensive Documentation:</strong> Real business value comes from working product increments.
+                                    <span class="elab">Functional software is always more important than exhaustive theoretical planning documents.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">3</span>
+                                <div>
+                                    <strong><span class="hl">Customer Collaboration</span> over Contract Negotiation:</strong> Honest, close collaboration with the client enables rapid adaptation to changing demands.
+                                    <span class="elab">Continuous partnership with the customer matters more than rigid, pre-negotiated contracts.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">4</span>
+                                <div>
+                                    <strong><span class="hl">Responding to Change</span> over Following a Plan:</strong> Plans must acknowledge uncertainty and leave space for changes.
+                                    <span class="elab">Adapting to complex requirements and shifting market environments is prioritized over blindly following an outdated plan.</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="sub-label">
+                            <svg class="ico" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+                            Key Agile Principles Pursued by Agile Teams
+                        </div>
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">1</span>
+                                <div>
+                                    <strong>Customer Satisfaction:</strong> Our highest priority is to <span class="hl">satisfy the customer through early and continuous delivery</span> of valuable software.
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">2</span>
+                                <div>
+                                    <strong>Continuous Delivery:</strong> Deliver working software <span class="hl">frequently</span>, from a couple of weeks to a couple of months, with a <span class="hl">preference to the shorter timescale</span>.
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">3</span>
+                                <div>
+                                    <strong>Working Software:</strong> <span class="hl">Working software</span> is the primary measure of progress.
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">4</span>
+                                <div>
+                                    <strong>Sustainable Development:</strong> Agile processes promote <span class="hl">sustainable development</span>; sponsors, developers, and users should be able to <span class="hl">maintain a constant pace indefinitely</span>.
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">5</span>
+                                <div>
+                                    <strong>Support Motivated Individuals:</strong> Build projects around motivated individuals; <span class="hl">give them the environment and support they need, and trust them</span> to get the job done.
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">6</span>
+                                <div>
+                                    <strong>&ldquo;Face-to-Face&rdquo; Communication:</strong> The most efficient and effective method of conveying information to and within a development team is <span class="hl">face-to-face conversation</span>.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- STOP 04 -->
+                <article class="lesson-stop">
+                    <div class="stop-node">04</div>
+                    <div class="stop-card">
+                        <div class="stop-header">
+                            <div>
+                                <span class="stop-tag">
+                                    <svg class="ico ico-sm" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/></svg>
+                                    Product Strategy &amp; Values
+                                </span>
+                                <h3>Minimum Viable Product (MVP) &amp; The 5 Scrum Values</h3>
+                            </div>
+                        </div>
+
+                        <div class="takeaway-banner">
+                            <svg class="ico" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                            <div><strong>MVP Definition:</strong> &ldquo;The <span class="hl">Minimum Viable Product (MVP)</span> is that version of a new product which allows a team to collect the <span class="hl">maximum amount of validated learning about customers with the least effort</span>.&rdquo;</div>
+                        </div>
+
+                        <div class="visual-versus">
+                            <div class="vs-pane">
+                                <h4>
+                                    <svg class="ico" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                                    MVP Benefit &amp; Correct Progression
+                                </h4>
+                                <div class="point-stack">
+                                    <div class="point-row">
+                                        <span class="point-num">1</span>
+                                        <div>
+                                            <strong>Benefit:</strong> Gain an understanding of <span class="hl">client expectations without wasting excessive time</span> on development.
+                                            <span class="elab">Build usable stages (skateboard &rarr; scooter &rarr; bicycle &rarr; motorcycle &rarr; car) rather than unusable isolated parts (one wheel &rarr; axle &rarr; chassis).</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="vs-badge">VS</div>
+                            <div class="vs-pane">
+                                <h4>
+                                    <svg class="ico" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                                    Common MVP Pitfall
+                                </h4>
+                                <div class="point-stack">
+                                    <div class="point-row">
+                                        <span class="point-num">2</span>
+                                        <div>
+                                            <strong>Pitfall:</strong> Teams put too much focus on <span class="hl">&ldquo;minimal&rdquo; instead of &ldquo;viable&rdquo; and sacrifice quality</span>.
+                                            <span class="elab">An MVP must still be functional, reliable, and valuable enough for real customers to use.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="sub-label">
+                            <svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M6 20v-2a6 6 0 0 1 12 0v2"/></svg>
+                            The 5 Core Scrum Values
+                        </div>
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">1</span>
+                                <div>
+                                    <strong>Respect:</strong> <span class="hl">Mutual respect</span> is the foundation for open and constructive collaboration.
+                                    <span class="elab">Team members value each other&rsquo;s skills, perspectives, and contributions.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">2</span>
+                                <div>
+                                    <strong>Focus:</strong> Scrum executes in short cycles (Sprints) with <span class="hl">clear, specific goals</span> that require undivided attention.
+                                    <span class="elab">Sprint Goals can only be achieved when the team focuses on current Sprint work without multitasking distractions.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">3</span>
+                                <div>
+                                    <strong>Courage:</strong> Team members need courage to <span class="hl">think out of the box and follow new approaches</span> despite risk and uncertainty.
+                                    <span class="elab">Empowers the team to speak up about blockers, challenge assumptions, and innovate.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">4</span>
+                                <div>
+                                    <strong>Openness:</strong> The Scrum Team and stakeholders communicate in an <span class="hl">open and honest way about progress, risks, changes, and problems</span>.
+                                    <span class="elab">Transparency ensures issues are surfaced early so the team can adapt together.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">5</span>
+                                <div>
+                                    <strong>Commitment:</strong> The Scrum Team is intrinsically motivated and <span class="hl">committed to the product, Sprint Goals, and mutual agreements</span>.
+                                    <span class="elab">Every member dedicates their best effort to achieving the team&rsquo;s shared objective.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+
+        <!-- ==================================================================
+             LESSON 5: SCRUM FRAMEWORK, USER STORIES, VELOCITY & BURNDOWN
+             ================================================================== -->
+        <section class="module-pane" id="mod-5">
+            <div class="module-intro">
+                <h2>Lesson 5: Scrum Framework, User Stories, Velocity &amp; Burndown</h2>
+            </div>
+
+            <div class="linear-feed">
+
+                <!-- STOP 01 -->
+                <article class="lesson-stop">
+                    <div class="stop-node">01</div>
+                    <div class="stop-card">
+                        <div class="stop-header">
+                            <div>
+                                <span class="stop-tag">
+                                    <svg class="ico ico-sm" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M6 20v-2a6 6 0 0 1 12 0v2"/></svg>
+                                    3 Scrum Roles
+                                </span>
+                                <h3>Scrum Structure (3-3-5) &amp; The 3 Scrum Roles</h3>
+                            </div>
+                        </div>
+
+                        <div class="takeaway-banner">
+                            <svg class="ico" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                            <div><strong>Scrum at a Glance:</strong> Scrum consists of <span class="hl">3 Roles</span>, <span class="hl">3 Artifacts</span>, and <span class="hl">5 Official Events</span> executing in short Sprints (<span class="hl">2&ndash;4 weeks</span>). Agile teams have no hierarchies&mdash;all three roles collaborate closely.</div>
+                        </div>
+
+                        <div class="pillars-visual">
+                            <div class="pillar-col">
+                                <div class="pillar-head">
+                                    <svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M6 20v-2a6 6 0 0 1 12 0v2"/></svg>
+                                    1. Product Owner
+                                </div>
+                                <div class="point-stack">
+                                    <div class="point-row"><span class="point-num">1</span><div>Single person working as the <span class="hl">&ldquo;voice of the customer&rdquo;</span>.</div></div>
+                                    <div class="point-row"><span class="point-num">2</span><div>Responsible for the <span class="hl">overall product vision, economic success, and maximizing business value</span>.</div></div>
+                                    <div class="point-row"><span class="point-num">3</span><div>Maintains and <span class="hl">prioritizes the Product Backlog</span> and negotiates Sprint Goals.</div></div>
+                                    <div class="point-row"><span class="point-num">4</span><div><span class="hl">Approves or rejects</span> finished User Stories within each Sprint.</div></div>
+                                </div>
+                            </div>
+
+                            <div class="pillar-col">
+                                <div class="pillar-head">
+                                    <svg class="ico" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                                    2. Scrum Master
+                                </div>
+                                <div class="point-stack">
+                                    <div class="point-row"><span class="point-num">1</span><div>Responsible for the <span class="hl">Scrum process</span>&mdash;ensuring everyone follows Scrum rules and guidelines.</div></div>
+                                    <div class="point-row"><span class="point-num">2</span><div>Creates an environment where the team works <span class="hl">self-organized and cross-functionally</span>.</div></div>
+                                    <div class="point-row"><span class="point-num">3</span><div><span class="hl">Removes impediments (blockers)</span>, risks, and external distractions.</div></div>
+                                    <div class="point-row"><span class="point-num">4</span><div>Moderates communication between PO and Dev Team (often an objective external coach).</div></div>
+                                </div>
+                            </div>
+
+                            <div class="pillar-col">
+                                <div class="pillar-head">
+                                    <svg class="ico" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/></svg>
+                                    3. Development Team
+                                </div>
+                                <div class="point-stack">
+                                    <div class="point-row"><span class="point-num">1</span><div>Typically <span class="hl">5 to 9 people</span> responsible for building and testing the working product.</div></div>
+                                    <div class="point-row"><span class="point-num">2</span><div><span class="hl">Cross-functional</span> (developers, testers, business analysts, domain experts in one team).</div></div>
+                                    <div class="point-row"><span class="point-num">3</span><div><span class="hl">Self-organized and autonomous</span> on how to achieve agreed Sprint Goals.</div></div>
+                                    <div class="point-row"><span class="point-num">4</span><div>Ideally located in a single room to support direct face-to-face collaboration.</div></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- STOP 02 -->
+                <article class="lesson-stop">
+                    <div class="stop-node">02</div>
+                    <div class="stop-card">
+                        <div class="stop-header">
+                            <div>
+                                <span class="stop-tag">
+                                    <svg class="ico ico-sm" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+                                    3 Artifacts &amp; Quality Gates
+                                </span>
+                                <h3>Scrum Artifacts, Definition of Ready (DoR) &amp; Definition of Done (DoD)</h3>
+                            </div>
+                        </div>
+
+                        <div class="sub-label">
+                            <svg class="ico" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+                            The 3 Official Scrum Artifacts
+                        </div>
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">1</span>
+                                <div>
+                                    <strong>Product Backlog:</strong> The prioritized master list of <span class="hl">all desired requirements</span> for the product, owned and ranked by the Product Owner.
+                                    <span class="elab">It is dynamic (new requirements can be added and priorities changed) and visible to all stakeholders and the Scrum Team.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">2</span>
+                                <div>
+                                    <strong>Sprint Backlog:</strong> The subset of Product Backlog items selected as the <span class="hl">work list for the current Sprint</span>.
+                                    <span class="elab">Referenced daily during the Daily Scrum and tracked via the Sprint Burndown Chart.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">3</span>
+                                <div>
+                                    <strong>Product Increment:</strong> The sum of all Product Backlog items completed during the current Sprint and all previous Sprints that are <span class="hl">potentially shippable</span>.
+                                    <span class="elab">Every Increment must be a working, tested, documented, and usable product that is additive to all prior increments.</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="sub-label">
+                            <svg class="ico" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                            Definition of Ready (DoR) vs. Definition of Done (DoD)
+                        </div>
+                        <div class="visual-versus">
+                            <div class="vs-pane">
+                                <h4>
+                                    <svg class="ico" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                                    Definition of Ready (DoR)
+                                </h4>
+                                <div class="point-stack">
+                                    <div class="point-row">
+                                        <span class="point-num">1</span>
+                                        <div>
+                                            <strong>Pre-Development Quality Gate:</strong> General criteria a User Story must satisfy <span class="hl">before development starts</span> (before entering the Sprint Backlog).
+                                            <span class="elab">Established by PO and Dev Team, known to all members, and displayed publicly to prevent mid-Sprint confusion and wasted time.</span>
+                                        </div>
+                                    </div>
+                                    <div class="point-row">
+                                        <span class="point-num">2</span>
+                                        <div>
+                                            <strong>Example DoR Criteria:</strong> Understood by all parties (with sketches/notes); meets <span class="hl">INVEST</span> criteria; has clear <span class="hl">Acceptance Criteria</span>; is <span class="hl">estimated</span> and <span class="hl">prioritized</span>; fits in <span class="hl">one Sprint</span>; no blocking external dependencies or open questions.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="vs-badge">VS</div>
+                            <div class="vs-pane">
+                                <h4>
+                                    <svg class="ico" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                                    Definition of Done (DoD)
+                                </h4>
+                                <div class="point-stack">
+                                    <div class="point-row">
+                                        <span class="point-num">1</span>
+                                        <div>
+                                            <strong>Post-Development Quality Gate:</strong> General checklist of criteria a requirement must meet <span class="hl">to be considered complete and accepted</span>.
+                                            <span class="elab">Helps the Scrum Team know what quality work is required and helps the Product Owner decide whether a story is accepted or refused at Sprint Review.</span>
+                                        </div>
+                                    </div>
+                                    <div class="point-row">
+                                        <span class="point-num">2</span>
+                                        <div>
+                                            <strong>DoR vs. Acceptance Criteria:</strong> DoR &amp; DoD apply <span class="hl">generally to all User Stories</span>, whereas Acceptance Criteria apply to <span class="hl">one specific User Story</span>.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- STOP 03 -->
+                <article class="lesson-stop">
+                    <div class="stop-node">03</div>
+                    <div class="stop-card">
+                        <div class="stop-header">
+                            <div>
+                                <span class="stop-tag">
+                                    <svg class="ico ico-sm" viewBox="0 0 24 24"><line x1="6" y1="3" x2="6" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></svg>
+                                    5 Events + Refinement
+                                </span>
+                                <h3>Scrum Events &amp; Scaling Scrum</h3>
+                            </div>
+                        </div>
+
+                        <div class="table-wrap">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Event / Activity</th>
+                                        <th>Time-Box / Duration</th>
+                                        <th>Participants</th>
+                                        <th>Purpose &amp; Key Activities</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>0. Product Backlog Refinement</strong><br><em>(Ongoing activity, not an official event)</em></td>
+                                        <td>~<span class="hl">10%</span> of Dev Team&rsquo;s capacity</td>
+                                        <td>Agile Team + Stakeholders</td>
+                                        <td>Review, clarify, and prioritize Product Backlog items before Sprint Planning so stories meet the Definition of Ready.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>1. Sprint</strong></td>
+                                        <td>Usually <span class="hl">2 or 4 weeks</span></td>
+                                        <td>Scrum Team</td>
+                                        <td>Time-boxed development period in which product increments are planned, designed, built, and tested; contains all other Scrum events.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>2. Sprint Planning</strong></td>
+                                        <td>~<span class="hl">2 hrs per Sprint week</span></td>
+                                        <td>Scrum Team</td>
+                                        <td>PO presents highest-priority backlog items and Sprint Goal; team selects items for the <span class="hl">Sprint Backlog</span> and breaks stories into <span class="hl">Tasks</span>.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>3. Daily Scrum</strong></td>
+                                        <td><span class="hl">15 minutes daily</span></td>
+                                        <td>Agile Team (PO optional)</td>
+                                        <td>Inspect progress and identify impediments by answering 3 questions: (1) <em>What did you do yesterday?</em> (2) <em>What will you do today?</em> (3) <em>Are there any impediments?</em></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>4. Sprint Review</strong></td>
+                                        <td>~<span class="hl">1 hr per Sprint week</span></td>
+                                        <td>Agile Team + Stakeholders</td>
+                                        <td>Held at the end of a Sprint to <span class="hl">demonstrate the Product Increment</span>, gather stakeholder feedback, and verify if the Definition of Done is met.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>5. Sprint Retrospective</strong></td>
+                                        <td>~<span class="hl">1 hr per Sprint week</span> (max 3 hrs for 4 wks)</td>
+                                        <td>Agile Team only (closed to outsiders)</td>
+                                        <td>Last meeting of the Sprint where the team <span class="hl">reflects on its own process</span>, shares lessons learned, and defines improvements for the next Sprint.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="sub-label">
+                            <svg class="ico" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+                            Scrum for Big Projects (Scaling Scrum)
+                        </div>
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">1</span>
+                                <div>
+                                    <strong>One Shared Product Backlog &amp; Shared Definition of Done:</strong> Multiple Scrum Teams build one product together, each running its own Sprints and Daily Scrums.
+                                    <span class="elab">Product Owners hold integration meetings across Sprint Backlogs so all teams meet a shared Definition of Done.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">2</span>
+                                <div>
+                                    <strong>Scrum of Scrums (Global Stand-Up):</strong> Cross-team coordination meeting attended by <span class="hl">all Scrum Masters (and Product Owners)</span>.
+                                    <span class="elab">Sometimes supported by additional team members to resolve cross-team dependencies and integration issues.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- STOP 04 -->
+                <article class="lesson-stop">
+                    <div class="stop-node">04</div>
+                    <div class="stop-card">
+                        <div class="stop-header">
+                            <div>
+                                <span class="stop-tag">
+                                    <svg class="ico ico-sm" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+                                    Requirements &amp; User Stories
+                                </span>
+                                <h3>Requirements Hierarchy, Epics vs. User Stories &amp; INVEST</h3>
+                            </div>
+                        </div>
+
+                        <div class="sub-label">
+                            <svg class="ico" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+                            4-Level Requirements Hierarchy in Scrum (Broadest to Smallest)
+                        </div>
+                        <div class="funnel-wrap">
+                            <div class="funnel-layer w-100"><strong>04 &mdash; Theme:</strong> A group of Epics that follow a specific strategic goal to describe products or projects.</div>
+                            <div class="funnel-layer w-88"><strong>03 &mdash; Epic:</strong> Roughly described large functionality spanning multiple Sprints; must be broken down into User Stories.</div>
+                            <div class="funnel-layer w-76"><strong>02 &mdash; User Story:</strong> Specific description of a single feature/functionality that <span class="hl">must be delivered within a single Sprint</span>.</div>
+                            <div class="funnel-layer w-64"><strong>01 &mdash; Task:</strong> Operative, concrete actions (programming steps, meetings, quality checks) required to deliver a User Story.</div>
+                        </div>
+
+                        <div class="visual-versus">
+                            <div class="vs-pane">
+                                <h4>
+                                    <svg class="ico" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                                    How Epics Differ from User Stories
+                                </h4>
+                                <div class="point-stack">
+                                    <div class="point-row"><span class="point-num">1</span><div><strong>Complexity:</strong> Too complex or unclear for immediate development; needs clarification.</div></div>
+                                    <div class="point-row"><span class="point-num">2</span><div><strong>Unknown:</strong> New/unfamiliar to the Dev Team, who have had no time to raise questions yet.</div></div>
+                                    <div class="point-row"><span class="point-num">3</span><div><strong>Risk:</strong> Includes severe risks whose consequences are not yet evaluated.</div></div>
+                                    <div class="point-row"><span class="point-num">4</span><div><strong>Size:</strong> Too big for a single Sprint; spans multiple Sprints and must be split into User Stories.</div></div>
+                                </div>
+                            </div>
+                            <div class="vs-badge">VS</div>
+                            <div class="vs-pane">
+                                <h4>
+                                    <svg class="ico" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                                    User Story &ldquo;INVEST&rdquo; Rule
+                                </h4>
+                                <div class="point-stack">
+                                    <div class="point-row"><span class="point-num">I</span><div><strong>Independent:</strong> Fairly independent from other User Stories.</div></div>
+                                    <div class="point-row"><span class="point-num">N</span><div><strong>Negotiable:</strong> Reminders for conversation discussed between PO and Dev Team.</div></div>
+                                    <div class="point-row"><span class="point-num">V</span><div><strong>Valuable:</strong> Delivers specific business value to the user.</div></div>
+                                    <div class="point-row"><span class="point-num">E</span><div><strong>Estimated:</strong> Effort/Story Points have been estimated.</div></div>
+                                    <div class="point-row"><span class="point-num">S</span><div><strong>Sized appropriately:</strong> Small enough to finish within one Sprint.</div></div>
+                                    <div class="point-row"><span class="point-num">T</span><div><strong>Testable:</strong> Clearly testable with defined test cases.</div></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="sub-label">
+                            <svg class="ico" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                            User Story Format, Acceptance Criteria &amp; Template Fields
+                        </div>
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">1</span>
+                                <div>
+                                    <strong>Standard User Story Format:</strong> <strong>Title</strong> + <span class="hl">&ldquo;As a &lt;role&gt;, I want to &lt;functionality&gt;, so that &lt;business value/benefit&gt;&rdquo;</span>.
+                                    <span class="elab">Describes <strong>WHAT</strong> the user can do and <strong>WHY</strong>, never <strong>HOW</strong> to program it (the Dev Team decides the technical &ldquo;how&rdquo; in Sprint Planning).</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">2</span>
+                                <div>
+                                    <strong>Acceptance Criteria:</strong> Explicit, testable, and traceable conditions defined <span class="hl">before development starts</span> that must be met for a specific User Story to be considered &ldquo;Done&rdquo;.
+                                    <span class="elab">Example for <em>Create User Accounts</em>: Administrator can enter username and email, system automatically generates an initial password, and system emails the password to the user.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">3</span>
+                                <div>
+                                    <strong>User-Story Template Sections:</strong> <span class="hl">Title</span>, <span class="hl">Requestor</span> (for clarification), <span class="hl">Estimation</span>, <span class="hl">ID</span>, <span class="hl">Involved Parties/Systems</span>, <span class="hl">Description</span> (As / I want to / So that), <span class="hl">Acceptance Criteria</span>, <span class="hl">Sketch/Screenshot</span>, <span class="hl">Business Value/Consequences</span> (for PO prioritization), and <span class="hl">Dependencies/Risks</span>.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- STOP 05 -->
+                <article class="lesson-stop">
+                    <div class="stop-node">05</div>
+                    <div class="stop-card">
+                        <div class="stop-header">
+                            <div>
+                                <span class="stop-tag">
+                                    <svg class="ico ico-sm" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/></svg>
+                                    Planning &amp; Monitoring
+                                </span>
+                                <h3>Velocity, Capacity Calculations &amp; Burndown Charts</h3>
+                            </div>
+                        </div>
+
+                        <div class="sub-label">
+                            <svg class="ico" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                            1. Velocity Rules &amp; Calculation
+                        </div>
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">1</span>
+                                <div>
+                                    <strong>Definition of Velocity:</strong> The <span class="hl">running average of all successfully completed Story Points</span> over the <span class="hl">last 3 Sprints</span>.
+                                    <span class="elab">First reliable Velocity calculation is possible after 3 completed Sprints; Velocity stabilizes after a few initial Sprints.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">2</span>
+                                <div>
+                                    <strong>Do Not Count Unfinished Work at All:</strong> Only User Stories that are <span class="hl">100% finished (&ldquo;Done&rdquo;)</span> count toward Velocity.
+                                    <span class="elab">Example: If Story A (13 pts, 100%), Story B (8 pts, 100%), Story C (1 pt, 100%), and Story D (13 pts, <strong>95%</strong>) are worked on, Story D counts as <strong>0</strong>, giving a Sprint Velocity of <code>13 + 8 + 1 = 22 Story Points</code>.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">3</span>
+                                <div>
+                                    <strong>3-Sprint Running Average Example:</strong> If Sprint 4 = <code>22 pts</code>, Sprint 5 = <code>25 pts</code>, and Sprint 6 = <code>27 pts</code>, then <span class="hl"><code>Velocity = (22 + 25 + 27) / 3 = ~25 Story Points</code></span>.
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">4</span>
+                                <div>
+                                    <strong>Velocity &ldquo;No-Go&rsquo;s&rdquo;:</strong> Never calculate the Velocity of <span class="hl">individual people</span> (only the team matters), and never use Velocity to <span class="hl">calculate bonuses</span> (which causes inflated Story Point estimates).
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="sub-label">
+                            <svg class="ico" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/></svg>
+                            2. Standard Capacity vs. Available Sprint Capacity
+                        </div>
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">1</span>
+                                <div>
+                                    <strong>Capacity Definition:</strong> The Development Team&rsquo;s <span class="hl">actual time available (in hours)</span> for implementing User Stories after deducting Scrum Events, emails, trainings, and vacations.
+                                    <span class="elab">Typically, 25% of an 8-hour workday is deducted for meetings and non-Story tasks, leaving <strong>6 productive hours/day</strong>.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">2</span>
+                                <div>
+                                    <strong>Standard Capacity Example:</strong> <code>6 developers &times; 10 Sprint days = 60 person-days</code>. At <code>6 productive hrs/day</code> (<code>8 hrs &minus; 25%</code>), <span class="hl"><code>Standard Capacity = 60 &times; 6 = 360 hours</code></span>.
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">3</span>
+                                <div>
+                                    <strong>Available Sprint Capacity Example:</strong> If 1 developer is on vacation (<code>&minus;10 days</code>) and the remaining 5 attend a 1-day training (<code>&minus;5 days</code>), the team loses <code>15 days</code> (<code>90 hrs</code>): <span class="hl"><code>Sprint Capacity = (60 &minus; 15) &times; 6 = 270 hours</code></span>, so <span class="hl"><code>Available Capacity = 270 / 360 = 75%</code></span>.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="sub-label">
+                            <svg class="ico" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+                            3. Burndown Charts (Ideal Trend vs. Real Progress)
+                        </div>
+
+                        <!-- Custom Inline SVG Diagram: Sprint Burndown Chart -->
+                        <div class="svg-diagram-box">
+                            <svg viewBox="0 0 600 220" role="img" aria-label="Sprint Burndown Chart showing Ideal Trend vs Real Progress">
+                                <!-- Axes -->
+                                <line x1="65" y1="25" x2="65" y2="180" stroke="var(--text-muted)" stroke-width="2"/>
+                                <line x1="65" y1="180" x2="540" y2="180" stroke="var(--text-muted)" stroke-width="2"/>
+
+                                <!-- Axis Labels -->
+                                <text x="22" y="105" text-anchor="middle" fill="var(--text-bold)" font-size="11" font-weight="700" transform="rotate(-90 22 105)">Story Points (Remaining)</text>
+                                <text x="302" y="208" text-anchor="middle" fill="var(--text-bold)" font-size="11" font-weight="700">Sprint Days (Day 0 to Day 10)</text>
+
+                                <!-- Y-Axis Ticks -->
+                                <text x="55" y="32" text-anchor="end" fill="var(--text-muted)" font-size="10">20</text>
+                                <text x="55" y="106" text-anchor="end" fill="var(--text-muted)" font-size="10">10</text>
+                                <text x="55" y="183" text-anchor="end" fill="var(--text-muted)" font-size="10">0</text>
+
+                                <!-- X-Axis Ticks -->
+                                <text x="65" y="194" text-anchor="middle" fill="var(--text-muted)" font-size="10">0</text>
+                                <text x="302" y="194" text-anchor="middle" fill="var(--text-muted)" font-size="10">5</text>
+                                <text x="540" y="194" text-anchor="middle" fill="var(--text-muted)" font-size="10">10</text>
+
+                                <!-- Ideal Trend Line (Straight Cyan/Sky Line) -->
+                                <line x1="65" y1="30" x2="540" y2="180" stroke="var(--sky)" stroke-width="2.5" stroke-dasharray="6,4"/>
+                                <text x="275" y="138" fill="var(--sky)" font-size="11" font-weight="800">Ideal Trend (Straight Line)</text>
+
+                                <!-- Real Progress Line (Stepped/Jagged Primary Line) -->
+                                <polyline points="65,30 112,45 160,65 207,108 255,115 302,122 350,145 397,165 445,172 492,180" fill="none" stroke="var(--primary)" stroke-width="3"/>
+                                <text x="345" y="72" fill="var(--primary)" font-size="11" font-weight="800">Real Progress (Actual &ldquo;Done&rdquo; Updates)</text>
+                            </svg>
+                        </div>
+
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">1</span>
+                                <div>
+                                    <strong>Axes of a Burndown Chart:</strong> The <span class="hl">Y-Axis</span> shows remaining Story Points for the current Sprint; the <span class="hl">X-Axis</span> shows the number of Sprint days.
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">2</span>
+                                <div>
+                                    <strong>Ideal Trend Line:</strong> A <span class="hl">straight diagonal line</span> dividing total planned Story Points (e.g., 20) by total Sprint days (e.g., 10) for rough orientation.
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">3</span>
+                                <div>
+                                    <strong>Real Progress Line:</strong> Updated <span class="hl">daily</span> from Sprint Backlog updates showing Story Points completed (&ldquo;Done&rdquo;).
+                                    <span class="elab">Often shows little progress in the very first days of a Sprint because it naturally takes several days to complete a full User Story.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        // 1. Top Scroll Progress Bar
+        const progressBar = document.getElementById('progressBar');
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.scrollY || document.documentElement.scrollTop;
+            const docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const pct = docHeight > 0 ? Math.min(100, Math.max(0, (scrollTop / docHeight) * 100)) : 0;
+            if (progressBar) progressBar.style.width = pct + '%';
+        }, { passive: true });
+
+        // 2. Top-Level Lesson Tab Switching
+        const tabButtons = document.querySelectorAll('.module-tab');
+        const modulePanes = document.querySelectorAll('.module-pane');
+
+        tabButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const targetId = btn.getAttribute('data-target');
+                tabButtons.forEach(b => b.classList.remove('active'));
+                modulePanes.forEach(p => p.classList.remove('active'));
+                btn.classList.add('active');
+                const targetPane = document.getElementById(targetId);
+                if (targetPane) targetPane.classList.add('active');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+
+        // 3. Dark / Light Theme Toggle
+        const themeBtn = document.getElementById('themeBtn');
+        const themeLabel = document.getElementById('themeLabel');
+        let savedTheme = null;
+        try {
+            savedTheme = localStorage.getItem('reviewer_theme');
+        } catch (e) {
+            savedTheme = null;
+        }
+        if (savedTheme === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            if (themeLabel) themeLabel.textContent = 'Light Mode';
+        }
+        if (themeBtn) {
+            themeBtn.addEventListener('click', () => {
+                const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+                if (isDark) {
+                    document.documentElement.removeAttribute('data-theme');
+                    try { localStorage.setItem('reviewer_theme', 'light'); } catch (e) {}
+                    if (themeLabel) themeLabel.textContent = 'Dark Mode';
+                } else {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                    try { localStorage.setItem('reviewer_theme', 'dark'); } catch (e) {}
+                    if (themeLabel) themeLabel.textContent = 'Light Mode';
+                }
+            });
+        }
+
+        // 4. Instant Keyword Filter (Filters Lesson Stops in Active Tab)
+        const searchInput = document.getElementById('searchInput');
+        if (searchInput) {
+            searchInput.addEventListener('input', (e) => {
+                const query = e.target.value.trim().toLowerCase();
+                document.querySelectorAll('.lesson-stop').forEach(stop => {
+                    const text = stop.textContent.toLowerCase();
+                    stop.style.display = (!query || text.includes(query)) ? '' : 'none';
+                });
+            });
+        }
+    </script>
+</body>
+</html>
