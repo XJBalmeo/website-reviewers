@@ -1,0 +1,2642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Science</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
+    <style>
+/* ==========================================================================
+   1. THEME VARIABLES (OPTION A: CRIMSON ROSE & WARM AMBER FOR DATA SCIENCE)
+   ========================================================================== */
+:root {
+    --bg-page: #f4f7f9;
+    --bg-card: #ffffff;
+    --bg-subtle: #f8fafc;
+    --bg-elevated: #f1f5f9;
+    --bg-code: #0f172a;
+
+    --text-main: #334155;
+    --text-muted: #64748b;
+    --text-bold: #0f172a;
+
+    /* Subject Accent Palette: Crimson Rose & Warm Amber */
+    --primary: #e11d48;
+    --primary-soft: #ffe4e6;
+    --primary-border: #fda4af;
+    --secondary: #d97706;
+    --secondary-soft: #fef3c7;
+    --header-bg: linear-gradient(135deg, #18090e 0%, #31101d 55%, #881337 100%);
+    --header-border: #f43f5e;
+    --progress-grad: linear-gradient(90deg, #f43f5e, #fb923c, #facc15);
+
+    /* Semantic Accent Colors for Visual Variety */
+    --emerald: #059669;
+    --emerald-soft: #d1fae5;
+    --amber: #d97706;
+    --amber-soft: #fef3c7;
+    --rose: #e11d48;
+    --rose-soft: #ffe4e6;
+    --purple: #7c3aed;
+    --purple-soft: #ede9fe;
+    --sky: #0284c7;
+    --sky-soft: #e0f2fe;
+
+    /* Highlighted Keyword Pill */
+    --hl-bg: #fef3c7;
+    --hl-text: #92400e;
+    --hl-border: #fde68a;
+
+    --border: #e2e8f0;
+    --line-spine: #cbd5e1;
+    --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.05);
+    --shadow-md: 0 10px 25px -5px rgba(15, 23, 42, 0.08);
+    --radius-lg: 18px;
+    --radius-md: 12px;
+}
+
+[data-theme="dark"] {
+    --bg-page: #090d16;
+    --bg-card: #111827;
+    --bg-subtle: #1e293b;
+    --bg-elevated: #0f172a;
+    --bg-code: #030712;
+
+    --text-main: #cbd5e1;
+    --text-muted: #94a3b8;
+    --text-bold: #f8fafc;
+
+    /* Subject Accent Palette (Dark Mode) */
+    --primary: #fb7185;
+    --primary-soft: rgba(244, 63, 94, 0.16);
+    --primary-border: #be123c;
+    --secondary: #fbbf24;
+    --secondary-soft: rgba(245, 158, 11, 0.16);
+
+    --emerald: #34d399;
+    --emerald-soft: rgba(16, 185, 129, 0.15);
+    --amber: #fbbf24;
+    --amber-soft: rgba(245, 158, 11, 0.15);
+    --rose: #fb7185;
+    --rose-soft: rgba(244, 63, 94, 0.15);
+    --purple: #c084fc;
+    --purple-soft: rgba(139, 92, 246, 0.16);
+    --sky: #38bdf8;
+    --sky-soft: rgba(14, 165, 233, 0.15);
+
+    --hl-bg: rgba(251, 191, 36, 0.18);
+    --hl-text: #fde68a;
+    --hl-border: rgba(251, 191, 36, 0.35);
+
+    --border: #1f2937;
+    --line-spine: #334155;
+    --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.35);
+    --shadow-md: 0 12px 30px -5px rgba(0, 0, 0, 0.55);
+}
+
+/* ==========================================================================
+   2. RESET & BASE TYPOGRAPHY
+   ========================================================================== */
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+body {
+    margin: 0;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: var(--bg-page);
+    color: var(--text-main);
+    line-height: 1.6;
+    overflow-x: hidden;
+    transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+h1, h2, h3, h4 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    color: var(--text-bold);
+    margin-top: 0;
+    line-height: 1.28;
+}
+
+strong, b { color: var(--text-bold); font-weight: 700; }
+
+code, pre, .mono {
+    font-family: 'JetBrains Mono', monospace;
+}
+
+p code, li code, td code, div code {
+    background: var(--bg-elevated);
+    color: var(--primary);
+    padding: 0.1rem 0.4rem;
+    border-radius: 5px;
+    font-size: 0.86em;
+    font-weight: 600;
+    border: 1px solid var(--border);
+}
+
+/* Inline SVG Icon Standard */
+svg.ico {
+    width: 18px;
+    height: 18px;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    fill: none;
+    flex-shrink: 0;
+    display: inline-block;
+    vertical-align: middle;
+}
+svg.ico-lg { width: 22px; height: 22px; }
+svg.ico-sm { width: 15px; height: 15px; }
+
+/* Highlighted Keyword Pill */
+.hl {
+    background-color: var(--hl-bg);
+    color: var(--hl-text);
+    border: 1px solid var(--hl-border);
+    padding: 0.06rem 0.4rem;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.93em;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+}
+
+/* Block Header + Newline Description Formatting */
+.point-body {
+    flex: 1;
+    min-width: 0;
+}
+.item-title {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 800;
+    font-size: 0.98rem;
+    color: var(--text-bold);
+    margin: 0 0 0.28rem 0;
+    line-height: 1.35;
+    display: block;
+}
+.item-desc {
+    color: var(--text-main);
+    font-size: 0.91rem;
+    line-height: 1.58;
+    display: block;
+}
+.elab {
+    display: block;
+    margin-top: 0.28rem;
+    color: var(--text-muted);
+    font-size: 0.87rem;
+    line-height: 1.52;
+}
+
+/* ==========================================================================
+   3. SCROLL PROGRESS BAR, HEADER & STICKY NAVIGATION TABS
+   ========================================================================== */
+.progress-rail {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: rgba(148, 163, 184, 0.2);
+    z-index: 1000;
+}
+.progress-fill {
+    height: 100%;
+    width: 0%;
+    background: var(--progress-grad);
+    transition: width 0.1s linear;
+}
+
+.app-header {
+    background: var(--header-bg);
+    color: #f8fafc;
+    padding: 1.25rem 5%;
+    border-bottom: 3px solid var(--header-border);
+}
+.header-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+.brand-box h1 {
+    color: #ffffff;
+    font-size: 1.45rem;
+    font-weight: 800;
+    margin: 0;
+    letter-spacing: -0.02em;
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+}
+.brand-icon {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    flex-shrink: 0;
+}
+
+.header-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    flex-wrap: wrap;
+}
+.search-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+.search-wrap svg.ico {
+    position: absolute;
+    left: 11px;
+    color: #94a3b8;
+    pointer-events: none;
+}
+.search-input {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    color: #ffffff;
+    padding: 0.48rem 0.85rem 0.48rem 2.2rem;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    width: 210px;
+    outline: none;
+    transition: all 0.2s ease;
+}
+.search-input::placeholder { color: #cbd5e1; }
+.search-input:focus {
+    background: rgba(255, 255, 255, 0.18);
+    border-color: #ffffff;
+    width: 250px;
+}
+
+.ctrl-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    color: #f8fafc;
+    padding: 0.48rem 0.9rem;
+    border-radius: 999px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+.ctrl-btn:hover { background: rgba(255, 255, 255, 0.2); }
+
+/* Sticky Lesson Tabs */
+.module-bar {
+    position: sticky;
+    top: 4px;
+    z-index: 900;
+    background: var(--bg-card);
+    border-bottom: 1px solid var(--border);
+    box-shadow: var(--shadow-sm);
+    padding: 0.65rem 5%;
+}
+.module-tabs {
+    max-width: 900px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(185px, 1fr));
+    gap: 0.5rem;
+}
+.module-tab {
+    background: var(--bg-subtle);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    padding: 0.6rem 0.85rem;
+    border-radius: 11px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 700;
+    font-size: 0.83rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.2s ease;
+    text-align: left;
+}
+.module-tab:hover {
+    color: var(--text-bold);
+    border-color: var(--primary);
+}
+.module-tab.active {
+    background: var(--primary);
+    color: #ffffff;
+    border-color: var(--primary);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+}
+.tab-num {
+    width: 24px; height: 24px;
+    border-radius: 7px;
+    background: rgba(15, 23, 42, 0.08);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 800;
+    flex-shrink: 0;
+}
+.module-tab.active .tab-num {
+    background: rgba(255, 255, 255, 0.22);
+    color: #ffffff;
+}
+
+/* ==========================================================================
+   4. SINGLE-COLUMN LINEAR FEED & LESSON STOP CARDS
+   ========================================================================== */
+.feed-shell {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem 5% 5rem 5%;
+}
+
+.module-pane { display: none; animation: fadeSlide 0.3s ease; }
+.module-pane.active { display: block; }
+@keyframes fadeSlide {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.module-intro {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-left: 5px solid var(--primary);
+    border-radius: var(--radius-lg);
+    padding: 1.25rem 1.65rem;
+    margin-bottom: 2.2rem;
+    box-shadow: var(--shadow-sm);
+}
+.module-intro h2 {
+    font-size: 1.45rem;
+    margin: 0;
+}
+
+/* Single-Column Timeline Spine */
+.linear-feed {
+    position: relative;
+    padding-left: 3.1rem;
+}
+.linear-feed::before {
+    content: "";
+    position: absolute;
+    left: 19px;
+    top: 12px;
+    bottom: 12px;
+    width: 3px;
+    background: var(--line-spine);
+    border-radius: 3px;
+}
+
+.lesson-stop {
+    position: relative;
+    margin-bottom: 2.25rem;
+}
+.stop-node {
+    position: absolute;
+    left: -3.1rem;
+    top: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    background: var(--primary);
+    color: #ffffff;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 800;
+    font-size: 0.88rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.18);
+    border: 3px solid var(--bg-page);
+    z-index: 2;
+}
+
+.stop-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1.65rem;
+    box-shadow: var(--shadow-md);
+}
+.stop-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.9rem;
+}
+.stop-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.73rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    padding: 0.25rem 0.65rem;
+    border-radius: 6px;
+    background: var(--primary-soft);
+    color: var(--primary);
+}
+.stop-card h3 {
+    font-size: 1.32rem;
+    margin: 0.35rem 0 0 0;
+}
+.sub-label {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.98rem;
+    font-weight: 800;
+    color: var(--text-bold);
+    margin: 1.35rem 0 0.55rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+}
+.sub-label svg.ico { color: var(--primary); }
+
+/* ==========================================================================
+   5. VISUAL COMPONENT LIBRARY STYLES (ALL ALWAYS-VISIBLE)
+   ========================================================================== */
+
+/* 5A. Takeaway Banner */
+.takeaway-banner {
+    background: var(--bg-subtle);
+    border-left: 4px solid var(--primary);
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    padding: 0.95rem 1.15rem;
+    margin-bottom: 1.1rem;
+    font-size: 0.94rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+}
+.takeaway-banner svg.ico {
+    color: var(--primary);
+    margin-top: 0.18rem;
+}
+
+/* 5B. One-Box-Per-Item Stack (.point-stack & .point-row) */
+.point-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin: 0.8rem 0;
+}
+.point-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.85rem;
+    background: var(--bg-subtle);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 0.9rem 1.1rem;
+    font-size: 0.91rem;
+}
+.point-num {
+    min-width: 28px;
+    height: 28px;
+    padding: 0 0.35rem;
+    border-radius: 8px;
+    background: var(--primary-soft);
+    color: var(--primary);
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    font-size: 0.78rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 0.05rem;
+}
+
+/* 5C. Multi-Pillar Concept Grid */
+.pillars-visual {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 0.9rem;
+    margin: 1rem 0;
+}
+.pillar-col {
+    background: var(--bg-subtle);
+    border: 1px solid var(--border);
+    border-top: 4px solid var(--primary);
+    border-radius: var(--radius-md);
+    padding: 1.05rem;
+}
+.pillar-head {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 800;
+    font-size: 0.96rem;
+    color: var(--text-bold);
+    margin-bottom: 0.5rem;
+}
+.pillar-head svg.ico { color: var(--primary); }
+
+/* 5D. Side-by-Side Comparison Cards (.visual-versus) */
+.visual-versus {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 0.95rem;
+    align-items: stretch;
+    margin: 1.1rem 0;
+}
+.vs-pane {
+    background: var(--bg-subtle);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 1.1rem;
+}
+.vs-pane h4 {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    margin-bottom: 0.6rem;
+    font-size: 1rem;
+}
+.vs-pane h4 svg.ico { color: var(--primary); }
+.vs-badge {
+    align-self: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 999px;
+    background: var(--primary);
+    color: #ffffff;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 800;
+    font-size: 0.76rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 5E. Responsive Data & Calculation Tables */
+.table-wrap {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin: 0.65rem 0 0.2rem 0;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+}
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.86rem;
+    min-width: 420px;
+}
+.data-table th {
+    background: var(--bg-elevated);
+    color: var(--text-bold);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 700;
+    text-align: left;
+    padding: 0.6rem 0.85rem;
+    border-bottom: 2px solid var(--border);
+}
+.data-table td {
+    padding: 0.55rem 0.85rem;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+}
+.data-table tr:last-child td { border-bottom: none; }
+.data-table tr:nth-child(even) td { background: var(--bg-card); }
+
+/* 5F. Code / Formula / Calculation Block */
+.code-block {
+    background: var(--bg-code);
+    color: #e2e8f0;
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.82rem;
+    line-height: 1.58;
+    overflow-x: auto;
+    margin: 0.55rem 0 0.1rem 0;
+    border: 1px solid #1e293b;
+    white-space: pre;
+}
+.code-block .c-kw  { color: #38bdf8; font-weight: 600; }
+.code-block .c-str { color: #4ade80; }
+.code-block .c-num { color: #fbbf24; }
+.code-block .c-cmt { color: #94a3b8; font-style: italic; }
+.code-block .c-nt  { color: #f472b6; font-weight: 600; }
+
+/* 5G. Custom Inline SVG Graphic Container */
+.svg-diagram-box {
+    background: var(--bg-subtle);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 1rem;
+    margin: 0.85rem 0;
+    text-align: center;
+    overflow-x: auto;
+}
+.svg-diagram-box svg {
+    max-width: 100%;
+    height: auto;
+}
+
+/* ==========================================================================
+   6. MOBILE RESPONSIVENESS (@media max-width: 720px)
+   ========================================================================== */
+@media screen and (max-width: 720px) {
+    .app-header { padding: 1.15rem 4%; }
+    .brand-box h1 { font-size: 1.2rem; }
+    .header-controls { width: 100%; justify-content: space-between; }
+    .search-wrap { flex: 1; }
+    .search-input, .search-input:focus { width: 100%; }
+
+    .module-bar { padding: 0.5rem 4%; }
+    .module-tabs { grid-template-columns: 1fr 1fr; gap: 0.4rem; }
+    .module-tab { padding: 0.55rem 0.65rem; font-size: 0.75rem; }
+
+    .feed-shell { padding: 1.25rem 4% 4rem 4%; }
+    .module-intro { padding: 1rem 1.25rem; }
+    .module-intro h2 { font-size: 1.2rem; }
+    .linear-feed { padding-left: 2.3rem; }
+    .linear-feed::before { left: 13px; }
+    .stop-node {
+        left: -2.3rem;
+        width: 30px;
+        height: 30px;
+        font-size: 0.75rem;
+        border-radius: 9px;
+    }
+    .stop-card { padding: 1.15rem; }
+    .stop-card h3 { font-size: 1.12rem; }
+
+    .visual-versus { grid-template-columns: 1fr; }
+    .vs-badge { margin: -0.25rem auto; }
+    .pillars-visual { grid-template-columns: 1fr; }
+
+    .point-row { padding: 0.75rem 0.85rem; font-size: 0.88rem; }
+}
+    </style>
+</head>
+<body>
+
+    <!-- Top Scroll Progress Rail -->
+    <div class="progress-rail">
+        <div class="progress-fill" id="progressBar"></div>
+    </div>
+
+    <!-- Application Header -->
+    <header class="app-header">
+        <div class="header-inner">
+            <div class="brand-box">
+                <h1>
+                    <span class="brand-icon">
+                        <svg class="ico ico-lg" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                    </span>
+                    Data Science
+                </h1>
+            </div>
+            <div class="header-controls">
+                <div class="search-wrap">
+                    <svg class="ico" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    <input type="text" id="searchInput" class="search-input" placeholder="Search concepts..." aria-label="Search concepts">
+                </div>
+                <button type="button" class="ctrl-btn" id="themeBtn" aria-label="Toggle color theme">
+                    <svg class="ico" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                    <span id="themeLabel">Dark Mode</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sticky Module / Lesson Navigation Bar -->
+    <nav class="module-bar" aria-label="Course Modules">
+        <div class="module-tabs">
+            <button type="button" class="module-tab active" data-target="mod-1">
+                <span class="tab-num">01</span>
+                <span>Intro &amp; Big Data</span>
+            </button>
+            <button type="button" class="module-tab" data-target="mod-2">
+                <span class="tab-num">02</span>
+                <span>Data Science Life Cycle</span>
+            </button>
+            <button type="button" class="module-tab" data-target="mod-3">
+                <span class="tab-num">03</span>
+                <span>R, dplyr &amp; Regression</span>
+            </button>
+            <button type="button" class="module-tab" data-target="mod-4">
+                <span class="tab-num">04</span>
+                <span>Statistical Inference</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Single-Column Linear Feed Shell -->
+    <main class="feed-shell">
+
+        <!-- ==================================================================
+             LESSON 1: INTRODUCTION TO DATA SCIENCE & BIG DATA
+             ================================================================== -->
+        <section class="module-pane active" id="mod-1">
+            <div class="module-intro">
+                <h2>Lesson 1: Introduction to Data Science &amp; Big Data</h2>
+            </div>
+
+            <div class="linear-feed">
+
+                <!-- STOP 01 -->
+                <article class="lesson-stop">
+                    <div class="stop-node">01</div>
+                    <div class="stop-card">
+                        <div class="stop-header">
+                            <div>
+                                <span class="stop-tag">
+                                    <svg class="ico ico-sm" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+                                    Big Data Foundations
+                                </span>
+                                <h3>What is Big Data &amp; The Four (4) V&rsquo;s</h3>
+                            </div>
+                        </div>
+
+                        <div class="takeaway-banner">
+                            <svg class="ico" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                            <div class="point-body">
+                                <div class="item-title">What is Big Data?</div>
+                                <div class="item-desc">Extremely large and complex amounts of data that are <span class="hl">difficult to collect, store, manage, and analyze using traditional database systems</span> such as RDBMS (MySQL, Oracle, or SQL Server).</div>
+                                <span class="elab">In simple terms, Big Data is data that is too large, too fast, or too complex for traditional database tools to handle efficiently.</span>
+                            </div>
+                        </div>
+
+                        <div class="sub-label">
+                            <svg class="ico" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+                            The Four (4) V&rsquo;s of Big Data
+                        </div>
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">1</span>
+                                <div class="point-body">
+                                    <div class="item-title">Volume</div>
+                                    <div class="item-desc">Means <span class="hl">&ldquo;how much data is there?&rdquo;</span> Refers to the sheer size and scale of data generated daily (millions or billions of records).</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">2</span>
+                                <div class="point-body">
+                                    <div class="item-title">Velocity</div>
+                                    <div class="item-desc">Means <span class="hl">&ldquo;at what speed is new data generated?&rdquo;</span> Refers to the rate at which new data flows into an organization in real time (such as streaming video or live sensors).</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">3</span>
+                                <div class="point-body">
+                                    <div class="item-title">Variety</div>
+                                    <div class="item-desc">Means <span class="hl">&ldquo;how diverse are different types of data?&rdquo;</span> Data comes in structured numeric tables as well as unstructured text documents, video, audio, email, and stock ticker data.</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">4</span>
+                                <div class="point-body">
+                                    <div class="item-title">Veracity</div>
+                                    <div class="item-desc">Means <span class="hl">&ldquo;how accurate is the data?&rdquo;</span> Refers to the trustworthiness, quality, and reliability of the data.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- STOP 02 -->
+                <article class="lesson-stop">
+                    <div class="stop-node">02</div>
+                    <div class="stop-card">
+                        <div class="stop-header">
+                            <div>
+                                <span class="stop-tag">
+                                    <svg class="ico ico-sm" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/></svg>
+                                    Data Forms
+                                </span>
+                                <h3>Forms of Big Data: Structured vs. Unstructured Data</h3>
+                            </div>
+                        </div>
+
+                        <div class="visual-versus">
+                            <div class="vs-pane">
+                                <h4>
+                                    <svg class="ico" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/></svg>
+                                    Structured Data
+                                </h4>
+                                <div class="point-stack">
+                                    <div class="point-row">
+                                        <span class="point-num">1</span>
+                                        <div class="point-body">
+                                            <div class="item-title">Definition</div>
+                                            <div class="item-desc">Easily analyzed and organized in a database; typically <span class="hl">stored in a table where every instance has the same structure</span> (set of attributes).</div>
+                                        </div>
+                                    </div>
+                                    <div class="point-row">
+                                        <span class="point-num">2</span>
+                                        <div class="point-body">
+                                            <div class="item-title">Ease of Use</div>
+                                            <div class="item-desc">Easy to <span class="hl">find, add, update, or delete</span> because records are highly organized and searchable.</div>
+                                        </div>
+                                    </div>
+                                    <div class="point-row">
+                                        <span class="point-num">3</span>
+                                        <div class="point-body">
+                                            <div class="item-title">Scalability &amp; Analytics</div>
+                                            <div class="item-desc">Systems scale easily by adding storage, and data is <span class="hl">readily queried with SQL</span> for statistical and machine learning models.</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="vs-badge">VS</div>
+                            <div class="vs-pane">
+                                <h4>
+                                    <svg class="ico" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                                    Unstructured Data
+                                </h4>
+                                <div class="point-stack">
+                                    <div class="point-row">
+                                        <span class="point-num">1</span>
+                                        <div class="point-body">
+                                            <div class="item-title">Definition</div>
+                                            <div class="item-desc">Data that <span class="hl">does not follow a fixed or organized row-and-column format</span> in a traditional database (makes up 80&ndash;90% of all data generated today).</div>
+                                        </div>
+                                    </div>
+                                    <div class="point-row">
+                                        <span class="point-num">2</span>
+                                        <div class="point-body">
+                                            <div class="item-title">Common Examples</div>
+                                            <div class="item-desc"><span class="hl">Text documents, video, audio, email, stock ticker data</span>, social media posts, and PDFs.</div>
+                                        </div>
+                                    </div>
+                                    <div class="point-row">
+                                        <span class="point-num">3</span>
+                                        <div class="point-body">
+                                            <div class="item-title">Challenges &amp; Analysis</div>
+                                            <div class="item-desc">Difficult for traditional RDBMS to store directly; requires <span class="hl">Natural Language Processing (NLP) or computer vision</span> to extract meaning.</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- STOP 03 -->
+                <article class="lesson-stop">
+                    <div class="stop-node">03</div>
+                    <div class="stop-card">
+                        <div class="stop-header">
+                            <div>
+                                <span class="stop-tag">
+                                    <svg class="ico ico-sm" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                                    Core Disciplines &amp; Patterns
+                                </span>
+                                <h3>Data Mining, Data Science &amp; Pattern Discovery</h3>
+                            </div>
+                        </div>
+
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">1</span>
+                                <div class="point-body">
+                                    <div class="item-title">Data Mining</div>
+                                    <div class="item-desc">The process of <span class="hl">examining large amounts of raw data to discover useful information, patterns, relationships, or trends</span>.</div>
+                                    <span class="elab">If Big Data is a mountain of information, Data Mining is the process of digging through it to find valuable insights.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">2</span>
+                                <div class="point-body">
+                                    <div class="item-title">Data Science &amp; Its Ultimate Goal</div>
+                                    <div class="item-desc">The study of data to discover useful information, patterns, and insights whose ultimate goal is <span class="hl">improving decision making</span>.</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="sub-label">
+                            <svg class="ico" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+                            Five Fields Combined in Data Science
+                        </div>
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">1</span>
+                                <div class="point-body">
+                                    <div class="item-title">Statistics</div>
+                                    <div class="item-desc">Helps us <span class="hl">analyze numbers and determine patterns or trends</span>.</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">2</span>
+                                <div class="point-body">
+                                    <div class="item-title">Mathematics</div>
+                                    <div class="item-desc">Provides <span class="hl">formulas and quantitative methods</span> for analyzing data.</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">3</span>
+                                <div class="point-body">
+                                    <div class="item-title">Data Analysis</div>
+                                    <div class="item-desc">Involves <span class="hl">examining data to find meaningful information</span>.</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">4</span>
+                                <div class="point-body">
+                                    <div class="item-title">Machine Learning</div>
+                                    <div class="item-desc">Allows computers to <span class="hl">learn patterns from data and make predictions</span>.</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">5</span>
+                                <div class="point-body">
+                                    <div class="item-title">Domain Knowledge</div>
+                                    <div class="item-desc">Deep understanding of a <span class="hl">specific industry or field</span> (such as healthcare, finance, or retail), including its rules, processes, and unique language.</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="sub-label">
+                            <svg class="ico" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                            Actionable Insights &amp; Grouping Techniques
+                        </div>
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">1</span>
+                                <div class="point-body">
+                                    <div class="item-title">Actionable Insight (DATA &rarr; ANALYSIS &rarr; INSIGHT &rarr; DECISION)</div>
+                                    <div class="item-desc">A finding from data that gives us <span class="hl">enough useful information to decide what action should be taken</span>.</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">2</span>
+                                <div class="point-body">
+                                    <div class="item-title">Customer Segmentation</div>
+                                    <div class="item-desc">Dividing customers into <span class="hl">groups based on similar characteristics, behaviors, or preferences</span>.</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">3</span>
+                                <div class="point-body">
+                                    <div class="item-title">Clustering</div>
+                                    <div class="item-desc">The common Data Science and Machine Learning term for <span class="hl">grouping entities that share similar characteristics or behaviors</span>.</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">4</span>
+                                <div class="point-body">
+                                    <div class="item-title">Association-Rule Mining</div>
+                                    <div class="item-desc">Data science technique used to <span class="hl">discover relationships between items that frequently occur together</span> (such as market basket analysis).</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- STOP 04 -->
+                <article class="lesson-stop">
+                    <div class="stop-node">04</div>
+                    <div class="stop-card">
+                        <div class="stop-header">
+                            <div>
+                                <span class="stop-tag">
+                                    <svg class="ico ico-sm" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+                                    Datasets &amp; Architecture
+                                </span>
+                                <h3>Core Data Elements, Analytics Record &amp; Data Architecture</h3>
+                            </div>
+                        </div>
+
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">1</span>
+                                <div class="point-body">
+                                    <div class="item-title">Data</div>
+                                    <div class="item-desc">A <span class="hl">collection of facts, observations, or information</span> about something in the real world.</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">2</span>
+                                <div class="point-body">
+                                    <div class="item-title">Entity (Rows)</div>
+                                    <div class="item-desc">The <span class="hl">real-world person, object, or event</span> that we are interested in studying (<em>Who or what are we studying?</em>).</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">3</span>
+                                <div class="point-body">
+                                    <div class="item-title">Attribute (Columns)</div>
+                                    <div class="item-desc">A <span class="hl">characteristic or property that describes an entity</span>, also called a feature or variable (<em>What do we know about it?</em>).</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">4</span>
+                                <div class="point-body">
+                                    <div class="item-title">Data Set</div>
+                                    <div class="item-desc">A <span class="hl">collection of related data organized together</span> (typically as an <code>N &times; M</code> table of entities and attributes).</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">5</span>
+                                <div class="point-body">
+                                    <div class="item-title">Analytics Record</div>
+                                    <div class="item-desc">A <span class="hl">well-organized collection of data prepared for analysis</span> after resolving missing values, duplicates, and formatting inconsistencies.</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="sub-label">
+                            <svg class="ico" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+                            Three Main Areas of Data Architecture
+                        </div>
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">1</span>
+                                <div class="point-body">
+                                    <div class="item-title">Data Sources</div>
+                                    <div class="item-desc"><span class="hl">Where all the data in an organization are generated</span> (CRM, ERP, POS systems, web logs, sensors, and external feeds).</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">2</span>
+                                <div class="point-body">
+                                    <div class="item-title">Data Storage</div>
+                                    <div class="item-desc"><span class="hl">Where the data are stored and processed</span> (relational databases, data warehouses, data lakes, and distributed systems).</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">3</span>
+                                <div class="point-body">
+                                    <div class="item-title">Applications</div>
+                                    <div class="item-desc"><span class="hl">Where the data are shared with consumers of these data</span> (Business Intelligence dashboards, reporting tools, and analytical apps).</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+
+        <!-- ==================================================================
+             LESSON 2: THE DATA SCIENCE LIFE CYCLE
+             ================================================================== -->
+        <section class="module-pane" id="mod-2">
+            <div class="module-intro">
+                <h2>Lesson 2: The Data Science Life Cycle</h2>
+            </div>
+
+            <div class="linear-feed">
+
+                <!-- STOP 01 -->
+                <article class="lesson-stop">
+                    <div class="stop-node">01</div>
+                    <div class="stop-card">
+                        <div class="stop-header">
+                            <div>
+                                <span class="stop-tag">
+                                    <svg class="ico ico-sm" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+                                    Overview &amp; Phase 1
+                                </span>
+                                <h3>Life Cycle Goals &amp; Phase 1: Business Requirements</h3>
+                            </div>
+                        </div>
+
+                        <div class="takeaway-banner">
+                            <svg class="ico" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                            <div class="point-body">
+                                <div class="item-title">What is the Data Science Life Cycle?</div>
+                                <div class="item-desc">A <span class="hl">structured process and iterative roadmap</span> of research and discovery that guides a data science project from start to finish in developing predictive models.</div>
+                                <span class="elab">Goals: Provide a clear process, improve team-customer communication, use standardized project documents (artifacts), and ensure consistency.</span>
+                            </div>
+                        </div>
+
+                        <div class="sub-label">
+                            <svg class="ico" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                            Phase 1: Business Requirements (First &amp; Most Important Phase)
+                        </div>
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">1</span>
+                                <div class="point-body">
+                                    <div class="item-title">Core Focus of Business Requirements</div>
+                                    <div class="item-desc"><span class="hl">Understand the business problem, define the central goal, and ask the right questions</span> before collecting or analyzing data.</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">2</span>
+                                <div class="point-body">
+                                    <div class="item-title">Two Important Activities (Business Requirements)</div>
+                                    <div class="item-desc"><span class="hl">Identify key variables</span> (target variables to be predicted) and <span class="hl">identify data sources</span> (where required data originates).</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">3</span>
+                                <div class="point-body">
+                                    <div class="item-title">Deliverable 1 &mdash; Charter Document</div>
+                                    <div class="item-desc">A <span class="hl">living document that gets updated throughout the project</span> as new data or requirements arise.</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">4</span>
+                                <div class="point-body">
+                                    <div class="item-title">Deliverable 2 &mdash; Data Sources Document</div>
+                                    <div class="item-desc">A document which <span class="hl">specifies the original and destination locations of the raw data</span>.</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">5</span>
+                                <div class="point-body">
+                                    <div class="item-title">Deliverable 3 &mdash; Data Dictionaries</div>
+                                    <div class="item-desc">Provide <span class="hl">descriptions of the data supplied by the client</span>, including information about the schema and entity-relation diagrams.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- STOP 02 -->
+                <article class="lesson-stop">
+                    <div class="stop-node">02</div>
+                    <div class="stop-card">
+                        <div class="stop-header">
+                            <div>
+                                <span class="stop-tag">
+                                    <svg class="ico ico-sm" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+                                    Phase 2: Data Acquisition
+                                </span>
+                                <h3>Phase 2: Data Acquisition, Ingestion &amp; ETL</h3>
+                            </div>
+                        </div>
+
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">1</span>
+                                <div class="point-body">
+                                    <div class="item-title">Data Ingestion</div>
+                                    <div class="item-desc">Setting up the process of <span class="hl">moving data from its source locations to the target locations</span> where analytics operations run.</div>
+                                    <span class="elab">Source Locations are origins (databases, APIs, sensors, files); Target Locations are destinations (data warehouses, data lakes); the Data Pipeline is the automated ETL system connecting them.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">E</span>
+                                <div class="point-body">
+                                    <div class="item-title">Extracting (ETL Step 1)</div>
+                                    <div class="item-desc"><span class="hl">Pulling raw data</span> from single or multiple data sources.</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">T</span>
+                                <div class="point-body">
+                                    <div class="item-title">Transforming (ETL Step 2)</div>
+                                    <div class="item-desc">Transforming data as per business logic via a two-step process: <span class="hl">data cleansing and data manipulation</span>.</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">L</span>
+                                <div class="point-body">
+                                    <div class="item-title">Loading (ETL Step 3)</div>
+                                    <div class="item-desc"><span class="hl">Loading the transformed data</span> into the target data source or data warehouse for analysis.</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="sub-label">
+                            <svg class="ico" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                            Deliverables (Data Acquisition and Understanding)
+                        </div>
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">1</span>
+                                <div class="point-body">
+                                    <div class="item-title">Data Quality Report</div>
+                                    <div class="item-desc">Includes <span class="hl">data summaries, relationships between attributes and target, and variable ranking</span>.</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">2</span>
+                                <div class="point-body">
+                                    <div class="item-title">Solution Architecture</div>
+                                    <div class="item-desc">A <span class="hl">diagram or description of your data pipeline</span>.</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">3</span>
+                                <div class="point-body">
+                                    <div class="item-title">A Checkpoint Decision</div>
+                                    <div class="item-desc">Used to <span class="hl">determine if the expected value is sufficient</span> to continue pursuing the project.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- STOP 03 -->
+                <article class="lesson-stop">
+                    <div class="stop-node">03</div>
+                    <div class="stop-card">
+                        <div class="stop-header">
+                            <div>
+                                <span class="stop-tag">
+                                    <svg class="ico ico-sm" viewBox="0 0 24 24"><line x1="6" y1="3" x2="6" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></svg>
+                                    Phase 3: Data Modeling
+                                </span>
+                                <h3>Phase 3: Data Modeling &amp; Feature Engineering</h3>
+                            </div>
+                        </div>
+
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">1</span>
+                                <div class="point-body">
+                                    <div class="item-title">Model Design</div>
+                                    <div class="item-desc">Define the <span class="hl">mathematical or statistical approach</span> that best fits your goals (e.g., regression, classification, clustering).</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">2</span>
+                                <div class="point-body">
+                                    <div class="item-title">Integration of Prior Knowledge</div>
+                                    <div class="item-desc">Use everything learned from earlier stages (data sources, dictionaries, requirements) to <span class="hl">guide how you structure and relate data entities</span>.</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">3</span>
+                                <div class="point-body">
+                                    <div class="item-title">Iteration and Refinement</div>
+                                    <div class="item-desc"><span class="hl">Adjust the model as new insights emerge</span> to improve accuracy and relevance.</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="sub-label">
+                            <svg class="ico" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                            Deliverables (Data Modeling)
+                        </div>
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">1</span>
+                                <div class="point-body">
+                                    <div class="item-title">Data Model Diagram</div>
+                                    <div class="item-desc">Visual representation of <span class="hl">entities, relationships, and data flow</span>.</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">2</span>
+                                <div class="point-body">
+                                    <div class="item-title">Model Specification Document</div>
+                                    <div class="item-desc">Defines <span class="hl">algorithms, parameters, and expected outputs</span>.</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">3</span>
+                                <div class="point-body">
+                                    <div class="item-title">Validation Report</div>
+                                    <div class="item-desc">Shows <span class="hl">how the model performs against test data and evaluation metrics</span>.</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="sub-label">
+                            <svg class="ico" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                            Feature Engineering Activities &amp; Transformations
+                        </div>
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">1</span>
+                                <div class="point-body">
+                                    <div class="item-title">Feature Engineering &amp; Inclusion/Aggregation</div>
+                                    <div class="item-desc">Transforming raw data into <span class="hl">meaningful inputs (features)</span>; <strong>Inclusion and Aggregation</strong> combines raw variables or summarizes data into new features.</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">2</span>
+                                <div class="point-body">
+                                    <div class="item-title">Log Transform</div>
+                                    <div class="item-desc"><span class="hl">Reduces skewness and compresses large values</span> (useful for right-skewed income or population data).</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">3</span>
+                                <div class="point-body">
+                                    <div class="item-title">Square-Root Transformation</div>
+                                    <div class="item-desc"><span class="hl">Stabilizes variance and reduces the impact of outliers</span> (often applied to count data like clicks).</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">4</span>
+                                <div class="point-body">
+                                    <div class="item-title">Categorical Encoding, Power Functions &amp; Scaling</div>
+                                    <div class="item-desc"><strong>Categorical Encoding</strong> converts text categories into numbers (one-hot/label encoding); <strong>Power Functions</strong> adjust distributions with exponents; <strong>Scaling</strong> standardizes ranges (Min-Max or Z-score).</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">5</span>
+                                <div class="point-body">
+                                    <div class="item-title">Skewed Data, Bias Mitigation &amp; Binning</div>
+                                    <div class="item-desc"><strong>Skewed Data</strong> is adjusted for symmetry; <strong>Bias Mitigation</strong> prevents unfair group favoritism; <span class="hl">Binning</span> groups continuous values into discrete intervals.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- STOP 04 -->
+                <article class="lesson-stop">
+                    <div class="stop-node">04</div>
+                    <div class="stop-card">
+                        <div class="stop-header">
+                            <div>
+                                <span class="stop-tag">
+                                    <svg class="ico ico-sm" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                                    Outliers &amp; Feature Selection
+                                </span>
+                                <h3>Outlier Treatment, Feature Selection &amp; Phase 4: Deployment</h3>
+                            </div>
+                        </div>
+
+                        <div class="sub-label">
+                            <svg class="ico" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                            Five Common Outlier Treatment Methods
+                        </div>
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">1</span>
+                                <div class="point-body">
+                                    <div class="item-title">Trimming</div>
+                                    <div class="item-desc"><span class="hl">Removes extreme values beyond a defined threshold</span> (e.g., top and bottom 1%) when outliers are clearly errors or irrelevant.</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">2</span>
+                                <div class="point-body">
+                                    <div class="item-title">Winsorizing</div>
+                                    <div class="item-desc"><span class="hl">Replaces extreme values with the nearest acceptable boundary</span> (e.g., capping at the 95th percentile) to keep all data points while reducing extreme influence.</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">3</span>
+                                <div class="point-body">
+                                    <div class="item-title">Imputation</div>
+                                    <div class="item-desc"><span class="hl">Substitutes outlier or missing values with estimated ones</span> (mean, median, or model-based) for continuity.</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">4</span>
+                                <div class="point-body">
+                                    <div class="item-title">Transformation</div>
+                                    <div class="item-desc">Applies mathematical functions (<span class="hl">log, square-root</span>) when outliers are legitimate but need normalization.</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">5</span>
+                                <div class="point-body">
+                                    <div class="item-title">Segmentation</div>
+                                    <div class="item-desc"><span class="hl">Separates outliers into a different group</span> for specialized analysis when they represent meaningful anomalies (such as fraud detection).</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="sub-label">
+                            <svg class="ico" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+                            Three Feature Selection Methods
+                        </div>
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">1</span>
+                                <div class="point-body">
+                                    <div class="item-title">Filter-Based Method</div>
+                                    <div class="item-desc">Selects features using <span class="hl">statistical metrics without involving a predictive model</span> (fast and scalable).</div>
+                                    <span class="elab">Examples: Correlation (removes redundant correlated features), Chi-square Test (dependence between categorical variables), and ANOVA (tests if group means differ significantly).</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">2</span>
+                                <div class="point-body">
+                                    <div class="item-title">Wrapper-Based Method</div>
+                                    <div class="item-desc">Treats feature selection as a search problem by <span class="hl">training models on feature subsets and evaluating performance</span> (more accurate, computationally expensive).</div>
+                                    <span class="elab">Examples: Recursive Feature Elimination (RFE), Forward Selection (starts empty, adds features), and Backward Selection (starts full, removes features).</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">3</span>
+                                <div class="point-body">
+                                    <div class="item-title">Embedded Method</div>
+                                    <div class="item-desc">Uses algorithms with <span class="hl">built-in feature selection during model training</span>.</div>
+                                    <span class="elab">Examples: LASSO / L1 Regularization (shrinks coefficients and eliminates less important features) and Ridge / L2 Regularization (reduces coefficient size while keeping all features to control overfitting).</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="sub-label">
+                            <svg class="ico" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                            Phase 4: Deployment Activities &amp; Deliverables
+                        </div>
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">1</span>
+                                <div class="point-body">
+                                    <div class="item-title">Model Operationalization, UAT &amp; API Exposure</div>
+                                    <div class="item-desc">Convert the model into a <span class="hl">deployable container/API</span>, validate with end-users in <span class="hl">User Acceptance Testing (UAT)</span>, and expose via an open API for websites, dashboards, spreadsheets, and backend apps.</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">2</span>
+                                <div class="point-body">
+                                    <div class="item-title">Phase 4 Deliverables</div>
+                                    <div class="item-desc"><span class="hl">Status Dashboard</span> (system health, uptime, metrics), <span class="hl">Final Modeling Report</span> (performance and validation summary), and <span class="hl">Solution Architecture Document</span> (technical setup and integration points).</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+
+        <!-- ==================================================================
+             LESSON 3: R PROGRAMMING, DPLYR, DESCRIPTIVE STATS & REGRESSION
+             ================================================================== -->
+        <section class="module-pane" id="mod-3">
+            <div class="module-intro">
+                <h2>Lesson 3: R Programming, dplyr, Descriptive Stats &amp; Regression</h2>
+            </div>
+
+            <div class="linear-feed">
+
+                <!-- STOP 01 -->
+                <article class="lesson-stop">
+                    <div class="stop-node">01</div>
+                    <div class="stop-card">
+                        <div class="stop-header">
+                            <div>
+                                <span class="stop-tag">
+                                    <svg class="ico ico-sm" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                                    R &amp; RStudio Environment
+                                </span>
+                                <h3>Compiler vs. Interpreter, RStudio Panes &amp; R Capabilities</h3>
+                            </div>
+                        </div>
+
+                        <div class="visual-versus">
+                            <div class="vs-pane">
+                                <h4>
+                                    <svg class="ico" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                                    Compiler vs. Interpreter
+                                </h4>
+                                <div class="point-stack">
+                                    <div class="point-row">
+                                        <span class="point-num">1</span>
+                                        <div class="point-body">
+                                            <div class="item-title">Compiler</div>
+                                            <div class="item-desc"><span class="hl">Translate the whole book &rarr; then read it</span> (translates the entire program before execution).</div>
+                                        </div>
+                                    </div>
+                                    <div class="point-row">
+                                        <span class="point-num">2</span>
+                                        <div class="point-body">
+                                            <div class="item-title">Interpreter</div>
+                                            <div class="item-desc"><span class="hl">Translate one sentence &rarr; understand it &rarr; execute it &rarr; move to the next</span> (R is an interpreted language).</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="vs-badge">VS</div>
+                            <div class="vs-pane">
+                                <h4>
+                                    <svg class="ico" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/></svg>
+                                    R vs. RStudio
+                                </h4>
+                                <div class="point-stack">
+                                    <div class="point-row">
+                                        <span class="point-num">1</span>
+                                        <div class="point-body">
+                                            <div class="item-title">R (The Language)</div>
+                                            <div class="item-desc">A programming language for <span class="hl">statistical computing and graphics</span> that can be used independently without RStudio.</div>
+                                        </div>
+                                    </div>
+                                    <div class="point-row">
+                                        <span class="point-num">2</span>
+                                        <div class="point-body">
+                                            <div class="item-title">RStudio (The IDE)</div>
+                                            <div class="item-desc">An <span class="hl">Integrated Development Environment (IDE)</span> providing a user-friendly interface for writing and running R code.</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="sub-label">
+                            <svg class="ico" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/></svg>
+                            Four Interface Components of RStudio
+                        </div>
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">1</span>
+                                <div class="point-body">
+                                    <div class="item-title">R Console</div>
+                                    <div class="item-desc"><span class="hl">Shows the output of code you run</span>; you can also type and execute R commands directly in the console.</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">2</span>
+                                <div class="point-body">
+                                    <div class="item-title">R Script</div>
+                                    <div class="item-desc">The editor space where you <span class="hl">write, edit, and save reusable R code files</span>.</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">3</span>
+                                <div class="point-body">
+                                    <div class="item-title">R Environment</div>
+                                    <div class="item-desc">Displays the <span class="hl">set of external elements added</span> (datasets, variables, vectors, and functions).</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">4</span>
+                                <div class="point-body">
+                                    <div class="item-title">Graphical Output</div>
+                                    <div class="item-desc">Displays the <span class="hl">graphs and plots created</span> during exploratory data analysis.</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="sub-label">
+                            <svg class="ico" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                            Three Core Capability Categories of R
+                        </div>
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">1</span>
+                                <div class="point-body">
+                                    <div class="item-title">Statistical Tasks</div>
+                                    <div class="item-desc"><span class="hl">Mean, median, and mode</span>; Standard deviation and variance; Correlation; Regression; Hypothesis testing; Probability distributions; ANOVA; Classification; Clustering; Data visualization.</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">2</span>
+                                <div class="point-body">
+                                    <div class="item-title">Computational Tasks</div>
+                                    <div class="item-desc"><span class="hl">Data manipulation, File processing, Automation, Programming</span>, Web-related tasks, Machine learning, Database connections, Statistical modeling, Data visualization.</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">3</span>
+                                <div class="point-body">
+                                    <div class="item-title">Visual Information</div>
+                                    <div class="item-desc"><span class="hl">Bar charts, Line graphs, Pie charts, Scatter plots, Box plots, Maps (Mapsa), and Heatmaps</span>.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- STOP 02 -->
+                <article class="lesson-stop">
+                    <div class="stop-node">02</div>
+                    <div class="stop-card">
+                        <div class="stop-header">
+                            <div>
+                                <span class="stop-tag">
+                                    <svg class="ico ico-sm" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+                                    Objects &amp; Data Structures
+                                </span>
+                                <h3>R Object Classes, Inspection Functions &amp; Data Structures</h3>
+                            </div>
+                        </div>
+
+                        <div class="sub-label">
+                            <svg class="ico" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                            5 Basic Classes of Objects in R
+                        </div>
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">1</span>
+                                <div class="point-body">
+                                    <div class="item-title">Character</div>
+                                    <div class="item-desc">Text strings enclosed in quotes (for example, <code>"a"</code>, <code>"swc"</code>).</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">2</span>
+                                <div class="point-body">
+                                    <div class="item-title">Numeric (Double)</div>
+                                    <div class="item-desc">Real or decimal numbers (for example, <code>2</code>, <code>15.5</code>).</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">3</span>
+                                <div class="point-body">
+                                    <div class="item-title">Integer</div>
+                                    <div class="item-desc">Whole integers suffixed with <code>L</code> (for example, <code>2L</code> means R stores it strictly as an integer).</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">4</span>
+                                <div class="point-body">
+                                    <div class="item-title">Complex</div>
+                                    <div class="item-desc">Complex numbers with real and imaginary parts (for example, <code>1 + 4i</code>).</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">5</span>
+                                <div class="point-body">
+                                    <div class="item-title">Logical</div>
+                                    <div class="item-desc">Boolean truth values: <span class="hl"><code>TRUE</code> or <code>FALSE</code></span>.</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="sub-label">
+                            <svg class="ico" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                            Object Inspection Functions in R
+                        </div>
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">1</span>
+                                <div class="point-body">
+                                    <div class="item-title"><code>class()</code></div>
+                                    <div class="item-desc">Answers: <span class="hl">&ldquo;What kind of object is it (high-level)?&rdquo;</span></div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">2</span>
+                                <div class="point-body">
+                                    <div class="item-title"><code>typeof()</code></div>
+                                    <div class="item-desc">Answers: <span class="hl">&ldquo;What is the object&rsquo;s data type (low-level)?&rdquo;</span></div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">3</span>
+                                <div class="point-body">
+                                    <div class="item-title"><code>length()</code></div>
+                                    <div class="item-desc">Answers: <span class="hl">&ldquo;How long is it?&rdquo;</span> (number of elements in the object).</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">4</span>
+                                <div class="point-body">
+                                    <div class="item-title"><code>attributes()</code></div>
+                                    <div class="item-desc">Answers: <span class="hl">&ldquo;Does it have any metadata?&rdquo;</span></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="sub-label">
+                            <svg class="ico" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+                            Four Core Data Structures &amp; Coercion in R
+                        </div>
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">1</span>
+                                <div class="point-body">
+                                    <div class="item-title">Vector, Atomic Vector &amp; Coercion</div>
+                                    <div class="item-desc">A <strong>Vector</strong> is a collection of values stored together (<code>c()</code>); an <span class="hl">Atomic Vector</span> holds data of a <strong>single data type</strong>.</div>
+                                    <span class="elab">Coercion: When objects of different types are mixed in an atomic vector, R automatically converts them into a single common class.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">2</span>
+                                <div class="point-body">
+                                    <div class="item-title">Matrix (Matrices)</div>
+                                    <div class="item-desc">A <span class="hl">2-dimensional data structure</span> (rows and columns) consisting of elements of the <span class="hl">same class</span>.</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">3</span>
+                                <div class="point-body">
+                                    <div class="item-title">Data Frames</div>
+                                    <div class="item-desc">A <span class="hl">2-dimensional tabular data structure</span> where different columns can hold different data types (ideal for real-world datasets).</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">4</span>
+                                <div class="point-body">
+                                    <div class="item-title">List</div>
+                                    <div class="item-desc">A special type of vector which can contain <span class="hl">elements of different data types</span>.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- STOP 03 -->
+                <article class="lesson-stop">
+                    <div class="stop-node">03</div>
+                    <div class="stop-card">
+                        <div class="stop-header">
+                            <div>
+                                <span class="stop-tag">
+                                    <svg class="ico ico-sm" viewBox="0 0 24 24"><line x1="6" y1="3" x2="6" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></svg>
+                                    Data Wrangling
+                                </span>
+                                <h3>Split-Apply-Combine &amp; The <code>dplyr</code> Package</h3>
+                            </div>
+                        </div>
+
+                        <div class="sub-label">
+                            <svg class="ico" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+                            Three Ways to Change Data
+                        </div>
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">1</span>
+                                <div class="point-body">
+                                    <div class="item-title">Split</div>
+                                    <div class="item-desc"><span class="hl">Splitting and selecting</span> (breaking data into subsets or choosing specific parts).</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">2</span>
+                                <div class="point-body">
+                                    <div class="item-title">Apply</div>
+                                    <div class="item-desc"><span class="hl">Transforming and re-calculating</span> (computing new values or summary metrics on subsets).</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">3</span>
+                                <div class="point-body">
+                                    <div class="item-title">Combine</div>
+                                    <div class="item-desc"><span class="hl">Aggregating and merging</span> (bringing processed results back together into a unified table).</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="sub-label">
+                            <svg class="ico" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                            <code>dplyr</code> Package Verbs &amp; Pipe Operator (Each in Its Own Box)
+                        </div>
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">1</span>
+                                <div class="point-body">
+                                    <div class="item-title"><code>dplyr</code> Package</div>
+                                    <div class="item-desc">An R package designed mainly for <span class="hl">data manipulation</span>.</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">2</span>
+                                <div class="point-body">
+                                    <div class="item-title"><code>select()</code></div>
+                                    <div class="item-desc">Answers: <span class="hl">&ldquo;Which columns do I want?&rdquo;</span> (chooses specific variables/columns).</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">3</span>
+                                <div class="point-body">
+                                    <div class="item-title"><code>filter()</code></div>
+                                    <div class="item-desc">Answers: <span class="hl">&ldquo;Which rows/records do I want?&rdquo;</span> (subsets rows that satisfy logical conditions).</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">4</span>
+                                <div class="point-body">
+                                    <div class="item-title"><code>mutate()</code></div>
+                                    <div class="item-desc">Used to <span class="hl">create or modify a variable/column</span>.</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">5</span>
+                                <div class="point-body">
+                                    <div class="item-title"><code>summarise()</code></div>
+                                    <div class="item-desc">Used to <span class="hl">produce a summary of the data</span> (collapses rows into summary statistics like mean or count).</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">6</span>
+                                <div class="point-body">
+                                    <div class="item-title"><code>group_by()</code></div>
+                                    <div class="item-desc">Used to <span class="hl">divide the data into groups based on a variable</span>.</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">7</span>
+                                <div class="point-body">
+                                    <div class="item-title">Pipe Operator ( <code>%&gt;%</code> )</div>
+                                    <div class="item-desc">Means: <span class="hl">&ldquo;Take this result and pass it to the next operation.&rdquo;</span></div>
+                                    <div class="code-block">dataset %&gt;%
+    filter(Age &gt;= 18) %&gt;%
+    group_by(Category) %&gt;%
+    summarise(AvgScore = mean(Score))</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- STOP 04 -->
+                <article class="lesson-stop">
+                    <div class="stop-node">04</div>
+                    <div class="stop-card">
+                        <div class="stop-header">
+                            <div>
+                                <span class="stop-tag">
+                                    <svg class="ico ico-sm" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                                    Regression &amp; ANOVA in R
+                                </span>
+                                <h3>Descriptive Tools, Simple Linear Regression &amp; ANOVA</h3>
+                            </div>
+                        </div>
+
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">1</span>
+                                <div class="point-body">
+                                    <div class="item-title">Descriptive Statistics Tools (Graphical vs. Analytical)</div>
+                                    <div class="item-desc"><strong>Graphical Tools:</strong> <span class="hl">Graphics, Bar Diagram, Histogram, Scattered Diagrams</span> &bull; <strong>Analytical Tools:</strong> Measures of Central Tendency (<span class="hl">Mean, Median, Mode</span>) and Measures of Variations (<span class="hl">Variants/Variance, Standard Deviation</span>).</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">2</span>
+                                <div class="point-body">
+                                    <div class="item-title">Simple Linear Regression &amp; Tilde Operator ( <code>~</code> )</div>
+                                    <div class="item-desc">Examines the relationship between one <span class="hl">dependent (response) variable <code>Y</code></span> and one <span class="hl">explanatory (predictor) variable <code>X</code></span>. In R, the tilde <code>~</code> means <span class="hl">&ldquo;is explained by&rdquo;</span> or <span class="hl">&ldquo;as a function of&rdquo;</span>.</div>
+                                    <div class="code-block">model &lt;- lm(Y ~ X, data = dataset)</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">3</span>
+                                <div class="point-body">
+                                    <div class="item-title">Basic Regression Equation Variables ( <code>Y = b<sub>0</sub> + b<sub>1</sub>X</code> )</div>
+                                    <div class="item-desc"><span class="hl"><code>Y</code></span> = Dependent / Response Variable (outcome to predict) &bull; <span class="hl"><code>X</code></span> = Explanatory / Predictor Variable (input feature) &bull; <span class="hl"><code>b<sub>0</sub></code></span> = Intercept (predicted <code>Y</code> when <code>X = 0</code>) &bull; <span class="hl"><code>b<sub>1</sub></code></span> = Slope / Coefficient (change in <code>Y</code> per 1-unit increase in <code>X</code>).</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">4</span>
+                                <div class="point-body">
+                                    <div class="item-title">ANOVA Table (Analysis of Variance)</div>
+                                    <div class="item-desc">A statistical table used to determine whether there is a <span class="hl">statistically significant difference among group means</span> using the F-test and p-value (<code>anova(model)</code>).</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">5</span>
+                                <div class="point-body">
+                                    <div class="item-title">Standard R Modeling Workflow</div>
+                                    <div class="item-desc">The 5-step sequence for running and inspecting a linear regression model in R.</div>
+                                    <div class="code-block">1. read_excel()   <span class="c-cmt"># Import dataset</span>
+2. View()         <span class="c-cmt"># Explore data table</span>
+3. lm(Y ~ X)      <span class="c-cmt"># Fit linear regression model</span>
+4. summary(model) <span class="c-cmt"># Inspect coefficients, p-values &amp; Residual Std Error</span>
+5. anova(model)   <span class="c-cmt"># Test significance among group means</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+
+        <!-- ==================================================================
+             LESSON 4: STATISTICAL INFERENCE, MEASURES & PROBABILITY
+             ================================================================== -->
+        <section class="module-pane" id="mod-4">
+            <div class="module-intro">
+                <h2>Lesson 4: Statistical Inference, Measures &amp; Probability Distributions</h2>
+            </div>
+
+            <div class="linear-feed">
+
+                <!-- STOP 01 -->
+                <article class="lesson-stop">
+                    <div class="stop-node">01</div>
+                    <div class="stop-card">
+                        <div class="stop-header">
+                            <div>
+                                <span class="stop-tag">
+                                    <svg class="ico ico-sm" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                                    Foundations of Inference
+                                </span>
+                                <h3>Statistical Inference, Descriptive Stats &amp; Basic Terminologies</h3>
+                            </div>
+                        </div>
+
+                        <div class="takeaway-banner">
+                            <svg class="ico" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                            <div class="point-body">
+                                <div class="item-title">What is Statistical Inference?</div>
+                                <div class="item-desc">Combines mathematics, empirical science, and logical reasoning to <span class="hl">use data from a sample to estimate, predict, and draw conclusions about a larger population</span>.</div>
+                                <span class="elab">Flow: 1. Extract Sample from Population &rarr; 2. Perform Statistical Analysis / Modelling &rarr; 3. Parameter Estimation back to Population.</span>
+                            </div>
+                        </div>
+
+                        <div class="visual-versus">
+                            <div class="vs-pane">
+                                <h4>
+                                    <svg class="ico" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                                    Descriptive Statistics
+                                </h4>
+                                <div class="point-stack">
+                                    <div class="point-row">
+                                        <span class="point-num">1</span>
+                                        <div class="point-body">
+                                            <div class="item-title">Describes Collected Data</div>
+                                            <div class="item-desc"><span class="hl">Summarizes and presents collected data</span> using tables, charts, graphs, and measures like mean, median, and mode.</div>
+                                            <span class="elab">Example: Calculating the average score of 30 students in a class.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="vs-badge">VS</div>
+                            <div class="vs-pane">
+                                <h4>
+                                    <svg class="ico" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                                    Statistical Inference
+                                </h4>
+                                <div class="point-stack">
+                                    <div class="point-row">
+                                        <span class="point-num">2</span>
+                                        <div class="point-body">
+                                            <div class="item-title">Generalizes to a Population</div>
+                                            <div class="item-desc"><span class="hl">Uses sample data to make estimates or draw conclusions</span> about a larger population (via Regression, Confidence Intervals, and Hypothesis Tests).</div>
+                                            <span class="elab">Example: Using the scores of 30 students to estimate the average performance of all students in a college.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="sub-label">
+                            <svg class="ico" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                            Basic Statistical Terminologies (With 1,000 College Students Example)
+                        </div>
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">1</span>
+                                <div class="point-body">
+                                    <div class="item-title">Population</div>
+                                    <div class="item-desc">The <span class="hl">entire group of individuals or objects</span> being studied.</div>
+                                    <span class="elab">Example: All 1,000 students in the college.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">2</span>
+                                <div class="point-body">
+                                    <div class="item-title">Parameter</div>
+                                    <div class="item-desc">A <span class="hl">numerical value describing a characteristic of a population</span> (such as population mean <code>&mu;</code> or population proportion).</div>
+                                    <span class="elab">Example: The true average grade of all 1,000 college students.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">3</span>
+                                <div class="point-body">
+                                    <div class="item-title">Sample</div>
+                                    <div class="item-desc">A <span class="hl">subset of a population</span> selected for study (used because studying an entire population is costly and time-consuming).</div>
+                                    <span class="elab">Example: 100 selected students surveyed from the college.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">4</span>
+                                <div class="point-body">
+                                    <div class="item-title">Statistic</div>
+                                    <div class="item-desc">A <span class="hl">numerical value describing a sample</span> (such as sample mean <code>x&#772;</code> or sample standard deviation <code>s</code>), used to estimate or test a population parameter.</div>
+                                    <span class="elab">Example: The average grade of the 100 selected students.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- STOP 02 -->
+                <article class="lesson-stop">
+                    <div class="stop-node">02</div>
+                    <div class="stop-card">
+                        <div class="stop-header">
+                            <div>
+                                <span class="stop-tag">
+                                    <svg class="ico ico-sm" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                                    Central Tendency
+                                </span>
+                                <h3>Measures of Center: Mean, Frequency Mean, Median &amp; Mode</h3>
+                            </div>
+                        </div>
+
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">1</span>
+                                <div class="point-body">
+                                    <div class="item-title">Mean (Average) &mdash; Individual Data Formula &amp; Example</div>
+                                    <div class="item-desc">Found by <span class="hl">adding all numbers in the dataset and dividing by the number of values <code>n</code></span>. Population mean uses Greek letter <span class="hl"><code>&mu;</code></span>; sample mean uses <span class="hl"><code>x&#772;</code></span>.</div>
+                                    <span class="elab">Limitation: Extremely high or low outliers can significantly distort the mean.</span>
+                                    <div class="code-block">Formula:  x&#772; = (&Sigma;x) / n
+Example (Dataset: 1, 3, 3, 4, 4, 4, 5, 5):
+x&#772; = (1 + 3 + 3 + 4 + 4 + 4 + 5 + 5) / 8 = 29 / 8 = 3.625  (shown as 3.652 in slide box)</div>
+                                </div>
+                            </div>
+
+                            <div class="point-row">
+                                <span class="point-num">2</span>
+                                <div class="point-body">
+                                    <div class="item-title">Mean with Frequency Distribution &mdash; Formula &amp; Worked Table</div>
+                                    <div class="item-desc">When data are summarized by frequencies <code>f</code>, multiply each value <code>x</code> by its frequency <code>f</code> (<span class="hl"><code>xf</code></span>), sum the <code>xf</code> column, and divide by total count <code>n</code>.</div>
+                                    <div class="code-block">Formula:  x&#772; = (&Sigma;(x &middot; f)) / n</div>
+                                    <div class="table-wrap">
+                                        <table class="data-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Value (<code>x</code>)</th>
+                                                    <th>Frequency (<code>f</code>)</th>
+                                                    <th>Product (<code>xf</code>)</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr><td>1</td><td>1</td><td>1</td></tr>
+                                                <tr><td>3</td><td>2</td><td>6</td></tr>
+                                                <tr><td>4</td><td>3</td><td>12</td></tr>
+                                                <tr><td>5</td><td>2</td><td>10</td></tr>
+                                                <tr><td><strong>Total</strong></td><td><strong><code>n = 8</code></strong></td><td><strong><code>&Sigma;xf = 29</code> &rarr; <code>x&#772; = 29 / 8 = 3.625</code></strong></td></tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="point-row">
+                                <span class="point-num">3</span>
+                                <div class="point-body">
+                                    <div class="item-title">Median (Middle Value) &mdash; Formula &amp; Example</div>
+                                    <div class="item-desc">The <span class="hl">middle value when a dataset is ordered from least to greatest</span>. If <code>n</code> is even, average the two middle values.</div>
+                                    <span class="elab">Advantage: One extreme outlier does not impact the median as significantly as the mean, making it more stable on skewed data.</span>
+                                    <div class="code-block">Example (n = 8 ordered values):  1, 3, 3, 4, | 4, 4, 5, 5
+Median = (4 + 4) / 2 = 4</div>
+                                </div>
+                            </div>
+
+                            <div class="point-row">
+                                <span class="point-num">4</span>
+                                <div class="point-body">
+                                    <div class="item-title">Mode (Most Frequent Value) &mdash; Example</div>
+                                    <div class="item-desc">The number or category that <span class="hl">occurs most often in a dataset</span>. Useful for both categorical/nominal data (such as car colors) and numerical data.</div>
+                                    <div class="code-block">Example:  1, 3, 3, [4, 4, 4], 5, 5
+Mode = 4  (appears 3 times, more than any other value)</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- STOP 03 -->
+                <article class="lesson-stop">
+                    <div class="stop-node">03</div>
+                    <div class="stop-card">
+                        <div class="stop-header">
+                            <div>
+                                <span class="stop-tag">
+                                    <svg class="ico ico-sm" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                                    Variability &amp; Dispersion
+                                </span>
+                                <h3>Measures of Spread: Range, Interquartile Range (IQR) &amp; Standard Deviation</h3>
+                            </div>
+                        </div>
+
+                        <div class="takeaway-banner">
+                            <svg class="ico" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                            <div class="point-body">
+                                <div class="item-title">Why Measures of Spread Matter (Same Center, Different Spread)</div>
+                                <div class="item-desc">Datasets can share the exact same Mean (<code>5</code>) and Median (<code>5</code>) while having completely different spreads: <code>1, 1, 1, 5, 9, 9, 9</code> (spread far apart), <code>1, 2, 4, 5, 6, 8, 9</code> (moderately spread), and <code>5, 5, 5, 5, 5, 5, 5</code> (zero spread).</div>
+                            </div>
+                        </div>
+
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">1</span>
+                                <div class="point-body">
+                                    <div class="item-title">Range &mdash; Formula, Examples &amp; Limitation</div>
+                                    <div class="item-desc">Measures the <span class="hl">difference between the largest and smallest values</span> in a dataset.</div>
+                                    <span class="elab">Limitation: A single extreme outlier greatly inflates the range (e.g., if min is 1 and max is 27, Range = 27 &minus; 1 = 26).</span>
+                                    <div class="code-block">Formula:    Range = Maximum Value &minus; Minimum Value
+Example 1:  For 3, 5, 8, 10          &rarr;  Range = 10 &minus; 3 = 7
+Example 2:  For 1, 3, 3, 4, 4, 4, 5, 5  &rarr;  Range = 5 &minus; 1 = 4</div>
+                                </div>
+                            </div>
+
+                            <div class="point-row">
+                                <span class="point-num">2</span>
+                                <div class="point-body">
+                                    <div class="item-title">Interquartile Range (IQR) &mdash; Formula &amp; Worked Example</div>
+                                    <div class="item-desc">Measures the <span class="hl">range of the middle 50% of the data</span> by subtracting the first quartile (<code>Q1</code>) from the third quartile (<code>Q3</code>).</div>
+                                    <span class="elab">Advantage: Not impacted by extreme outliers. Limitation: Only considers two values (<code>Q1</code> and <code>Q3</code>) rather than all observations.</span>
+                                    <div class="code-block">Formula:  IQR = Q3 &minus; Q1
+Example:  1, 3, | 3, 4, | 4, 4, | 5, 5
+          Q1 = (3 + 3)/2 = 3,   Median = 4,   Q3 = (4 + 5)/2 = 4.5
+          IQR = 4.5 &minus; 3 = 1.5</div>
+                                </div>
+                            </div>
+
+                            <div class="point-row">
+                                <span class="point-num">3</span>
+                                <div class="point-body">
+                                    <div class="item-title">Sample Standard Deviation ( <code>s</code> ) &mdash; Individual Data Formula &amp; Worked Example</div>
+                                    <div class="item-desc">The most important measure of spread: measures the <span class="hl">average distance of all data values from the mean</span>.</div>
+                                    <span class="elab">We square each deviation <code>(x &minus; x&#772;)<sup>2</sup></code> so positive and negative differences do not cancel out, divide by <code>n &minus; 1</code>, and take the square root.</span>
+                                    <div class="code-block">Formula:  s = &radic;[ &Sigma;(x &minus; x&#772;)<sup>2</sup> / (n &minus; 1) ]
+
+Worked Example (Given data: 11, 13, 14, 14):
+Step 1 (Mean):  x&#772; = (11 + 13 + 14 + 14) / 4 = 52 / 4 = 13</div>
+                                    <div class="table-wrap">
+                                        <table class="data-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Value (<code>x</code>)</th>
+                                                    <th>Deviation (<code>x &minus; x&#772;</code>)</th>
+                                                    <th>Squared Deviation (<code>(x &minus; x&#772;)<sup>2</sup></code>)</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr><td>11</td><td>11 &minus; 13 = &minus;2</td><td>4</td></tr>
+                                                <tr><td>13</td><td>13 &minus; 13 = 0</td><td>0</td></tr>
+                                                <tr><td>14</td><td>14 &minus; 13 = 1</td><td>1</td></tr>
+                                                <tr><td>14</td><td>14 &minus; 13 = 1</td><td>1</td></tr>
+                                                <tr><td><strong>Total</strong></td><td></td><td><strong><code>&Sigma;(x &minus; x&#772;)<sup>2</sup> = 6</code></strong></td></tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="code-block">Step 3 (Substitute into Formula):
+s = &radic;[ 6 / (4 &minus; 1) ] = &radic;(6 / 3) = &radic;2 &approx; 1.41</div>
+                                </div>
+                            </div>
+
+                            <div class="point-row">
+                                <span class="point-num">4</span>
+                                <div class="point-body">
+                                    <div class="item-title">Sample Standard Deviation with Frequency Distribution &mdash; Formula &amp; Worked Table</div>
+                                    <div class="item-desc">When data are given with frequencies <code>f</code>, <span class="hl">multiply each squared deviation <code>(x &minus; x&#772;)<sup>2</sup></code> by its frequency <code>f</code></span> before summing, then divide by <code>n &minus; 1</code> and take the square root.</div>
+                                    <div class="code-block">Formula (w/ frequencies):  s = &radic;[ &Sigma;((x &minus; x&#772;)<sup>2</sup> &middot; f) / (n &minus; 1) ]</div>
+                                    <div class="table-wrap">
+                                        <table class="data-table">
+                                            <thead>
+                                                <tr>
+                                                    <th><code>x</code></th>
+                                                    <th><code>f</code></th>
+                                                    <th><code>x &minus; x&#772;</code> (where <code>x&#772; = 3.625</code>)</th>
+                                                    <th><code>(x &minus; x&#772;)<sup>2</sup></code></th>
+                                                    <th><code>(x &minus; x&#772;)<sup>2</sup>f</code></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr><td>1</td><td>1</td><td>&minus;2.625</td><td>6.89</td><td>6.89</td></tr>
+                                                <tr><td>3</td><td>2</td><td>&minus;0.625</td><td>0.39</td><td>0.78</td></tr>
+                                                <tr><td>4</td><td>3</td><td>0.375</td><td>0.14</td><td>0.42</td></tr>
+                                                <tr><td>5</td><td>2</td><td>1.375</td><td>1.89</td><td>3.78</td></tr>
+                                                <tr><td><strong>Total</strong></td><td><strong><code>n = 8</code></strong></td><td></td><td></td><td><strong><code>&Sigma;(x &minus; x&#772;)<sup>2</sup>f = 11.87</code></strong></td></tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="code-block">s = &radic;[ 11.87 / (8 &minus; 1) ] = &radic;(11.87 / 7) = 1.30</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- STOP 04 -->
+                <article class="lesson-stop">
+                    <div class="stop-node">04</div>
+                    <div class="stop-card">
+                        <div class="stop-header">
+                            <div>
+                                <span class="stop-tag">
+                                    <svg class="ico ico-sm" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                                    Z-Scores &amp; Outliers
+                                </span>
+                                <h3>Z-Score Formulas &amp; Two Methods for Calculating Outliers</h3>
+                            </div>
+                        </div>
+
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">1</span>
+                                <div class="point-body">
+                                    <div class="item-title">Z-Score (Number of Standard Deviations from the Mean)</div>
+                                    <div class="item-desc">The variable <span class="hl"><code>Z</code> represents the number of standard deviations a value <code>x</code> is from the mean</span>.</div>
+                                    <div class="code-block">Formulas:
+1) Find Z from x:   z = (x &minus; x&#772;) / s
+2) Find x from Z:   x = x&#772; + z &middot; s
+
+Worked Example A (Dataset: 1, 3, 3, 4, 4, 4, 5, 5 where median = 4, x&#772; = 3.625, s = 1.3):
+How many standard deviations from the mean is the median?
+Z = (4 &minus; 3.625) / 1.3 = 0.288 standard deviations from the mean
+
+Worked Example B (Same data):
+What value is 2 standard deviations BELOW the mean (z = &minus;2)?
+x = 3.625 &minus; 2(1.3) = 1.025</div>
+                                </div>
+                            </div>
+
+                            <div class="point-row">
+                                <span class="point-num">2</span>
+                                <div class="point-body">
+                                    <div class="item-title">Outliers Definition</div>
+                                    <div class="item-desc"><span class="hl">Values far removed from the rest of the data</span> (either unusually large or unusually small, such as <code>87</code> in <code>1, 3, 3, 5, 87</code>).</div>
+                                    <span class="elab">Since 95% of data generally falls within 2 standard deviations of the mean, values beyond 2 SDs are considered unusual or extreme outliers.</span>
+                                </div>
+                            </div>
+
+                            <div class="point-row">
+                                <span class="point-num">3</span>
+                                <div class="point-body">
+                                    <div class="item-title">Outlier Method 1 &mdash; IQR Method ( <code>1.5 &times; IQR</code> Rule )</div>
+                                    <div class="item-desc">A value cannot be more than <span class="hl"><code>1.5 &times; IQR</code> below <code>Q1</code> or above <code>Q3</code></span>. Any value outside those cutoffs is an outlier.</div>
+                                    <div class="code-block">Cutoffs:
+Below:  Q1 &minus; 1.5 &times; IQR
+Above:  Q3 + 1.5 &times; IQR
+
+Worked Example (Dataset: 2, 3, 5, 6, 7, 14):
+Q1 = 3,   Median = 5.5,   Q3 = 7   &rarr;   IQR = 7 &minus; 3 = 4
+Below Cutoff = 3 &minus; 1.5(4) = &minus;3   (no values below &minus;3)
+Above Cutoff = 7 + 1.5(4) = 13   (14 &gt; 13, so 14 is an outlier)</div>
+                                </div>
+                            </div>
+
+                            <div class="point-row">
+                                <span class="point-num">4</span>
+                                <div class="point-body">
+                                    <div class="item-title">Outlier Method 2 &mdash; Standard Deviation Method ( <code>&plusmn; 2s</code> Rule )</div>
+                                    <div class="item-desc">Any value <span class="hl">more than two standard deviations below or above the mean</span> is classified as an outlier.</div>
+                                    <div class="code-block">Cutoffs:
+Below:  x&#772; &minus; 2s
+Above:  x&#772; + 2s
+
+Worked Example (Dataset: 1, 3, 3, 4, 4, 4, 5, 5 where x&#772; = 3.625, s = 1.3):
+Below Cutoff = 3.625 &minus; 2(1.3) = 1.025  (value 1 is below 1.025)
+Above Cutoff = 3.625 + 2(1.3) = 6.225</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- STOP 05 -->
+                <article class="lesson-stop">
+                    <div class="stop-node">05</div>
+                    <div class="stop-card">
+                        <div class="stop-header">
+                            <div>
+                                <span class="stop-tag">
+                                    <svg class="ico ico-sm" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+                                    Probability &amp; Bayes
+                                </span>
+                                <h3>Probability in Data Science, Bayes&rsquo; Theorem &amp; Event Independence</h3>
+                            </div>
+                        </div>
+
+                        <div class="visual-versus">
+                            <div class="vs-pane">
+                                <h4>
+                                    <svg class="ico" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                                    Probability (Future Likelihood)
+                                </h4>
+                                <div class="point-stack">
+                                    <div class="point-row">
+                                        <span class="point-num">1</span>
+                                        <div class="point-body">
+                                            <div class="item-title">Predicts What Might Happen</div>
+                                            <div class="item-desc">Predicts the <span class="hl">likelihood or chance that an event will happen in the future</span> over repeated trials.</div>
+                                            <span class="elab">Example: Predicting the chance of rain tomorrow.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="vs-badge">VS</div>
+                            <div class="vs-pane">
+                                <h4>
+                                    <svg class="ico" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                                    Statistics (Past Frequency)
+                                </h4>
+                                <div class="point-stack">
+                                    <div class="point-row">
+                                        <span class="point-num">2</span>
+                                        <div class="point-body">
+                                            <div class="item-title">Analyzes What Has Happened</div>
+                                            <div class="item-desc">Analyzes <span class="hl">observed data and the frequency of events that have already occurred</span>.</div>
+                                            <span class="elab">Example: Analyzing how often it rained during the past month.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="sub-label">
+                            <svg class="ico" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                            Four Applications of Probability in Data Science
+                        </div>
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">1</span>
+                                <div class="point-body">
+                                    <div class="item-title">Statistical Inference</div>
+                                    <div class="item-desc">Determines how accurately <span class="hl">sample survey results reflect population preferences</span> to guide marketing and policy.</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">2</span>
+                                <div class="point-body">
+                                    <div class="item-title">Machine Learning</div>
+                                    <div class="item-desc">Powers classification models like <span class="hl">Naive Bayes, regression, and decision trees</span> to predict class likelihoods under uncertainty.</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">3</span>
+                                <div class="point-body">
+                                    <div class="item-title">Bayesian Analysis</div>
+                                    <div class="item-desc">Combines <span class="hl">prior knowledge (Prior beliefs) with new data (Evidence)</span> to update the probability of an outcome (<span class="hl">Posterior beliefs</span>).</div>
+                                    <span class="elab">Example: A doctor updates the probability that a patient has a disease as new test results arrive.</span>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">4</span>
+                                <div class="point-body">
+                                    <div class="item-title">Risk Assessment</div>
+                                    <div class="item-desc">Estimates the <span class="hl">likelihood of unwanted events</span> to reduce losses across Finance (loan defaults), Healthcare (disease outbreaks), and Insurance (policyholder risk).</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="sub-label">
+                            <svg class="ico" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                            Probability Terminologies, Formulas &amp; Worked Examples
+                        </div>
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">1</span>
+                                <div class="point-body">
+                                    <div class="item-title">Event ( <code>E</code> ), Trial &amp; Random Variable</div>
+                                    <div class="item-desc">An <span class="hl">Event (<code>E</code>)</span> is a set of outcomes to which a probability <code>P(E)</code> is assigned; a <span class="hl">Trial</span> is a situation where <code>E</code> might succeed or fail; a <span class="hl">Random Variable</span> represents the outcome of events (probabilities range from <code>0</code> to <code>1</code>).</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">2</span>
+                                <div class="point-body">
+                                    <div class="item-title">Empirical (Practical) Probability</div>
+                                    <div class="item-desc">The <span class="hl">number of times the event occurs (<code>s</code>) divided by total observed trials (<code>n</code>)</span>.</div>
+                                    <div class="code-block">Formula:  P = s / n
+Example (Toss a coin 4 times &rarr; H, H, H, T):
+P(Head) = 3 / 4 = 0.75     P(Tail) = 1 / 4 = 0.25</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">3</span>
+                                <div class="point-body">
+                                    <div class="item-title">Theoretical (Classical) Probability &amp; Worked Examples</div>
+                                    <div class="item-desc">The <span class="hl">number of favorable outcomes <code>n(E)</code> divided by the total number of possible outcomes in the sample space <code>n(S)</code></span>.</div>
+                                    <div class="code-block">Formula:  P(E) = n(E) / n(S)
+
+Worked Example 1 (Roll a 6-sided die for an even number):
+Sample Space S = {1, 2, 3, 4, 5, 6}  &rarr;  n(S) = 6
+Event E (even) = {2, 4, 6}           &rarr;  n(E) = 3
+P(E) = 3 / 6 = 1 / 2 = 0.5 (50%)
+
+Worked Example 2 (Toss two coins for two heads):
+Sample Space S = {(H,T), (H,H), (T,H), (T,T)}  &rarr;  n(S) = 4
+Event E (two heads) = {(H,H)}                  &rarr;  n(E) = 1
+P(E) = 1 / 4 = 0.25 (25%)</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">4</span>
+                                <div class="point-body">
+                                    <div class="item-title">Joint Probability ( <code>P(A &cap; B)</code> )</div>
+                                    <div class="item-desc">The probability that <span class="hl">events A and B both occur</span>. If <code>A</code> and <code>B</code> are independent, multiply their individual probabilities.</div>
+                                    <div class="code-block">Independent Events:  P(A &cap; B) = P(A) &middot; P(B)
+Dependent Events:    P(A &cap; B) = P(A) &middot; P(B | A)</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">5</span>
+                                <div class="point-body">
+                                    <div class="item-title">Conditional Probability ( <code>P(A | B)</code> )</div>
+                                    <div class="item-desc">The probability of event <code>A</code> <span class="hl">given that event <code>B</code> has already occurred</span> (used when events are not independent).</div>
+                                    <div class="code-block">P(A | B) = P(A &cap; B) / P(B)
+P(B | A) = P(A &cap; B) / P(A)</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">6</span>
+                                <div class="point-body">
+                                    <div class="item-title">Bayes&rsquo; Theorem</div>
+                                    <div class="item-desc">Calculates the <span class="hl">Posterior Probability <code>P(H | E)</code></span> of hypothesis <code>H</code> given evidence <code>E</code>.</div>
+                                    <div class="code-block">P(H | E) = [ P(H) &middot; P(E | H) ] / P(E)
+
+Where:
+&bull; P(H | E) = Posterior probability of Hypothesis H given Evidence E
+&bull; P(H)     = Prior probability of Hypothesis H
+&bull; P(E | H) = Likelihood of Evidence E if Hypothesis H is true
+&bull; P(E)     = Prior probability that Evidence E itself is true</div>
+                                </div>
+                            </div>
+                            <div class="point-row">
+                                <span class="point-num">7</span>
+                                <div class="point-body">
+                                    <div class="item-title">Independent, Dependent, Pairwise &amp; Mutually Independent Events</div>
+                                    <div class="item-desc"><strong>Independent:</strong> One event does not affect the other (e.g., red die even <code>P(A)=1/2</code> and blue die odd <code>P(B)=1/2</code>). <strong>Pairwise Independent:</strong> Every pair is independent. <strong>Mutually Independent:</strong> Every event is independent of <span class="hl">every intersection of the other events</span>.</div>
+                                    <div class="code-block">Two-Dice Example (A: red=3, B: blue=4, C: sum=7):
+&bull; Pairwise check: P(A|B) = 1/6, P(A|C) = 1/6, P(B|C) = 1/6  &rarr; Pairwise Independent
+&bull; Mutual check:   P(A | (B &cap; C)) = 1  vs.  P(A | (B &cap; C)&prime;) = 1/7
+  Since 1 &ne; 1/7, events A, B, and C are Mutually Dependent (NOT mutually independent).</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- STOP 06 -->
+                <article class="lesson-stop">
+                    <div class="stop-node">06</div>
+                    <div class="stop-card">
+                        <div class="stop-header">
+                            <div>
+                                <span class="stop-tag">
+                                    <svg class="ico ico-sm" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                                    Probability Distributions
+                                </span>
+                                <h3>Discrete, Normal (68&ndash;95&ndash;99.7), Standard Normal (Z) &amp; Binomial Distributions</h3>
+                            </div>
+                        </div>
+
+                        <div class="point-stack">
+                            <div class="point-row">
+                                <span class="point-num">1</span>
+                                <div class="point-body">
+                                    <div class="item-title">Probability Distribution (Discrete, Univariate, Finite Support)</div>
+                                    <div class="item-desc">Lists <span class="hl">all possible outcomes of a random variable along with their probability values</span> (e.g., fair 6-sided die: outcomes <code>1, 2, 3, 4, 5, 6</code> each with probability <code>1/6</code>).</div>
+                                    <span class="elab"><strong>Discrete:</strong> No outcomes exist in between consecutive values (cannot roll 1.5) &bull; <strong>Univariate:</strong> Only one random variable &bull; <strong>Finite Support:</strong> Limited set of defined outcomes <code>{1, 2, 3, 4, 5, 6}</code>.</span>
+                                </div>
+                            </div>
+
+                            <div class="point-row">
+                                <span class="point-num">2</span>
+                                <div class="point-body">
+                                    <div class="item-title">Normal Distribution (Gaussian Distribution / Bell Curve) &amp; Empirical Rule</div>
+                                    <div class="item-desc">A <span class="hl">symmetric bell-shaped distribution</span> where 50% of data lie on each side and <span class="hl">Mean = Median = Mode</span> at the exact center.</div>
+                                    <span class="elab">Fits natural phenomena like heights, blood pressure, measurement error, and IQ scores.</span>
+
+                                    <!-- Inline SVG Normal Curve Diagram -->
+                                    <div class="svg-diagram-box">
+                                        <svg viewBox="0 0 600 185" role="img" aria-label="Normal Distribution 68-95-99.7 Empirical Rule Diagram">
+                                            <!-- Baseline -->
+                                            <line x1="30" y1="145" x2="570" y2="145" stroke="var(--text-muted)" stroke-width="2"/>
+                                            <!-- Bell Curve Path -->
+                                            <path d="M 35 144 C 120 144, 175 130, 220 75 C 255 30, 275 18, 300 18 C 325 18, 345 30, 380 75 C 425 130, 480 144, 565 144" fill="var(--primary-soft)" stroke="var(--primary)" stroke-width="3"/>
+                                            <!-- Center Mean Line -->
+                                            <line x1="300" y1="18" x2="300" y2="145" stroke="var(--primary)" stroke-width="2" stroke-dasharray="5,4"/>
+                                            <!-- 1 SD Lines -->
+                                            <line x1="225" y1="70" x2="225" y2="145" stroke="var(--text-muted)" stroke-width="1.5" stroke-dasharray="3,3"/>
+                                            <line x1="375" y1="70" x2="375" y2="145" stroke="var(--text-muted)" stroke-width="1.5" stroke-dasharray="3,3"/>
+                                            <!-- 2 SD Lines -->
+                                            <line x1="150" y1="125" x2="150" y2="145" stroke="var(--text-muted)" stroke-width="1.5" stroke-dasharray="3,3"/>
+                                            <line x1="450" y1="125" x2="450" y2="145" stroke="var(--text-muted)" stroke-width="1.5" stroke-dasharray="3,3"/>
+                                            <!-- Labels -->
+                                            <text x="300" y="92" text-anchor="middle" fill="var(--text-bold)" font-size="12" font-weight="800">68% (&plusmn;1&sigma;)</text>
+                                            <text x="300" y="116" text-anchor="middle" fill="var(--primary)" font-size="11" font-weight="800">95% (&plusmn;2&sigma;) &bull; 99.7% (&plusmn;3&sigma;)</text>
+                                            <text x="150" y="164" text-anchor="middle" fill="var(--text-muted)" font-size="10">&mu; &minus; 2&sigma;</text>
+                                            <text x="225" y="164" text-anchor="middle" fill="var(--text-muted)" font-size="10">&mu; &minus; 1&sigma;</text>
+                                            <text x="300" y="164" text-anchor="middle" fill="var(--text-bold)" font-size="10" font-weight="700">Mean (&mu;)</text>
+                                            <text x="375" y="164" text-anchor="middle" fill="var(--text-muted)" font-size="10">&mu; + 1&sigma;</text>
+                                            <text x="450" y="164" text-anchor="middle" fill="var(--text-muted)" font-size="10">&mu; + 2&sigma;</text>
+                                        </svg>
+                                    </div>
+
+                                    <div class="code-block">Empirical Rule (68&ndash;95&ndash;99.7):
+&bull; 68% of data falls within 1 SD (&plusmn;1&sigma;) of the mean
+&bull; 95% of data falls within 2 SDs (&plusmn;2&sigma;) of the mean
+&bull; 99.7% of data falls within 3 SDs (&plusmn;3&sigma;) of the mean
+
+Worked Example 1 (Men&rsquo;s Height: &mu; = 178 cm, &sigma; = 7 cm):
+68% of population are between 178 &minus; 7 = 171 cm and 178 + 7 = 185 cm.
+
+Worked Example 2 (95% of students are between 1.1m and 1.7m tall):
+&bull; Mean = halfway between 1.1m and 1.7m = (1.1 + 1.7) / 2 = 1.4m
+&bull; 95% spans 2 SDs on each side (total of 4 SDs):
+  1 Standard Deviation = (1.7m &minus; 1.1m) / 4 = 0.6m / 4 = 0.15m</div>
+                                </div>
+                            </div>
+
+                            <div class="point-row">
+                                <span class="point-num">3</span>
+                                <div class="point-body">
+                                    <div class="item-title">Standard Normal Z-Distribution &amp; Apples-to-Oranges Comparison</div>
+                                    <div class="item-desc">Standardizes any normal distribution so it always has <span class="hl"><code>Mean (&mu;) = 0</code> and <code>Standard Deviation (&sigma;) = 1</code></span>.</div>
+                                    <div class="code-block">Formula:  z = (X &minus; &mu;) / &sigma;
+
+Worked Example 1 (Test Score X = 190, &mu; = 150, &sigma; = 25):
+z = (190 &minus; 150) / 25 = 40 / 25 = +1.6  (1.6 SDs above the mean)
+
+Worked Example 2 (Comparing Apple [110g] vs. Orange [100g]):
+&bull; Apples (&mu; = 100g, &sigma; = 15g):   z = (110 &minus; 100) / 15 = +0.667  (above average apple)
+&bull; Oranges (&mu; = 140g, &sigma; = 25g):  z = (100 &minus; 140) / 25 = &minus;1.600  (well below average orange)</div>
+                                </div>
+                            </div>
+
+                            <div class="point-row">
+                                <span class="point-num">4</span>
+                                <div class="point-body">
+                                    <div class="item-title">Binomial Distribution &amp; Bernoulli Distribution</div>
+                                    <div class="item-desc">Measures the probability of getting exactly <span class="hl"><code>x</code> successes in <code>n</code> independent trials</span> where each trial has two outcomes (Success <code>p</code> or Failure <code>q = 1 &minus; p</code>).</div>
+                                    <span class="elab">Note: A <strong>Bernoulli distribution</strong> is simply a Binomial distribution with a single trial (<code>n = 1</code>).</span>
+                                    <div class="code-block">Formula 1 (Combinations Form):
+P(x) = nCx &middot; p<sup>x</sup> &middot; (1 &minus; p)<sup>n&minus;x</sup>
+
+Formula 2 (Factorials Form):
+P(X) = [ n! / ((n &minus; X)! &middot; X!) ] &middot; p<sup>X</sup> &middot; q<sup>n&minus;X</sup>
+
+Worked Example (A coin is tossed n = 10 times; find probability of x = 6 heads):
+&bull; Given: n = 10,  x = 6,  p = 0.5,  q = 1 &minus; 0.5 = 0.5
+&bull; Combinations: 10C6 = 10! / ((10 &minus; 6)! &middot; 6!) = 10! / (4! &middot; 6!) = 210
+&bull; Probability:
+  P(x = 6) = 210 &times; (0.5)<sup>6</sup> &times; (0.5)<sup>4</sup>
+           = 210 &times; 0.015625 &times; 0.0625
+           = 0.205078125  (~20.51%)</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        // 1. Top Scroll Progress Bar
+        const progressBar = document.getElementById('progressBar');
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.scrollY || document.documentElement.scrollTop;
+            const docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const pct = docHeight > 0 ? Math.min(100, Math.max(0, (scrollTop / docHeight) * 100)) : 0;
+            if (progressBar) progressBar.style.width = pct + '%';
+        }, { passive: true });
+
+        // 2. Top-Level Lesson Tab Switching
+        const tabButtons = document.querySelectorAll('.module-tab');
+        const modulePanes = document.querySelectorAll('.module-pane');
+
+        tabButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const targetId = btn.getAttribute('data-target');
+                tabButtons.forEach(b => b.classList.remove('active'));
+                modulePanes.forEach(p => p.classList.remove('active'));
+                btn.classList.add('active');
+                const targetPane = document.getElementById(targetId);
+                if (targetPane) targetPane.classList.add('active');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+
+        // 3. Dark / Light Theme Toggle
+        const themeBtn = document.getElementById('themeBtn');
+        const themeLabel = document.getElementById('themeLabel');
+        let savedTheme = null;
+        try {
+            savedTheme = localStorage.getItem('reviewer_theme');
+        } catch (e) {
+            savedTheme = null;
+        }
+        if (savedTheme === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            if (themeLabel) themeLabel.textContent = 'Light Mode';
+        }
+        if (themeBtn) {
+            themeBtn.addEventListener('click', () => {
+                const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+                if (isDark) {
+                    document.documentElement.removeAttribute('data-theme');
+                    try { localStorage.setItem('reviewer_theme', 'light'); } catch (e) {}
+                    if (themeLabel) themeLabel.textContent = 'Dark Mode';
+                } else {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                    try { localStorage.setItem('reviewer_theme', 'dark'); } catch (e) {}
+                    if (themeLabel) themeLabel.textContent = 'Light Mode';
+                }
+            });
+        }
+
+        // 4. Instant Keyword Filter (Filters Lesson Stops in Active Tab)
+        const searchInput = document.getElementById('searchInput');
+        if (searchInput) {
+            searchInput.addEventListener('input', (e) => {
+                const query = e.target.value.trim().toLowerCase();
+                document.querySelectorAll('.lesson-stop').forEach(stop => {
+                    const text = stop.textContent.toLowerCase();
+                    stop.style.display = (!query || text.includes(query)) ? '' : 'none';
+                });
+            });
+        }
+    </script>
+</body>
+</html>
