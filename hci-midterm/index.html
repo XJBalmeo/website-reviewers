@@ -633,46 +633,230 @@ svg.ico-sm { width: 15px; height: 15px; }
 }
 
 /* ==========================================================================
-   6. GIZMO-STYLE 60-ITEM EXAM SIMULATOR STYLES (DESKTOP & MOBILE READY)
+   6. 60-ITEM EXAM SIMULATOR STYLES (CLEAN HIERARCHY: MODES -> ACTIONS -> CARD)
    ========================================================================== */
-.exam-toolbar {
+
+/* Level 1: Two Main Mode Buttons (Flashcards & Type-Answer Mode) */
+.mode-switch-bar {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.65rem;
     background: var(--bg-card);
+    padding: 0.5rem;
+    border-radius: 14px;
     border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    padding: 1.25rem;
-    margin-bottom: 1.25rem;
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 1rem;
+}
+.mode-switch-btn {
+    background: var(--bg-subtle);
+    border: 1.5px solid transparent;
+    color: var(--text-muted);
+    padding: 0.8rem 1rem;
+    border-radius: 10px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 800;
+    font-size: 0.95rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.55rem;
+    transition: all 0.2s ease;
+}
+.mode-switch-btn:hover {
+    color: var(--text-bold);
+    border-color: var(--primary-border);
+}
+.mode-switch-btn.active {
+    background: var(--primary);
+    color: #ffffff;
+    border-color: var(--primary);
+    box-shadow: 0 4px 12px rgba(2, 132, 199, 0.25);
+}
+
+/* Level 2: Separate Filter Button & Standout Shuffle / Reset Bar */
+.exam-utility-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+    position: relative;
+}
+.filter-trigger-btn {
+    background: var(--bg-card);
+    border: 2px solid var(--border);
+    color: var(--text-bold);
+    padding: 0.62rem 1.1rem;
+    border-radius: 11px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 800;
+    font-size: 0.86rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.18s ease;
+}
+.filter-trigger-btn:hover,
+.filter-trigger-btn.open {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+.filter-summary-badge {
+    background: var(--primary-soft);
+    color: var(--primary);
+    font-size: 0.75rem;
+    font-weight: 800;
+    padding: 0.15rem 0.55rem;
+    border-radius: 999px;
+}
+
+/* Standout Shuffle & Reset Group */
+.standout-actions-group {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+.standout-btn {
+    padding: 0.62rem 1.1rem;
+    border-radius: 11px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 800;
+    font-size: 0.85rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    transition: all 0.18s ease;
     box-shadow: var(--shadow-sm);
 }
-.exam-stats-row {
+.standout-btn.shuffle-btn {
+    background: var(--amber-soft);
+    border: 2px solid var(--amber-border);
+    color: var(--amber);
+}
+.standout-btn.shuffle-btn:hover {
+    background: var(--amber);
+    color: #ffffff;
+}
+.standout-btn.reset-btn {
+    background: var(--rose-soft);
+    border: 2px solid var(--rose-border);
+    color: var(--rose);
+}
+.standout-btn.reset-btn:hover {
+    background: var(--rose);
+    color: #ffffff;
+}
+
+/* Collapsible Checkable Filters Panel */
+.filter-drawer {
+    display: none;
+    background: var(--bg-card);
+    border: 2px solid var(--primary-border);
+    border-radius: var(--radius-lg);
+    padding: 1.25rem 1.4rem;
+    margin-bottom: 1.15rem;
+    box-shadow: var(--shadow-md);
+    animation: fadeSlide 0.2s ease;
+}
+.filter-drawer.show {
+    display: block;
+}
+.filter-drawer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 1.1rem;
+    margin-bottom: 1rem;
+}
+.filter-col-title {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+    margin-bottom: 0.55rem;
+}
+.chk-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+}
+.chk-label {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--text-bold);
+    cursor: pointer;
+    padding: 0.38rem 0.6rem;
+    border-radius: 8px;
+    background: var(--bg-subtle);
+    border: 1px solid var(--border);
+    transition: border-color 0.15s ease;
+}
+.chk-label:hover {
+    border-color: var(--primary);
+}
+.chk-label input[type="checkbox"] {
+    width: 17px;
+    height: 17px;
+    accent-color: var(--primary);
+    cursor: pointer;
+}
+.filter-drawer-footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
-    gap: 0.75rem;
-    margin-bottom: 0.9rem;
+    gap: 0.5rem;
+    padding-top: 0.85rem;
+    border-top: 1px solid var(--border);
+}
+
+/* Level 3: Question Stats Header Docked Directly on Top of the Question Card */
+.question-stats-dock {
+    background: var(--bg-subtle);
+    border-bottom: 1px solid var(--border);
+    padding: 0.85rem 1.4rem;
+    border-radius: 16px 16px 0 0;
+    margin: -1.75rem -1.75rem 1.15rem -1.75rem;
 }
 .exam-stat-badges {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
     gap: 0.5rem;
-    align-items: center;
+    margin-bottom: 0.65rem;
 }
 .stat-pill {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 0.35rem;
-    padding: 0.32rem 0.7rem;
-    border-radius: 999px;
-    font-size: 0.79rem;
-    font-weight: 700;
-    background: var(--bg-subtle);
+    padding: 0.38rem 0.65rem;
+    border-radius: 9px;
+    font-size: 0.8rem;
+    font-weight: 800;
+    background: var(--bg-card);
     border: 1px solid var(--border);
     color: var(--text-bold);
+    text-align: center;
 }
 .stat-pill.correct {
     background: var(--emerald-soft);
     border-color: var(--emerald-border);
     color: var(--emerald);
+}
+.stat-pill.review-pill {
+    background: var(--rose-soft);
+    border-color: var(--rose-border);
+    color: var(--rose);
 }
 .stat-pill.streak {
     background: var(--amber-soft);
@@ -681,11 +865,10 @@ svg.ico-sm { width: 15px; height: 15px; }
 }
 .exam-progress-track {
     width: 100%;
-    height: 8px;
+    height: 6px;
     background: var(--bg-elevated);
     border-radius: 999px;
     overflow: hidden;
-    margin-bottom: 0.95rem;
 }
 .exam-progress-bar {
     height: 100%;
@@ -694,41 +877,8 @@ svg.ico-sm { width: 15px; height: 15px; }
     transition: width 0.25s ease;
 }
 
-.exam-filters {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.45rem;
-    align-items: center;
-    justify-content: space-between;
-}
-.filter-group {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem;
-}
-.filter-btn {
-    background: var(--bg-subtle);
-    border: 1px solid var(--border);
-    color: var(--text-muted);
-    padding: 0.42rem 0.75rem;
-    border-radius: 8px;
-    font-size: 0.78rem;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.15s ease;
-}
-.filter-btn:hover {
-    color: var(--text-bold);
-    border-color: var(--primary);
-}
-.filter-btn.active {
-    background: var(--primary);
-    color: #ffffff;
-    border-color: var(--primary);
-}
-
-/* Gizmo Card Shell */
-.gizmo-card {
+/* Shared Question & Flashcard Container */
+.exam-question-box {
     background: var(--bg-card);
     border: 2px solid var(--border);
     border-radius: var(--radius-lg);
@@ -737,12 +887,13 @@ svg.ico-sm { width: 15px; height: 15px; }
     margin-bottom: 1.25rem;
     transition: border-color 0.2s ease;
 }
-.gizmo-card.state-correct {
+.exam-question-box.state-correct {
     border-color: var(--emerald);
 }
-.gizmo-card.state-wrong {
+.exam-question-box.state-wrong {
     border-color: var(--rose);
 }
+
 .gizmo-card-top {
     display: flex;
     justify-content: space-between;
@@ -756,15 +907,6 @@ svg.ico-sm { width: 15px; height: 15px; }
     align-items: center;
     gap: 0.45rem;
     flex-wrap: wrap;
-}
-.q-num-badge {
-    background: var(--primary);
-    color: #ffffff;
-    font-family: 'JetBrains Mono', monospace;
-    font-weight: 800;
-    font-size: 0.8rem;
-    padding: 0.25rem 0.65rem;
-    border-radius: 7px;
 }
 .q-type-badge {
     background: var(--primary-soft);
@@ -790,13 +932,183 @@ svg.ico-sm { width: 15px; height: 15px; }
     border-radius: 6px;
 }
 
-.gizmo-prompt {
+/* Flashcard Flip Area Inside Question Box */
+.fc-flip-zone {
+    background: var(--bg-subtle);
+    border: 2px dashed var(--border);
+    border-radius: 14px;
+    min-height: 220px;
+    padding: 1.5rem 1.25rem;
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 1rem;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+.fc-flip-zone:hover {
+    border-color: var(--primary);
+}
+.fc-flip-zone.is-flipped {
+    border-style: solid;
+    border-color: var(--primary);
+    background: var(--bg-card);
+}
+.fc-side-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.73rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 0.22rem 0.65rem;
+    border-radius: 6px;
+    background: var(--bg-elevated);
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+}
+.fc-flip-zone.is-flipped .fc-side-tag {
+    background: var(--emerald-soft);
+    color: var(--emerald);
+    border-color: var(--emerald-border);
+}
+.fc-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 0.85rem 0.25rem;
+}
+.fc-front-text {
     font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 1.16rem;
+    font-size: 1.18rem;
     font-weight: 700;
     color: var(--text-bold);
-    line-height: 1.5;
-    margin-bottom: 1.15rem;
+    line-height: 1.55;
+    max-width: 680px;
+}
+.fc-back-wrap {
+    width: 100%;
+    max-width: 700px;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    animation: fadeSlide 0.2s ease;
+}
+.fc-flip-zone.is-flipped .fc-front-wrap {
+    display: none;
+}
+.fc-flip-zone.is-flipped .fc-back-wrap {
+    display: flex;
+}
+.fc-answer-title {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 1.42rem;
+    font-weight: 800;
+    color: var(--primary);
+    margin-bottom: 0.55rem;
+    line-height: 1.3;
+}
+[data-theme="dark"] .fc-answer-title {
+    color: #38bdf8;
+}
+.fc-answer-sub {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    max-width: 620px;
+    line-height: 1.55;
+}
+.fc-enum-back-list {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.42rem;
+    text-align: left;
+    margin-top: 0.35rem;
+}
+.fc-enum-back-item {
+    background: var(--bg-subtle);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--primary);
+    border-radius: 9px;
+    padding: 0.52rem 0.85rem;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--text-bold);
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+.fc-tap-hint {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+}
+
+.fc-controls-bar {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0.6rem;
+    margin-bottom: 0.85rem;
+}
+.fc-judge-btn {
+    border: 1.5px solid var(--border);
+    border-radius: 11px;
+    padding: 0.75rem 0.9rem;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 800;
+    font-size: 0.88rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+    min-height: 46px;
+    transition: all 0.15s ease;
+}
+.fc-judge-btn.btn-wrong {
+    background: var(--rose-soft);
+    border-color: var(--rose-border);
+    color: var(--rose);
+}
+.fc-judge-btn.btn-wrong:hover {
+    background: var(--rose);
+    color: #ffffff;
+}
+.fc-judge-btn.btn-flip {
+    background: var(--bg-subtle);
+    border-color: var(--primary);
+    color: var(--primary);
+}
+.fc-judge-btn.btn-flip:hover {
+    background: var(--primary-soft);
+}
+.fc-judge-btn.btn-correct {
+    background: var(--emerald-soft);
+    border-color: var(--emerald-border);
+    color: var(--emerald);
+}
+.fc-judge-btn.btn-correct:hover {
+    background: var(--emerald);
+    color: #ffffff;
+}
+
+/* Type-Answer Mode Specific Elements */
+.gizmo-prompt {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text-bold);
+    line-height: 1.52;
+    margin-bottom: 1.1rem;
 }
 .gizmo-blank-pill {
     display: inline-block;
@@ -817,8 +1129,6 @@ svg.ico-sm { width: 15px; height: 15px; }
     color: var(--emerald);
     border-bottom-color: var(--emerald);
 }
-
-/* Input Controls (16px font size prevents iOS Safari zoom on mobile) */
 .gizmo-input-wrap {
     display: flex;
     gap: 0.6rem;
@@ -833,7 +1143,7 @@ svg.ico-sm { width: 15px; height: 15px; }
     padding: 0.78rem 1rem;
     border-radius: 12px;
     font-family: 'Inter', sans-serif;
-    font-size: 1rem; /* 16px for mobile touch accessibility */
+    font-size: 1rem;
     font-weight: 600;
     outline: none;
     transition: border-color 0.2s ease, background-color 0.2s ease;
@@ -851,7 +1161,6 @@ svg.ico-sm { width: 15px; height: 15px; }
     border-color: var(--rose);
     background: var(--rose-soft);
 }
-
 .gizmo-submit-btn {
     background: var(--primary);
     color: #ffffff;
@@ -868,26 +1177,16 @@ svg.ico-sm { width: 15px; height: 15px; }
     gap: 0.45rem;
     min-height: 46px;
     flex-shrink: 0;
-    transition: opacity 0.15s ease, transform 0.1s ease;
 }
-.gizmo-submit-btn:hover { opacity: 0.92; }
-.gizmo-submit-btn:active { transform: scale(0.98); }
-
-/* Enumeration Multi-Slot Grid */
 .enum-helper-note {
     font-size: 0.84rem;
     color: var(--text-muted);
-    margin-bottom: 0.75rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 0.4rem;
+    margin-bottom: 0.65rem;
 }
 .enum-slots-list {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.48rem;
     margin-bottom: 0.95rem;
 }
 .enum-slot-row {
@@ -897,8 +1196,7 @@ svg.ico-sm { width: 15px; height: 15px; }
     background: var(--bg-subtle);
     border: 1.5px solid var(--border);
     border-radius: 10px;
-    padding: 0.55rem 0.85rem;
-    transition: all 0.2s ease;
+    padding: 0.52rem 0.85rem;
 }
 .enum-slot-row.slot-solved {
     background: var(--emerald-soft);
@@ -909,13 +1207,13 @@ svg.ico-sm { width: 15px; height: 15px; }
     border-color: var(--amber-border);
 }
 .enum-slot-num {
-    width: 26px;
-    height: 26px;
-    border-radius: 7px;
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
     background: var(--primary-soft);
     color: var(--primary);
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.78rem;
+    font-size: 0.76rem;
     font-weight: 700;
     display: inline-flex;
     align-items: center;
@@ -928,7 +1226,7 @@ svg.ico-sm { width: 15px; height: 15px; }
 }
 .enum-slot-text {
     flex: 1;
-    font-size: 0.91rem;
+    font-size: 0.9rem;
     font-weight: 600;
     color: var(--text-bold);
 }
@@ -938,14 +1236,13 @@ svg.ico-sm { width: 15px; height: 15px; }
     font-style: italic;
 }
 
-/* Action Bar (Hint, Reveal, Prev, Next) */
 .gizmo-actions-bar {
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
     gap: 0.6rem;
-    padding-top: 0.85rem;
+    padding-top: 0.8rem;
     border-top: 1px solid var(--border);
 }
 .gizmo-aux-btns, .gizmo-nav-btns {
@@ -967,7 +1264,6 @@ svg.ico-sm { width: 15px; height: 15px; }
     align-items: center;
     gap: 0.4rem;
     min-height: 40px;
-    transition: all 0.15s ease;
 }
 .act-btn:hover {
     border-color: var(--primary);
@@ -978,17 +1274,12 @@ svg.ico-sm { width: 15px; height: 15px; }
     border-color: var(--primary);
     color: #ffffff;
 }
-.act-btn.primary-nav:hover {
-    opacity: 0.92;
-    color: #ffffff;
-}
 
-/* Feedback Box */
 .gizmo-feedback {
-    margin: 0.85rem 0;
-    padding: 0.9rem 1.1rem;
+    margin: 0.8rem 0;
+    padding: 0.85rem 1.05rem;
     border-radius: 11px;
-    font-size: 0.9rem;
+    font-size: 0.89rem;
     display: none;
 }
 .gizmo-feedback.show { display: block; }
@@ -1008,75 +1299,17 @@ svg.ico-sm { width: 15px; height: 15px; }
     color: var(--text-bold);
 }
 
-/* Question Navigator Grid (1 to 60) */
-.q-grid-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
+.fc-complete-banner {
+    background: var(--emerald-soft);
+    border: 2px solid var(--emerald-border);
     border-radius: var(--radius-lg);
-    padding: 1.15rem 1.35rem;
-    box-shadow: var(--shadow-sm);
-    margin-bottom: 1.5rem;
-}
-.q-grid-title {
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 0.86rem;
-    font-weight: 800;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    margin-bottom: 0.75rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-.q-nav-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(36px, 1fr));
-    gap: 0.38rem;
-}
-.q-dot {
-    height: 34px;
-    border-radius: 8px;
-    border: 1px solid var(--border);
-    background: var(--bg-subtle);
-    color: var(--text-muted);
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.76rem;
-    font-weight: 700;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.15s ease;
-}
-.q-dot:hover {
-    border-color: var(--primary);
-    color: var(--text-bold);
-}
-.q-dot.current {
-    border: 2px solid var(--primary);
-    color: var(--primary);
-    font-weight: 800;
-}
-.q-dot.done-correct {
-    background: var(--emerald);
-    border-color: var(--emerald);
-    color: #ffffff;
-}
-.q-dot.done-revealed {
-    background: var(--amber);
-    border-color: var(--amber);
-    color: #ffffff;
-}
-
-/* All-60 List Mode Container */
-.all-questions-list {
+    padding: 1.75rem 1.4rem;
+    text-align: center;
+    margin-bottom: 1.25rem;
     display: none;
-    flex-direction: column;
-    gap: 1rem;
 }
-.all-questions-list.show {
-    display: flex;
+.fc-complete-banner.show {
+    display: block;
 }
 
 /* ==========================================================================
@@ -1115,8 +1348,20 @@ svg.ico-sm { width: 15px; height: 15px; }
     .stair-1, .stair-2, .stair-3, .stair-4, .stair-5 { margin-left: 0; }
     .point-row { padding: 0.75rem 0.85rem; font-size: 0.88rem; }
 
-    /* Mobile Gizmo Exam Controls */
-    .gizmo-card { padding: 1.2rem; }
+    /* Mobile Exam Hierarchy Controls */
+    .mode-switch-bar { grid-template-columns: 1fr 1fr; gap: 0.4rem; padding: 0.4rem; }
+    .mode-switch-btn { padding: 0.65rem 0.5rem; font-size: 0.82rem; }
+    .exam-utility-bar { flex-direction: column; align-items: stretch; }
+    .filter-trigger-btn { width: 100%; justify-content: space-between; }
+    .standout-actions-group { width: 100%; display: grid; grid-template-columns: 1fr 1fr; }
+    .standout-btn { justify-content: center; }
+    .exam-question-box { padding: 1.2rem; }
+    .question-stats-dock { margin: -1.2rem -1.2rem 1rem -1.2rem; padding: 0.75rem 0.9rem; }
+    .exam-stat-badges { grid-template-columns: 1fr 1fr; gap: 0.4rem; }
+    .fc-flip-zone { padding: 1.15rem 0.9rem; min-height: 195px; }
+    .fc-front-text { font-size: 1.03rem; }
+    .fc-answer-title { font-size: 1.22rem; }
+    .fc-controls-bar { grid-template-columns: 1fr; }
     .gizmo-prompt { font-size: 1.03rem; }
     .gizmo-input-wrap { flex-direction: column; }
     .gizmo-submit-btn { width: 100%; min-height: 46px; }
@@ -2864,58 +3109,163 @@ svg.ico-sm { width: 15px; height: 15px; }
         </section>
 
         <!-- ==================================================================
-             MODULE 5: 60-ITEM GIZMO-STYLE IDENTIFICATION & ENUMERATION EXAM
+             MODULE 5: 60-ITEM FLASHCARDS & INTERACTIVE EXAM
              ================================================================== -->
         <section class="module-pane" id="mod-5">
             <div class="module-intro">
-                <h2>60-Item Interactive Exam: Identification &amp; Enumeration</h2>
+                <h2>60-Item Exam: Flashcards &amp; Type-Answer</h2>
             </div>
 
-            <!-- Top Exam Dashboard & Filter Toolbar -->
-            <div class="exam-toolbar">
-                <div class="exam-stats-row">
+            <!-- LEVEL 1: Two Main Mode Buttons (Flashcards & Type-Answer Mode) -->
+            <div class="mode-switch-bar" role="tablist" aria-label="Exam Study Mode">
+                <button type="button" class="mode-switch-btn active" id="modeFlashcardsBtn">
+                    <svg class="ico ico-sm" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+                    <span>Flashcards</span>
+                </button>
+                <button type="button" class="mode-switch-btn" id="modeTypingBtn">
+                    <svg class="ico ico-sm" viewBox="0 0 24 24"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" y1="20" x2="15" y2="20"/><line x1="12" y1="4" x2="12" y2="20"/></svg>
+                    <span>Type-Answer Mode</span>
+                </button>
+            </div>
+
+            <!-- LEVEL 2: Filters Button (Left) & Separate Standout Shuffle / Reset Buttons (Right) -->
+            <div class="exam-utility-bar">
+                <button type="button" class="filter-trigger-btn" id="filterToggleBtn" aria-expanded="false">
+                    <svg class="ico ico-sm" viewBox="0 0 24 24"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+                    <span>Filters</span>
+                    <span class="filter-summary-badge" id="filterSummaryBadge">All 60 Included</span>
+                </button>
+
+                <div class="standout-actions-group">
+                    <button type="button" class="standout-btn shuffle-btn" id="shuffleExamBtn">
+                        <svg class="ico ico-sm" viewBox="0 0 24 24"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/></svg>
+                        <span>Shuffle</span>
+                    </button>
+                    <button type="button" class="standout-btn reset-btn" id="resetExamBtn">
+                        <svg class="ico ico-sm" viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+                        <span>Reset</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Collapsible Checkboxes Filter Drawer -->
+            <div class="filter-drawer" id="filterDrawer">
+                <div class="filter-drawer-grid">
+                    <div>
+                        <div class="filter-col-title">Include Lessons</div>
+                        <div class="chk-list">
+                            <label class="chk-label"><input type="checkbox" class="flt-lesson" value="L1" checked> Lesson 1: Intro to HCI</label>
+                            <label class="chk-label"><input type="checkbox" class="flt-lesson" value="L2" checked> Lesson 2: Psychology of Action</label>
+                            <label class="chk-label"><input type="checkbox" class="flt-lesson" value="L3" checked> Lesson 3: Interaction Design</label>
+                            <label class="chk-label"><input type="checkbox" class="flt-lesson" value="L4" checked> Lesson 4: User-Centered Design</label>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="filter-col-title">Include Question Types</div>
+                        <div class="chk-list">
+                            <label class="chk-label"><input type="checkbox" class="flt-type" value="id" checked> Identification (37 Items)</label>
+                            <label class="chk-label"><input type="checkbox" class="flt-type" value="enum" checked> Enumeration (23 Items)</label>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="filter-col-title">Queue Focus</div>
+                        <div class="chk-list">
+                            <label class="chk-label"><input type="checkbox" id="fltUnmasteredOnly" checked> Show Unmastered &amp; Needs Review Only</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="filter-drawer-footer">
+                    <button type="button" class="act-btn" id="selectAllFiltersBtn">Check All Lessons &amp; Types</button>
+                    <button type="button" class="act-btn primary-nav" id="closeFilterDrawerBtn">Apply &amp; Close Filters</button>
+                </div>
+            </div>
+
+            <!-- Celebration Banner When Queue is Completed -->
+            <div class="fc-complete-banner" id="fcCompleteBanner">
+                <h3 style="margin-bottom: 0.4rem;">All Selected Questions Mastered!</h3>
+                <p style="margin: 0 0 1rem 0; color: var(--text-main); font-size: 0.94rem;">You have mastered every item in your current filter selection.</p>
+                <div style="display: flex; gap: 0.6rem; justify-content: center; flex-wrap: wrap;">
+                    <button type="button" class="act-btn primary-nav" id="fcReviewAllBtn">Include Mastered Questions Again</button>
+                    <button type="button" class="act-btn" id="fcResetDeckBtn">Reset All Progress</button>
+                </div>
+            </div>
+
+            <!-- LEVEL 3: Unified Question Box (Stats Docked Directly on Top of the Question) -->
+            <div class="exam-question-box" id="examQuestionBox">
+
+                <!-- Mastered, Remaining, Needs Review & Streak Directly on Top of the Question -->
+                <div class="question-stats-dock">
                     <div class="exam-stat-badges">
                         <span class="stat-pill correct" id="statScore">Mastered: 0 / 60</span>
+                        <span class="stat-pill" id="statRemaining">Remaining: 60</span>
+                        <span class="stat-pill review-pill" id="statReviewCount">Needs Review: 0</span>
                         <span class="stat-pill streak" id="statStreak">Streak: 0</span>
                     </div>
-                    <div class="filter-group">
-                        <button type="button" class="filter-btn" id="toggleViewBtn">All 60 List View</button>
-                        <button type="button" class="filter-btn" id="shuffleExamBtn">Shuffle</button>
-                        <button type="button" class="filter-btn" id="resetExamBtn">Reset</button>
+                    <div class="exam-progress-track">
+                        <div class="exam-progress-bar" id="examProgressBar"></div>
                     </div>
                 </div>
 
-                <div class="exam-progress-track">
-                    <div class="exam-progress-bar" id="examProgressBar"></div>
-                </div>
-
-                <div class="exam-filters">
-                    <div class="filter-group" id="examFilterGroup">
-                        <button type="button" class="filter-btn active" data-filter="all">All (60)</button>
-                        <button type="button" class="filter-btn" data-filter="id">Identification (37)</button>
-                        <button type="button" class="filter-btn" data-filter="enum">Enumeration (23)</button>
-                        <button type="button" class="filter-btn" data-filter="L1">Lesson 1</button>
-                        <button type="button" class="filter-btn" data-filter="L2">Lesson 2</button>
-                        <button type="button" class="filter-btn" data-filter="L3">Lesson 3</button>
-                        <button type="button" class="filter-btn" data-filter="L4">Lesson 4</button>
+                <!-- Shared Question Metadata Bar -->
+                <div class="gizmo-card-top">
+                    <div class="q-badge-group">
+                        <span class="q-type-badge" id="qTypeBadge">Identification</span>
+                        <span class="q-lesson-badge" id="qLessonBadge">Lesson 1</span>
                     </div>
+                    <span class="stat-pill" id="qStatusPill">Unmastered</span>
                 </div>
-            </div>
 
-            <!-- Gizmo Interactive Card Container (Default Mode) -->
-            <div id="gizmoCardView">
-                <div class="gizmo-card" id="gizmoActiveCard">
-                    <div class="gizmo-card-top">
-                        <div class="q-badge-group">
-                            <span class="q-type-badge" id="qTypeBadge">Identification</span>
-                            <span class="q-lesson-badge" id="qLessonBadge">Lesson 1</span>
+                <!-- ==========================================================
+                     MODE A: FLASHCARDS BODY
+                     ========================================================== -->
+                <div id="flashcardModeView">
+                    <div class="fc-flip-zone" id="fcCard" tabindex="0" role="button" aria-label="Flashcard - Tap or press Space to flip">
+                        <span class="fc-side-tag" id="fcSideTag">FRONT &bull; DESCRIPTION</span>
+
+                        <div class="fc-body">
+                            <div class="fc-front-wrap">
+                                <div class="fc-front-text" id="fcFrontText"></div>
+                            </div>
+                            <div class="fc-back-wrap">
+                                <div class="fc-answer-title" id="fcBackTitle"></div>
+                                <div class="fc-answer-sub" id="fcBackSub"></div>
+                                <div class="fc-enum-back-list" id="fcEnumBackList"></div>
+                            </div>
                         </div>
-                        <span class="stat-pill" id="qStatusPill">Unanswered</span>
+
+                        <div class="fc-tap-hint">
+                            <svg class="ico ico-sm" viewBox="0 0 24 24"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+                            <span>Tap card or press <strong>Space</strong> to flip</span>
+                        </div>
                     </div>
 
+                    <div class="fc-controls-bar">
+                        <button type="button" class="fc-judge-btn btn-wrong" id="fcWrongBtn">
+                            <svg class="ico ico-sm" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                            <span>Needs Review (Wrong)</span>
+                        </button>
+                        <button type="button" class="fc-judge-btn btn-flip" id="fcFlipBtn">
+                            <svg class="ico ico-sm" viewBox="0 0 24 24"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+                            <span>Flip Card</span>
+                        </button>
+                        <button type="button" class="fc-judge-btn btn-correct" id="fcCorrectBtn">
+                            <svg class="ico ico-sm" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                            <span>Mastered (Correct)</span>
+                        </button>
+                    </div>
+
+                    <div class="gizmo-actions-bar">
+                        <button type="button" class="act-btn" id="fcPrevBtn">&larr; Previous</button>
+                        <button type="button" class="act-btn primary-nav" id="fcNextBtn">Next &rarr;</button>
+                    </div>
+                </div>
+
+                <!-- ==========================================================
+                     MODE B: TYPE-ANSWER MODE BODY
+                     ========================================================== -->
+                <div id="gizmoCardView" style="display: none;">
                     <div class="gizmo-prompt" id="qPromptText"></div>
 
-                    <!-- Enumeration Slots Container (Visible only on Enumeration items) -->
                     <div id="enumContainer" style="display: none;">
                         <div class="enum-helper-note">
                             <span id="enumProgressText">Type each item below and press Enter (any order):</span>
@@ -2923,7 +3273,6 @@ svg.ico-sm { width: 15px; height: 15px; }
                         <div class="enum-slots-list" id="enumSlotsList"></div>
                     </div>
 
-                    <!-- Typing Input + Enter / Submit Button -->
                     <div class="gizmo-input-wrap">
                         <input
                             type="text"
@@ -2942,10 +3291,8 @@ svg.ico-sm { width: 15px; height: 15px; }
                         </button>
                     </div>
 
-                    <!-- Instant Feedback Alert -->
                     <div class="gizmo-feedback" id="gizmoFeedbackBox"></div>
 
-                    <!-- Bottom Action & Navigation Bar -->
                     <div class="gizmo-actions-bar">
                         <div class="gizmo-aux-btns">
                             <button type="button" class="act-btn" id="gizmoHintBtn">
@@ -2958,29 +3305,23 @@ svg.ico-sm { width: 15px; height: 15px; }
                             </button>
                             <button type="button" class="act-btn" id="gizmoRetryBtn">
                                 <svg class="ico ico-sm" viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
-                                Retry Item
+                                Retry
                             </button>
                         </div>
                         <div class="gizmo-nav-btns">
-                            <button type="button" class="act-btn" id="gizmoPrevBtn">
-                                &larr; Prev
-                            </button>
-                            <button type="button" class="act-btn primary-nav" id="gizmoNextBtn">
-                                Next &rarr;
-                            </button>
+                            <button type="button" class="act-btn" id="gizmoPrevBtn">&larr; Previous</button>
+                            <button type="button" class="act-btn primary-nav" id="gizmoNextBtn">Next &rarr;</button>
                         </div>
                     </div>
                 </div>
 
-
             </div>
-
-            <!-- All-60 Scrollable Sheet View (Toggled via "All 60 List View") -->
-            <div class="all-questions-list" id="allQuestionsListView"></div>
 
         </section>
 
     </main>
+
+
 
     <script>
         // 1. Top Scroll Progress Bar
@@ -3054,61 +3395,61 @@ svg.ico-sm { width: 15px; height: 15px; }
         const EXAM_QUESTIONS = [
             // --- LESSON 1: IDENTIFICATION (1-10) ---
             {
-                id: 1, type: 'id', lesson: 'L1',
+                id: 1, type: 'id', desc: 'The study of how people interact with computers and to what extent computers are or are not developed for successful interaction with human beings.', lesson: 'L1',
                 prompt: '___ is the study of how people interact with computers and to what extent computers are or are not developed for successful interaction with human beings.',
                 answer: 'Human-Computer Interaction (HCI)',
                 accepted: ['human-computer interaction', 'human computer interaction', 'hci']
             },
             {
-                id: 2, type: 'id', lesson: 'L1',
+                id: 2, type: 'id', desc: 'The quality of a system being easy to learn, easy to remember how to use, effective to use, efficient to use, safe to use, and enjoyable to use.', lesson: 'L1',
                 prompt: 'In HCI, ___ refers to the quality of a system being easy to learn, easy to remember how to use, effective, efficient, safe, and enjoyable to use.',
                 answer: 'Usability',
                 accepted: ['usability']
             },
             {
-                id: 3, type: 'id', lesson: 'L1',
+                id: 3, type: 'id', desc: 'An importance of HCI that promotes fairness, accessibility, privacy protection, and responsible technology use.', lesson: 'L1',
                 prompt: 'Under Importance of HCI, ___ promotes fairness, accessibility, privacy protection, and responsible technology use.',
                 answer: 'Ethical Design',
                 accepted: ['ethical design', 'ethics']
             },
             {
-                id: 4, type: 'id', lesson: 'L1',
+                id: 4, type: 'id', desc: 'An importance of HCI that allows systems to meet the needs of diverse users, devices, and contexts.', lesson: 'L1',
                 prompt: 'Under Importance of HCI, ___ allows systems to meet the needs of diverse users, devices, and contexts.',
                 answer: 'Adaptability',
                 accepted: ['adaptability']
             },
             {
-                id: 5, type: 'id', lesson: 'L1',
+                id: 5, type: 'id', desc: 'A usability importance benefit achieved when more users—including those with disabilities—can use the system.', lesson: 'L1',
                 prompt: 'Under Usability Importance, when more users—including those with disabilities—can use the system, it ___ .',
                 answer: 'Increases Accessibility',
                 accepted: ['increases accessibility', 'accessibility']
             },
             {
-                id: 6, type: 'id', lesson: 'L1',
+                id: 6, type: 'id', desc: 'A factor in HCI that refers to the rules, policies, culture, and structure of the company or institution where the system is used.', lesson: 'L1',
                 prompt: 'Among the Factors in HCI, ___ refer to the rules, policies, culture, and structure of the company or institution where the system is used.',
                 answer: 'Organization factors',
                 accepted: ['organization factors', 'organizational factors', 'organization factor', 'organizational factor']
             },
             {
-                id: 7, type: 'id', lesson: 'L1',
+                id: 7, type: 'id', desc: 'A factor in HCI that refers to the physical surroundings where interaction happens, such as lighting, noise, temperature, and space.', lesson: 'L1',
                 prompt: 'Among the Factors in HCI, ___ refer to the physical surroundings where interaction happens, such as lighting, noise, temperature, and space.',
                 answer: 'Environmental factors',
                 accepted: ['environmental factors', 'environmental factor', 'environment factors']
             },
             {
-                id: 8, type: 'id', lesson: 'L1',
+                id: 8, type: 'id', desc: 'A factor in HCI that refers to physical ease and ergonomics while using a system, such as posture, screen position, and keyboard design.', lesson: 'L1',
                 prompt: 'Among the Factors in HCI, ___ refer to physical ease and ergonomics while using a system, such as posture, screen position, and keyboard design.',
                 answer: 'Comfort factors',
                 accepted: ['comfort factors', 'comfort factor', 'comfort']
             },
             {
-                id: 9, type: 'id', lesson: 'L1',
+                id: 9, type: 'id', desc: 'A factor in HCI that refers to what the system can actually do—its features, operations, and capabilities.', lesson: 'L1',
                 prompt: 'Among the Factors in HCI, ___ refers to what the system can actually do—its features, operations, and capabilities.',
                 answer: 'System functionality',
                 accepted: ['system functionality', 'functionality']
             },
             {
-                id: 10, type: 'id', lesson: 'L1',
+                id: 10, type: 'id', desc: 'The discipline contributing to HCI that designs hardware and workspaces around the physical body to ensure comfort and safety.', lesson: 'L1',
                 prompt: 'The discipline contributing to HCI that designs hardware and workspaces around the physical body to ensure comfort and safety is ___ .',
                 answer: 'Ergonomics/Human Factors',
                 accepted: ['ergonomics', 'human factors', 'ergonomics/human factors', 'ergonomics and human factors']
@@ -3116,67 +3457,67 @@ svg.ico-sm { width: 15px; height: 15px; }
 
             // --- LESSON 2: IDENTIFICATION (11-21) ---
             {
-                id: 11, type: 'id', lesson: 'L2',
+                id: 11, type: 'id', desc: "The psychological gap where users try to figure out how a system operates ('How do I work this?').", lesson: 'L2',
                 prompt: 'The ___ is the psychological gap where users try to figure out how a system operates ("How do I work this?").',
                 answer: 'Gulf of Execution',
                 accepted: ['gulf of execution', 'execution gulf']
             },
             {
-                id: 12, type: 'id', lesson: 'L2',
+                id: 12, type: 'id', desc: "The psychological gap where users try to figure out what happened after taking an action ('Is this what I wanted?').", lesson: 'L2',
                 prompt: 'The ___ is the psychological gap where users try to figure out what happened after taking an action ("Is this what I wanted?").',
                 answer: 'Gulf of Evaluation',
                 accepted: ['gulf of evaluation', 'evaluation gulf']
             },
             {
-                id: 13, type: 'id', lesson: 'L2',
+                id: 13, type: 'id', desc: 'The very first stage in the Seven Stages of Action, where the user decides what they want to achieve.', lesson: 'L2',
                 prompt: 'In the Seven Stages of Action, the very first stage—where you decide what you want to achieve—is forming the ___ .',
                 answer: 'Goal',
                 accepted: ['goal', 'form the goal', 'forming the goal']
             },
             {
-                id: 14, type: 'id', lesson: 'L2',
+                id: 14, type: 'id', desc: 'The stage in the Bridge of Execution (after forming a Plan) where the user picks the exact action sequence before physically performing it.', lesson: 'L2',
                 prompt: 'In the Seven Stages of Action (Bridge of Execution), after forming a general Plan, the user must ___ an action sequence before performing it.',
                 answer: 'Specify',
                 accepted: ['specify', 'specify an action sequence']
             },
             {
-                id: 15, type: 'id', lesson: 'L2',
+                id: 15, type: 'id', desc: 'The first stage of the Bridge of Evaluation in the Seven Stages of Action, where the user sees or hears the state of the world.', lesson: 'L2',
                 prompt: 'In the Seven Stages of Action (Bridge of Evaluation), the first evaluation stage—where you see or hear the state of the world—is ___ .',
                 answer: 'Perceive',
                 accepted: ['perceive', 'perceive the state of the world']
             },
             {
-                id: 16, type: 'id', lesson: 'L2',
+                id: 16, type: 'id', desc: 'The final stage of the Bridge of Evaluation in the Seven Stages of Action, where the user checks whether the outcome matches their original goal.', lesson: 'L2',
                 prompt: 'In the Seven Stages of Action (Bridge of Evaluation), the final stage—where you check whether the outcome matches your original goal—is ___ .',
                 answer: 'Compare',
                 accepted: ['compare', 'compare the outcome with the goal']
             },
             {
-                id: 17, type: 'id', lesson: 'L2',
+                id: 17, type: 'id', desc: 'Produced after initial learning through continued practice and study—sometimes for thousands of hours over a period of years—until performance becomes effortless and automatic.', lesson: 'L2',
                 prompt: '___ is produced after initial learning through continued practice and study—sometimes for thousands of hours over a period of years—until performance becomes automatic.',
                 answer: 'Overlearning',
                 accepted: ['overlearning', 'over-learning']
             },
             {
-                id: 18, type: 'id', lesson: 'L2',
+                id: 18, type: 'id', desc: 'The human memory system for factual information (such as names, dates, or definitions).', lesson: 'L2',
                 prompt: '___ is the human memory system for factual information (such as names, dates, or definitions).',
                 answer: 'Declarative Memory',
                 accepted: ['declarative memory', 'declarative']
             },
             {
-                id: 19, type: 'id', lesson: 'L2',
+                id: 19, type: 'id', desc: 'The human memory system for recalling the activities and motor skills performed.', lesson: 'L2',
                 prompt: '___ is the human memory system for recalling the activities and motor skills performed.',
                 answer: 'Procedural Memory',
                 accepted: ['procedural memory', 'procedural']
             },
             {
-                id: 20, type: 'id', lesson: 'L2',
+                id: 20, type: 'id', desc: "The most basic subconscious level of processing, sometimes referred to as the 'lizard brain'.", lesson: 'L2',
                 prompt: 'The ___ level of processing is the most basic subconscious level of processing and is sometimes referred to as the "lizard brain".',
                 answer: 'Visceral',
                 accepted: ['visceral', 'visceral level', 'lizard brain']
             },
             {
-                id: 21, type: 'id', lesson: 'L2',
+                id: 21, type: 'id', desc: 'The subconscious level of processing that serves as the home of learned skills, triggered by situations that match the appropriate terms.', lesson: 'L2',
                 prompt: 'The ___ level of processing is the home of learned skills, triggered by situations that match the appropriate terms, whereas the Reflective level is the home of conscious cognition.',
                 answer: 'Behavioral',
                 accepted: ['behavioral', 'behavioral level', 'behavioural']
@@ -3184,55 +3525,55 @@ svg.ico-sm { width: 15px; height: 15px; }
 
             // --- LESSON 3: IDENTIFICATION (22-30) ---
             {
-                id: 22, type: 'id', lesson: 'L3',
+                id: 22, type: 'id', desc: 'Designing interactive products to support the way people communicate and interact in their everyday and working lives.', lesson: 'L3',
                 prompt: '___ is the practice of designing interactive products to support the way people communicate and interact in their everyday and working lives.',
                 answer: 'Interaction Design',
                 accepted: ['interaction design', 'ixd']
             },
             {
-                id: 23, type: 'id', lesson: 'L3',
+                id: 23, type: 'id', desc: "The author of Thoughts on Interaction Design who stated that 'Interaction Design is the creation of a dialogue between a person and a product, system, or service.'", lesson: 'L3',
                 prompt: 'According to ___ , author of Thoughts on Interaction Design, "Interaction Design is the creation of a dialogue between a person and a product, system, or service."',
                 answer: 'John Kolko',
                 accepted: ['john kolko', 'kolko']
             },
             {
-                id: 24, type: 'id', lesson: 'L3',
+                id: 24, type: 'id', desc: 'The 1st dimension (1D) of Interactive Design, which encompasses text such as button labels that help give users the right amount of information.', lesson: 'L3',
                 prompt: 'In the Five Dimensions of Interactive Design, the 1st dimension (1D) is ___ , which encompasses text such as button labels that give users the right amount of information.',
                 answer: 'Words (1D)',
                 accepted: ['words', '1d', 'words (1d)']
             },
             {
-                id: 25, type: 'id', lesson: 'L3',
+                id: 25, type: 'id', desc: 'The 2nd dimension (2D) of Interactive Design, which consists of graphical elements such as images, typography, and icons that aid in user interaction.', lesson: 'L3',
                 prompt: 'In the Five Dimensions of Interactive Design, the 2nd dimension (2D) is ___ , which includes graphical elements such as images, typography, and icons.',
                 answer: 'Visual Representations (2D)',
                 accepted: ['visual representations', 'visual representation', '2d', 'visual representations (2d)']
             },
             {
-                id: 26, type: 'id', lesson: 'L3',
+                id: 26, type: 'id', desc: 'The 3rd dimension (3D) of Interactive Design, referring to the physical medium or hardware through which users interact with the product or service (e.g., a laptop via a mouse).', lesson: 'L3',
                 prompt: 'In the Five Dimensions of Interactive Design, the 3rd dimension (3D) is ___ , referring to the medium through which users interact with the product (e.g., laptop via a mouse).',
                 answer: 'Physical Objects/Space (3D)',
                 accepted: ['physical objects/space', 'physical objects', 'physical space', 'physical objects / space', '3d', 'physical objects/space (3d)']
             },
             {
-                id: 27, type: 'id', lesson: 'L3',
+                id: 27, type: 'id', desc: 'The 4th dimension (4D) of Interactive Design, which relates to media that changes over time such as animations, videos, and sounds.', lesson: 'L3',
                 prompt: 'In the Five Dimensions of Interactive Design, the 4th dimension (4D) is ___ , which relates to media that changes over time such as animations, videos, and sounds.',
                 answer: 'Time (4D)',
                 accepted: ['time', '4d', 'time (4d)']
             },
             {
-                id: 28, type: 'id', lesson: 'L3',
+                id: 28, type: 'id', desc: 'The 5th dimension (5D) of Interactive Design, concerned with how the previous four dimensions define the actions a user performs and how the product reacts and provides feedback.', lesson: 'L3',
                 prompt: 'In the Five Dimensions of Interactive Design, the 5th dimension (5D) is ___ , which defines how users perform actions and how the product reacts and provides feedback.',
                 answer: 'Behavior (5D)',
                 accepted: ['behavior', 'behaviour', '5d', 'behavior (5d)']
             },
             {
-                id: 29, type: 'id', lesson: 'L3',
+                id: 29, type: 'id', desc: 'A key principle of Interaction Design stating that design elements should visually suggest how they are used.', lesson: 'L3',
                 prompt: 'Among the Key Principles of Interaction Design, ___ state that design elements should suggest how they are used.',
                 answer: 'Affordances',
                 accepted: ['affordances', 'affordance']
             },
             {
-                id: 30, type: 'id', lesson: 'L3',
+                id: 30, type: 'id', desc: 'A key principle of Interaction Design referring to limits built into an interface that prevent users from making mistakes.', lesson: 'L3',
                 prompt: 'Among the Key Principles of Interaction Design, ___ are limits that prevent users from making mistakes.',
                 answer: 'Constraints',
                 accepted: ['constraints', 'constraint']
@@ -3240,43 +3581,43 @@ svg.ico-sm { width: 15px; height: 15px; }
 
             // --- LESSON 4: IDENTIFICATION (31-37) ---
             {
-                id: 31, type: 'id', lesson: 'L4',
+                id: 31, type: 'id', desc: 'A collection of processes that focus on putting users at the center of product design and involving them throughout the lifecycle, from planning through post-release assessment.', lesson: 'L4',
                 prompt: '___ is a collection of processes that focus on putting users at the center of product design and involving them throughout the lifecycle, from planning through post-release assessment.',
                 answer: 'User-Centered Design (UCD)',
                 accepted: ['user-centered design', 'user centered design', 'ucd']
             },
             {
-                id: 32, type: 'id', lesson: 'L4',
+                id: 32, type: 'id', desc: 'An approach that focuses on fully understanding the perspectives of the people the design is for in each step of the process.', lesson: 'L4',
                 prompt: '___ is an approach that focuses on fully understanding the perspectives of the people the design is for in each step of the process.',
                 answer: 'Human-Centered Design (HCD)',
                 accepted: ['human-centered design', 'human centered design', 'hcd']
             },
             {
-                id: 33, type: 'id', lesson: 'L4',
+                id: 33, type: 'id', desc: 'An essential element of UCD stating that text on the interface should be easy to read.', lesson: 'L4',
                 prompt: 'Among the Essential Elements of UCD, ___ means that text should be easy to read, while Language means short sentences are preferred.',
                 answer: 'Legibility',
                 accepted: ['legibility']
             },
             {
-                id: 34, type: 'id', lesson: 'L4',
+                id: 34, type: 'id', desc: 'A UCD method where users sort content cards into groups to test and design the overall information architecture of a website or app.', lesson: 'L4',
                 prompt: 'In UCD Methods, ___ ask users to sort content cards into groups to test and design the information architecture of a website or app.',
                 answer: 'Card Sorting',
                 accepted: ['card sorting', 'card sort']
             },
             {
-                id: 35, type: 'id', lesson: 'L4',
+                id: 35, type: 'id', desc: 'A UCD method that actively involves end-users as co-designers alongside the product team during design workshops.', lesson: 'L4',
                 prompt: 'In UCD Methods, ___ actively involves end-users as co-designers alongside the product team during design workshops.',
                 answer: 'Participatory Design',
                 accepted: ['participatory design']
             },
             {
-                id: 36, type: 'id', lesson: 'L4',
+                id: 36, type: 'id', desc: 'Used in the Research stage of the UCD Process: archetypes of real users representing a target group with similar behaviors, needs, goals, and skills.', lesson: 'L4',
                 prompt: 'In the Research stage of the UCD Process, ___ are archetypes of real users representing a group with similar behaviors, needs, goals, and skills.',
                 answer: 'Personas',
                 accepted: ['personas', 'persona', 'user personas']
             },
             {
-                id: 37, type: 'id', lesson: 'L4',
+                id: 37, type: 'id', desc: 'Used in the Validation stage of the UCD Process: observing and interviewing users while they perform tasks in their natural environment.', lesson: 'L4',
                 prompt: 'In the Validation stage of the UCD Process, ___ involve observing and interviewing users while they perform tasks in their natural environment.',
                 answer: 'Contextual Inquiries',
                 accepted: ['contextual inquiries', 'contextual inquiry']
@@ -3542,6 +3883,41 @@ svg.ico-sm { width: 15px; height: 15px; }
             }
         ];
 
+        // Helper: Convert a fill-in-the-blank prompt into a clean Flashcard Front Description (Zero Blanks!)
+        function getCleanFlashcardFront(q) {
+            if (q.type === 'enum') {
+                return q.prompt;
+            }
+            if (q.desc) {
+                return q.desc;
+            }
+            const raw = q.prompt;
+            // Cleanly convert "___ is ..." or "In X, ___ refers to..." into a direct description
+            let s = raw
+                .replace(/^The\s+___\s+is\s+/i, 'This is ')
+                .replace(/^___\s+is\s+/i, 'This is ')
+                .replace(/^___\s+are\s+/i, 'These are ')
+                .replace(/,\s*___\s+refers\s+to\s+/i, ', this refers to ')
+                .replace(/,\s*___\s+refer\s+to\s+/i, ', these refer to ')
+                .replace(/,\s*___\s+promotes\s+/i, ', this promotes ')
+                .replace(/,\s*___\s+allows\s+/i, ', this allows ')
+                .replace(/,\s*___\s+state\s+that\s+/i, ', this principle states that ')
+                .replace(/,\s*___\s+are\s+/i, ', these are ')
+                .replace(/,\s*___\s+means\s+that\s+/i, ', this means that ')
+                .replace(/,\s*___\s+ask\s+users\s+/i, ', this method asks users ')
+                .replace(/,\s*___\s+actively\s+involves\s+/i, ', this method actively involves ')
+                .replace(/,\s*___\s+involve\s+observing\s+/i, ', this validation method involves observing ')
+                .replace(/According to\s+___\s*,\s*/i, 'Author of Thoughts on Interaction Design who stated: ')
+                .replace(/is\s+___\s*,\s*which/i, 'is the dimension that')
+                .replace(/is\s+___\s*,\s*referring/i, 'is the dimension referring')
+                .replace(/it\s+___\s*\./i, 'this usability benefit is achieved.')
+                .replace(/is\s+forming\s+the\s+___\s*\./i, 'is this first stage.')
+                .replace(/must\s+___\s+an\s+action\s+sequence/i, 'must perform this stage on an action sequence')
+                .replace(/is\s+___\s*\./i, 'is this concept.')
+                .replace(/___/g, 'this concept');
+            return s.charAt(0).toUpperCase() + s.slice(1);
+        }
+
         // Normalization helper for forgiving comparison
         function normStr(s) {
             return (s || '')
@@ -3560,30 +3936,58 @@ svg.ico-sm { width: 15px; height: 15px; }
             return arr;
         }
 
-        // State Management (Purely Random Order on Load)
-        let filteredQuestions = shuffleArray([...EXAM_QUESTIONS]);
+        // State Management
+        let activeMode = 'flashcards'; // 'flashcards' | 'typing'
+        let deckOrder = shuffleArray([...EXAM_QUESTIONS]);
+        let filteredQuestions = [...deckOrder];
         let currentIndex = 0;
         let streakCount = 0;
-        let isListView = false;
 
-        // Per-question state map: { status: 'unanswered'|'correct'|'revealed', solvedSlots: Set, hintShown: false }
+        // Per-question state map: { status: 'unanswered'|'correct'|'review'|'revealed', solvedSlots: Set, hintShown: false }
         const questionState = {};
         EXAM_QUESTIONS.forEach(q => {
             questionState[q.id] = {
                 status: 'unanswered',
                 solvedSlots: new Set(),
-                hintShown: false,
-                lastTyped: ''
+                hintShown: false
             };
         });
 
         // DOM Elements
+        const examQuestionBox = document.getElementById('examQuestionBox');
         const statScore = document.getElementById('statScore');
+        const statRemaining = document.getElementById('statRemaining');
+        const statReviewCount = document.getElementById('statReviewCount');
         const statStreak = document.getElementById('statStreak');
         const examProgressBar = document.getElementById('examProgressBar');
+        const fcCompleteBanner = document.getElementById('fcCompleteBanner');
+
+        // Mode Switcher Buttons & Views
+        const modeFlashcardsBtn = document.getElementById('modeFlashcardsBtn');
+        const modeTypingBtn = document.getElementById('modeTypingBtn');
+        const flashcardModeView = document.getElementById('flashcardModeView');
+        const gizmoCardView = document.getElementById('gizmoCardView');
+
+        // Filter Drawer Elements
+        const filterToggleBtn = document.getElementById('filterToggleBtn');
+        const filterSummaryBadge = document.getElementById('filterSummaryBadge');
+        const filterDrawer = document.getElementById('filterDrawer');
+        const fltUnmasteredOnly = document.getElementById('fltUnmasteredOnly');
+
+        // Shared Card Metadata DOM
         const qTypeBadge = document.getElementById('qTypeBadge');
         const qLessonBadge = document.getElementById('qLessonBadge');
         const qStatusPill = document.getElementById('qStatusPill');
+
+        // Flashcard DOM Elements
+        const fcCard = document.getElementById('fcCard');
+        const fcSideTag = document.getElementById('fcSideTag');
+        const fcFrontText = document.getElementById('fcFrontText');
+        const fcBackTitle = document.getElementById('fcBackTitle');
+        const fcBackSub = document.getElementById('fcBackSub');
+        const fcEnumBackList = document.getElementById('fcEnumBackList');
+
+        // Typing Mode DOM Elements
         const qPromptText = document.getElementById('qPromptText');
         const enumContainer = document.getElementById('enumContainer');
         const enumProgressText = document.getElementById('enumProgressText');
@@ -3592,53 +3996,198 @@ svg.ico-sm { width: 15px; height: 15px; }
         const gizmoCheckBtn = document.getElementById('gizmoCheckBtn');
         const gizmoCheckBtnLabel = document.getElementById('gizmoCheckBtnLabel');
         const gizmoFeedbackBox = document.getElementById('gizmoFeedbackBox');
-        const gizmoActiveCard = document.getElementById('gizmoActiveCard');
-        const gizmoCardView = document.getElementById('gizmoCardView');
-        const allQuestionsListView = document.getElementById('allQuestionsListView');
-        const toggleViewBtn = document.getElementById('toggleViewBtn');
-
-        function updateGlobalStats() {
-            const masteredCount = EXAM_QUESTIONS.filter(q => questionState[q.id].status === 'correct').length;
-            const total = EXAM_QUESTIONS.length;
-            statScore.textContent = `Mastered: ${masteredCount} / ${total}`;
-            statStreak.textContent = `Streak: ${streakCount}`;
-            const pct = Math.round((masteredCount / total) * 100);
-            examProgressBar.style.width = `${pct}%`;
-        }
 
         function formatLessonLabel(code) {
             const map = { L1: 'Lesson 1: Intro to HCI', L2: 'Lesson 2: Psychology', L3: 'Lesson 3: Interaction Design', L4: 'Lesson 4: UCD' };
             return map[code] || code;
         }
 
-        function renderActiveCard() {
-            if (filteredQuestions.length === 0) return;
-            if (currentIndex >= filteredQuestions.length) currentIndex = 0;
-            const q = filteredQuestions[currentIndex];
-            const st = questionState[q.id];
+        function getSelectedPool() {
+            const checkedLessons = Array.from(document.querySelectorAll('.flt-lesson:checked')).map(el => el.value);
+            const checkedTypes = Array.from(document.querySelectorAll('.flt-type:checked')).map(el => el.value);
+            return deckOrder.filter(q => checkedLessons.includes(q.lesson) && checkedTypes.includes(q.type));
+        }
 
-            qTypeBadge.textContent = q.type === 'id' ? 'Identification' : `Enumeration (${q.items.length})`;
-            qTypeBadge.className = 'q-type-badge' + (q.type === 'enum' ? ' enum' : '');
-            qLessonBadge.textContent = formatLessonLabel(q.lesson);
+        function recomputeFilteredDeck() {
+            const pool = getSelectedPool();
+            const unmasteredOnly = fltUnmasteredOnly.checked;
 
-            gizmoActiveCard.classList.remove('state-correct', 'state-wrong');
-            gizmoAnswerInput.classList.remove('input-correct', 'input-wrong');
-            gizmoFeedbackBox.className = 'gizmo-feedback';
-            gizmoFeedbackBox.innerHTML = '';
+            if (unmasteredOnly) {
+                filteredQuestions = pool.filter(q => questionState[q.id].status !== 'correct');
+            } else {
+                filteredQuestions = pool;
+            }
 
+            filterSummaryBadge.textContent = `${pool.length} Selected`;
+
+            if (currentIndex >= filteredQuestions.length) {
+                currentIndex = 0;
+            }
+        }
+
+        function updateGlobalStats() {
+            const pool = getSelectedPool();
+            const total = pool.length;
+            const masteredCount = pool.filter(q => questionState[q.id].status === 'correct').length;
+            const reviewCount = pool.filter(q => questionState[q.id].status === 'review').length;
+            const remaining = Math.max(0, total - masteredCount);
+
+            statScore.textContent = `Mastered: ${masteredCount} / ${total}`;
+            statRemaining.textContent = `Remaining: ${remaining}`;
+            statReviewCount.textContent = `Needs Review: ${reviewCount}`;
+            statStreak.textContent = `Streak: ${streakCount}`;
+            const pct = total > 0 ? Math.round((masteredCount / total) * 100) : 0;
+            examProgressBar.style.width = `${pct}%`;
+        }
+
+        function updateSharedCardHeader(q, st) {
+            examQuestionBox.classList.remove('state-correct', 'state-wrong');
             if (st.status === 'correct') {
                 qStatusPill.textContent = 'Mastered';
                 qStatusPill.className = 'stat-pill correct';
-                gizmoActiveCard.classList.add('state-correct');
+                examQuestionBox.classList.add('state-correct');
+            } else if (st.status === 'review') {
+                qStatusPill.textContent = 'Needs Review';
+                qStatusPill.className = 'stat-pill review-pill';
+                examQuestionBox.classList.add('state-wrong');
             } else if (st.status === 'revealed') {
                 qStatusPill.textContent = 'Revealed';
                 qStatusPill.className = 'stat-pill streak';
             } else {
-                qStatusPill.textContent = 'In Progress';
+                qStatusPill.textContent = 'Unmastered';
                 qStatusPill.className = 'stat-pill';
             }
 
-            // Render Prompt with Gizmo Blank Pill for Identification
+            qTypeBadge.textContent = q.type === 'id' ? 'Identification' : `Enumeration (${q.items.length} Items)`;
+            qTypeBadge.className = 'q-type-badge' + (q.type === 'enum' ? ' enum' : '');
+            qLessonBadge.textContent = formatLessonLabel(q.lesson);
+        }
+
+        function renderCurrentMode() {
+            recomputeFilteredDeck();
+            updateGlobalStats();
+
+            if (filteredQuestions.length === 0) {
+                fcCompleteBanner.classList.add('show');
+                examQuestionBox.style.display = 'none';
+                return;
+            } else {
+                fcCompleteBanner.classList.remove('show');
+                examQuestionBox.style.display = 'block';
+            }
+
+            if (activeMode === 'flashcards') {
+                flashcardModeView.style.display = 'block';
+                gizmoCardView.style.display = 'none';
+                renderFlashcard();
+            } else {
+                flashcardModeView.style.display = 'none';
+                gizmoCardView.style.display = 'block';
+                renderActiveCard();
+            }
+        }
+
+        // =====================================================================
+        // FLASHCARDS RENDERING & ACTIONS
+        // =====================================================================
+        function renderFlashcard() {
+            const q = filteredQuestions[currentIndex];
+            const st = questionState[q.id];
+            updateSharedCardHeader(q, st);
+
+            fcCard.classList.remove('is-flipped');
+            fcSideTag.innerHTML = 'FRONT &bull; DESCRIPTION';
+
+            fcFrontText.textContent = getCleanFlashcardFront(q);
+
+            if (q.type === 'id') {
+                fcBackTitle.textContent = q.answer;
+                fcBackSub.textContent = getCleanFlashcardFront(q);
+                fcBackSub.style.display = 'block';
+                fcEnumBackList.style.display = 'none';
+                fcEnumBackList.innerHTML = '';
+            } else {
+                fcBackTitle.textContent = q.prompt.replace(/:$/, '');
+                fcBackSub.style.display = 'none';
+                fcEnumBackList.style.display = 'flex';
+                fcEnumBackList.innerHTML = q.items.map(it => `
+                    <div class="fc-enum-back-item">
+                        <span class="enum-slot-num">&#10003;</span>
+                        <span>${it.label}</span>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function flipActiveFlashcard() {
+            const flipped = fcCard.classList.toggle('is-flipped');
+            fcSideTag.innerHTML = flipped ? 'BACK &bull; ANSWER' : 'FRONT &bull; DESCRIPTION';
+        }
+
+        function markFlashcardResult(isCorrect) {
+            if (filteredQuestions.length === 0) return;
+            const q = filteredQuestions[currentIndex];
+            const st = questionState[q.id];
+
+            if (isCorrect) {
+                st.status = 'correct';
+                streakCount++;
+                if (!fltUnmasteredOnly.checked) {
+                    currentIndex = (currentIndex + 1) % filteredQuestions.length;
+                }
+            } else {
+                st.status = 'review';
+                streakCount = 0;
+                currentIndex = (currentIndex + 1) % filteredQuestions.length;
+            }
+            renderCurrentMode();
+        }
+
+        fcCard.addEventListener('click', flipActiveFlashcard);
+        document.getElementById('fcFlipBtn').addEventListener('click', flipActiveFlashcard);
+        document.getElementById('fcCorrectBtn').addEventListener('click', () => markFlashcardResult(true));
+        document.getElementById('fcWrongBtn').addEventListener('click', () => markFlashcardResult(false));
+
+        document.getElementById('fcNextBtn').addEventListener('click', () => {
+            if (filteredQuestions.length === 0) return;
+            currentIndex = (currentIndex + 1) % filteredQuestions.length;
+            renderCurrentMode();
+        });
+        document.getElementById('fcPrevBtn').addEventListener('click', () => {
+            if (filteredQuestions.length === 0) return;
+            currentIndex = (currentIndex - 1 + filteredQuestions.length) % filteredQuestions.length;
+            renderCurrentMode();
+        });
+
+        document.addEventListener('keydown', (e) => {
+            const mod5 = document.getElementById('mod-5');
+            if (!mod5 || !mod5.classList.contains('active') || activeMode !== 'flashcards') return;
+            if (document.activeElement && (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA')) return;
+
+            if (e.code === 'Space') {
+                e.preventDefault();
+                flipActiveFlashcard();
+            } else if (e.key === '1') {
+                e.preventDefault();
+                markFlashcardResult(false);
+            } else if (e.key === '2') {
+                e.preventDefault();
+                markFlashcardResult(true);
+            }
+        });
+
+        // =====================================================================
+        // TYPE-ANSWER MODE RENDERING & ACTIONS
+        // =====================================================================
+        function renderActiveCard() {
+            const q = filteredQuestions[currentIndex];
+            const st = questionState[q.id];
+            updateSharedCardHeader(q, st);
+
+            gizmoAnswerInput.classList.remove('input-correct', 'input-wrong');
+            gizmoFeedbackBox.className = 'gizmo-feedback';
+            gizmoFeedbackBox.innerHTML = '';
+
             if (q.type === 'id') {
                 enumContainer.style.display = 'none';
                 const blankHtml = (st.status === 'correct' || st.status === 'revealed')
@@ -3649,7 +4198,6 @@ svg.ico-sm { width: 15px; height: 15px; }
                 gizmoCheckBtnLabel.textContent = (st.status === 'correct' || st.status === 'revealed') ? 'Next (Enter)' : 'Check (Enter)';
                 gizmoAnswerInput.value = st.status === 'correct' ? q.answer : '';
             } else {
-                // Enumeration
                 qPromptText.textContent = q.prompt;
                 enumContainer.style.display = 'block';
                 const solvedCount = st.solvedSlots.size;
@@ -3685,8 +4233,6 @@ svg.ico-sm { width: 15px; height: 15px; }
                 gizmoCheckBtnLabel.textContent = (st.status === 'correct' || st.status === 'revealed') ? 'Next (Enter)' : 'Add / Check (Enter)';
                 gizmoAnswerInput.value = '';
             }
-
-            updateGlobalStats();
         }
 
         function getHintText(fullStr) {
@@ -3728,10 +4274,10 @@ svg.ico-sm { width: 15px; height: 15px; }
         }
 
         function handleCheckOrSubmit() {
+            if (filteredQuestions.length === 0) return;
             const q = filteredQuestions[currentIndex];
             const st = questionState[q.id];
 
-            // If already finished, Enter advances to next item!
             if ((st.status === 'correct' || st.status === 'revealed') && !gizmoAnswerInput.value.trim()) {
                 goToNextQuestion();
                 return;
@@ -3744,21 +4290,24 @@ svg.ico-sm { width: 15px; height: 15px; }
                 if (matchesIdQuestion(rawVal, q)) {
                     st.status = 'correct';
                     streakCount++;
-                    renderActiveCard();
+                    updateGlobalStats();
+                    updateSharedCardHeader(q, st);
+                    qPromptText.innerHTML = q.prompt.replace('___', `<span class="gizmo-blank-pill filled-correct">${q.answer}</span>`);
                     gizmoAnswerInput.classList.add('input-correct');
                     gizmoFeedbackBox.className = 'gizmo-feedback show fb-correct';
                     gizmoFeedbackBox.innerHTML = `<strong>Correct!</strong> Answer: <span class="hl">${q.answer}</span>. Press <strong>Enter</strong> or tap <strong>Next</strong> to continue.`;
                     gizmoAnswerInput.value = '';
+                    gizmoCheckBtnLabel.textContent = 'Next (Enter)';
                 } else {
+                    st.status = 'review';
                     streakCount = 0;
-                    gizmoActiveCard.classList.add('state-wrong');
+                    updateGlobalStats();
+                    updateSharedCardHeader(q, st);
                     gizmoAnswerInput.classList.add('input-wrong');
                     gizmoFeedbackBox.className = 'gizmo-feedback show fb-wrong';
-                    gizmoFeedbackBox.innerHTML = `<strong>Not quite.</strong> Try again, or tap <strong>Hint</strong> / <strong>Reveal</strong> if you want to check the answer.`;
-                    updateGlobalStats();
+                    gizmoFeedbackBox.innerHTML = `<strong>Not quite.</strong> Marked as Needs Review. Try again, or tap <strong>Hint</strong> / <strong>Reveal</strong>.`;
                 }
             } else {
-                // Enumeration: support single item OR comma/semicolon-separated multiple items at once
                 const parts = rawVal.split(/[,;\n]+/).map(s => s.trim()).filter(Boolean);
                 let matchedAny = false;
                 const matchedLabels = [];
@@ -3778,43 +4327,47 @@ svg.ico-sm { width: 15px; height: 15px; }
                         st.status = 'correct';
                         streakCount++;
                         renderActiveCard();
+                        updateGlobalStats();
                         gizmoFeedbackBox.className = 'gizmo-feedback show fb-correct';
                         gizmoFeedbackBox.innerHTML = `<strong>All ${q.items.length} items complete!</strong> Press <strong>Enter</strong> or tap <strong>Next</strong> to continue.`;
+                        gizmoCheckBtnLabel.textContent = 'Next (Enter)';
                     } else {
                         renderActiveCard();
+                        updateGlobalStats();
                         gizmoFeedbackBox.className = 'gizmo-feedback show fb-correct';
                         gizmoFeedbackBox.innerHTML = `<strong>Matched:</strong> ${matchedLabels.join(' &bull; ')} (${q.items.length - st.solvedSlots.size} remaining). Keep typing!`;
                         gizmoAnswerInput.focus();
                     }
                 } else {
+                    st.status = 'review';
+                    updateGlobalStats();
+                    updateSharedCardHeader(q, st);
                     gizmoAnswerInput.classList.add('input-wrong');
                     gizmoFeedbackBox.className = 'gizmo-feedback show fb-wrong';
-                    gizmoFeedbackBox.innerHTML = `<strong>No match found for "${rawVal}".</strong> Check your spelling or tap <strong>Hint</strong> to see the first letters.`;
+                    gizmoFeedbackBox.innerHTML = `<strong>No match found for "${rawVal}".</strong> Check your spelling or tap <strong>Hint</strong>.`;
                 }
             }
         }
 
         function goToNextQuestion() {
-            if (currentIndex < filteredQuestions.length - 1) {
-                currentIndex++;
-            } else {
-                currentIndex = 0;
+            recomputeFilteredDeck();
+            if (filteredQuestions.length === 0) {
+                renderCurrentMode();
+                return;
             }
-            renderActiveCard();
-            gizmoAnswerInput.focus();
+            currentIndex = (currentIndex + 1) % filteredQuestions.length;
+            renderCurrentMode();
+            if (activeMode === 'typing') gizmoAnswerInput.focus();
         }
 
         function goToPrevQuestion() {
-            if (currentIndex > 0) {
-                currentIndex--;
-            } else {
-                currentIndex = filteredQuestions.length - 1;
-            }
-            renderActiveCard();
-            gizmoAnswerInput.focus();
+            recomputeFilteredDeck();
+            if (filteredQuestions.length === 0) return;
+            currentIndex = (currentIndex - 1 + filteredQuestions.length) % filteredQuestions.length;
+            renderCurrentMode();
+            if (activeMode === 'typing') gizmoAnswerInput.focus();
         }
 
-        // Event Listeners for Gizmo Card
         gizmoCheckBtn.addEventListener('click', handleCheckOrSubmit);
         gizmoAnswerInput.addEventListener('keydown', (e) => {
             if (e.key === 'Enter') {
@@ -3827,6 +4380,7 @@ svg.ico-sm { width: 15px; height: 15px; }
         document.getElementById('gizmoPrevBtn').addEventListener('click', goToPrevQuestion);
 
         document.getElementById('gizmoHintBtn').addEventListener('click', () => {
+            if (filteredQuestions.length === 0) return;
             const q = filteredQuestions[currentIndex];
             const st = questionState[q.id];
             st.hintShown = true;
@@ -3835,199 +4389,109 @@ svg.ico-sm { width: 15px; height: 15px; }
             if (q.type === 'id') {
                 gizmoFeedbackBox.innerHTML = `<strong>Hint:</strong> Starts with <code>${getHintText(q.answer)}</code>`;
             } else {
-                gizmoFeedbackBox.innerHTML = `<strong>Hint:</strong> First letters of each remaining item are now shown inside the numbered slots above.`;
+                gizmoFeedbackBox.innerHTML = `<strong>Hint:</strong> First letters of each remaining item are now shown inside the slots above.`;
             }
             gizmoAnswerInput.focus();
         });
 
         document.getElementById('gizmoRevealBtn').addEventListener('click', () => {
+            if (filteredQuestions.length === 0) return;
             const q = filteredQuestions[currentIndex];
             const st = questionState[q.id];
             st.status = 'revealed';
             streakCount = 0;
             renderActiveCard();
             gizmoFeedbackBox.className = 'gizmo-feedback show fb-hint';
-            gizmoFeedbackBox.innerHTML = `<strong>Answer Revealed.</strong> Study the answer above, then tap <strong>Retry Item</strong> to type it from memory or press <strong>Enter</strong> for Next.`;
+            gizmoFeedbackBox.innerHTML = `<strong>Answer Revealed.</strong> Study the answer above, then tap <strong>Retry</strong> to type it from memory or press <strong>Enter</strong> for Next.`;
         });
 
         document.getElementById('gizmoRetryBtn').addEventListener('click', () => {
+            if (filteredQuestions.length === 0) return;
             const q = filteredQuestions[currentIndex];
             questionState[q.id] = {
                 status: 'unanswered',
                 solvedSlots: new Set(),
-                hintShown: false,
-                lastTyped: ''
+                hintShown: false
             };
-            renderActiveCard();
+            renderCurrentMode();
             gizmoAnswerInput.focus();
         });
 
-        // Filter Buttons
-        document.querySelectorAll('#examFilterGroup .filter-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                document.querySelectorAll('#examFilterGroup .filter-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                const f = btn.getAttribute('data-filter');
-                if (f === 'all') filteredQuestions = shuffleArray([...EXAM_QUESTIONS]);
-                else if (f === 'id' || f === 'enum') filteredQuestions = shuffleArray(EXAM_QUESTIONS.filter(q => q.type === f));
-                else filteredQuestions = shuffleArray(EXAM_QUESTIONS.filter(q => q.lesson === f));
+        // =====================================================================
+        // MODE SWITCHERS, FILTER DRAWER, SHUFFLE & RESET
+        // =====================================================================
+        modeFlashcardsBtn.addEventListener('click', () => {
+            activeMode = 'flashcards';
+            modeFlashcardsBtn.classList.add('active');
+            modeTypingBtn.classList.remove('active');
+            renderCurrentMode();
+        });
+
+        modeTypingBtn.addEventListener('click', () => {
+            activeMode = 'typing';
+            modeTypingBtn.classList.add('active');
+            modeFlashcardsBtn.classList.remove('active');
+            renderCurrentMode();
+        });
+
+        filterToggleBtn.addEventListener('click', () => {
+            const isOpen = filterDrawer.classList.toggle('show');
+            filterToggleBtn.classList.toggle('open', isOpen);
+            filterToggleBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        });
+
+        document.getElementById('closeFilterDrawerBtn').addEventListener('click', () => {
+            filterDrawer.classList.remove('show');
+            filterToggleBtn.classList.remove('open');
+            filterToggleBtn.setAttribute('aria-expanded', 'false');
+            currentIndex = 0;
+            renderCurrentMode();
+        });
+
+        document.getElementById('selectAllFiltersBtn').addEventListener('click', () => {
+            document.querySelectorAll('.flt-lesson, .flt-type').forEach(cb => { cb.checked = true; });
+            currentIndex = 0;
+            renderCurrentMode();
+        });
+
+        document.querySelectorAll('.flt-lesson, .flt-type, #fltUnmasteredOnly').forEach(cb => {
+            cb.addEventListener('change', () => {
                 currentIndex = 0;
-                renderActiveCard();
-                if (isListView) renderAllListView();
+                renderCurrentMode();
             });
         });
 
-        // Shuffle & Reset
         document.getElementById('shuffleExamBtn').addEventListener('click', () => {
-            for (let i = filteredQuestions.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [filteredQuestions[i], filteredQuestions[j]] = [filteredQuestions[j], filteredQuestions[i]];
-            }
+            deckOrder = shuffleArray([...EXAM_QUESTIONS]);
             currentIndex = 0;
-            renderActiveCard();
-            if (isListView) renderAllListView();
+            renderCurrentMode();
         });
 
-        document.getElementById('resetExamBtn').addEventListener('click', () => {
+        function resetAllProgress() {
             EXAM_QUESTIONS.forEach(q => {
                 questionState[q.id] = {
                     status: 'unanswered',
                     solvedSlots: new Set(),
-                    hintShown: false,
-                    lastTyped: ''
+                    hintShown: false
                 };
             });
-            filteredQuestions = shuffleArray([...filteredQuestions]);
+            deckOrder = shuffleArray([...EXAM_QUESTIONS]);
             streakCount = 0;
             currentIndex = 0;
-            renderActiveCard();
-            if (isListView) renderAllListView();
-        });
-
-        // Toggle between Card View (Gizmo) and All-60 Scrollable Sheet View
-        toggleViewBtn.addEventListener('click', () => {
-            isListView = !isListView;
-            if (isListView) {
-                gizmoCardView.style.display = 'none';
-                allQuestionsListView.classList.add('show');
-                toggleViewBtn.textContent = 'Gizmo Card View';
-                toggleViewBtn.classList.add('active');
-                renderAllListView();
-            } else {
-                gizmoCardView.style.display = 'block';
-                allQuestionsListView.classList.remove('show');
-                toggleViewBtn.textContent = 'All 60 List View';
-                toggleViewBtn.classList.remove('active');
-                renderActiveCard();
-            }
-        });
-
-        function renderAllListView() {
-            allQuestionsListView.innerHTML = '';
-            filteredQuestions.forEach((q, idx) => {
-                const st = questionState[q.id];
-                const card = document.createElement('div');
-                card.className = 'gizmo-card' + (st.status === 'correct' ? ' state-correct' : '');
-
-                const topHtml = `
-                    <div class="gizmo-card-top">
-                        <div class="q-badge-group">
-                            <span class="q-type-badge ${q.type === 'enum' ? 'enum' : ''}">${q.type === 'id' ? 'Identification' : 'Enumeration (' + q.items.length + ')'}</span>
-                            <span class="q-lesson-badge">${formatLessonLabel(q.lesson)}</span>
-                        </div>
-                        <span class="stat-pill ${st.status === 'correct' ? 'correct' : ''}">${st.status === 'correct' ? 'Mastered' : (st.status === 'revealed' ? 'Revealed' : 'Unanswered')}</span>
-                    </div>
-                `;
-
-                const promptText = q.type === 'id'
-                    ? q.prompt.replace('___', (st.status === 'correct' || st.status === 'revealed')
-                        ? `<span class="gizmo-blank-pill filled-correct">${q.answer}</span>`
-                        : `<span class="gizmo-blank-pill">__________</span>`)
-                    : q.prompt;
-
-                let enumHtml = '';
-                if (q.type === 'enum') {
-                    const rows = q.items.map((it, sIdx) => {
-                        const solved = st.solvedSlots.has(sIdx) || st.status === 'revealed';
-                        return `
-                            <div class="enum-slot-row ${st.solvedSlots.has(sIdx) ? 'slot-solved' : (st.status === 'revealed' ? 'slot-revealed' : '')}">
-                                <span class="enum-slot-num">${st.solvedSlots.has(sIdx) ? '&#10003;' : '&bull;'}</span>
-                                <div class="enum-slot-text">${solved ? it.label : '<span class="enum-slot-placeholder">Type item below and press Enter...</span>'}</div>
-                            </div>
-                        `;
-                    }).join('');
-                    enumHtml = `<div class="enum-slots-list">${rows}</div>`;
-                }
-
-                card.innerHTML = `
-                    ${topHtml}
-                    <div class="gizmo-prompt">${promptText}</div>
-                    ${enumHtml}
-                    <div class="gizmo-input-wrap">
-                        <input type="text" class="gizmo-text-input list-q-input" placeholder="${q.type === 'id' ? 'Type answer and press Enter...' : 'Type an item and press Enter...'}" autocomplete="off" spellcheck="false" enterkeyhint="done">
-                        <button type="button" class="gizmo-submit-btn list-q-check">Check</button>
-                        <button type="button" class="act-btn list-q-reveal">Reveal</button>
-                    </div>
-                `;
-
-                const inp = card.querySelector('.list-q-input');
-                const chk = card.querySelector('.list-q-check');
-                const rev = card.querySelector('.list-q-reveal');
-
-                const submitListItem = () => {
-                    const val = inp.value.trim();
-                    if (!val) return;
-                    if (q.type === 'id') {
-                        if (matchesIdQuestion(val, q)) {
-                            st.status = 'correct';
-                            streakCount++;
-                            updateGlobalStats();
-                            renderAllListView();
-                        } else {
-                            inp.classList.add('input-wrong');
-                        }
-                    } else {
-                        const parts = val.split(/[,;\n]+/).map(s => s.trim()).filter(Boolean);
-                        let hit = false;
-                        parts.forEach(p => {
-                            const mIdx = matchEnumItemIndex(p, q, st.solvedSlots);
-                            if (mIdx !== -1) {
-                                st.solvedSlots.add(mIdx);
-                                hit = true;
-                            }
-                        });
-                        if (hit) {
-                            if (st.solvedSlots.size === q.items.length) {
-                                st.status = 'correct';
-                                streakCount++;
-                            }
-                            updateGlobalStats();
-                            renderAllListView();
-                        } else {
-                            inp.classList.add('input-wrong');
-                        }
-                    }
-                };
-
-                chk.addEventListener('click', submitListItem);
-                inp.addEventListener('keydown', (e) => {
-                    if (e.key === 'Enter') {
-                        e.preventDefault();
-                        submitListItem();
-                    }
-                });
-                rev.addEventListener('click', () => {
-                    st.status = 'revealed';
-                    updateGlobalStats();
-                    renderAllListView();
-                });
-
-                allQuestionsListView.appendChild(card);
-            });
+            renderCurrentMode();
         }
 
+        document.getElementById('resetExamBtn').addEventListener('click', resetAllProgress);
+        document.getElementById('fcResetDeckBtn').addEventListener('click', resetAllProgress);
+        document.getElementById('fcReviewAllBtn').addEventListener('click', () => {
+            fltUnmasteredOnly.checked = false;
+            currentIndex = 0;
+            renderCurrentMode();
+        });
+
         // Initialize Exam Simulator on Load
-        renderActiveCard();
+        renderCurrentMode();
+
     </script>
 </body>
 </html>
