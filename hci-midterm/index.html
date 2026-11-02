@@ -1369,6 +1369,71 @@ svg.ico-sm { width: 15px; height: 15px; }
     .gizmo-aux-btns, .gizmo-nav-btns { width: 100%; justify-content: space-between; }
     .act-btn { flex: 1; justify-content: center; min-height: 42px; }
 }
+    
+/* ==========================================================================
+   8. SHOW / HIDE DEFINITIONS (MEMORIZATION MODE)
+   ========================================================================== */
+.defs-toolbar {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 0.65rem;
+    margin: 0.75rem 0 -0.15rem 0;
+}
+.defs-hint {
+    display: none;
+    font-size: 0.76rem;
+    color: var(--text-muted);
+}
+.defs-toolbar.is-hidden .defs-hint { display: inline; }
+
+.defs-toggle {
+    background: var(--primary-soft);
+    color: var(--primary);
+    border: 1.5px solid var(--primary-border);
+    padding: 0.38rem 0.85rem;
+    border-radius: 999px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 800;
+    font-size: 0.78rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    white-space: nowrap;
+    transition: all 0.18s ease;
+}
+.defs-toggle:hover {
+    background: var(--primary);
+    color: #ffffff;
+    border-color: var(--primary);
+}
+.defs-toggle:focus-visible,
+.defs-hidden > .point-row:focus-visible,
+.defs-hidden > .stair-step:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+}
+[data-theme="dark"] .defs-toggle { color: #38bdf8; }
+[data-theme="dark"] .defs-toggle:hover { color: #ffffff; }
+
+.defs-hidden > .point-row,
+.defs-hidden > .stair-step {
+    cursor: pointer;
+    transition: border-color 0.15s ease;
+}
+.defs-hidden > .point-row:hover,
+.defs-hidden > .stair-step:hover { border-color: var(--primary); }
+
+.defs-hidden > .point-row:not(.revealed) .item-desc,
+.defs-hidden > .point-row:not(.revealed) .elab,
+.defs-hidden > .stair-step:not(.revealed) .item-desc,
+.defs-hidden > .stair-step:not(.revealed) .elab { display: none; }
+
+@media screen and (max-width: 720px) {
+    .defs-toolbar { flex-wrap: wrap; }
+    .defs-hint { width: 100%; text-align: right; order: 2; }
+}
     </style>
 </head>
 <body>
@@ -4491,6 +4556,92 @@ svg.ico-sm { width: 15px; height: 15px; }
 
         // Initialize Exam Simulator on Load
         renderCurrentMode();
+
+            // =====================================================================
+        // 6. SHOW / HIDE DEFINITIONS (lists with more than 2 items)
+        // =====================================================================
+        (function () {
+            const ICON_EYE = '<svg class="ico ico-sm" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>';
+            const ICON_EYE_OFF = '<svg class="ico ico-sm" viewBox="0 0 24 24"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>';
+
+            const lists = [];
+
+            function itemsOf(list) {
+                return Array.from(list.children).filter(el =>
+                    el.classList.contains('point-row') || el.classList.contains('stair-step'));
+            }
+
+            function setListHidden(entry, hide) {
+                const { list, toolbar, btn } = entry;
+                list.classList.toggle('defs-hidden', hide);
+                toolbar.classList.toggle('is-hidden', hide);
+                itemsOf(list).forEach(it => {
+                    it.classList.remove('revealed');
+                    if (hide) { it.setAttribute('tabindex', '0'); it.setAttribute('role', 'button'); }
+                    else { it.removeAttribute('tabindex'); it.removeAttribute('role'); }
+                });
+                btn.innerHTML = (hide ? ICON_EYE : ICON_EYE_OFF) + '<span>' + (hide ? 'Show definitions' : 'Hide definitions') + '</span>';
+                btn.setAttribute('aria-pressed', hide ? 'true' : 'false');
+            }
+
+            document.querySelectorAll('.point-stack, .staircase').forEach(list => {
+                const items = itemsOf(list);
+                if (items.length <= 2) return;
+
+                const toolbar = document.createElement('div');
+                toolbar.className = 'defs-toolbar';
+                const hint = document.createElement('span');
+                hint.className = 'defs-hint';
+                hint.textContent = 'Tap an item to reveal it';
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'defs-toggle';
+                toolbar.appendChild(hint);
+                toolbar.appendChild(btn);
+                list.parentNode.insertBefore(toolbar, list);
+
+                const entry = { list, toolbar, btn };
+                lists.push(entry);
+                setListHidden(entry, false);
+
+                btn.addEventListener('click', () => {
+                    setListHidden(entry, !list.classList.contains('defs-hidden'));
+                    refreshGlobalBtn();
+                });
+
+                const toggleItem = (it) => {
+                    if (list.classList.contains('defs-hidden')) it.classList.toggle('revealed');
+                };
+                items.forEach(it => {
+                    it.addEventListener('click', () => toggleItem(it));
+                    it.addEventListener('keydown', (e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            toggleItem(it);
+                        }
+                    });
+                });
+            });
+
+            const headerControls = document.querySelector('.header-controls');
+            const themeButton = document.getElementById('themeBtn');
+            const globalBtn = document.createElement('button');
+            globalBtn.type = 'button';
+            globalBtn.className = 'ctrl-btn';
+            globalBtn.id = 'defsGlobalBtn';
+            if (headerControls) headerControls.insertBefore(globalBtn, themeButton);
+
+            function refreshGlobalBtn() {
+                const allHidden = lists.length > 0 && lists.every(e => e.list.classList.contains('defs-hidden'));
+                globalBtn.innerHTML = (allHidden ? ICON_EYE : ICON_EYE_OFF) + '<span>' + (allHidden ? 'Show Definitions' : 'Hide Definitions') + '</span>';
+            }
+            globalBtn.addEventListener('click', () => {
+                const allHidden = lists.every(e => e.list.classList.contains('defs-hidden'));
+                lists.forEach(e => setListHidden(e, !allHidden));
+                refreshGlobalBtn();
+            });
+            refreshGlobalBtn();
+        })();
 
     </script>
 </body>
