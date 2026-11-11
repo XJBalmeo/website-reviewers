@@ -677,7 +677,7 @@ table.data-table td {
     overflow-x: auto;
 }
 .svg-diagram-box svg {
-    max-width: 620px;
+    max-width: 780px;
     width: 100%;
     height: auto;
 }
@@ -1778,6 +1778,148 @@ table.data-table td {
                                     <div class="item-desc">Uses <span class="hl">Syntax Diagrams</span> and <span class="hl">Extended Backus-Naur Form (EBNF)</span> as the standard formal models for syntax description.</div>
                                 </div>
                             </div>
+                        </div>
+
+
+                        <div class="sub-label">
+                            <svg class="ico" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+                            Structure of a Compiler (Stages in Translation Diagram)
+                        </div>
+                        <div class="svg-diagram-box">
+                            <svg viewBox="0 0 840 605" style="max-width: 820px;" role="img" aria-label="Structure of a Compiler: Stages in Translation">
+                                <defs>
+                                    <marker id="arrow-end" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+                                        <path d="M 0 1.5 L 8.5 5 L 0 8.5 z" fill="var(--text-bold)"/>
+                                    </marker>
+                                    <marker id="arrow-start" viewBox="0 0 10 10" refX="2" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto">
+                                        <path d="M 10 1.5 L 1.5 5 L 10 8.5 z" fill="var(--text-bold)"/>
+                                    </marker>
+                                    <marker id="arrow-primary" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto">
+                                        <path d="M 0 1.5 L 8.5 5 L 0 8.5 z" fill="var(--primary)"/>
+                                    </marker>
+                                </defs>
+
+                                <!-- Top Input: SOURCE PROGRAM (Text) -->
+                                <g font-family="Plus Jakarta Sans, Inter, sans-serif" font-size="13" font-weight="800" fill="var(--text-bold)" text-anchor="middle">
+                                    <text x="390" y="24">SOURCE PROGRAM</text>
+                                    <text x="390" y="42" font-weight="700" fill="var(--text-muted)">(Text)</text>
+                                </g>
+                                <line x1="390" y1="49" x2="390" y2="72" stroke="var(--text-bold)" stroke-width="1.7" marker-end="url(#arrow-end)"/>
+
+                                <!-- Box 1: lexical analysis -->
+                                <rect x="320" y="75" width="140" height="44" rx="4" fill="var(--bg-subtle)" stroke="var(--text-bold)" stroke-width="1.6"/>
+                                <g font-family="Plus Jakarta Sans, Inter, sans-serif" font-size="13" font-weight="700" fill="var(--text-bold)" text-anchor="middle">
+                                    <text x="390" y="94">lexical</text>
+                                    <text x="390" y="111">analysis</text>
+                                </g>
+                                <line x1="390" y1="119" x2="390" y2="144" stroke="var(--text-bold)" stroke-width="1.7" marker-end="url(#arrow-end)"/>
+
+                                <!-- Intermediate: Lexical Tokens -->
+                                <text x="390" y="160" font-family="Plus Jakarta Sans, Inter, sans-serif" font-size="13" font-weight="700" fill="var(--primary)" text-anchor="middle">Lexical Tokens</text>
+                                <line x1="390" y1="167" x2="390" y2="192" stroke="var(--text-bold)" stroke-width="1.7" marker-end="url(#arrow-end)"/>
+
+                                <!-- Box 2: Syntactic Analysis -->
+                                <rect x="315" y="195" width="150" height="44" rx="4" fill="var(--bg-subtle)" stroke="var(--text-bold)" stroke-width="1.6"/>
+                                <g font-family="Plus Jakarta Sans, Inter, sans-serif" font-size="13" font-weight="700" fill="var(--text-bold)" text-anchor="middle">
+                                    <text x="390" y="214">Syntactic</text>
+                                    <text x="390" y="231">Analysis</text>
+                                </g>
+                                <line x1="390" y1="239" x2="390" y2="264" stroke="var(--text-bold)" stroke-width="1.7" marker-end="url(#arrow-end)"/>
+
+                                <!-- Intermediate: Parse Tree -->
+                                <text x="390" y="280" font-family="Plus Jakarta Sans, Inter, sans-serif" font-size="13" font-weight="700" fill="var(--primary)" text-anchor="middle">Parse Tree</text>
+                                <line x1="390" y1="287" x2="390" y2="312" stroke="var(--text-bold)" stroke-width="1.7" marker-end="url(#arrow-end)"/>
+
+                                <!-- Box 3: Semantic Analysis -->
+                                <rect x="315" y="315" width="150" height="44" rx="4" fill="var(--bg-subtle)" stroke="var(--text-bold)" stroke-width="1.6"/>
+                                <g font-family="Plus Jakarta Sans, Inter, sans-serif" font-size="13" font-weight="700" fill="var(--text-bold)" text-anchor="middle">
+                                    <text x="390" y="334">Semantic</text>
+                                    <text x="390" y="351">Analysis</text>
+                                </g>
+                                <line x1="390" y1="359" x2="390" y2="384" stroke="var(--text-bold)" stroke-width="1.7" marker-end="url(#arrow-end)"/>
+
+                                <!-- Intermediate: Intermediate code -->
+                                <text x="390" y="400" font-family="Plus Jakarta Sans, Inter, sans-serif" font-size="13" font-weight="700" fill="var(--primary)" text-anchor="middle">Intermediate code</text>
+                                <line x1="390" y1="407" x2="390" y2="432" stroke="var(--text-bold)" stroke-width="1.7" marker-end="url(#arrow-end)"/>
+
+                                <!-- Box 4: Optimization -->
+                                <rect x="315" y="435" width="150" height="38" rx="4" fill="var(--bg-subtle)" stroke="var(--text-bold)" stroke-width="1.6"/>
+                                <text x="390" y="459" font-family="Plus Jakarta Sans, Inter, sans-serif" font-size="13" font-weight="700" fill="var(--text-bold)" text-anchor="middle">Optimization</text>
+                                <line x1="390" y1="473" x2="390" y2="494" stroke="var(--text-bold)" stroke-width="1.7" marker-end="url(#arrow-end)"/>
+
+                                <!-- Intermediate: Optimized intermediate code -->
+                                <g font-family="Plus Jakarta Sans, Inter, sans-serif" font-size="13" font-weight="700" fill="var(--primary)" text-anchor="middle">
+                                    <text x="390" y="509">Optimized intermediate</text>
+                                    <text x="390" y="525">code</text>
+                                </g>
+                                <line x1="390" y1="531" x2="390" y2="550" stroke="var(--text-bold)" stroke-width="1.7" marker-end="url(#arrow-end)"/>
+
+                                <!-- Box 5: Code generation -->
+                                <rect x="315" y="553" width="150" height="36" rx="4" fill="var(--bg-subtle)" stroke="var(--text-bold)" stroke-width="1.6"/>
+                                <text x="390" y="576" font-family="Plus Jakarta Sans, Inter, sans-serif" font-size="13" font-weight="700" fill="var(--text-bold)" text-anchor="middle">Code generation</text>
+
+                                <!-- Left Table: Symbol Table / Other Table -->
+                                <rect x="55" y="198" width="110" height="132" rx="4" fill="var(--bg-subtle)" stroke="var(--text-bold)" stroke-width="1.6"/>
+                                <line x1="55" y1="264" x2="165" y2="264" stroke="var(--text-bold)" stroke-width="1.5"/>
+                                <g font-family="Plus Jakarta Sans, Inter, sans-serif" font-size="13" font-weight="700" fill="var(--text-bold)" text-anchor="middle">
+                                    <text x="110" y="228">Symbol</text>
+                                    <text x="110" y="245">Table</text>
+                                    <text x="110" y="293">Other</text>
+                                    <text x="110" y="310">Table</text>
+                                </g>
+
+                                <!-- 4 Bidirectional Arrows between Symbol/Other Table and Phases -->
+                                <g stroke="var(--text-bold)" stroke-width="1.5" marker-start="url(#arrow-start)" marker-end="url(#arrow-end)">
+                                    <line x1="176" y1="210" x2="310" y2="103"/>
+                                    <line x1="176" y1="246" x2="305" y2="217"/>
+                                    <line x1="176" y1="284" x2="305" y2="334"/>
+                                    <line x1="176" y1="316" x2="305" y2="446"/>
+                                </g>
+
+                                <!-- Right Side: Source program recognition phase (Brace + Dotted Arrows) -->
+                                <path d="M 595 130 C 608 130, 608 140, 608 168 L 608 195 C 608 204, 616 208, 624 208 C 616 208, 608 212, 608 221 L 608 248 C 608 276, 608 286, 595 286" fill="none" stroke="var(--primary)" stroke-width="2"/>
+                                <g stroke="var(--primary)" stroke-width="1.6" stroke-dasharray="3,3" marker-end="url(#arrow-primary)">
+                                    <line x1="585" y1="142" x2="472" y2="98"/>
+                                    <line x1="585" y1="208" x2="476" y2="208"/>
+                                    <line x1="585" y1="274" x2="476" y2="334"/>
+                                </g>
+                                <g font-family="Plus Jakarta Sans, Inter, sans-serif" font-size="13" font-weight="700" fill="var(--text-bold)" text-anchor="start">
+                                    <text x="635" y="196">Source program</text>
+                                    <text x="635" y="213">recognition</text>
+                                    <text x="635" y="230">phase</text>
+                                </g>
+
+                                <!-- Bottom-Left Side: Object Code generation phase (Brace + Arrows) -->
+                                <g font-family="Plus Jakarta Sans, Inter, sans-serif" font-size="13" font-weight="700" fill="var(--text-bold)" text-anchor="middle">
+                                    <text x="115" y="504">Object Code</text>
+                                    <text x="115" y="521">generation phase</text>
+                                </g>
+                                <path d="M 218 450 C 206 450, 206 460, 206 485 L 206 504 C 206 512, 198 516, 190 516 C 198 516, 206 520, 206 528 L 206 550 C 206 575, 206 585, 218 585" fill="none" stroke="var(--primary)" stroke-width="2"/>
+                                <g stroke="var(--primary)" stroke-width="1.6" marker-end="url(#arrow-primary)">
+                                    <line x1="226" y1="496" x2="305" y2="458"/>
+                                    <line x1="226" y1="536" x2="305" y2="569"/>
+                                </g>
+
+                                <!-- Bottom-Right Flow: object code -> Linking -> Executable table -->
+                                <line x1="465" y1="571" x2="572" y2="571" stroke="var(--text-bold)" stroke-width="1.7" marker-end="url(#arrow-end)"/>
+                                <text x="518" y="562" font-family="Plus Jakarta Sans, Inter, sans-serif" font-size="12.5" font-weight="700" fill="var(--primary)" text-anchor="middle">object code</text>
+
+                                <!-- Object code from other compilations -->
+                                <g font-family="Plus Jakarta Sans, Inter, sans-serif" font-size="12.5" font-weight="700" fill="var(--text-bold)" text-anchor="middle">
+                                    <text x="625" y="472">Object code from</text>
+                                    <text x="625" y="489">other compilations</text>
+                                </g>
+                                <line x1="625" y1="498" x2="625" y2="549" stroke="var(--text-bold)" stroke-width="1.7" marker-end="url(#arrow-end)"/>
+
+                                <!-- Box 6: Linking -->
+                                <rect x="575" y="553" width="100" height="36" rx="4" fill="var(--bg-subtle)" stroke="var(--text-bold)" stroke-width="1.6"/>
+                                <text x="625" y="576" font-family="Plus Jakarta Sans, Inter, sans-serif" font-size="13" font-weight="700" fill="var(--text-bold)" text-anchor="middle">Linking</text>
+
+                                <!-- Final Output: Executable table -->
+                                <line x1="675" y1="571" x2="782" y2="571" stroke="var(--text-bold)" stroke-width="1.7" marker-end="url(#arrow-end)"/>
+                                <text x="728" y="560" font-family="Plus Jakarta Sans, Inter, sans-serif" font-size="12.5" font-weight="700" fill="var(--primary)" text-anchor="middle">Executable</text>
+                                <text x="728" y="590" font-family="Plus Jakarta Sans, Inter, sans-serif" font-size="12.5" font-weight="700" fill="var(--primary)" text-anchor="middle">table</text>
+                            </svg>
                         </div>
 
                         <div class="sub-label">
