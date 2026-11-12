@@ -682,6 +682,526 @@ table.data-table td {
     height: auto;
 }
 
+
+/* ==========================================================================
+   4B. 50-ITEM MULTIPLE-CHOICE MOCK EXAM STYLES
+   ========================================================================== */
+.exam-nav-tab {
+    margin-top: 0.35rem;
+    border: 1px dashed var(--primary-border) !important;
+    background: var(--primary-soft) !important;
+    color: var(--primary) !important;
+}
+.exam-nav-tab.active {
+    background: var(--primary) !important;
+    color: #ffffff !important;
+    border-style: solid !important;
+}
+[data-theme="dark"] .exam-nav-tab.active {
+    color: #042f2e !important;
+}
+
+.exam-workspace {
+    max-width: 880px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+/* Top Control Bar: Filters on left, Prominent Shuffle & Reset on right */
+.exam-top-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border);
+}
+.exam-filter-cluster {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    flex-wrap: wrap;
+}
+.exam-action-cluster {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    flex-wrap: wrap;
+}
+
+.exam-btn {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.84rem;
+    font-weight: 700;
+    padding: 0.55rem 1rem;
+    border-radius: 9px;
+    border: 1px solid var(--border);
+    background: var(--bg-subtle);
+    color: var(--text-bold);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    transition: all 0.18s ease;
+}
+.exam-btn:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+.exam-btn.active-toggle {
+    background: var(--primary);
+    color: #ffffff;
+    border-color: var(--primary);
+}
+[data-theme="dark"] .exam-btn.active-toggle {
+    color: #042f2e;
+}
+
+/* Prominent Shuffle & Reset Buttons */
+.exam-btn-shuffle {
+    background: var(--primary-soft);
+    border: 1.5px solid var(--primary);
+    color: var(--primary);
+    font-weight: 800;
+}
+.exam-btn-shuffle:hover {
+    background: var(--primary);
+    color: #ffffff;
+}
+[data-theme="dark"] .exam-btn-shuffle:hover {
+    color: #042f2e;
+}
+
+.exam-btn-reset {
+    background: rgba(225, 29, 72, 0.08);
+    border: 1.5px solid rgba(225, 29, 72, 0.35);
+    color: #e11d48;
+    font-weight: 800;
+}
+[data-theme="dark"] .exam-btn-reset {
+    color: #fb7185;
+    border-color: rgba(251, 113, 133, 0.4);
+}
+.exam-btn-reset:hover {
+    background: #e11d48;
+    color: #ffffff;
+    border-color: #e11d48;
+}
+
+/* Collapsible Unit Checkboxes Filter Drawer */
+.exam-filter-drawer {
+    display: none;
+    background: var(--bg-subtle);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+}
+.exam-filter-drawer.open {
+    display: block;
+}
+.filter-drawer-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.75rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+.filter-drawer-title {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 800;
+    color: var(--text-bold);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+.filter-quick-links {
+    display: flex;
+    gap: 0.5rem;
+}
+.filter-mini-btn {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0.25rem 0.6rem;
+    border-radius: 6px;
+    cursor: pointer;
+}
+.filter-mini-btn:hover {
+    color: var(--primary);
+    border-color: var(--primary);
+}
+.filter-checkbox-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 0.55rem;
+}
+.filter-check-label {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    font-size: 0.86rem;
+    font-weight: 600;
+    color: var(--text-main);
+    cursor: pointer;
+    padding: 0.4rem 0.6rem;
+    border-radius: 8px;
+    background: var(--bg-page);
+    border: 1px solid var(--border);
+}
+.filter-check-label input[type="checkbox"] {
+    accent-color: var(--primary);
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+/* Status Pills & Progress Bar Directly Above Question */
+.exam-telemetry-bar {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 1rem 1.25rem;
+    background: var(--bg-subtle);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+}
+.telemetry-pills {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.65rem;
+    flex-wrap: wrap;
+}
+.telemetry-group {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    flex-wrap: wrap;
+}
+.stat-pill {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 800;
+    padding: 0.38rem 0.85rem;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+.stat-pill.mastered {
+    background: rgba(22, 163, 74, 0.14);
+    color: #15803d;
+    border: 1px solid rgba(22, 163, 74, 0.35);
+}
+[data-theme="dark"] .stat-pill.mastered {
+    color: #4ade80;
+    background: rgba(74, 222, 128, 0.12);
+}
+.stat-pill.remaining {
+    background: var(--bg-page);
+    color: var(--text-bold);
+    border: 1px solid var(--border);
+}
+.stat-pill.review {
+    background: rgba(217, 119, 6, 0.14);
+    color: #b45309;
+    border: 1px solid rgba(217, 119, 6, 0.35);
+}
+[data-theme="dark"] .stat-pill.review {
+    color: #fbbf24;
+    background: rgba(251, 191, 36, 0.12);
+}
+.stat-pill.streak {
+    background: rgba(13, 148, 136, 0.14);
+    color: var(--primary);
+    border: 1px solid var(--primary-border);
+}
+.queue-position-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--text-muted);
+}
+
+.exam-progress-track {
+    width: 100%;
+    height: 7px;
+    background: var(--border);
+    border-radius: 999px;
+    overflow: hidden;
+}
+.exam-progress-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--primary), #10b981);
+    transition: width 0.25s ease;
+}
+
+/* Question Display Surface */
+.exam-question-surface {
+    padding: 1.65rem 1.75rem;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: var(--bg-page);
+}
+.question-meta-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+}
+.question-unit-badge {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.74rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--primary);
+    background: var(--primary-soft);
+    padding: 0.3rem 0.7rem;
+    border-radius: 6px;
+}
+.question-status-badge {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 800;
+    padding: 0.25rem 0.65rem;
+    border-radius: 6px;
+}
+.question-status-badge.unanswered {
+    color: var(--text-muted);
+    background: var(--bg-subtle);
+}
+.question-status-badge.correct {
+    color: #15803d;
+    background: rgba(22, 163, 74, 0.14);
+}
+[data-theme="dark"] .question-status-badge.correct {
+    color: #4ade80;
+}
+.question-status-badge.wrong {
+    color: #be123c;
+    background: rgba(225, 29, 72, 0.14);
+}
+[data-theme="dark"] .question-status-badge.wrong {
+    color: #fb7185;
+}
+
+.question-stem {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: clamp(1.06rem, 1.5vw, 1.22rem);
+    font-weight: 700;
+    color: var(--text-bold);
+    line-height: 1.55;
+    margin-bottom: 1.4rem;
+}
+
+/* Multiple Choice Options Stack (Single Column) */
+.mc-options-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+.mc-option-btn {
+    width: 100%;
+    text-align: left;
+    background: var(--bg-subtle);
+    border: 1.5px solid var(--border);
+    border-radius: 11px;
+    padding: 0.9rem 1.15rem;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.96rem;
+    font-weight: 700;
+    color: var(--text-bold);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    transition: all 0.16s ease;
+}
+.mc-option-btn:hover:not(:disabled) {
+    border-color: var(--primary);
+    background: var(--primary-soft);
+    transform: translateX(3px);
+}
+.mc-option-left {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+}
+.mc-letter {
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    background: var(--bg-page);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.84rem;
+    font-weight: 800;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+.mc-option-btn:hover:not(:disabled) .mc-letter {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+.mc-tag-pill {
+    font-size: 0.74rem;
+    font-weight: 800;
+    padding: 0.22rem 0.6rem;
+    border-radius: 999px;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+/* Instant Feedback States on Option Buttons */
+.mc-option-btn.is-correct {
+    background: rgba(22, 163, 74, 0.13) !important;
+    border-color: #16a34a !important;
+    color: #15803d !important;
+}
+[data-theme="dark"] .mc-option-btn.is-correct {
+    background: rgba(34, 197, 94, 0.16) !important;
+    border-color: #22c55e !important;
+    color: #4ade80 !important;
+}
+.mc-option-btn.is-correct .mc-letter {
+    background: #16a34a;
+    border-color: #16a34a;
+    color: #ffffff;
+}
+.mc-option-btn.is-correct .mc-tag-pill {
+    background: #16a34a;
+    color: #ffffff;
+}
+
+.mc-option-btn.is-wrong {
+    background: rgba(225, 29, 72, 0.12) !important;
+    border-color: #e11d48 !important;
+    color: #be123c !important;
+}
+[data-theme="dark"] .mc-option-btn.is-wrong {
+    background: rgba(244, 63, 94, 0.16) !important;
+    border-color: #f43f5e !important;
+    color: #fb7185 !important;
+}
+.mc-option-btn.is-wrong .mc-letter {
+    background: #e11d48;
+    border-color: #e11d48;
+    color: #ffffff;
+}
+.mc-option-btn.is-wrong .mc-tag-pill {
+    background: #e11d48;
+    color: #ffffff;
+}
+
+.mc-option-btn.is-dimmed {
+    opacity: 0.55;
+}
+
+/* Instant Explanation Banner */
+.instant-feedback-box {
+    display: none;
+    margin-top: 1.25rem;
+    padding: 1.05rem 1.25rem;
+    border-radius: 11px;
+    font-size: 0.92rem;
+    line-height: 1.58;
+    animation: fadeSlide 0.2s ease;
+}
+.instant-feedback-box.show {
+    display: block;
+}
+.instant-feedback-box.feedback-correct {
+    background: rgba(22, 163, 74, 0.1);
+    border-left: 4px solid #16a34a;
+    color: var(--text-main);
+}
+.instant-feedback-box.feedback-wrong {
+    background: rgba(225, 29, 72, 0.1);
+    border-left: 4px solid #e11d48;
+    color: var(--text-main);
+}
+.feedback-headline {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 800;
+    font-size: 0.98rem;
+    margin-bottom: 0.35rem;
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+}
+.feedback-correct .feedback-headline {
+    color: #15803d;
+}
+[data-theme="dark"] .feedback-correct .feedback-headline {
+    color: #4ade80;
+}
+.feedback-wrong .feedback-headline {
+    color: #be123c;
+}
+[data-theme="dark"] .feedback-wrong .feedback-headline {
+    color: #fb7185;
+}
+
+/* Bottom Navigation Bar (Previous / Retry / Next) */
+.exam-nav-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+    padding-top: 1.15rem;
+    border-top: 1px solid var(--border);
+    flex-wrap: wrap;
+}
+.exam-nav-btn {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 800;
+    padding: 0.65rem 1.2rem;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--bg-subtle);
+    color: var(--text-bold);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    transition: all 0.18s ease;
+}
+.exam-nav-btn:hover:not(:disabled) {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+.exam-nav-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+.exam-nav-btn.primary-next {
+    background: var(--primary);
+    color: #ffffff;
+    border-color: var(--primary);
+}
+[data-theme="dark"] .exam-nav-btn.primary-next {
+    color: #042f2e;
+}
+.exam-nav-btn.primary-next:hover:not(:disabled) {
+    opacity: 0.92;
+}
+
 /* ==========================================================================
    5. RESPONSIVE BREAKPOINTS (TABLET & MOBILE)
    ========================================================================== */
@@ -772,6 +1292,10 @@ table.data-table td {
                     <span class="tab-num">06</span>
                     <span>Subprogram Control</span>
                 </button>
+                <button type="button" class="module-tab exam-nav-tab" data-target="mod-exam" id="sidebarExamTab">
+                    <span class="tab-num">50</span>
+                    <span>50-Item Mock Exam</span>
+                </button>
             </nav>
 
             <div class="sidebar-section-label">Topics in This Unit</div>
@@ -796,6 +1320,10 @@ table.data-table td {
                         <svg class="ico" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
                         <input type="text" id="searchInput" class="search-input" placeholder="Search concepts..." aria-label="Search concepts">
                     </div>
+                    <button type="button" class="ctrl-btn" id="jumpExamBtn" aria-label="Open 50-Item Mock Exam" style="border-color: var(--primary); color: var(--primary);">
+                        <svg class="ico" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+                        <span>50-Item Mock Exam</span>
+                    </button>
                     <button type="button" class="ctrl-btn" id="themeBtn" aria-label="Toggle color theme">
                         <svg class="ico" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
                         <span id="themeLabel">Dark Mode</span>
@@ -3248,7 +3776,113 @@ struct student S1, S2, S3;</div>
             </div>
         </section>
 
-    
+        <!-- ==================================================================
+             50-ITEM MULTIPLE-CHOICE MOCK EXAM (DEFINITION -> TERM)
+             ================================================================== -->
+        <section class="module-pane" id="mod-exam">
+            <div class="module-intro">
+                <h2>50-Item Multiple-Choice Mock Exam: Definition to Term</h2>
+            </div>
+
+            <div class="exam-workspace">
+
+                <!-- Top Hierarchy Bar: Filters & Needs-Review Toggle vs Prominent Shuffle & Reset -->
+                <div class="exam-top-controls">
+                    <div class="exam-filter-cluster">
+                        <button type="button" class="exam-btn" id="toggleFilterDrawerBtn">
+                            <svg class="ico ico-sm" viewBox="0 0 24 24"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+                            <span id="filterBtnLabel">Filters (All 6 Lessons)</span>
+                        </button>
+                        <button type="button" class="exam-btn" id="needsReviewQueueBtn">
+                            <svg class="ico ico-sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                            <span id="needsReviewBtnText">Unmastered / Needs Review Only: OFF</span>
+                        </button>
+                    </div>
+
+                    <div class="exam-action-cluster">
+                        <button type="button" class="exam-btn exam-btn-shuffle" id="examShuffleBtn">
+                            <svg class="ico ico-sm" viewBox="0 0 24 24"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/></svg>
+                            <span>Shuffle Exam</span>
+                        </button>
+                        <button type="button" class="exam-btn exam-btn-reset" id="examResetBtn">
+                            <svg class="ico ico-sm" viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+                            <span>Reset All</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Collapsible Unit Filters Drawer -->
+                <div class="exam-filter-drawer" id="examFilterDrawer">
+                    <div class="filter-drawer-header">
+                        <span class="filter-drawer-title">Select Course Lessons to Include in Exam</span>
+                        <div class="filter-quick-links">
+                            <button type="button" class="filter-mini-btn" id="selectAllUnitsBtn">Select All</button>
+                            <button type="button" class="filter-mini-btn" id="clearAllUnitsBtn">Clear All</button>
+                        </div>
+                    </div>
+                    <div class="filter-checkbox-grid" id="unitCheckboxContainer">
+                        <label class="filter-check-label"><input type="checkbox" class="unit-filter-cb" value="Lesson 1" checked> Lesson 1: Overview of PLs (9)</label>
+                        <label class="filter-check-label"><input type="checkbox" class="unit-filter-cb" value="Lesson 2" checked> Lesson 2: Syntax &amp; Semantics (10)</label>
+                        <label class="filter-check-label"><input type="checkbox" class="unit-filter-cb" value="Lesson 3" checked> Lesson 3: Names, Bindings &amp; Scopes (10)</label>
+                        <label class="filter-check-label"><input type="checkbox" class="unit-filter-cb" value="Lesson 4" checked> Lesson 4: Data Types (11)</label>
+                        <label class="filter-check-label"><input type="checkbox" class="unit-filter-cb" value="Lesson 5" checked> Lesson 5: Sequence Control (5)</label>
+                        <label class="filter-check-label"><input type="checkbox" class="unit-filter-cb" value="Lesson 6" checked> Lesson 6: Subprogram Control (5)</label>
+                    </div>
+                </div>
+
+                <!-- Telemetry Status Pills Directly Above the Question -->
+                <div class="exam-telemetry-bar">
+                    <div class="telemetry-pills">
+                        <div class="telemetry-group">
+                            <span class="stat-pill mastered" id="pillMastered">Mastered: 0 / 50</span>
+                            <span class="stat-pill remaining" id="pillRemaining">Remaining: 50</span>
+                            <span class="stat-pill review" id="pillReview">Needs Review: 0</span>
+                            <span class="stat-pill streak" id="pillStreak">Streak: 0</span>
+                        </div>
+                        <span class="queue-position-label" id="queuePositionText">Item 1 of 50</span>
+                    </div>
+                    <div class="exam-progress-track">
+                        <div class="exam-progress-fill" id="examProgressFill"></div>
+                    </div>
+                </div>
+
+                <!-- Main Multiple Choice Question Card (Unnumbered for Pure Random Mastery) -->
+                <div class="exam-question-surface" id="examQuestionSurface">
+                    <div class="question-meta-row">
+                        <span class="question-unit-badge" id="qUnitBadge">Lesson 1: Overview of PLs</span>
+                        <span class="question-status-badge unanswered" id="qStatusBadge">Select the matching term</span>
+                    </div>
+
+                    <div class="question-stem" id="qStemText"></div>
+
+                    <div class="mc-options-list" id="mcOptionsList"></div>
+
+                    <div class="instant-feedback-box" id="instantFeedbackBox">
+                        <div class="feedback-headline" id="feedbackHeadline"></div>
+                        <div id="feedbackBody"></div>
+                    </div>
+
+                    <div class="exam-nav-footer">
+                        <button type="button" class="exam-nav-btn" id="prevQuestionBtn">
+                            <svg class="ico ico-sm" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+                            <span>Previous</span>
+                        </button>
+
+                        <button type="button" class="exam-nav-btn" id="retryQuestionBtn" style="display:none;">
+                            <svg class="ico ico-sm" viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+                            <span>Retry Question</span>
+                        </button>
+
+                        <button type="button" class="exam-nav-btn primary-next" id="nextQuestionBtn">
+                            <span>Next</span>
+                            <svg class="ico ico-sm" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
             </main>
         </div>
     </div>
@@ -3395,6 +4029,1003 @@ struct student S1, S2, S3;</div>
                 });
             });
         }
+
+
+        // 7. 50-ITEM MULTIPLE-CHOICE MOCK EXAM ENGINE
+        const PPL_EXAM_BANK = [
+            // LESSON 1 (9 ITEMS)
+            {
+                id: "q1",
+                unit: "Lesson 1",
+                unitTitle: "Lesson 1 • Overview of PLs",
+                definition: "Which characteristic of a good programming language means having a small set of basic features that are separately understandable and can be combined freely without unexpected interactions or arbitrary exceptions?",
+                answer: "Orthogonality",
+                distractors: [
+                    "Clarity, Simplicity, and Unity",
+                    "Naturalness for the Application",
+                    "Support for Abstraction"
+                ],
+                explanation: "Orthogonality means language features work independently and consistently together without unexpected side effects or arbitrary context-dependent restrictions."
+            },
+            {
+                id: "q2",
+                unit: "Lesson 1",
+                unitTitle: "Lesson 1 • Overview of PLs",
+                definition: "Under program verification and reliability, what term refers to having two or more distinct referencing methods or variable names that point to the exact same memory location?",
+                answer: "Aliasing",
+                distractors: [
+                    "Type Checking",
+                    "Exception Handling",
+                    "Operator Overloading"
+                ],
+                explanation: "Aliasing occurs when two distinct names or pointers reference the same memory cell, which complicates program verification because changing one silently alters the other."
+            },
+            {
+                id: "q3",
+                unit: "Lesson 1",
+                unitTitle: "Lesson 1 • Overview of PLs",
+                definition: "Which reliability feature of a programming language intercepts runtime errors or unusual conditions so the program can execute corrective measures and continue running?",
+                answer: "Exception Handling",
+                distractors: [
+                    "Static Type Checking",
+                    "Aliasing Control",
+                    "Symbol-Table Maintenance"
+                ],
+                explanation: "Exception handling catches runtime faults or abnormal states and transfers control to a recovery handler rather than abruptly crashing the program."
+            },
+            {
+                id: "q4",
+                unit: "Lesson 1",
+                unitTitle: "Lesson 1 • Overview of PLs",
+                definition: "In studying the effects of environment on programming languages, which environment refers specifically to the external hardware and software system that supports the actual execution of a finished program?",
+                answer: "Operating (Target) Environment",
+                distractors: [
+                    "Host (Development) Environment",
+                    "Integrated Programming Environment",
+                    "Interactive Debugging Environment"
+                ],
+                explanation: "The Operating (Target) Environment is the machine and OS where the compiled program actually executes, whereas the Host Environment is where the program is designed, coded, and tested."
+            },
+            {
+                id: "q5",
+                unit: "Lesson 1",
+                unitTitle: "Lesson 1 • Overview of PLs",
+                definition: "Which class of programming environment executes programs from start to finish without live user interaction by processing pre-collected files of input data?",
+                answer: "Batch Processing Environment",
+                distractors: [
+                    "Interactive Environment",
+                    "Embedded System Environment",
+                    "Programming Support Environment"
+                ],
+                explanation: "In a Batch Processing Environment, jobs run non-interactively on collected input files, requiring strong file I/O and automated error recovery so one bad record does not halt the entire run."
+            },
+            {
+                id: "q6",
+                unit: "Lesson 1",
+                unitTitle: "Lesson 1 • Overview of PLs",
+                definition: "Which sub-category of execution-time (runtime) binding restricts the association of formal parameters and local variables with storage locations to occur only upon entering a subprogram or block (as in C and Pascal)?",
+                answer: "Binding at Entry to a Subprogram or Block",
+                distractors: [
+                    "Binding at Arbitrary Points During Execution",
+                    "Translation-Time Binding Chosen by the Translator",
+                    "Translation-Time Binding Chosen by the Loader"
+                ],
+                explanation: "Execution-time bindings are split into two sub-categories: at entry to a subprogram/block (C, Pascal) vs. at arbitrary points during execution (LISP, ML, and variable assignment)."
+            },
+            {
+                id: "q7",
+                unit: "Lesson 1",
+                unitTitle: "Lesson 1 • Overview of PLs",
+                definition: "Among the three sub-classes of translation-time (compile-time) bindings, which one decides internal storage representations—such as how arrays are stored and how array descriptors are created—without programmer specification?",
+                answer: "Bindings Chosen by the Translator",
+                distractors: [
+                    "Bindings Chosen by the Programmer",
+                    "Bindings Chosen by the Loader",
+                    "Implementation-Time Bindings"
+                ],
+                explanation: "Bindings chosen by the translator are decided automatically by the compiler during translation without explicit instructions from the programmer."
+            },
+            {
+                id: "q8",
+                unit: "Lesson 1",
+                unitTitle: "Lesson 1 • Overview of PLs",
+                definition: "Which class of binding time permanently fixes the available statement forms, built-in data structure types, and reserved keywords when the programming language itself is originally created?",
+                answer: "Definition Time",
+                distractors: [
+                    "Implementation Time",
+                    "Translation Time",
+                    "Load / Link Time"
+                ],
+                explanation: "Definition time bindings are fixed by the language specification itself, whereas implementation time bindings (such as the exact bit precision of an integer) are fixed when a specific compiler is built."
+            },
+            {
+                id: "q9",
+                unit: "Lesson 1",
+                unitTitle: "Lesson 1 • Overview of PLs",
+                definition: "Which programming paradigm is rooted in the theory of mathematical functions—emphasizing expressions and functions that can be passed as parameters and returned as results—and includes LISP, Scheme, ML, and CLOS?",
+                answer: "Functional Languages",
+                distractors: [
+                    "Imperative (Procedural) Languages",
+                    "Logic (Rule-Based) Languages",
+                    "Concurrent Languages"
+                ],
+                explanation: "Functional languages (such as LISP, Scheme, ML, and CLOS) compute by evaluating mathematical functions rather than executing sequential state-mutating commands."
+            },
+
+            // LESSON 2 (10 ITEMS)
+            {
+                id: "q10",
+                unit: "Lesson 2",
+                unitTitle: "Lesson 2 • Syntax & Semantics",
+                definition: "In formal syntax terminology, what is the lowest-level syntactic unit of a programming language—the actual character string or word extracted from source text, such as *, sum, or begin?",
+                answer: "Lexeme",
+                distractors: [
+                    "Token",
+                    "Sentential Form",
+                    "Nonterminal Symbol"
+                ],
+                explanation: "A lexeme is the actual character sequence in the source program (like 'sum' or '*'), whereas a token is the syntactic category to which that lexeme belongs (like 'identifier')."
+            },
+            {
+                id: "q11",
+                unit: "Lesson 2",
+                unitTitle: "Lesson 2 • Syntax & Semantics",
+                definition: "In formal syntax terminology, what term refers to a category or class of lowest-level syntactic units—such as identifier, integer_literal, or plus_op—produced by the lexical analyzer?",
+                answer: "Token",
+                distractors: [
+                    "Lexeme",
+                    "Sentence",
+                    "Abstraction (Nonterminal)"
+                ],
+                explanation: "A token is a category of lexemes. For example, the distinct lexemes 'count', 'total', and 'sum' all belong to the single token category 'identifier'."
+            },
+            {
+                id: "q12",
+                unit: "Lesson 2",
+                unitTitle: "Lesson 2 • Syntax & Semantics",
+                definition: "In the formal definition of languages, what do we call a formal device that reads input strings over the alphabet of a language and decides whether or not those strings belong to the language?",
+                answer: "Recognizer",
+                distractors: [
+                    "Generator",
+                    "Macro Preprocessor",
+                    "Code Optimizer"
+                ],
+                explanation: "A recognizer (such as the syntax analyzer/parser inside a compiler) checks whether an input string is a valid sentence of the language, whereas a generator (grammar) produces valid sentences."
+            },
+            {
+                id: "q13",
+                unit: "Lesson 2",
+                unitTitle: "Lesson 2 • Syntax & Semantics",
+                definition: "In a grammar derivation, what term refers to every string of symbols—whether it still contains angle-bracket nonterminals or only terminals—that appears at any step of the derivation?",
+                answer: "Sentential Form",
+                distractors: [
+                    "Sentence",
+                    "Start Symbol",
+                    "Production Rule"
+                ],
+                explanation: "Every intermediate or final string in a derivation is a sentential form. Once all nonterminals are replaced and only terminals remain, that sentential form is also called a sentence."
+            },
+            {
+                id: "q14",
+                unit: "Lesson 2",
+                unitTitle: "Lesson 2 • Syntax & Semantics",
+                definition: "In a Backus-Naur Form (BNF) derivation, what is the specific name for a sentential form that contains ONLY terminal symbols (lexemes/tokens) after all nonterminals have been expanded?",
+                answer: "Sentence",
+                distractors: [
+                    "Sentential Form",
+                    "Leftmost Derivation",
+                    "Parse Tree Root"
+                ],
+                explanation: "A sentence is a sentential form consisting exclusively of terminal symbols over the language's alphabet."
+            },
+            {
+                id: "q15",
+                unit: "Lesson 2",
+                unitTitle: "Lesson 2 • Syntax & Semantics",
+                definition: "What formal property describes a grammar that generates at least one sentential form for which two or more distinct parse trees exist?",
+                answer: "Ambiguous Grammar",
+                distractors: [
+                    "Context-Free Grammar",
+                    "Leftmost Grammar",
+                    "Extended BNF Grammar"
+                ],
+                explanation: "A grammar is ambiguous if and only if it generates a sentential form that has two or more distinct parse trees, which can lead to conflicting operator precedence or associativity."
+            },
+            {
+                id: "q16",
+                unit: "Lesson 2",
+                unitTitle: "Lesson 2 • Syntax & Semantics",
+                definition: "Among the eleven syntactic elements of a language, which element refers to optional words inserted into statements purely to make programs read more like natural English (such as the optional word THEN in COBOL)?",
+                answer: "Noise Words",
+                distractors: [
+                    "Reserved Words",
+                    "Keywords",
+                    "Delimiters and Brackets"
+                ],
+                explanation: "Noise words are optional syntactic words ignored by the translator's logic but permitted in statements to improve human readability."
+            },
+            {
+                id: "q17",
+                unit: "Lesson 2",
+                unitTitle: "Lesson 2 • Syntax & Semantics",
+                definition: "Which formal method of specifying program semantics defines the meaning of each language construct by mapping it to mathematical objects (such as sets or functions), rather than using logical pre- and post-condition assertions?",
+                answer: "Denotational Semantics",
+                distractors: [
+                    "Axiomatic Semantics",
+                    "Operational Semantics",
+                    "Syntactic Recognition"
+                ],
+                explanation: "Denotational semantics maps language constructs to mathematical objects, whereas Axiomatic semantics specifies meaning using logical assertions (pre-conditions and post-conditions)."
+            },
+            {
+                id: "q18",
+                unit: "Lesson 2",
+                unitTitle: "Lesson 2 • Syntax & Semantics",
+                definition: "In the stages of compiler translation, which phase serves as the central bridge between the Analysis (recognition) phase and the Synthesis (object code generation) phase—handling symbol-table maintenance, most error detection, macro expansion, and intermediate code output?",
+                answer: "Semantic Analysis",
+                distractors: [
+                    "Lexical Analysis (Scanner)",
+                    "Syntactical Analysis (Parser)",
+                    "Code Optimization"
+                ],
+                explanation: "Semantic analysis is the central phase of translation that bridges source program recognition and object code synthesis, producing intermediate code after verifying types and maintaining the symbol table."
+            },
+            {
+                id: "q19",
+                unit: "Lesson 2",
+                unitTitle: "Lesson 2 • Syntax & Semantics",
+                definition: "In the structure of a compiler, what table is created and maintained by the compiler or assembler across phases to relate symbolic addresses (identifier names) to absolute machine addresses and attributes?",
+                answer: "Symbol Table",
+                distractors: [
+                    "Parse Tree",
+                    "Executable Table",
+                    "Activation Record"
+                ],
+                explanation: "The Symbol Table stores programmer-defined identifiers and relates symbolic addresses to actual addresses while interacting with lexical, syntactic, semantic, and optimization phases."
+            },
+
+            // LESSON 3 (10 ITEMS)
+            {
+                id: "q20",
+                unit: "Lesson 3",
+                unitTitle: "Lesson 3 • Names, Bindings & Scopes",
+                definition: "In designing special words for a programming language, what do we call a special word of the language that can NEVER be redefined or used by the programmer as a variable or identifier name?",
+                answer: "Reserved Word",
+                distractors: [
+                    "Keyword",
+                    "Noise Word",
+                    "Manifest Constant"
+                ],
+                explanation: "A reserved word cannot be used as a user-defined name under any circumstance, whereas a keyword is special only in certain contexts (such as in Fortran, where INTEGER or REAL could be used as variable names)."
+            },
+            {
+                id: "q21",
+                unit: "Lesson 3",
+                unitTitle: "Lesson 3 • Names, Bindings & Scopes",
+                definition: "Among the sextuple of attributes that characterize a variable, which attribute determines both the range of values the variable can hold and the set of operations defined for those values (plus precision for floating-point numbers)?",
+                answer: "Type",
+                distractors: [
+                    "Value (R-Value)",
+                    "Address (L-Value)",
+                    "Scope"
+                ],
+                explanation: "A variable's Type attribute dictates its legal range of values, the operations permitted on those values, and (for floating-point numbers) its numeric precision."
+            },
+            {
+                id: "q22",
+                unit: "Lesson 3",
+                unitTitle: "Lesson 3 • Names, Bindings & Scopes",
+                definition: "When categorizing variables by lifetime, which category is bound to memory cells before program execution begins and remains bound to the exact same memory cell throughout the entire execution?",
+                answer: "Static Variables",
+                distractors: [
+                    "Stack-Dynamic Variables",
+                    "Explicit Heap-Dynamic Variables",
+                    "Implicit Heap-Dynamic Variables"
+                ],
+                explanation: "Static variables are bound to memory cells before execution starts and keep that same memory allocation until the program terminates."
+            },
+            {
+                id: "q23",
+                unit: "Lesson 3",
+                unitTitle: "Lesson 3 • Names, Bindings & Scopes",
+                definition: "Which lifetime category describes variables whose storage bindings are created when their declaration statements are elaborated at runtime, while all of their other attributes (such as type) are statically bound?",
+                answer: "Stack-Dynamic Variables",
+                distractors: [
+                    "Static Variables",
+                    "Explicit Heap-Dynamic Variables",
+                    "Implicit Heap-Dynamic Variables"
+                ],
+                explanation: "Stack-dynamic variables allocate storage on the runtime stack when their declaration is reached (elaborated) upon subprogram entry, while scalar attributes other than address are statically bound."
+            },
+            {
+                id: "q24",
+                unit: "Lesson 3",
+                unitTitle: "Lesson 3 • Names, Bindings & Scopes",
+                definition: "Which lifetime category consists of nameless (anonymous) memory cells that are allocated and deallocated during execution by explicit directives written by the programmer (such as new or malloc) and accessed only through pointers or references?",
+                answer: "Explicit Heap-Dynamic Variables",
+                distractors: [
+                    "Implicit Heap-Dynamic Variables",
+                    "Stack-Dynamic Variables",
+                    "Static Variables"
+                ],
+                explanation: "Explicit heap-dynamic variables are allocated and deallocated on the heap via explicit programmer directives at runtime."
+            },
+            {
+                id: "q25",
+                unit: "Lesson 3",
+                unitTitle: "Lesson 3 • Names, Bindings & Scopes",
+                definition: "Which lifetime category describes variables whose storage, type, and value attributes are all bound and unbound automatically whenever they are assigned values in assignment statements at runtime?",
+                answer: "Implicit Heap-Dynamic Variables",
+                distractors: [
+                    "Explicit Heap-Dynamic Variables",
+                    "Stack-Dynamic Variables",
+                    "Static Variables"
+                ],
+                explanation: "Implicit heap-dynamic variables have all attributes (storage, type, value) allocated and deallocated automatically as a result of assignment statements."
+            },
+            {
+                id: "q26",
+                unit: "Lesson 3",
+                unitTitle: "Lesson 3 • Names, Bindings & Scopes",
+                definition: "In a language with nested static scopes, all enclosing scopes of a given scope are called its static ancestors; what is the specific term for the nearest (immediately enclosing) static ancestor?",
+                answer: "Static Parent",
+                distractors: [
+                    "Dynamic Parent",
+                    "Referencing Environment",
+                    "Global Declaration Scope"
+                ],
+                explanation: "Enclosing static scopes are called static ancestors, and the nearest static ancestor surrounding a scope is its static parent."
+            },
+            {
+                id: "q27",
+                unit: "Lesson 3",
+                unitTitle: "Lesson 3 • Names, Bindings & Scopes",
+                definition: "Which scoping rule connects nonlocal variable references to declarations by searching backward through the temporal sequence of active subprogram calls rather than the spatial layout of the source text—making static type checking impossible?",
+                answer: "Dynamic Scoping",
+                distractors: [
+                    "Static (Lexical) Scoping",
+                    "Global File Scoping",
+                    "Nested Block Scoping"
+                ],
+                explanation: "Dynamic scoping is based on the runtime calling sequence of subprograms rather than their textual layout, which makes static type checking impossible and hurts readability."
+            },
+            {
+                id: "q28",
+                unit: "Lesson 3",
+                unitTitle: "Lesson 3 • Names, Bindings & Scopes",
+                definition: "What term defines the complete collection of all names that are visible and can be referenced in a given statement (consisting of local variables plus all visible variables in enclosing scopes or active subprograms)?",
+                answer: "Referencing Environment",
+                distractors: [
+                    "Variable Scope",
+                    "Variable Lifetime",
+                    "Symbol Table Descriptor"
+                ],
+                explanation: "The referencing environment of a statement is the set of all variable names visible at that statement."
+            },
+            {
+                id: "q29",
+                unit: "Lesson 3",
+                unitTitle: "Lesson 3 • Names, Bindings & Scopes",
+                definition: "What is the formal name for a named constant whose value is statically bound at compile time (such as const in C#), rather than being dynamically bound when storage is allocated at runtime (such as readonly in C#)?",
+                answer: "Manifest Constant",
+                distractors: [
+                    "Dynamic Named Constant",
+                    "Implicit Heap Constant",
+                    "Reserved Identifier"
+                ],
+                explanation: "Named constants whose values are bound statically at compile time are called manifest constants."
+            },
+
+            // LESSON 4 (11 ITEMS)
+            {
+                id: "q30",
+                unit: "Lesson 4",
+                unitTitle: "Lesson 4 • Data Types",
+                definition: "Among numeric data types, which type represents numbers as the exact quotient of two integers specifically to avoid the round-off and truncation problems encountered in floating-point and fixed-point representations of real numbers?",
+                answer: "Rational Numbers",
+                distractors: [
+                    "Complex Numbers",
+                    "Floating-Point Real Numbers",
+                    "Signed Integer Numbers"
+                ],
+                explanation: "A rational number is the quotient of two integers, allowing exact fractional arithmetic without floating-point round-off or truncation errors."
+            },
+            {
+                id: "q31",
+                unit: "Lesson 4",
+                unitTitle: "Lesson 4 • Data Types",
+                definition: "In the formal operations on Boolean data types, which binary Boolean operation is defined by the conditional expression 'if x then y else true'?",
+                answer: "Implication (x imp y)",
+                distractors: [
+                    "Equivalence (x equiv y)",
+                    "Conjunction (x and y)",
+                    "Inclusive Disjunction (x or y)"
+                ],
+                explanation: "In Boolean operations, implication (x imp y) is false only when x is true and y is false, which matches 'if x then y else true'. Equivalence (r equiv j) is 'if r then j else not j'."
+            },
+            {
+                id: "q32",
+                unit: "Lesson 4",
+                unitTitle: "Lesson 4 • Data Types",
+                definition: "In vector and array operations, what is the specific name of the operation that selects a component from a vector and returns the memory location (l-value) of that relevant object?",
+                answer: "Subscripting",
+                distractors: [
+                    "Dereferencing",
+                    "Field Selection",
+                    "Concatenation"
+                ],
+                explanation: "Subscripting selects a component from a vector/array using an index and returns the l-value (memory location) of that element."
+            },
+            {
+                id: "q33",
+                unit: "Lesson 4",
+                unitTitle: "Lesson 4 • Data Types",
+                definition: "When storing a multidimensional array (matrix) in linear memory, which representation divides the array into a vector of sub-vectors for each element in the range of the first subscript—storing an entire row before the next row ('row of columns')?",
+                answer: "Row-Major Order",
+                distractors: [
+                    "Column-Major Order",
+                    "Pointer-Vector Order",
+                    "Indexed-Sequential Order"
+                ],
+                explanation: "Row-major order divides the matrix by its first (row) subscript first, whereas column-major order treats the matrix as a single row of columns."
+            },
+            {
+                id: "q34",
+                unit: "Lesson 4",
+                unitTitle: "Lesson 4 • Data Types",
+                definition: "Which structured data type is composed of a heterogeneous collection of named components (fields) that may have different data types and are accessed using explicit field names rather than computed subscripts?",
+                answer: "Record",
+                distractors: [
+                    "Vector (One-Dimensional Array)",
+                    "Multidimensional Matrix",
+                    "Character String"
+                ],
+                explanation: "A record groups heterogeneous named components (fields) of potentially different types, unlike an array whose elements must all share the same data type."
+            },
+            {
+                id: "q35",
+                unit: "Lesson 4",
+                unitTitle: "Lesson 4 • Data Types",
+                definition: "In a variant record (such as a Pascal record with a case...of section that shares memory among alternative field groups), what is the formal name of the special tag field whose value indicates which variant is currently active?",
+                answer: "Discriminant (Tag Field)",
+                distractors: [
+                    "Subscript Descriptor",
+                    "Dereference Pointer",
+                    "Bucket Overflow Key"
+                ],
+                explanation: "The tag component of a variant record is called the discriminant because it discriminates which variant group of fields is currently stored in the shared memory space."
+            },
+            {
+                id: "q36",
+                unit: "Lesson 4",
+                unitTitle: "Lesson 4 • Data Types",
+                definition: "Among the three design models for character strings, which model allows a string's length to vary dynamically at runtime up to a declared maximum capacity (as in Pascal and Ada)?",
+                answer: "Bounded-Length Strings",
+                distractors: [
+                    "Fixed-Length (Immutable) Strings",
+                    "Unbounded Variable-Length Strings",
+                    "Null-Terminated Pointer Strings"
+                ],
+                explanation: "Bounded-length strings allow varying lengths up to a fixed declared maximum bound, whereas fixed-length strings are immutable and unbounded strings can grow without a preset ceiling."
+            },
+            {
+                id: "q37",
+                unit: "Lesson 4",
+                unitTitle: "Lesson 4 • Data Types",
+                definition: "Among the three memory implementation methods for character strings, which method stores characters in fixed-size multi-character nodes connected by pointers to avoid the high memory overhead of storing a pointer for every single character?",
+                answer: "Linked-Block Implementation",
+                distractors: [
+                    "Sequential (Contiguous) Implementation",
+                    "Single-Character Linked-List Implementation",
+                    "Direct-Access Bucket Implementation"
+                ],
+                explanation: "Linked-block string storage groups several characters into each linked block, balancing dynamic resizing with much lower pointer overhead than a one-character-per-node linked list."
+            },
+            {
+                id: "q38",
+                unit: "Lesson 4",
+                unitTitle: "Lesson 4 • Data Types",
+                definition: "What memory safety error occurs when a pointer variable still contains the address of a heap-dynamic variable that has already been deallocated?",
+                answer: "Dangling Pointer",
+                distractors: [
+                    "Memory Leak (Unreferenced Garbage)",
+                    "Subscript Out-of-Bounds Error",
+                    "Type Incompatibility Fault"
+                ],
+                explanation: "A dangling pointer points to a memory cell that has already been deallocated, which can corrupt unrelated data or crash the program if dereferenced."
+            },
+            {
+                id: "q39",
+                unit: "Lesson 4",
+                unitTitle: "Lesson 4 • Data Types",
+                definition: "Which file organization divides a file into fixed-size logical blocks (buckets) and applies a mathematical key-transformation function (Key -> Address) to jump directly to a bucket, chaining overflow records with pointers when collisions occur?",
+                answer: "Hashed File",
+                distractors: [
+                    "Sequential File",
+                    "Direct Access File",
+                    "Indexed Sequential File"
+                ],
+                explanation: "A hashed file maps keys directly to bucket addresses using a hash function and resolves bucket collisions via overflow pointers."
+            },
+            {
+                id: "q40",
+                unit: "Lesson 4",
+                unitTitle: "Lesson 4 • Data Types",
+                definition: "Which file organization pairs a key-sorted primary data file with a separate multi-level index table (similar to a B-tree) so that records can be processed both sequentially in sorted order and randomly by key?",
+                answer: "Indexed Sequential File",
+                distractors: [
+                    "Hashed File",
+                    "Direct Access File",
+                    "Sequential File"
+                ],
+                explanation: "An indexed sequential file combines sequential key ordering with a separate index hierarchy, supporting both fast random key lookups and ordered sequential scans."
+            },
+
+            // LESSON 5 (5 ITEMS)
+            {
+                id: "q41",
+                unit: "Lesson 5",
+                unitTitle: "Lesson 5 • Sequence Control",
+                definition: "When traversing a binary expression tree, which notation is produced by visiting the Left subtree first, then the Root (operator), and finally the Right subtree (L -> Root -> R)?",
+                answer: "Infix Notation (In-Order Traversal)",
+                distractors: [
+                    "Prefix / Polish Notation (Pre-Order Traversal)",
+                    "Postfix / Reverse Polish Notation (Post-Order Traversal)",
+                    "Cambridge Polish Notation"
+                ],
+                explanation: "In-order traversal (Left -> Root -> Right) places the operator between its operands, producing standard infix notation (e.g., (a + b) * c)."
+            },
+            {
+                id: "q42",
+                unit: "Lesson 5",
+                unitTitle: "Lesson 5 • Sequence Control",
+                definition: "Which expression notation is produced by visiting the Left subtree, then the Right subtree, and finally the Root (L -> R -> Root)—allowing unambiguous stack-based evaluation without any parentheses?",
+                answer: "Postfix / Reverse Polish Notation",
+                distractors: [
+                    "Prefix / Polish Notation",
+                    "Infix Notation",
+                    "Uniform Eager Notation"
+                ],
+                explanation: "Post-order traversal (Left -> Right -> Root) places the operator after its operands (Reverse Polish / Postfix notation), which can be evaluated directly on a stack without parentheses."
+            },
+            {
+                id: "q43",
+                unit: "Lesson 5",
+                unitTitle: "Lesson 5 • Sequence Control",
+                definition: "In expression evaluation, what occurs when a function modifies one of its two-way parameters or alters a nonlocal/global variable during evaluation, potentially changing the result of other operands in the same expression?",
+                answer: "Functional Side Effect",
+                distractors: [
+                    "Short-Circuit Evaluation",
+                    "Uniform Evaluation Rule",
+                    "Operator Associativity"
+                ],
+                explanation: "A functional side effect happens when a function changes a parameter or global variable in addition to returning a value, making expression results sensitive to operand evaluation order."
+            },
+            {
+                id: "q44",
+                unit: "Lesson 5",
+                unitTitle: "Lesson 5 • Sequence Control",
+                definition: "In expression evaluation, what rule states that all operands of an operation are evaluated completely before the operator is applied (as opposed to evaluating operands only when needed, as in conditionals)?",
+                answer: "Eager (Uniform) Evaluation Rule",
+                distractors: [
+                    "Short-Circuit (Lazy) Evaluation Rule",
+                    "Left-to-Right Associativity Rule",
+                    "Operator Precedence Hierarchy"
+                ],
+                explanation: "The uniform (eager) evaluation rule evaluates every operand first before applying the operator, whereas conditional constructs like if-then-else or short-circuit operators evaluate operands selectively."
+            },
+            {
+                id: "q45",
+                unit: "Lesson 5",
+                unitTitle: "Lesson 5 • Sequence Control",
+                definition: "Among statement-level sequence control structures, which repetition construct controls loop execution using a loop variable, an initial value, a terminal limit, and a step size?",
+                answer: "Counter-Controlled (Iterative) Loop",
+                distractors: [
+                    "Logically Controlled Pre-Test Loop",
+                    "Logically Controlled Post-Test Loop",
+                    "Unconditional Branch (GOTO)"
+                ],
+                explanation: "Counter-controlled loops (such as FOR loops) manage repetition via an explicit loop variable, initial value, terminal value, and step size."
+            },
+
+            // LESSON 6 (5 ITEMS)
+            {
+                id: "q46",
+                unit: "Lesson 6",
+                unitTitle: "Lesson 6 • Subprogram Control",
+                definition: "In subprogram definitions, what is the specific name for the dummy variable listed in the subprogram header (declaration) and used inside the subprogram body to represent data passed by the caller?",
+                answer: "Formal Parameter",
+                distractors: [
+                    "Actual Parameter (Argument)",
+                    "Local Stack-Dynamic Variable",
+                    "Implicit Subprogram Descriptor"
+                ],
+                explanation: "Formal parameters are the dummy variables declared in the subprogram header, whereas actual parameters (arguments) are the values or variables supplied in the subprogram call statement."
+            },
+            {
+                id: "q47",
+                unit: "Lesson 6",
+                unitTitle: "Lesson 6 • Subprogram Control",
+                definition: "Which parameter-passing implementation method achieves In-Out Mode by copying the actual parameter's value into a local stack variable on subprogram entry and copying the final local value back to the caller's variable upon termination?",
+                answer: "Pass-by-Value-Result (Call-by-Copy-Restore)",
+                distractors: [
+                    "Pass-by-Reference (Call-by-Address)",
+                    "Pass-by-Value",
+                    "Pass-by-Name (Textual Substitution)"
+                ],
+                explanation: "Pass-by-value-result (also called copy-restore) implements In-Out Mode using physical value copying at entry and exit rather than transmitting an access path/pointer."
+            },
+            {
+                id: "q48",
+                unit: "Lesson 6",
+                unitTitle: "Lesson 6 • Subprogram Control",
+                definition: "Which late-binding parameter-passing method (used in Algol 60) textually substitutes the actual parameter expression for every occurrence of the formal parameter and re-evaluates it in the caller's referencing environment each time it is accessed?",
+                answer: "Pass-by-Name",
+                distractors: [
+                    "Pass-by-Reference",
+                    "Pass-by-Value-Result",
+                    "Pass-by-Result"
+                ],
+                explanation: "Pass-by-name performs textual substitution (implemented via thunks), delaying evaluation until each time the parameter is actually referenced in the subprogram body."
+            },
+            {
+                id: "q49",
+                unit: "Lesson 6",
+                unitTitle: "Lesson 6 • Subprogram Control",
+                definition: "When a subprogram is passed as a parameter to another subprogram in a block-structured language, which policy binds the referencing environment of the passed subprogram to the environment of the statement where the subprogram was originally declared?",
+                answer: "Deep Binding",
+                distractors: [
+                    "Shallow Binding",
+                    "Ad Hoc Binding",
+                    "Dynamic Call-Chain Binding"
+                ],
+                explanation: "Deep binding uses the environment of the definition of the passed subprogram; shallow binding uses the environment of the call statement that invokes it; ad hoc binding uses the environment of the call statement that passed it."
+            },
+            {
+                id: "q50",
+                unit: "Lesson 6",
+                unitTitle: "Lesson 6 • Subprogram Control",
+                definition: "What special category of subprograms has multiple entry points, maintains symmetric (quasi-concurrent) control with other routines via resume statements, and preserves its local state so execution continues from where it last left off?",
+                answer: "Coroutine",
+                distractors: [
+                    "Overloaded Subprogram",
+                    "Generic (Polymorphic) Subprogram",
+                    "Recursive Function Subprogram"
+                ],
+                explanation: "Coroutines operate with symmetric control via 'resume' rather than master-slave call/return, retaining their state across invocations and resuming at the statement following their last yield."
+            }
+        ];
+
+        // Exam State
+        let examMasteredSet = new Set();
+        let examReviewSet = new Set();
+        let examStreak = 0;
+        let examReviewOnlyMode = false;
+        let examActiveQueue = [];
+        let examCurrentIndex = 0;
+        // Per-item session state: { chosenAnswer: string, shuffledOptions: string[] }
+        let examSessionAnswers = {};
+
+        function shuffleArray(arr) {
+            const copy = [...arr];
+            for (let i = copy.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [copy[i], copy[j]] = [copy[j], copy[i]];
+            }
+            return copy;
+        }
+
+        function getSelectedUnits() {
+            const cbs = document.querySelectorAll('.unit-filter-cb');
+            const selected = [];
+            cbs.forEach(cb => {
+                if (cb.checked) selected.push(cb.value);
+            });
+            return selected;
+        }
+
+        function updateFilterButtonLabel() {
+            const selected = getSelectedUnits();
+            const labelEl = document.getElementById('filterBtnLabel');
+            if (!labelEl) return;
+            if (selected.length === 6) {
+                labelEl.textContent = 'Filters (All 6 Lessons)';
+            } else if (selected.length === 0) {
+                labelEl.textContent = 'Filters (None Selected)';
+            } else {
+                labelEl.textContent = `Filters (${selected.length} of 6 Lessons)`;
+            }
+        }
+
+        function buildExamQueue(shouldShuffle = true) {
+            const selectedUnits = new Set(getSelectedUnits());
+            let pool = PPL_EXAM_BANK.filter(item => selectedUnits.has(item.unit));
+
+            if (examReviewOnlyMode) {
+                pool = pool.filter(item => !examMasteredSet.has(item.id) || examReviewSet.has(item.id));
+            }
+
+            if (shouldShuffle) {
+                pool = shuffleArray(pool);
+            }
+
+            examActiveQueue = pool;
+            examCurrentIndex = 0;
+
+            // Ensure every item has shuffled options ready
+            examActiveQueue.forEach(item => {
+                if (!examSessionAnswers[item.id] || shouldShuffle) {
+                    const prevChosen = examSessionAnswers[item.id] ? examSessionAnswers[item.id].chosenAnswer : null;
+                    examSessionAnswers[item.id] = {
+                        chosenAnswer: prevChosen,
+                        shuffledOptions: shuffleArray([item.answer, ...item.distractors])
+                    };
+                }
+            });
+
+            updateFilterButtonLabel();
+            renderExamCard();
+        }
+
+        function updateExamTelemetry() {
+            const selectedUnits = new Set(getSelectedUnits());
+            const totalInSelectedUnits = PPL_EXAM_BANK.filter(item => selectedUnits.has(item.unit)).length;
+            const masteredInSelected = PPL_EXAM_BANK.filter(item => selectedUnits.has(item.unit) && examMasteredSet.has(item.id)).length;
+            const reviewInSelected = PPL_EXAM_BANK.filter(item => selectedUnits.has(item.unit) && examReviewSet.has(item.id)).length;
+            const remainingCount = Math.max(0, totalInSelectedUnits - masteredInSelected);
+
+            const pillMastered = document.getElementById('pillMastered');
+            const pillRemaining = document.getElementById('pillRemaining');
+            const pillReview = document.getElementById('pillReview');
+            const pillStreak = document.getElementById('pillStreak');
+            const progressFill = document.getElementById('examProgressFill');
+
+            if (pillMastered) pillMastered.textContent = `Mastered: ${masteredInSelected} / ${totalInSelectedUnits}`;
+            if (pillRemaining) pillRemaining.textContent = `Remaining: ${remainingCount}`;
+            if (pillReview) pillReview.textContent = `Needs Review: ${reviewInSelected}`;
+            if (pillStreak) pillStreak.textContent = `Streak: ${examStreak}`;
+
+            const pct = totalInSelectedUnits > 0 ? Math.round((masteredInSelected / totalInSelectedUnits) * 100) : 0;
+            if (progressFill) progressFill.style.width = pct + '%';
+        }
+
+        function renderExamCard() {
+            updateExamTelemetry();
+
+            const posEl = document.getElementById('queuePositionText');
+            const unitBadge = document.getElementById('qUnitBadge');
+            const statusBadge = document.getElementById('qStatusBadge');
+            const stemEl = document.getElementById('qStemText');
+            const optionsList = document.getElementById('mcOptionsList');
+            const feedbackBox = document.getElementById('instantFeedbackBox');
+            const feedbackHeadline = document.getElementById('feedbackHeadline');
+            const feedbackBody = document.getElementById('feedbackBody');
+            const prevBtn = document.getElementById('prevQuestionBtn');
+            const nextBtn = document.getElementById('nextQuestionBtn');
+            const retryBtn = document.getElementById('retryQuestionBtn');
+
+            if (!stemEl || !optionsList) return;
+
+            if (examActiveQueue.length === 0) {
+                if (posEl) posEl.textContent = '0 Items in Queue';
+                if (unitBadge) unitBadge.textContent = 'Queue Complete';
+                if (statusBadge) {
+                    statusBadge.className = 'question-status-badge correct';
+                    statusBadge.textContent = 'All Filtered Items Mastered';
+                }
+                stemEl.textContent = examReviewOnlyMode
+                    ? 'You have mastered all items in the selected lessons! Turn off "Unmastered / Needs Review Only" or click "Reset All" to practice the full 50-item mock exam again.'
+                    : 'Please select at least one course lesson in the Filters drawer above to load mock exam questions.';
+                optionsList.innerHTML = '';
+                if (feedbackBox) feedbackBox.className = 'instant-feedback-box';
+                if (prevBtn) prevBtn.disabled = true;
+                if (nextBtn) nextBtn.disabled = true;
+                if (retryBtn) retryBtn.style.display = 'none';
+                return;
+            }
+
+            if (examCurrentIndex >= examActiveQueue.length) examCurrentIndex = examActiveQueue.length - 1;
+            if (examCurrentIndex < 0) examCurrentIndex = 0;
+
+            const currentItem = examActiveQueue[examCurrentIndex];
+            const itemState = examSessionAnswers[currentItem.id] || {
+                chosenAnswer: null,
+                shuffledOptions: shuffleArray([currentItem.answer, ...currentItem.distractors])
+            };
+            examSessionAnswers[currentItem.id] = itemState;
+
+            if (posEl) posEl.textContent = `Item ${examCurrentIndex + 1} of ${examActiveQueue.length}`;
+            if (unitBadge) unitBadge.textContent = currentItem.unitTitle;
+            stemEl.textContent = currentItem.definition;
+
+            const hasAnswered = itemState.chosenAnswer !== null;
+            const isCorrect = itemState.chosenAnswer === currentItem.answer;
+
+            if (statusBadge) {
+                if (!hasAnswered) {
+                    statusBadge.className = 'question-status-badge unanswered';
+                    statusBadge.textContent = 'Select the matching term';
+                } else if (isCorrect) {
+                    statusBadge.className = 'question-status-badge correct';
+                    statusBadge.textContent = '✓ Answered Correctly';
+                } else {
+                    statusBadge.className = 'question-status-badge wrong';
+                    statusBadge.textContent = '✗ Needs Review';
+                }
+            }
+
+            const letters = ['A', 'B', 'C', 'D'];
+            optionsList.innerHTML = '';
+
+            itemState.shuffledOptions.forEach((optText, idx) => {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'mc-option-btn';
+
+                let tagHtml = '';
+                if (hasAnswered) {
+                    btn.disabled = true;
+                    if (optText === currentItem.answer) {
+                        btn.classList.add('is-correct');
+                        tagHtml = `<span class="mc-tag-pill">✓ Correct Term</span>`;
+                    } else if (optText === itemState.chosenAnswer) {
+                        btn.classList.add('is-wrong');
+                        tagHtml = `<span class="mc-tag-pill">✗ Your Choice</span>`;
+                    } else {
+                        btn.classList.add('is-dimmed');
+                    }
+                }
+
+                btn.innerHTML = `
+                    <span class="mc-option-left">
+                        <span class="mc-letter">${letters[idx]}</span>
+                        <span>${optText}</span>
+                    </span>
+                    ${tagHtml}
+                `;
+
+                btn.addEventListener('click', () => handleSelectOption(currentItem, optText));
+                optionsList.appendChild(btn);
+            });
+
+            if (hasAnswered) {
+                feedbackBox.className = `instant-feedback-box show ${isCorrect ? 'feedback-correct' : 'feedback-wrong'}`;
+                if (isCorrect) {
+                    feedbackHeadline.textContent = `✓ Correct! — ${currentItem.answer}`;
+                } else {
+                    feedbackHeadline.textContent = `✗ Incorrect — You selected "${itemState.chosenAnswer}". The correct term is "${currentItem.answer}".`;
+                }
+                feedbackBody.textContent = currentItem.explanation;
+                if (retryBtn) retryBtn.style.display = 'inline-flex';
+            } else {
+                feedbackBox.className = 'instant-feedback-box';
+                if (retryBtn) retryBtn.style.display = 'none';
+            }
+
+            if (prevBtn) prevBtn.disabled = examCurrentIndex === 0;
+            if (nextBtn) nextBtn.disabled = examCurrentIndex === examActiveQueue.length - 1;
+        }
+
+        function handleSelectOption(item, selectedOption) {
+            const state = examSessionAnswers[item.id];
+            if (!state || state.chosenAnswer !== null) return;
+
+            state.chosenAnswer = selectedOption;
+            if (selectedOption === item.answer) {
+                examMasteredSet.add(item.id);
+                examReviewSet.delete(item.id);
+                examStreak++;
+            } else {
+                examMasteredSet.delete(item.id);
+                examReviewSet.add(item.id);
+                examStreak = 0;
+            }
+            renderExamCard();
+        }
+
+        // Wire up Exam Buttons
+        const toggleFilterDrawerBtn = document.getElementById('toggleFilterDrawerBtn');
+        const examFilterDrawer = document.getElementById('examFilterDrawer');
+        if (toggleFilterDrawerBtn && examFilterDrawer) {
+            toggleFilterDrawerBtn.addEventListener('click', () => {
+                const isOpen = examFilterDrawer.classList.toggle('open');
+                toggleFilterDrawerBtn.classList.toggle('active-toggle', isOpen);
+            });
+        }
+
+        document.querySelectorAll('.unit-filter-cb').forEach(cb => {
+            cb.addEventListener('change', () => buildExamQueue(false));
+        });
+
+        const selectAllUnitsBtn = document.getElementById('selectAllUnitsBtn');
+        const clearAllUnitsBtn = document.getElementById('clearAllUnitsBtn');
+        if (selectAllUnitsBtn) {
+            selectAllUnitsBtn.addEventListener('click', () => {
+                document.querySelectorAll('.unit-filter-cb').forEach(cb => { cb.checked = true; });
+                buildExamQueue(false);
+            });
+        }
+        if (clearAllUnitsBtn) {
+            clearAllUnitsBtn.addEventListener('click', () => {
+                document.querySelectorAll('.unit-filter-cb').forEach(cb => { cb.checked = false; });
+                buildExamQueue(false);
+            });
+        }
+
+        const needsReviewQueueBtn = document.getElementById('needsReviewQueueBtn');
+        const needsReviewBtnText = document.getElementById('needsReviewBtnText');
+        if (needsReviewQueueBtn) {
+            needsReviewQueueBtn.addEventListener('click', () => {
+                examReviewOnlyMode = !examReviewOnlyMode;
+                needsReviewQueueBtn.classList.toggle('active-toggle', examReviewOnlyMode);
+                if (needsReviewBtnText) {
+                    needsReviewBtnText.textContent = `Unmastered / Needs Review Only: ${examReviewOnlyMode ? 'ON' : 'OFF'}`;
+                }
+                buildExamQueue(false);
+            });
+        }
+
+        const examShuffleBtn = document.getElementById('examShuffleBtn');
+        if (examShuffleBtn) {
+            examShuffleBtn.addEventListener('click', () => {
+                buildExamQueue(true);
+            });
+        }
+
+        const examResetBtn = document.getElementById('examResetBtn');
+        if (examResetBtn) {
+            examResetBtn.addEventListener('click', () => {
+                examMasteredSet.clear();
+                examReviewSet.clear();
+                examStreak = 0;
+                examSessionAnswers = {};
+                buildExamQueue(true);
+            });
+        }
+
+        const prevQuestionBtn = document.getElementById('prevQuestionBtn');
+        const nextQuestionBtn = document.getElementById('nextQuestionBtn');
+        const retryQuestionBtn = document.getElementById('retryQuestionBtn');
+
+        if (prevQuestionBtn) {
+            prevQuestionBtn.addEventListener('click', () => {
+                if (examCurrentIndex > 0) {
+                    examCurrentIndex--;
+                    renderExamCard();
+                }
+            });
+        }
+        if (nextQuestionBtn) {
+            nextQuestionBtn.addEventListener('click', () => {
+                if (examCurrentIndex < examActiveQueue.length - 1) {
+                    examCurrentIndex++;
+                    renderExamCard();
+                }
+            });
+        }
+        if (retryQuestionBtn) {
+            retryQuestionBtn.addEventListener('click', () => {
+                const currentItem = examActiveQueue[examCurrentIndex];
+                if (!currentItem) return;
+                examSessionAnswers[currentItem.id] = {
+                    chosenAnswer: null,
+                    shuffledOptions: shuffleArray([currentItem.answer, ...currentItem.distractors])
+                };
+                renderExamCard();
+            });
+        }
+
+        // Top-bar quick jump to 50-Item Mock Exam
+        const jumpExamBtn = document.getElementById('jumpExamBtn');
+        const sidebarExamTab = document.getElementById('sidebarExamTab');
+        if (jumpExamBtn && sidebarExamTab) {
+            jumpExamBtn.addEventListener('click', () => {
+                sidebarExamTab.click();
+            });
+        }
+
+        // Initialize Exam Queue on Load
+        buildExamQueue(true);
 
         // Initialize Sidebar TOC & Toggle Label
         buildSidebarToc();
